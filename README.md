@@ -8,6 +8,7 @@ The technologies currently used are:
 * **OpenJDK 11**.
 * **Spring Boot 2.7.1** (using **Spring Security**, **Spring MVC** and **Spring Data JPA**).
 * **Thymeleaf** as the HTML5 template engine.
+* **Apache Tomcat** as the web server.
 * **Hibernate** as the ORM.
 * The latest version of **MySQL Community Server** (currently 8.0.29) as the database.
 * **Lombok** to generate the model objects and for logging.
@@ -23,7 +24,7 @@ This repository makes use of the **company logo files** and **Curriculum Vitae f
 ## 2. Execution procedure
 
 To run the application with an IDE (I recommend using **Spring Tool Suite**, which is based on **Eclipse**):
-* **Run the application:** As a Spring Boot application
+* **Run the application:** as a Spring Boot application
 * **Open in a web browser:** <http://localhost:8080>
 
 To run the application with Docker Compose:
