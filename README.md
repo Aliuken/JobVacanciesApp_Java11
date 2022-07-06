@@ -8,8 +8,9 @@ The technologies currently used are:
 * **OpenJDK 11**
 * **Spring Boot 2.7.1** (using **Spring Security**, **Spring MVC** and **Spring Data JPA**)
 * **Thymeleaf** (as the HTML5 template engine)
-* **Lombok** (to generate the model objects and for logging)
+* **Hibernate** as ORM.
 * The latest version of **MySQL Community Server** (currently 8.0.29)
+* **Lombok** (to generate the model objects and for logging)
 * **Docker** (with **Dockerfile** and **Docker Compose**)
 * **Bootstrap 5.1.3**, **Material Design for Bootstrap 4.2.0** and **jQuery UI 1.13.1** for the look-and-feel.
 * **Font Awesome 6.1.1** for the icons.
