@@ -1,0 +1,110 @@
+<!doctype html>
+<html layout:decorate="~{fragments/template}">
+  <head>
+    <title th:text="(${authUserDTO.id} == null) ? #{authUserCreation.head.title} : #{authUserEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${authUserDTO.id} == null) ? #{authUserPanel.userCreation.main.title} : #{authUserEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/my-user/auth-users (lang=${param.lang})}" th:object="${authUserDTO}" method="post">
+
+			<div class="mb-1" th:if="${errorMsg != null}">
+			  <strong class="text-danger" th:text="${errorMsg}"></strong>
+			  <br/>
+			</div>
+
+			<div class="mb-1" th:if="${successMsg != null}">
+			  <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+			  <br/>
+			</div>
+			
+			<div class="row">
+              <div class="col-md-1 form-group">
+                <label for="langCombo" class="form-label mt-2 mb-1" th:text="#{authUser.language}"></label>
+                <select id="langCombo" name="langCombo" th:field="*{language}" required>
+		          <option value="en" th:text="English"></option>
+		          <option value="es" th:text="Español"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <input type="hidden" th:field="*{firstRegistrationDateTime}"></input>
+                <input type="hidden" th:field="*{firstRegistrationAuthUserEmail}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{authUser.name}"></label>
+                <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required></input>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="surnames" class="form-label mt-2 mb-1" th:text="#{authUser.surnames}"></label>
+                <input type="text" id="surnames" name="surnames" class="form-control" th:field="*{surnames}" required></input>
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="email" class="form-label mt-2 mb-1" th:text="#{authUser.email}"></label>
+                <input type="text" id="email" name="email" class="form-control" th:field="*{email}" required disabled></input>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <label for="maxPriorityAuthRole" class="form-label mt-2 mb-1" th:text="#{authUser.maxPriorityAuthRole}"></label>
+                <input type="text" id="maxPriorityAuthRole" name="maxPriorityAuthRole" class="form-control" th:field="*{maxPriorityAuthRoleName}" required disabled></input>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="authRoles" class="form-label mt-2 mb-1" th:text="#{authUser.authRoles}"></label>
+                <input type="text" id="authRoles" name="authRoles" class="form-control" th:field="*{authRoleNames}" required disabled></input>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="status" class="form-label mt-2 mb-1" th:text="#{authUser.status}"></label>
+                <select id="status" name="status" th:field="*{enabled}" required>
+		          <option value="true" th:text="#{authUserStatus.enabled}"></option>
+		          <option value="false" th:text="#{authUserStatus.disabled}"></option>
+                </select>
+              </div>
+            </div>
+            
+            <br/>
+            <button type="submit" id="saveButton" class="btn btn-primary" th:text="#{button.save}"></button>
+            
+            <hr/>
+            
+            <h5 th:text="#{option.otherOperations}"></h5>
+            
+            <div class="row mx-0 px-0 my-0 py-0">
+              <div class="col-md-8 mx-0 px-0 my-0 py-0">
+                <div class="row mx-0 px-0 my-0 py-0">
+                  <div class="col-md-2 form-group mx-0 px-0 my-0 py-0">
+                    <label for="changePassword" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password}"></label>
+                    <br/>
+                    <a class="btn btn-primary" id="changePassword" name="changePassword" th:href="@{/my-user/auth-users/change-password (lang=${param.lang})}" th:text="#{authUserCredentials.changePassword}"></a>
+                  </div>
+                  <div class="col-md-2 form-group mx-0 px-0 my-0 py-0">
+                    <label for="getJobRequests" class="form-label mt-2 mb-1" th:text="#{authUser.jobRequests}"></label>
+                    <br/>
+                    <a class="btn btn-primary" id="getJobRequests" name="getJobRequests" th:href="@{/my-user/auth-users/job-requests (lang=${param.lang})}" th:text="#{authUser.getJobRequests}"></a>
+                  </div>
+                  <div class="col-md-2 form-group mx-0 px-0 my-0 py-0">
+                    <label for="getAuthUserCurriculums" class="form-label mt-2 mb-1" th:text="#{authUser.authUserCurriculums}"></label>
+                    <br/>
+                    <a class="btn btn-primary" id="getAuthUserCurriculums" name="getAuthUserCurriculums" th:href="@{/my-user/auth-users/auth-user-curriculums (lang=${param.lang})}" th:text="#{authUser.getAuthUserCurriculums}"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html layout:decorate="~{fragments/template}">
+  <head>
+    <title th:text="(${jobVacancyDTO.id} == null) ? #{jobVacancyCreation.head.title} : #{jobVacancyEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="additionalStyles">
+      <link th:href="@{/jquery-ui-1.13.1/jquery-ui.min.css}" rel="stylesheet">
+      <link th:href="@{/jquery-timepicker-addon-1.6.3-dist/jquery-ui-timepicker-addon.min.css}" rel="stylesheet">
+      <style type="text/css">
+		.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+		.ui-timepicker-div dl{ text-align: left; }
+		.ui-timepicker-div dl dt{ height: 25px; }
+		.ui-timepicker-div dl dd{ margin: 15px 10px 10px 75px; }
+		.ui-timepicker-div td { font-size: 90%; }
+	  </style>
+    </div>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobVacancyDTO.id} == null) ? #{jobVacancyCreation.main.title} : #{jobVacancyEdition.main.title}"></strong></h4>
+        <div class="card-body">
+          <form th:action="@{/job-vacancies/save (lang=${param.lang})}" th:object="${jobVacancyDTO}" method="post" enctype="multipart/form-data">
+
+	        <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+			  <span th:text="#{error.correctFields} + ':'"></span>
+			  <ul>
+			    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			  </ul>
+			</div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <input type="hidden" th:field="*{firstRegistrationDateTime}"></input>
+                <input type="hidden" th:field="*{firstRegistrationAuthUserEmail}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{jobVacancy.name} + ':'"></label>
+                <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required></input>
+              </div>
+
+              <div class="col-md-9 form-group">
+                <label for="description" class="form-label mt-2 mb-1" th:text="#{jobVacancy.description} + ':'"></label>
+                <input type="text" id="description" name="description" th:field="*{description}" class="form-control" required></input>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label for="jobCategory" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCategory} + ':'"></label>
+                <select id="jobCategory" name="jobCategory" class="form-control" th:field="*{jobCategory.id}">
+                  <option th:each="jobCategory : ${jobCategories}" th:value="${jobCategory.id}" th:text="${jobCategory.name}"></option>
+                </select>
+              </div>
+              
+              <div class="col-md-3 form-group">
+                <label for="jobCompanyLogoCombo" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCompany} + ':'"></label>
+                <select id="jobCompanyLogoCombo" name="jobCompanyLogoCombo" class="form-control" th:field="*{jobCompany.id}">
+                  <option th:each="jobCompany : ${jobCompanies}" th:value="${jobCompany.id}" th:text="${jobCompany.name}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-1 form-group">
+                <label for="status" class="form-label mt-2 mb-1" th:text="#{jobVacancy.status} + ':'"></label>
+                <select id="status" name="status" class="form-control" th:field="*{status}">
+                  <option th:each="jobVacancyStatus : ${T(com.aliuken.jobvacanciesapp.model.JobVacancyStatus).values()}" th:value="${jobVacancyStatus.name}" th:text="#{${jobVacancyStatus.messageName}}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="publicationDateTime" class="form-label mt-2 mb-1" th:text="#{jobVacancy.publicationDateTime} + ':'"></label>
+                <input type="text" id="publicationDateTime" name="publicationDateTime" class="form-control" th:field="*{publicationDateTime}" required></input>
+              </div>
+
+              <div class="col-md-1 form-group">
+                <label for="salary" class="form-label mt-2 mb-1" th:text="#{jobVacancy.salary} + ':'"></label>
+                <input type="text" id="salary" name="salary" class="form-control" th:field="*{salary}" required></input>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <br/>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="highlighted1" name="highlighted1" th:field="*{highlighted}" value="1"></input>
+                  <label class="form-check-label" for="highlighted1" th:text="#{jobVacancyHighlighted.yes}"></label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="highlighted2" name="highlighted2" th:field="*{highlighted}" value="0"></input>
+                  <label class="form-check-label" for="highlighted2" th:text="#{jobVacancyHighlighted.no}"></label>
+                </div>
+              </div>
+
+            </div>
+            <hr/>
+
+            <div class="row">
+
+              <div class="col-md-9 form-group">
+                <label for="details" class="form-label mt-2 mb-1" th:text="#{jobVacancy.details} + ':'"></label>
+                <textarea class="form-control" id="details" name="details" th:field="*{details}" rows="9"></textarea>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="jobCompanyLogoImage" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCompanyLogo} + ': '"></label>
+                <div th:replace="fragments/jobCompanyLogoFragment :: jobCompanyLogoFragment(${jobVacancyDTO.jobCompany}, false)"></div>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="additionalScripts">
+      <script type="text/javascript" th:src="@{/jquery-ui-1.13.1/jquery-ui.min.js}"></script>
+      <script type="text/javascript" th:src="@{/jobvacanciesapp-javascript-utils/ajax-utils.js}"></script>
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+	      let jobCompanyDTOModelAttribute;
+	      let jobCompanyLogoModelAttribute;
+	      let useAjaxToRefreshJobCompanyLogosModelAttribute;
+	      let refreshUrlModelAttribute;
+          /*<![CDATA[*/
+            jobVacancyDTOModelAttribute = /*[[${jobVacancyDTO}]]*/ null;
+            jobCompanyLogoModelAttribute = /*[[${jobCompanyLogo}]]*/ null;
+            useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
+            refreshUrlModelAttribute = /*[[@{/job-vacancies/refresh-logo}]]*/ null;
+          /*]]>*/
+          
+          let jobCompanyIdModelAttribute = (jobVacancyDTOModelAttribute != null && jobVacancyDTOModelAttribute.jobCompany != null) ? jobVacancyDTOModelAttribute.jobCompany.id : null;
+          
+          if(useAjaxToRefreshJobCompanyLogosModelAttribute) {
+	        treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
+          } else {
+            treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoModelAttribute);
+          }
+        });
+      </script>
+      <script type="text/javascript" th:src="@{/jquery-timepicker-addon-1.6.3-dist/jquery-ui-timepicker-addon.min.js}"></script>
+      <script type="text/javascript" th:src="@{/jquery-timepicker-addon-1.6.3-dist/i18n/jquery-ui-timepicker-addon-i18n.min.js}"></script>
+      <script type="text/javascript">
+        $(function () {
+            $("#publicationDateTime").datetimepicker({
+				dateFormat: 'dd-mm-yy',
+				timeFormat: 'HH:mm:ss',
+				showSecond:false,
+				showMillisec:false,
+				showMicrosec:false,
+				showTimezone:false
+			});
+        });
+      </script>
+      <script type="text/javascript" th:src="@{/tinymce-6.1.0/js/tinymce/tinymce.min.js}"></script>
+      <script type="text/javascript">
+        const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
+
+        tinymce.init({
+          selector: 'textarea#details',
+          plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+          editimage_cors_hosts: ['picsum.photos'],
+          menubar: 'file edit view insert format tools table help',
+          toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+          toolbar_sticky: true,
+          toolbar_sticky_offset: isSmallScreen ? 102 : 108,
+          autosave_ask_before_unload: true,
+          autosave_interval: '30s',
+          autosave_prefix: '{path}{query}-{id}-',
+          autosave_restore_when_empty: false,
+          autosave_retention: '2m',
+          image_advtab: true,
+          link_list: [
+            { title: 'My page 1', value: 'https://www.tiny.cloud' },
+            { title: 'My page 2', value: 'http://www.moxiecode.com' }
+          ],
+          image_list: [
+            { title: 'My page 1', value: 'https://www.tiny.cloud' },
+            { title: 'My page 2', value: 'http://www.moxiecode.com' }
+          ],
+          image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'Some class', value: 'class-name' }
+          ],
+          importcss_append: true,
+          file_picker_callback: (callback, value, meta) => {
+            /* Provide file and text for the link dialog */
+            if (meta.filetype === 'file') {
+              callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+            }
+
+            /* Provide image and alt text for the image dialog */
+            if (meta.filetype === 'image') {
+              callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+            }
+
+            /* Provide alternative source and posted for the media dialog */
+            if (meta.filetype === 'media') {
+              callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+            }
+          },
+          templates: [
+            { title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>' },
+            { title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...' },
+            { title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>' }
+          ],
+          template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+          template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+          height: 600,
+          image_caption: true,
+          quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+          noneditable_class: 'mceNonEditable',
+          toolbar_mode: 'sliding',
+          contextmenu: 'link image table',
+          skin: useDarkMode ? 'oxide-dark' : 'oxide',
+          content_css: useDarkMode ? 'dark' : 'default',
+          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+      </script>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 30m
+    encoding:
+      enabled: true
+      charset: UTF-8
+logging:
+  level:
+    org:
+      springframework: INFO
+      hibernate: INFO
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/job-vacancies-app-db?useSSL=false&serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true
+    username: root
+    password: admin
+  jpa:
+    open-in-view: true
+    generate-ddl: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        '[format_sql]': true
+        '[enable_lazy_load_no_trans]': true
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  servlet:
+    multipart:
+      enabled: true
+      location: /tmp
+      max-file-size: 5MB
+  thymeleaf:
+    cache: false
+  data:
+    web:
+      pageable:
+        default-page-size: 5
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: aliuken.developer@gmail.com
+    password: dleookkmwqiksftw
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
+jobvacanciesapp:
+  jobCompanyLogosPath: /AppData/JobVacanciesApp/job-company-logos/
+  authUserCurriculumFilesPath: /AppData/JobVacanciesApp/auth-user-curriculum-files/
+  anonymousAccessAllowed: false
+  useAjaxToRefreshJobCompanyLogos: true

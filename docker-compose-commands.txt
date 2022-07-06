@@ -1,0 +1,9 @@
+./docker-compose-start.sh
+./docker-compose-stop.sh
+
+./Dockerfile-start.sh
+./Dockerfile-stop.sh
+
+docker exec -it app-db-container bash -l
+/usr/bin/mysql -u root -padmin job-vacancies-app-db
+select * from job_category;

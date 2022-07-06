@@ -1,0 +1,61 @@
+<!doctype html>
+<html layout:decorate="~{fragments/template}">
+  <head>
+    <title th:text="(${jobRequest.id} == null) ? #{jobRequestCreation.head.title} : #{jobRequestEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobRequest.id} == null) ? #{jobRequestCreation.main.title} : #{jobRequestEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <h5 class="card-title"><strong th:text="#{jobRequest.jobVacancy} + ': '"></strong><span th:text="${jobVacancy.name}"></span></h5>
+          <div class="row">
+            <div class="col-md-3">
+              <h6 class="card-title"><strong th:text="#{jobRequest.jobCategory} + ': '"></strong><span th:text="${jobVacancy.jobCategory.name}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.jobCompany} + ': '"></strong><span th:text="${jobVacancy.jobCompany.name}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.salary} + ': '"></strong><span th:text="${jobVacancy.salary}"></span></h6>
+            </div>
+            <div class="col-md-2">
+              <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobVacancy.jobCompany.selectedJobCompanyLogoFilePath})}" style="max-width:160px; max-height:160px;"></img>
+            </div>
+          </div>
+          <p class="card-text" th:text="${jobVacancy.description}"></p>
+          <hr/>
+
+          <form th:action="@{/job-requests/save (lang=${param.lang})}" th:object="${jobRequest}" method="post" enctype="multipart/form-data">
+            <div class="row">
+            
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="hidden" th:field="*{id}"></input>
+                  <input type="hidden" th:field="*{firstRegistrationDateTime}"></input>
+                  <input type="hidden" th:field="*{firstRegistrationAuthUser}"></input>
+                  <input type="hidden" th:name="jobVacancy.id" th:value="${jobVacancy.id}"></input>
+                  <label for="comments" class="form-label mt-2 mb-1" th:text="#{jobRequest.comments} + ': '"></label>
+                  <textarea class="form-control" name="comments" th:field="*{comments}" id="comments" rows="2"></textarea>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="curriculumFileCombo" class="form-label mt-2 mb-1" th:text="#{jobRequest.curriculum} + ': '"></label>
+                <select id="curriculumFileCombo" name="curriculumFileCombo" th:field="*{curriculumFileName}" class="form-select mb-3" style="height:40px">
+                  <option th:each="authUserCurriculums : ${authUserCurriculums}" th:text="${authUserCurriculums.selectionName}" th:value="${authUserCurriculums.fileName}"></option>
+                </select>
+              </div>
+              
+            </div>
+            <hr/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.send}"></button>
+          </form>
+            
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

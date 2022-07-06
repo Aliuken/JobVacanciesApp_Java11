@@ -1,0 +1,83 @@
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
+  <div class="container-fluid">
+
+    <a id="appBrand" class="navbar-brand my-0 py-0" th:href="@{/ (lang=${param.lang})}">
+      <img th:src="@{/images/logo.png}" class="rounded my-0 py-0" height="48"></img>
+      JobVacanciesApp
+    </a>
+
+    <button class="navbar-toggler p-0 border-0" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" id="navbarSideCollapse" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRATOR')">
+	      <a class="nav-link" th:href="@{/job-categories/index (lang=${param.lang})}" th:text="#{menu.jobCategories}"></a>
+	    </li>
+	    <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRATOR')">
+	      <a class="nav-link" th:href="@{/job-companies/index (lang=${param.lang})}" th:text="#{menu.jobCompanies}"></a>
+	    </li>
+	    <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRATOR')">
+	      <a class="nav-link" th:href="@{/job-vacancies/index (lang=${param.lang})}" th:text="#{menu.jobVacancies}"></a>
+	    </li>
+        <li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRATOR')">
+          <a class="nav-link" th:href="@{/job-requests/index (lang=${param.lang})}" th:text="#{menu.jobRequests}"></a>
+	    </li>
+	    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMINISTRATOR')">
+	      <a class="nav-link" th:href="@{/auth-users/index (lang=${param.lang})}" th:text="#{menu.authUsers}"></a>
+	    </li>
+	    <li class="nav-item">
+          <a class="nav-link" th:href="@{/about (lang=${param.lang})}" th:text="#{menu.about}"></a>
+        </li>
+      </ul>
+    </div>
+
+    <div sec:authorize="isAnonymous()" th:with="currentUrl=${#httpServletRequest.requestURI}">
+      <span class="text-light align-middle" th:text="#{lang.change} + ':'" th:if="${currentUrl} != '/signup'"></span>
+      &nbsp;&nbsp;
+      <select id="langCombo" name="langCombo" class="align-middle" th:if="${currentUrl} != '/signup'">
+		<option value="en" th:text="English"></option>
+	    <option value="es" th:text="Español"></option>
+      </select>
+      &nbsp;&nbsp;
+	  <a class="btn btn-primary align-middle" th:href="@{/index (lang=${param.lang})}" th:text="#{button.login}"></a>
+	  &nbsp;&nbsp;
+      <a class="btn btn-primary align-middle" th:href="@{/signup (lang=${param.lang})}" th:text="#{button.signup}"></a>
+	</div>
+
+    <div sec:authorize="isAuthenticated()" th:with="sessionAuthUser=${@abstractEntityService.refreshEntity(session.sessionAuthUser)}, sessionAuthUserEmail=${sessionAuthUser.email}, sessionAuthUserRoleName=${sessionAuthUser.maxPriorityAuthRoleName}">
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${sessionAuthUserRoleName} == 'ADMINISTRATOR'">
+        <a id="appUser" th:href="@{/my-user/auth-users (lang=${param.lang})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${sessionAuthUserEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.administrator} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+	    <a class="btn btn-primary align-middle" th:href="@{/logout (lang=${param.lang})}" th:text="#{button.logout}"></a>
+      </div>
+
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${sessionAuthUserRoleName} == 'SUPERVISOR'">
+        <a id="appUser" th:href="@{/my-user/auth-users (lang=${param.lang})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${sessionAuthUserEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.supervisor} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+	    <a class="btn btn-primary align-middle" th:href="@{/logout (lang=${param.lang})}" th:text="#{button.logout}"></a>
+      </div>
+
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${sessionAuthUserRoleName} == 'USER'">
+        <a id="appUser" th:href="@{/my-user/auth-users (lang=${param.lang})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${sessionAuthUserEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.user} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+	    <a class="btn btn-primary align-middle" th:href="@{/logout (lang=${param.lang})}" th:text="#{button.logout}"></a>
+      </div>
+
+    </div>
+
+  </div>
+</nav>

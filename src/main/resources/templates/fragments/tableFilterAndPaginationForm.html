@@ -1,0 +1,44 @@
+<div th:fragment="tableFilterAndPaginationForm(endpoint, showFilterForm, isAuthUserEntity, containsDifferentAuthUsers)" class="container-fluid mx-1 px-1 my-2 py-1" id="filterFormContainer" name="filterFormContainer">
+
+  <form th:action="@{${endpoint} (lang=${param.lang}, page='0')}" th:object="${tableSearchDTO}" method="get" class="form-inline">
+    <div th:if="${showFilterForm} == true" class="mx-0 px-0 my-0 py-0">
+      <label th:text="#{filterContainer.label} + ':'"></label>
+      <br/>
+      <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.searchFor} + ':'"></label>
+      &nbsp;
+      <select th:if="${isAuthUserEntity == true or containsDifferentAuthUsers == true}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.model.dto.TableField).values()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      <select th:if="${isAuthUserEntity != true and containsDifferentAuthUsers != true}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.model.dto.TableField).valuesWithoutAuthUser()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      &nbsp;&nbsp;&nbsp;
+      <label for="tableFieldValue" class="form-label mt-2 mb-1" th:text="#{table.searchForWithValue} + ':'"></label>
+      &nbsp;
+      <input type="text" id="tableFieldValue" name="tableFieldValue" th:field="*{tableFieldValue}"></input>
+      &nbsp;
+      <button type="submit" th:text="#{button.filter}"></button>
+      <br/>
+      <br/>
+    </div>
+    <label th:text="#{paginationContainer.label} + ':'"></label>
+    <br/>
+    <label for="tableOrderCombo" class="form-label mt-2 mb-1" th:text="#{table.orderBy} + ':'"></label>
+    &nbsp;
+    <select th:if="${isAuthUserEntity == true or containsDifferentAuthUsers == true}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.dto.TableOrder).values()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    <select th:if="${isAuthUserEntity != true and containsDifferentAuthUsers != true}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.dto.TableOrder).valuesWithoutAuthUser()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    &nbsp;&nbsp;&nbsp;
+    <label for="tablePageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.tablePageSize} + ':'"></label>
+    &nbsp;
+    <select id="tablePageSizeCombo" name="tablePageSizeCombo" th:field="*{size}">
+      <option th:each="tablePageSize : ${T(com.aliuken.jobvacanciesapp.model.dto.TablePageSize).values()}" th:value="${tablePageSize.code}" th:text="${tablePageSize.code}"></option>
+    </select>
+  </form>
+
+</div>

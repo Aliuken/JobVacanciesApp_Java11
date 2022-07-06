@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "jobvacanciesapp.jobCompanyLogosPath",
+    "type": "java.lang.String",
+    "description": "Folder of the company logotypes"
+  },
+  {
+    "name": "jobvacanciesapp.authUserCurriculumFilesPath",
+    "type": "java.lang.String",
+    "description": "Folder of the user curriculum files"
+  },
+  {
+    "name": "jobvacanciesapp.anonymousAccessAllowed",
+    "type": "java.lang.Boolean",
+    "description": "Indicator of anonymous access allowed"
+  },
+  {
+    "name": "jobvacanciesapp.useAjaxToRefreshJobCompanyLogos",
+    "type": "java.lang.String",
+    "description": "Indicator of use of Ajax to refresh company logotypes instead of URL params"
+  }
+]}

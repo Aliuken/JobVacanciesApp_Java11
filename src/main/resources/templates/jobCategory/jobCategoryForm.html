@@ -1,0 +1,53 @@
+<!doctype html>
+<html layout:decorate="~{fragments/template}">
+  <head>
+    <title th:text="(${jobCategory.id} == null) ? #{jobCategoryCreation.head.title} : #{jobCategoryEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobCategory.id} == null) ? #{jobCategoryCreation.main.title} : #{jobCategoryEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/job-categories/save (lang=${param.lang})}" th:object="${jobCategory}" method="post">
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <input type="hidden" th:field="*{firstRegistrationDateTime}"></input>
+                <input type="hidden" th:field="*{firstRegistrationAuthUser}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{jobCategory.name} + ': '"></label>
+                <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required></input>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="description" class="form-label mt-2 mb-1" th:text="#{jobCategory.description} + ': '"></label>
+                <textarea id="description" name="description" class="form-control" th:field="*{description}" rows="2"></textarea>
+              </div>
+            </div>
+
+			<br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
+
+            <div class="row" th:if="${jobCategory.id} != null">
+              <br/>
+              <hr/>
+              <div class="col-md-2 form-group">
+                <label for="getJobVacancies" class="form-label mt-2 mb-1" th:text="#{jobCategory.jobVacancies}"></label>
+                <br/>
+                <a class="btn btn-primary" id="getJobVacancies" name="getJobVacancies" th:href="@{/job-categories/job-vacancies/{id} (id=${jobCategory.id}, lang=${param.lang})}" th:text="#{jobCategory.getJobVacancies}"></a>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
