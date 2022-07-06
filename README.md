@@ -5,8 +5,9 @@
 **JobVacanciesApp** is an application made with **OpenJDK 11** and **Spring Boot** to learn how to made a web site by using all the state-of-the-art Spring-related technologies.
 
 The technologies currently used are:
-* **OpenJDK 11**.
+* **OpenJDK 11** as the Java implementation.
 * **Spring Boot 2.7.1** (using **Spring Security**, **Spring MVC** and **Spring Data JPA**).
+* **Maven** as the dependency manager and for building the application.
 * **Thymeleaf** as the HTML5 template engine.
 * **Apache Tomcat** as the web server.
 * **Hibernate** as the ORM.
