@@ -48,7 +48,9 @@
             <tbody>
               <tr th:each="authUser : ${authUsers}">
                 <td th:text="${authUser.id}"></td>
-                <td th:text="${authUser.email}"></td>
+                <td>
+                  <a th:href="@{/auth-users/view/{id} (id=${authUser.id}, lang=${param.lang})}" th:text="${authUser.email}"></a>
+                </td>
                 <td th:text="${authUser.name}"></td>
                 <td th:text="${authUser.surnames}"></td>
                 <td th:text="#{${authUser.enabled} ? 'authUserStatus.enabled' : 'authUserStatus.disabled'}"></td>
