@@ -62,10 +62,8 @@ The database of the application comes with 7 predefined users with the following
 | pai.mei@aliuken.com | qwerty7  | user          |
 ```
 
-NOTE: The users **antonio@aliuken.com** and **pai.mei@aliuken.com** can still not be used. They require confirmation via email.
-
-The priority order of the roles is: **administrator > supervisor > user**.
-
-When you create a user for your personal email account, its role will be "user".
-
-In order to receive the email to confirm your account registration, you need to create a Gmail SMTP account (as indicated here: <https://www.baeldung.com/spring-email#2-spring-boot-mail-server-properties>) and pass the value for the following environment variables to the application: **EMAIL_APPLICATION_ACCOUNT_USER** and **EMAIL_APPLICATION_ACCOUNT_PASSWORD**.
+NOTES:
+* The users **antonio@aliuken.com** and **pai.mei@aliuken.com** can still not be used. They require confirmation via email.
+* The priority order of the roles is: **administrator > supervisor > user**.
+* When you create a user for your personal email account, its role will be "user".
+* In order to receive the email to confirm your account registration, you need to create a Gmail SMTP account (as indicated here: <https://www.baeldung.com/spring-email#2-spring-boot-mail-server-properties>) and pass the value for the following environment variables to the application: **EMAIL_APPLICATION_ACCOUNT_USER** and **EMAIL_APPLICATION_ACCOUNT_PASSWORD**.
