@@ -49,13 +49,18 @@ In the docker-compose.yaml file:
 ## 4. Credentials to access the application
 
 The database of the application comes with 7 predefined users with the following credentials and roles:
-* **aliuken@aliuken.com** --> qwerty1 --> administrator
-* **luis@aliuken.com** --> qwerty2 --> supervisor
-* **marisol@aliuken.com** --> qwerty3 --> supervisor
-* **daniel@aliuken.com** --> qwerty4 --> user
-* **miguel@aliuken.com** --> qwerty5 --> user
-* **antonio@aliuken.com** --> qwerty6 --> user
-* **pai.mei@aliuken.com** --> qwerty7 --> user
+
+```txt
+| Email               | Password | Role          |
+| --------------------| ---------|---------------|
+| aliuken@aliuken.com | qwerty1  | administrator |
+| luis@aliuken.com    | qwerty2  | supervisor    |
+| marisol@aliuken.com | qwerty3  | supervisor    |
+| daniel@aliuken.com  | qwerty4  | user          |
+| miguel@aliuken.com  | qwerty5  | user          |
+| antonio@aliuken.com | qwerty6  | user          |
+| pai.mei@aliuken.com | qwerty7  | user          |
+```
 
 NOTE: The users **antonio@aliuken.com** and **pai.mei@aliuken.com** can still not be used. They require confirmation via email.
 
