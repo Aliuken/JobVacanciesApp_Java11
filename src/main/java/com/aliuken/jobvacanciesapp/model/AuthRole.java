@@ -64,17 +64,25 @@ public class AuthRole extends AbstractEntity {
 		super();
 	}
 
+	public Set<Long> getAuthUserRoleIds() {
+		final Set<Long> authUserRoleIds = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
+				.map(aur -> aur.getId())
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+
+		return authUserRoleIds;
+	}
+
 	public Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthUser())
+				.map(aur -> aur.getAuthUser())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUsers;
 	}
-	
+
 	public Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthUser())
+				.map(aur -> aur.getAuthUser())
 				.map(au -> au.getId())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -83,7 +91,7 @@ public class AuthRole extends AbstractEntity {
 
 	public Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthUser())
+				.map(aur -> aur.getAuthUser())
 				.map(au -> au.getEmail())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -100,13 +108,13 @@ public class AuthRole extends AbstractEntity {
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 		final String authUserEmails = this.getAuthUserEmails().toString();
 
-		final String result = StringUtils.getStringJoined("AuthRole [id=", idString, ", name=", name, ", messageName=", messageName, ", priority=", priorityString, 
-			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, 
+		final String result = StringUtils.getStringJoined("AuthRole [id=", idString, ", name=", name, ", messageName=", messageName, ", priority=", priorityString,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
 			", users=", authUserEmails, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

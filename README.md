@@ -12,6 +12,7 @@ The technologies currently used are:
 * **Apache Tomcat** as the web server.
 * **Hibernate** as the ORM.
 * The latest version of **MySQL Community Server** (currently 8.0.29) as the database.
+* **JUnit 5** for unit testing.
 * **Lombok** to generate the model objects and for logging.
 * **Docker** (with **Dockerfile** and **Docker Compose**).
 * **Bootstrap 5.1.3**, **Material Design for Bootstrap 4.2.0** and **jQuery UI 1.13.1** for the look-and-feel.
@@ -44,3 +45,22 @@ In the docker-compose.yaml file:
 * **healthcheck** and **service_healthy** are used joint to determine when the **db-dump.sql** file was executed, to start the **Spring Boot application** after that.
 * **internal-net** is used to communicate the Spring Boot application with the database.
 * **external-net** is used to communicate the Spring Boot application with the user.
+
+## 4. Credentials to access the application
+
+The database of the application comes with 7 predefined users with the following credentials and roles:
+* **aliuken@aliuken.com** --> qwerty1 --> administrator
+* **luis@aliuken.com** --> qwerty2 --> supervisor
+* **marisol@aliuken.com** --> qwerty3 --> supervisor
+* **daniel@aliuken.com** --> qwerty4 --> user
+* **miguel@aliuken.com** --> qwerty5 --> user
+* **antonio@aliuken.com** --> qwerty6 --> user
+* **pai.mei@aliuken.com** --> qwerty7 --> user
+
+NOTE: The users **antonio@aliuken.com** and **pai.mei@aliuken.com** can still not be used. They require confirmation via email.
+
+The priority order of the roles is: **administrator > supervisor > user**.
+
+When you create a user for your personal email account, its role will be "user".
+
+In order to receive the email to confirm your account registration, you need to create a Gmail SMTP account (as indicated here: <https://www.baeldung.com/spring-email#2-spring-boot-mail-server-properties>) and pass the value for the following environment variables to the application: **EMAIL_APPLICATION_ACCOUNT_USER** and **EMAIL_APPLICATION_ACCOUNT_PASSWORD**.

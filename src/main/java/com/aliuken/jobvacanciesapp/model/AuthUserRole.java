@@ -45,12 +45,12 @@ public class AuthUserRole extends AbstractEntityWithAuthUser {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("AuthUserRole [id=", idString, ", authUser=", authUserEmail, ", authRoleName=", authRoleName, 
+		final String result = StringUtils.getStringJoined("AuthUserRole [id=", idString, ", authUser=", authUserEmail, ", authRoleName=", authRoleName,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

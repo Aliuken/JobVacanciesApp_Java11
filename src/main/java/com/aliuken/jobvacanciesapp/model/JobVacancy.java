@@ -62,16 +62,11 @@ public class JobVacancy extends AbstractEntity {
     @NotNull
 	@Column(name="highlighted", length=1, nullable=false)
 	private Boolean highlighted;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_company_id", nullable=false)
 	private JobCompany jobCompany;
-
-	@NotNull
-    @Size(max=10000)
-    @Column(name="details", length=10000, nullable=false)
-	private String details;
 
 	@NotNull
 	@ManyToOne
@@ -82,6 +77,12 @@ public class JobVacancy extends AbstractEntity {
 	@Column(name="publication_date_time", nullable=false)
 	private LocalDateTime publicationDateTime;
 
+
+	@NotNull
+    @Size(max=10000)
+    @Column(name="details", length=10000, nullable=false)
+	private String details;
+
 	@OneToMany(mappedBy="jobVacancy", fetch=FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
@@ -90,15 +91,23 @@ public class JobVacancy extends AbstractEntity {
 	public JobVacancy() {
 		super();
 	}
-	
+
 	public boolean isVerified() {
 		boolean isVerified = (JobVacancyStatus.APPROVED.equals(status) && Boolean.TRUE.equals(highlighted));
 		return isVerified;
 	}
-	
+
 	public boolean isVerifiable() {
 		boolean isVerifiable = (!JobVacancyStatus.DELETED.equals(status) && !this.isVerified());
 		return isVerifiable;
+	}
+
+	public Set<Long> getJobRequestIds() {
+		final Set<Long> jobRequestIds = StreamUtils.ofNullableCollectionParallel(this.getJobRequests())
+				.map(jr -> jr.getId())
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+
+		return jobRequestIds;
 	}
 
 	public Set<AuthUser> getAuthUsers() {
@@ -108,7 +117,7 @@ public class JobVacancy extends AbstractEntity {
 
 		return authUsers;
 	}
-	
+
 	public Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = StreamUtils.ofNullableCollectionParallel(this.getJobRequests())
 				.map(jr -> jr.getAuthUser())
@@ -142,18 +151,18 @@ public class JobVacancy extends AbstractEntity {
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 		final String authUserEmails = this.getAuthUserEmails().toString();
 
-		final String result = StringUtils.getStringJoined("JobVacancy [id=", idString, ", name=", name, ", description=", description, ", salary=", salaryString, ", status=", statusCode, ", highlighted=", highlightedString, ", jobCompany=", jobCompanyName, ", details=", details, ", jobCategory=", jobCategoryName, ", publicationDateTime=", publicationDateTimeString, 
-			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, 
+		final String result = StringUtils.getStringJoined("JobVacancy [id=", idString, ", name=", name, ", description=", description, ", salary=", salaryString, ", status=", statusCode, ", highlighted=", highlightedString, ", jobCompany=", jobCompanyName, ", jobCategory=", jobCategoryName, ", publicationDateTime=", publicationDateTimeString, ", details=", details,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
 			", users=", authUserEmails, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(name, description, salary, status, highlighted, jobCompany, details, jobCategory, publicationDateTime);
+		result = prime * result + Objects.hash(name, description, salary, status, highlighted, jobCompany, jobCategory, publicationDateTime, details);
 		return result;
 	}
 
@@ -166,8 +175,8 @@ public class JobVacancy extends AbstractEntity {
 		return Objects.equals(name, other.name) && Objects.equals(description, other.description)
 			&& Objects.equals(salary, other.salary) && Objects.equals(status, other.status)
 			&& Objects.equals(highlighted, other.highlighted) && Objects.equals(jobCompany, other.jobCompany)
-			&& Objects.equals(details, other.details) && Objects.equals(jobCategory, other.jobCategory)
-			&& Objects.equals(publicationDateTime, other.publicationDateTime);
+			&& Objects.equals(jobCategory, other.jobCategory) && Objects.equals(publicationDateTime, other.publicationDateTime)
+			&& Objects.equals(details, other.details);
 	}
 
 }

@@ -40,8 +40,8 @@ public class JobCategory extends AbstractEntity {
 	private String name;
 
     @NotNull
-	@Size(max=255)
-    @Column(name="description", length=255, nullable=false)
+	@Size(max=500)
+    @Column(name="description", length=500, nullable=false)
 	private String description;
 
 	@OneToMany(mappedBy="jobCategory", fetch=FetchType.LAZY)
@@ -52,7 +52,7 @@ public class JobCategory extends AbstractEntity {
 	public JobCategory() {
 		super();
 	}
-	
+
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = StreamUtils.ofNullableCollectionParallel(this.getJobVacancies())
 				.map(jv -> jv.getId())
@@ -78,13 +78,13 @@ public class JobCategory extends AbstractEntity {
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 		final String jobVacancyNames = this.getJobVacancyNames().toString();
 
-		final String result = StringUtils.getStringJoined("JobCategory [id=", idString, ", name=", name, ", description=", description, 
-			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, 
+		final String result = StringUtils.getStringJoined("JobCategory [id=", idString, ", name=", name, ", description=", description,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
 			", jobVacancies=", jobVacancyNames, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

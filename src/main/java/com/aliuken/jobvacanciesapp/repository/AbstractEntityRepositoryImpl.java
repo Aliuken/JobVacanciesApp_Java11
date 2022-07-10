@@ -11,12 +11,20 @@ import com.aliuken.jobvacanciesapp.model.AbstractEntity;
 public class AbstractEntityRepositoryImpl<T extends AbstractEntity> implements AbstractEntityRepository<T> {
 	@PersistenceContext
     private EntityManager entityManager;
-	
+
+	@SuppressWarnings("unchecked")
 	public T refreshEntity(T abstractEntity) {
-		if(abstractEntity != null) {
-			abstractEntity = entityManager.merge(abstractEntity);
-			entityManager.refresh(abstractEntity);
+		if(abstractEntity == null) {
+			return null;
 		}
+
+		Long abstractEntityId = abstractEntity.getId();
+		if(abstractEntityId == null) {
+			return null;
+		}
+
+		Class<T> abstractEntityClass = (Class<T>) abstractEntity.getClass();
+		abstractEntity = entityManager.find(abstractEntityClass, abstractEntityId);
 		return abstractEntity;
 	}
 }

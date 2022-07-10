@@ -24,18 +24,23 @@ public class JobVacancyServiceImpl implements JobVacancyService {
 	private JobVacancyRepository jobVacancyRepository;
 
 	@Override
+	public List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(boolean highlighted, JobVacancyStatus status) {
+		return jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(highlighted, status);
+	}
+
+	@Override
 	public Class<JobVacancy> getEntityClass() {
 		return JobVacancy.class;
 	}
 
 	@Override
-	public void save(JobVacancy jobVacancy) {
-		jobVacancyRepository.save(jobVacancy);
+	public JobVacancy saveAndFlush(JobVacancy jobVacancy) {
+		return jobVacancyRepository.saveAndFlush(jobVacancy);
 	}
 
 	@Override
-	public void deleteById(Long jobVacancyId) {
-		jobVacancyRepository.deleteById(jobVacancyId);
+	public void deleteByIdAndFlush(Long jobVacancyId) {
+		jobVacancyRepository.deleteByIdAndFlush(jobVacancyId);
 	}
 
 	@Override
@@ -44,7 +49,7 @@ public class JobVacancyServiceImpl implements JobVacancyService {
 	}
 
 	@Override
-	public JobVacancy findById(Long jobVacancyId) {
+	public JobVacancy findByIdNotOptional(Long jobVacancyId) {
 		return jobVacancyRepository.findByIdNotOptional(jobVacancyId);
 	}
 
@@ -64,25 +69,25 @@ public class JobVacancyServiceImpl implements JobVacancyService {
 	}
 
 	@Override
-	public Page<JobVacancy> findAll(Pageable pageable, Example<JobVacancy> example) {
-		return jobVacancyRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<JobVacancy> findAll(Pageable pageable, TableOrder tableOrder) {
 		return jobVacancyRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<JobVacancy> findAll(Pageable pageable, TableOrder tableOrder, Example<JobVacancy> example) {
-		return jobVacancyRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<JobVacancy> findAll(Pageable pageable, TableOrder tableOrder, Specification<JobVacancy> specification) {
 		return jobVacancyRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<JobVacancy> findAll(Example<JobVacancy> example, Pageable pageable) {
+		return jobVacancyRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<JobVacancy> findAll(Example<JobVacancy> example, Pageable pageable, TableOrder tableOrder) {
+		return jobVacancyRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public JobVacancy getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		JobVacancy jobVacancy = new JobVacancy();

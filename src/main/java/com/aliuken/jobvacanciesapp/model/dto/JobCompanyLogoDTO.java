@@ -11,7 +11,7 @@ import lombok.Data;
 public class JobCompanyLogoDTO implements Serializable {
 
 	private static final long serialVersionUID = 4433301684411887321L;
-	
+
 	private Long id;
 	private String fileName;
 	private String filePath;
@@ -20,7 +20,7 @@ public class JobCompanyLogoDTO implements Serializable {
 	public JobCompanyLogoDTO() {
 		super();
 	}
-	
+
 	public JobCompanyLogoDTO(JobCompanyLogo jobCompanyLogo) {
 		if(jobCompanyLogo != null) {
 			this.id = jobCompanyLogo.getId();

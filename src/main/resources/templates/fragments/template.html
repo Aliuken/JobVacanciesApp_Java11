@@ -57,17 +57,17 @@
     <script type="text/javascript" th:inline="javascript">
       $(document).ready(function() {
 	    let langSessionAttributeElement = document.getElementById("langSessionAttributeElement");
-	    
+
 	    let langSessionAttribute = null;
 	    if(langSessionAttributeElement != null) {
 		  langSessionAttribute = langSessionAttributeElement.value;
 	    }
-	    
+
 	    let langModelAttribute;
         /*<![CDATA[*/
           langModelAttribute = /*[[${lang}]]*/ null;
         /*]]>*/
-        
+
 	    treatLangComboAndUrlParameter(langSessionAttribute, langModelAttribute);
       });
     </script>

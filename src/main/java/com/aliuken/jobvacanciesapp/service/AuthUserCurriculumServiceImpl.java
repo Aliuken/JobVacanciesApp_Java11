@@ -23,18 +23,23 @@ public class AuthUserCurriculumServiceImpl implements AuthUserCurriculumService 
 	private AuthUserCurriculumRepository authUserCurriculumRepository;
 
 	@Override
+	public AuthUserCurriculum findByAuthUserAndFileName(AuthUser authUser, String fileName) {
+		return authUserCurriculumRepository.findByAuthUserAndFileName(authUser, fileName);
+	}
+
+	@Override
 	public Class<AuthUserCurriculum> getEntityClass() {
 		return AuthUserCurriculum.class;
 	}
 
 	@Override
-	public void save(AuthUserCurriculum authUserCurriculum) {
-		authUserCurriculumRepository.save(authUserCurriculum);
+	public AuthUserCurriculum saveAndFlush(AuthUserCurriculum authUserCurriculum) {
+		return authUserCurriculumRepository.saveAndFlush(authUserCurriculum);
 	}
 
 	@Override
-	public void deleteById(Long authUserCurriculumId) {
-		authUserCurriculumRepository.deleteById(authUserCurriculumId);
+	public void deleteByIdAndFlush(Long authUserCurriculumId) {
+		authUserCurriculumRepository.deleteByIdAndFlush(authUserCurriculumId);
 	}
 
 	@Override
@@ -43,7 +48,7 @@ public class AuthUserCurriculumServiceImpl implements AuthUserCurriculumService 
 	}
 
 	@Override
-	public AuthUserCurriculum findById(Long authUserCurriculumId) {
+	public AuthUserCurriculum findByIdNotOptional(Long authUserCurriculumId) {
 		return authUserCurriculumRepository.findByIdNotOptional(authUserCurriculumId);
 	}
 
@@ -53,25 +58,25 @@ public class AuthUserCurriculumServiceImpl implements AuthUserCurriculumService 
 	}
 
 	@Override
-	public Page<AuthUserCurriculum> findAll(Pageable pageable, Example<AuthUserCurriculum> example) {
-		return authUserCurriculumRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthUserCurriculum> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authUserCurriculumRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<AuthUserCurriculum> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthUserCurriculum> example) {
-		return authUserCurriculumRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<AuthUserCurriculum> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthUserCurriculum> specification) {
 		return authUserCurriculumRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<AuthUserCurriculum> findAll(Example<AuthUserCurriculum> example, Pageable pageable) {
+		return authUserCurriculumRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthUserCurriculum> findAll(Example<AuthUserCurriculum> example, Pageable pageable, TableOrder tableOrder) {
+		return authUserCurriculumRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public AuthUserCurriculum getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		AuthUserCurriculum authUserCurriculum = new AuthUserCurriculum();

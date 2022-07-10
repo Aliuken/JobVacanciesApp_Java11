@@ -28,13 +28,13 @@ public class JobCompanyServiceImpl implements JobCompanyService {
 	}
 
 	@Override
-	public void save(JobCompany jobCompany) {
-		jobCompanyRepository.save(jobCompany);
+	public JobCompany saveAndFlush(JobCompany jobCompany) {
+		return jobCompanyRepository.saveAndFlush(jobCompany);
 	}
 
 	@Override
-	public void deleteById(Long jobCompanyId) {
-		jobCompanyRepository.deleteById(jobCompanyId);
+	public void deleteByIdAndFlush(Long jobCompanyId) {
+		jobCompanyRepository.deleteByIdAndFlush(jobCompanyId);
 	}
 
 	@Override
@@ -43,10 +43,10 @@ public class JobCompanyServiceImpl implements JobCompanyService {
 	}
 
 	@Override
-	public JobCompany findById(Long jobCompanyId) {
+	public JobCompany findByIdNotOptional(Long jobCompanyId) {
 		return jobCompanyRepository.findByIdNotOptional(jobCompanyId);
 	}
-	
+
 	@Override
 	public JobCompany findByName(String jobCompanyName) {
 		return jobCompanyRepository.findByName(jobCompanyName);
@@ -58,25 +58,25 @@ public class JobCompanyServiceImpl implements JobCompanyService {
 	}
 
 	@Override
-	public Page<JobCompany> findAll(Pageable pageable, Example<JobCompany> example) {
-		return jobCompanyRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<JobCompany> findAll(Pageable pageable, TableOrder tableOrder) {
 		return jobCompanyRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<JobCompany> findAll(Pageable pageable, TableOrder tableOrder, Example<JobCompany> example) {
-		return jobCompanyRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<JobCompany> findAll(Pageable pageable, TableOrder tableOrder, Specification<JobCompany> specification) {
 		return jobCompanyRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<JobCompany> findAll(Example<JobCompany> example, Pageable pageable) {
+		return jobCompanyRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<JobCompany> findAll(Example<JobCompany> example, Pageable pageable, TableOrder tableOrder) {
+		return jobCompanyRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public JobCompany getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		JobCompany jobCompany = new JobCompany();

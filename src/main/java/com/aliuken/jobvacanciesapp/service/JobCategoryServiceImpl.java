@@ -23,18 +23,23 @@ public class JobCategoryServiceImpl implements JobCategoryService {
 	private JobCategoryRepository jobCategoryRepository;
 
 	@Override
+	public JobCategory findByName(String name) {
+		return jobCategoryRepository.findByName(name);
+	}
+
+	@Override
 	public Class<JobCategory> getEntityClass() {
 		return JobCategory.class;
 	}
 
 	@Override
-	public void save(JobCategory jobCategory) {
-		jobCategoryRepository.save(jobCategory);
+	public JobCategory saveAndFlush(JobCategory jobCategory) {
+		return jobCategoryRepository.saveAndFlush(jobCategory);
 	}
 
 	@Override
-	public void deleteById(Long jobCategoryId) {
-		jobCategoryRepository.deleteById(jobCategoryId);
+	public void deleteByIdAndFlush(Long jobCategoryId) {
+		jobCategoryRepository.deleteByIdAndFlush(jobCategoryId);
 	}
 
 	@Override
@@ -43,7 +48,7 @@ public class JobCategoryServiceImpl implements JobCategoryService {
 	}
 
 	@Override
-	public JobCategory findById(Long jobCategoryId) {
+	public JobCategory findByIdNotOptional(Long jobCategoryId) {
 		return jobCategoryRepository.findByIdNotOptional(jobCategoryId);
 	}
 
@@ -53,25 +58,25 @@ public class JobCategoryServiceImpl implements JobCategoryService {
 	}
 
 	@Override
-	public Page<JobCategory> findAll(Pageable pageable, Example<JobCategory> example) {
-		return jobCategoryRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<JobCategory> findAll(Pageable pageable, TableOrder tableOrder) {
 		return jobCategoryRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<JobCategory> findAll(Pageable pageable, TableOrder tableOrder, Example<JobCategory> example) {
-		return jobCategoryRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<JobCategory> findAll(Pageable pageable, TableOrder tableOrder, Specification<JobCategory> specification) {
 		return jobCategoryRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<JobCategory> findAll(Example<JobCategory> example, Pageable pageable) {
+		return jobCategoryRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<JobCategory> findAll(Example<JobCategory> example, Pageable pageable, TableOrder tableOrder) {
+		return jobCategoryRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public JobCategory getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		JobCategory jobCategory = new JobCategory();

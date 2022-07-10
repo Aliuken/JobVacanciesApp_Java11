@@ -120,7 +120,7 @@ public class WebSecurityConfig {
 			supervisorViewsArray = new String[]{"/job-requests/**", "/job-vacancies/**", "/job-categories/**", "/job-companies/**"};
 			administratorViewsArray = new String[]{"/auth-users/**"};
 		}
-		
+
 		final ViewsAllowedDTO viewsAllowedDTO = new ViewsAllowedDTO();
 		viewsAllowedDTO.setAnonymousViewsArray(anonymousViewsArray);
 		viewsAllowedDTO.setUserViewsArray(userViewsArray);

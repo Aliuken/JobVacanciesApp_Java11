@@ -1,0 +1,16 @@
+Remove trailing spaces in Eclipse:
+
+Search -> File Search -> Regular expression ->
+
+  Containing text:
+  [ \t]+(\r|\n|$)
+
+  File name patterns:
+  *.html, *.java
+
+  Working set:
+  JobVacanciesApp-src-main-java, JobVacanciesApp-src-main-resources-templates, JobVacanciesApp-src-test-java
+
+Replace... ->
+
+  With: $1

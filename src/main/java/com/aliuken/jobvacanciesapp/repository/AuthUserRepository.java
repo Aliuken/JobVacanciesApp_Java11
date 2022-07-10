@@ -1,7 +1,5 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +10,8 @@ import com.aliuken.jobvacanciesapp.repository.superinterface.JpaRepositoryWithPa
 
 @Repository
 public interface AuthUserRepository extends JpaRepositoryWithPaginationAndSorting<AuthUser> {
-	AuthUser findByEmail(String email);
-	List<AuthUser> findByEnabled(Boolean enabled);
+	@Query("SELECT au FROM AuthUser au WHERE au.email = :email")
+	AuthUser findByEmail(@Param("email") String email);
 
 	@Modifying
 	@Query("UPDATE AuthUser au SET au.enabled=0 WHERE au.id = :authUserId")
@@ -22,7 +20,7 @@ public interface AuthUserRepository extends JpaRepositoryWithPaginationAndSortin
 	@Modifying
 	@Query("UPDATE AuthUser au SET au.enabled=1 WHERE au.id = :authUserId")
 	int unlock(@Param("authUserId") long authUserId);
-	
+
 	@Override
 	default Class<AuthUser> getEntityClass() {
 		return AuthUser.class;

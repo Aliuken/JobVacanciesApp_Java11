@@ -16,7 +16,7 @@ import lombok.Data;
 public class JobVacancyDTO implements Serializable {
 
 	private static final long serialVersionUID = -3670738813828834458L;
-	
+
 	private Long id;
 	private String name;
 	private String description;
@@ -39,13 +39,13 @@ public class JobVacancyDTO implements Serializable {
 			this.id = jobVacancy.getId();
 			this.name = jobVacancy.getName();
 			this.description = jobVacancy.getDescription();
-			
+
 			JobCategory jobCategory = jobVacancy.getJobCategory();
 			this.jobCategory = new JobCategoryDTO(jobCategory);
-			
+
 			JobCompany jobCompany = jobVacancy.getJobCompany();
 			this.jobCompany = new JobCompanyDTO(jobCompany);
-			
+
 			this.status = jobVacancy.getStatus().name();
 			this.publicationDateTime = jobVacancy.getPublicationDateTime();
 			this.salary = jobVacancy.getSalary();
@@ -66,10 +66,10 @@ public class JobVacancyDTO implements Serializable {
 		final String highlightedString = highlighted.toString();
 		final String firstRegistrationDateTimeString = DateTimeUtils.convertToString(firstRegistrationDateTime);
 
-		final String result = StringUtils.getStringJoined("JobVacancyDTO [id=", idString, ", name=", name, ", description=", description, 
-				", jobCategory=", jobCategoryIdString, ", jobCompany=", jobCompanyIdString, 
-				", status=", status, ", publicationDateTime=", publicationDateTimeString, 
-				", salary=", salaryString, ", highlighted=", highlightedString, ", details=", details, 
+		final String result = StringUtils.getStringJoined("JobVacancyDTO [id=", idString, ", name=", name, ", description=", description,
+				", jobCategory=", jobCategoryIdString, ", jobCompany=", jobCompanyIdString,
+				", status=", status, ", publicationDateTime=", publicationDateTimeString,
+				", salary=", salaryString, ", highlighted=", highlightedString, ", details=", details,
 				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUserEmail=", firstRegistrationAuthUserEmail, "]");
 
 		return result;

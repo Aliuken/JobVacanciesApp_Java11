@@ -34,12 +34,12 @@ public abstract class AbstractEntityWithAuthUser extends AbstractEntity {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("AbstractEntity [id=", idString, ", user=", email, 
+		final String result = StringUtils.getStringJoined("AbstractEntity [id=", idString, ", user=", email,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

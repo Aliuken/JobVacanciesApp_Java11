@@ -29,10 +29,11 @@ import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.service.JobVacancyService;
+import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 
 @Controller
 public class JobRequestController implements GenericControllerInterface {
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -44,12 +45,12 @@ public class JobRequestController implements GenericControllerInterface {
 
 	@Autowired
 	private AuthUserService authUserService;
-	
+
 	@Override
 	public MessageSource getMessageSource() {
 		return messageSource;
 	}
-	
+
 	/**
 	 * Metodo que muestra la lista de solicitudes con paginacion
 	 */
@@ -75,12 +76,13 @@ public class JobRequestController implements GenericControllerInterface {
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "jobRequest/listJobRequests.html");
 	}
-	
+
 	/**
 	 * Método para renderizar la vista de los Detalles para un determinado usuario
 	 */
@@ -88,7 +90,7 @@ public class JobRequestController implements GenericControllerInterface {
 	public String view(Model model, @PathVariable("jobRequestId") long jobRequestId, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-requests/view/{jobRequestId}";
 
-		final JobRequest jobRequest = jobRequestService.findById(jobRequestId);
+		final JobRequest jobRequest = jobRequestService.findByIdNotOptional(jobRequestId);
 		model.addAttribute("jobRequest", jobRequest);
 
 		return this.getNextView(model, operation, language, "jobRequest/jobRequestDetail.html");
@@ -100,11 +102,11 @@ public class JobRequestController implements GenericControllerInterface {
 	@GetMapping("/job-requests/create/{jobVacancyId}")
 	public String create(Model model, @PathVariable Long jobVacancyId, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-requests/create/{jobVacancyId}";
-		
-		final JobVacancy jobVacancy = jobVacancyService.findById(jobVacancyId);
+
+		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 		final JobRequest jobRequest = new JobRequest();
 		jobRequest.setJobVacancy(jobVacancy);
-		
+
 		model.addAttribute("jobVacancy", jobVacancy);
 		model.addAttribute("jobRequest", jobRequest);
 
@@ -132,10 +134,10 @@ public class JobRequestController implements GenericControllerInterface {
 		jobRequest.setAuthUser(authUser);
 
 		final Long jobVacancyId = jobRequest.getJobVacancy().getId();
-		final JobVacancy jobVacancy = jobVacancyService.findById(jobVacancyId);
+		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 		jobRequest.setJobVacancy(jobVacancy);
 
-		jobRequestService.save(jobRequest);
+		jobRequest = jobRequestService.saveAndFlush(jobRequest);
 
 		String successMsg = this.getInternationalizedMessage(language, "saveJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
@@ -149,14 +151,14 @@ public class JobRequestController implements GenericControllerInterface {
 	 */
 	@GetMapping("/job-requests/delete/{jobRequestId}")
 	public String delete(@PathVariable("jobRequestId") long jobRequestId, RedirectAttributes redirectAttributes, @RequestParam(name="lang", required=false) String language) {
-		jobRequestService.deleteById(jobRequestId);
-		
+		jobRequestService.deleteByIdAndFlush(jobRequestId);
+
 		String successMsg = this.getInternationalizedMessage(language, "deleteJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
 		return this.getNextRedirect(language, "/job-requests/index");
 	}
-	
+
 	/**
 	 * Metodo que agrega al modelo datos genéricos para todo el controlador
 	 */

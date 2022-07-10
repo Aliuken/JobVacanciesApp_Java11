@@ -28,13 +28,13 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 	}
 
 	@Override
-	public void save(AuthRole authRole) {
-		authRoleRepository.save(authRole);
+	public AuthRole saveAndFlush(AuthRole authRole) {
+		 return authRoleRepository.saveAndFlush(authRole);
 	}
 
 	@Override
-	public void deleteById(Long authRoleId) {
-		authRoleRepository.deleteById(authRoleId);
+	public void deleteByIdAndFlush(Long authRoleId) {
+		authRoleRepository.deleteByIdAndFlush(authRoleId);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 	}
 
 	@Override
-	public AuthRole findById(Long authRoleId) {
+	public AuthRole findByIdNotOptional(Long authRoleId) {
 		return authRoleRepository.findByIdNotOptional(authRoleId);
 	}
 
@@ -58,23 +58,23 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 	}
 
 	@Override
-	public Page<AuthRole> findAll(Pageable pageable, Example<AuthRole> example) {
-		return authRoleRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthRole> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authRoleRepository.findAll(pageable, tableOrder);
 	}
 
 	@Override
-	public Page<AuthRole> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthRole> example) {
-		return authRoleRepository.findAll(pageable, tableOrder, example);
+	public Page<AuthRole> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthRole> specification) {
+		return authRoleRepository.findAll(pageable, tableOrder, specification);
 	}
 
 	@Override
-	public Page<AuthRole> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthRole> specification) {
-		return authRoleRepository.findAll(pageable, tableOrder, specification);
+	public Page<AuthRole> findAll(Example<AuthRole> example, Pageable pageable) {
+		return authRoleRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthRole> findAll(Example<AuthRole> example, Pageable pageable, TableOrder tableOrder) {
+		return authRoleRepository.findAll(example, pageable, tableOrder);
 	}
 
 	@Override

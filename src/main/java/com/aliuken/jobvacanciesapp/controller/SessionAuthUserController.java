@@ -33,13 +33,14 @@ import com.aliuken.jobvacanciesapp.service.AuthUserCredentialsService;
 import com.aliuken.jobvacanciesapp.service.AuthUserCurriculumService;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.service.JobRequestService;
+import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 
 @Controller
 public class SessionAuthUserController implements GenericControllerInterface {
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@Autowired
 	private AbstractEntityService<AuthUser> abstractEntityService;
 
@@ -51,13 +52,13 @@ public class SessionAuthUserController implements GenericControllerInterface {
 
 	@Autowired
 	private JobRequestService jobRequestService;
-	
+
 	@Autowired
 	private AuthUserCurriculumService authUserCurriculumService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Override
 	public MessageSource getMessageSource() {
 		return messageSource;
@@ -95,13 +96,13 @@ public class SessionAuthUserController implements GenericControllerInterface {
 
 		final AuthUserLanguage authUserLanguage = AuthUserLanguage.findByCode(language);
 
-		final AuthUser sessionAuthUser = this.getRefreshedSessionAuthUser(httpServletRequest);
+		AuthUser sessionAuthUser = this.getRefreshedSessionAuthUser(httpServletRequest);
 		sessionAuthUser.setName(name);
 		sessionAuthUser.setSurnames(surnames);
 		sessionAuthUser.setLanguage(authUserLanguage);
 		sessionAuthUser.setEnabled(enabled);
-		authUserService.save(sessionAuthUser);
-		
+		sessionAuthUser = authUserService.saveAndFlush(sessionAuthUser);
+
 		httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER, sessionAuthUser);
 
 		String successMsg = this.getInternationalizedMessage(language, "saveUser.successMsg", null);
@@ -171,7 +172,7 @@ public class SessionAuthUserController implements GenericControllerInterface {
 		}
 		final String encryptedNewPassword = passwordEncoder.encode(newPassword1);
 		authUserCredentials.setEncryptedPassword(encryptedNewPassword);
-		authUserCredentialsService.save(authUserCredentials);
+		authUserCredentials = authUserCredentialsService.saveAndFlush(authUserCredentials);
 
 		String successMsg = this.getInternationalizedMessage(language, "saveNewPassword.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
@@ -189,7 +190,7 @@ public class SessionAuthUserController implements GenericControllerInterface {
 		final AuthUser sessionAuthUser = this.getRefreshedSessionAuthUser(httpServletRequest);
 		Long sessionAuthUserId = sessionAuthUser.getId();
 		String sessionAuthUserEmail = sessionAuthUser.getEmail();
-		
+
 		if (bindingResult.hasErrors()) {
 			final Page<JobRequest> jobRequests = Page.empty();
 			model.addAttribute("authUserId", sessionAuthUserId);
@@ -212,12 +213,13 @@ public class SessionAuthUserController implements GenericControllerInterface {
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "authUser/authUserJobRequests.html");
 	}
-	
+
 	/**
 	 * Método para renderizar la tabla para consultar los currículums de un usuario
 	 */
@@ -228,7 +230,7 @@ public class SessionAuthUserController implements GenericControllerInterface {
 		final AuthUser sessionAuthUser = this.getRefreshedSessionAuthUser(httpServletRequest);
 		Long sessionAuthUserId = sessionAuthUser.getId();
 		String sessionAuthUserEmail = sessionAuthUser.getEmail();
-		
+
 		if (bindingResult.hasErrors()) {
 			final Page<AuthUserCurriculum> authUserCurriculums = Page.empty();
 			model.addAttribute("authUserId", sessionAuthUserId);
@@ -251,18 +253,19 @@ public class SessionAuthUserController implements GenericControllerInterface {
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "authUser/sessionAuthUserCurriculums.html");
 	}
-	
+
 	private AuthUser getRefreshedSessionAuthUser(HttpServletRequest httpServletRequest) {
 		AuthUser sessionAuthUser = (AuthUser) httpServletRequest.getSession().getAttribute(Constants.SESSION_AUTH_USER);
 		sessionAuthUser = abstractEntityService.refreshEntity(sessionAuthUser);
 		return sessionAuthUser;
 	}
-	
+
 //	private AuthUser getRefreshedSessionAuthUser(Authentication authentication) {
 //		final String sessionAuthUserEmail = authentication.getName();
 //		final AuthUser sessionAuthUser = authUserService.findByEmail(sessionAuthUserEmail);

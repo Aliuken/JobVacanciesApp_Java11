@@ -29,13 +29,13 @@ public class AuthUserRoleServiceImpl implements AuthUserRoleService {
 	}
 
 	@Override
-	public void save(AuthUserRole authUserRole) {
-		authUserRoleRepository.save(authUserRole);
+	public AuthUserRole saveAndFlush(AuthUserRole authUserRole) {
+		return authUserRoleRepository.saveAndFlush(authUserRole);
 	}
 
 	@Override
-	public void deleteById(Long authUserRoleId) {
-		authUserRoleRepository.deleteById(authUserRoleId);
+	public void deleteByIdAndFlush(Long authUserRoleId) {
+		authUserRoleRepository.deleteByIdAndFlush(authUserRoleId);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class AuthUserRoleServiceImpl implements AuthUserRoleService {
 	}
 
 	@Override
-	public AuthUserRole findById(Long authUserRoleId) {
+	public AuthUserRole findByIdNotOptional(Long authUserRoleId) {
 		return authUserRoleRepository.findByIdNotOptional(authUserRoleId);
 	}
 
@@ -59,25 +59,25 @@ public class AuthUserRoleServiceImpl implements AuthUserRoleService {
 	}
 
 	@Override
-	public Page<AuthUserRole> findAll(Pageable pageable, Example<AuthUserRole> example) {
-		return authUserRoleRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthUserRole> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authUserRoleRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<AuthUserRole> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthUserRole> example) {
-		return authUserRoleRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<AuthUserRole> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthUserRole> specification) {
 		return authUserRoleRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<AuthUserRole> findAll(Example<AuthUserRole> example, Pageable pageable) {
+		return authUserRoleRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthUserRole> findAll(Example<AuthUserRole> example, Pageable pageable, TableOrder tableOrder) {
+		return authUserRoleRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public AuthUserRole getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		AuthUserRole authUserRole = new AuthUserRole();

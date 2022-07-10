@@ -6,5 +6,6 @@ import com.aliuken.jobvacanciesapp.service.superinterface.AbstractEntityExtraSer
 public interface AuthUserCredentialsService extends AbstractEntityExtraServiceInterface<AuthUserCredentials> {
 
 	AuthUserCredentials findByEmail(String email);
+	AuthUserCredentials findByEmailAndEncryptedPassword(String email, String encryptedPassword);
 
 }

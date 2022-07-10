@@ -44,7 +44,7 @@ public class JobCompany extends AbstractEntity {
 	@Size(max=255)
     @Column(name="description", length=255, nullable=false)
 	private String description;
-    
+
     @Size(max=255)
     @Column(name="selected_logo_file_name", length=255)
 	private String selectedLogoFileName;
@@ -62,7 +62,7 @@ public class JobCompany extends AbstractEntity {
 	public JobCompany() {
 		super();
 	}
-	
+
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = StreamUtils.ofNullableCollectionParallel(this.getJobVacancies())
 				.map(jv -> jv.getId())
@@ -78,7 +78,7 @@ public class JobCompany extends AbstractEntity {
 
 		return jobVacancyNames;
 	}
-	
+
 	public Set<Long> getJobCompanyLogoIds() {
 		final Set<Long> jobCompanyLogoIds = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
 				.map(jcl -> jcl.getId())
@@ -105,10 +105,10 @@ public class JobCompany extends AbstractEntity {
 		} else {
 			selectedJobCompanyLogo = null;
 		}
-		
+
 		return selectedJobCompanyLogo;
 	}
-	
+
 	public Long getSelectedJobCompanyLogoId() {
 		final Long selectedJobCompanyLogoId;
 		if(selectedLogoFileName != null) {
@@ -120,10 +120,10 @@ public class JobCompany extends AbstractEntity {
 		} else {
 			selectedJobCompanyLogoId = null;
 		}
-		
+
 		return selectedJobCompanyLogoId;
 	}
-	
+
 	public String getSelectedJobCompanyLogoFilePath() {
 		final String selectedJobCompanyLogoFilePath;
 		if(selectedLogoFileName != null) {
@@ -135,7 +135,7 @@ public class JobCompany extends AbstractEntity {
 		} else {
 			selectedJobCompanyLogoFilePath = Constants.NO_SELECTED_LOGO_FILE_PATH;
 		}
-		
+
 		return selectedJobCompanyLogoFilePath;
 	}
 
@@ -150,7 +150,7 @@ public class JobCompany extends AbstractEntity {
 		} else {
 			selectedJobCompanyLogoSelectionName = null;
 		}
-		
+
 		return selectedJobCompanyLogoSelectionName;
 	}
 
@@ -164,13 +164,13 @@ public class JobCompany extends AbstractEntity {
 		final String jobVacancyNames = this.getJobVacancyNames().toString();
 		final String jobCompanyLogoSelectionNames = this.getJobCompanyLogoSelectionNames().toString();
 
-		final String result = StringUtils.getStringJoined("JobCompany [id=", idString, ", name=", name, ", description=", description, ", selectedLogoFileName=", selectedLogoFileName, 
-			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, 
+		final String result = StringUtils.getStringJoined("JobCompany [id=", idString, ", name=", name, ", description=", description, ", selectedLogoFileName=", selectedLogoFileName,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
 			", jobVacancies=", jobVacancyNames, ", jobCompanyLogos=", jobCompanyLogoSelectionNames, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

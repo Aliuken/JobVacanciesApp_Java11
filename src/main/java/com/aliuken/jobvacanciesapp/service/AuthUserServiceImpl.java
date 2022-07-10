@@ -27,13 +27,13 @@ public class AuthUserServiceImpl implements AuthUserService {
 	}
 
 	@Override
-	public void save(AuthUser authUser) {
-		authUserRepository.save(authUser);
+	public AuthUser saveAndFlush(AuthUser authUser) {
+		return authUserRepository.saveAndFlush(authUser);
 	}
 
 	@Override
-	public void deleteById(Long authUserId) {
-		authUserRepository.deleteById(authUserId);
+	public void deleteByIdAndFlush(Long authUserId) {
+		authUserRepository.deleteByIdAndFlush(authUserId);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 	}
 
 	@Override
-	public AuthUser findById(Long authUserId) {
+	public AuthUser findByIdNotOptional(Long authUserId) {
 		return authUserRepository.findByIdNotOptional(authUserId);
 	}
 
@@ -71,25 +71,25 @@ public class AuthUserServiceImpl implements AuthUserService {
 	}
 
 	@Override
-	public Page<AuthUser> findAll(Pageable pageable, Example<AuthUser> example) {
-		return authUserRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthUser> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authUserRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<AuthUser> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthUser> example) {
-		return authUserRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<AuthUser> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthUser> specification) {
 		return authUserRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<AuthUser> findAll(Example<AuthUser> example, Pageable pageable) {
+		return authUserRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthUser> findAll(Example<AuthUser> example, Pageable pageable, TableOrder tableOrder) {
+		return authUserRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public AuthUser getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		AuthUser authUser = new AuthUser();

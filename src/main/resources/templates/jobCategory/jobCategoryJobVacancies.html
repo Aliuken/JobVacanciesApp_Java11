@@ -33,7 +33,7 @@
 			<strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
 			<br/>
 		  </div>
-		  
+
 		  <label class="mx-2 px-0 my-0 py-0" th:text="#{table.filteredByJobCategory} + ':'"></label>
           <br/>
           <label for="filterByJobCategoryId" class="mx-2 px-0 mt-2 mb-3 py-0" th:text="#{abstractEntity.id} + ':'"></label>
@@ -137,7 +137,7 @@
             tablePageSizeModelAttribute = /*[[${tablePageSize}]]*/ null;
             pageNumberModelAttribute = /*[[${pageNumber}]]*/ null;
           /*]]>*/
-          
+
           treatFilterAndPaginationCombosAndUrlParameters(tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableOrderCodeModelAttribute, tablePageSizeModelAttribute, pageNumberModelAttribute);
         });
       </script>

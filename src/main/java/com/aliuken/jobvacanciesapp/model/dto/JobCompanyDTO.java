@@ -43,7 +43,7 @@ public class JobCompanyDTO implements Serializable {
 			this.id = jobCompany.getId();
 			this.name = jobCompany.getName();
 			this.description = jobCompany.getDescription();
-			
+
 			JobCompanyLogo selectedJobCompanyLogo = jobCompany.getSelectedJobCompanyLogo();
 			if(selectedJobCompanyLogo != null) {
 				this.isSelectedLogo = true;
@@ -54,10 +54,10 @@ public class JobCompanyDTO implements Serializable {
 				this.selectedLogoId = Constants.NO_SELECTED_LOGO_ID;
 				this.selectedLogoFilePath = Constants.NO_SELECTED_LOGO_FILE_PATH;
 			}
-			
+
 			this.firstRegistrationDateTime = jobCompany.getFirstRegistrationDateTime();
 			this.firstRegistrationAuthUserEmail = jobCompany.getFirstRegistrationAuthUserEmail();
-			
+
 			Set<JobCompanyLogo> jobCompanyLogos = jobCompany.getJobCompanyLogos();
 			if(jobCompanyLogos != null) {
 				this.jobCompanyLogos = new LinkedHashSet<>();
@@ -91,7 +91,7 @@ public class JobCompanyDTO implements Serializable {
 		final String firstRegistrationDateTimeString = DateTimeUtils.convertToString(firstRegistrationDateTime);
 		final String jobCompanyLogoFilePaths = this.getJobCompanyLogoFilePaths().toString();
 
-		final String result = StringUtils.getStringJoined("JobCompanyDTO [id=", idString, ", name=", name, ", description=", description, ", isSelectedLogo=", isSelectedLogoString, ", selectedLogoId=", selectedLogoIdString, ", selectedLogoFilePath=", selectedLogoFilePath, 
+		final String result = StringUtils.getStringJoined("JobCompanyDTO [id=", idString, ", name=", name, ", description=", description, ", isSelectedLogo=", isSelectedLogoString, ", selectedLogoId=", selectedLogoIdString, ", selectedLogoFilePath=", selectedLogoFilePath,
 				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUserEmail=", firstRegistrationAuthUserEmail, ", jobCompanyLogos=", jobCompanyLogoFilePaths, "]");
 
 		return result;

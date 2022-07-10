@@ -49,7 +49,7 @@ public class AuthUserConfirmation extends AbstractEntity {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("AuthUserConfirmation [id=", idString, ", email=", email, ", uuid=", uuid, 
+		final String result = StringUtils.getStringJoined("AuthUserConfirmation [id=", idString, ", email=", email, ", uuid=", uuid,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;

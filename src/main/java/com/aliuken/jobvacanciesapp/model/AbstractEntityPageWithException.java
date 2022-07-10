@@ -8,12 +8,13 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 
 import com.aliuken.jobvacanciesapp.util.StringUtils;
+import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 
 import lombok.Data;
 
 @Data
 public class AbstractEntityPageWithException<T extends AbstractEntity> implements Serializable {
-	
+
 	private static final long serialVersionUID = 7013173615371005888L;
 
 	@NotNull
@@ -29,13 +30,14 @@ public class AbstractEntityPageWithException<T extends AbstractEntity> implement
 	@Override
 	public String toString() {
 		final String pageString = page.toString();
-		final String exceptionMessage = exception.getMessage();
 
-		final String result = StringUtils.getStringJoined("AbstractEntityPageWithException [page=", pageString, ", exception=", exceptionMessage, "]");
+		String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+
+		final String result = StringUtils.getStringJoined("AbstractEntityPageWithException [page=", pageString, ", exception=", rootCauseMessage, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(page, exception);

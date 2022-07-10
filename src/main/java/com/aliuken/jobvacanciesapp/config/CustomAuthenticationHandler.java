@@ -33,7 +33,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		final AuthUser sessionAuthUser = authUserService.findByEmail(email);
 
         httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER, sessionAuthUser);
-        
+
         super.onAuthenticationSuccess(httpServletRequest, httpServletResponse, authentication);
     }
 

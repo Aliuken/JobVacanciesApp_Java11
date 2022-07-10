@@ -62,7 +62,7 @@ public enum TableOrder implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public static TableOrder[] valuesWithoutAuthUser() {
 		TableOrder[] tableOrders = EnumSet.allOf(TableOrder.class).stream().parallel()
 			.filter(e -> e.tableField.isAuthUserField() == false)

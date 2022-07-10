@@ -15,7 +15,7 @@
       <div class="card">
         <h4 class="card-header"><strong th:text="#{authUserCurriculums.main.title}"></strong></h4>
         <div class="card-body">
-        
+
           <a class="btn btn-primary" th:href="@{/my-user/auth-user-curriculums/create (lang=${param.lang})}" role="button">
             <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
             &nbsp;
@@ -32,7 +32,7 @@
 			<strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
 			<br/>
 		  </div>
-		  
+
           <label class="mx-2 px-0 my-0 py-0" th:text="#{table.filteredByAuthUser} + ':'"></label>
           <br/>
           <label for="filterByAuthUserId" class="mx-2 px-0 mt-2 mb-3 py-0" th:text="#{abstractEntity.id} + ':'"></label>
@@ -43,7 +43,7 @@
           &nbsp;
           <input type="text" id="filterByAuthUserEmail" name="filterByAuthUserEmail" class="mx-0 px-1 mt-2 mb-3 py-0" th:value="${authUserEmail}" size="100" disabled></input>
           <br/>
-          
+
           <div th:replace="fragments/tableFilterAndPaginationForm :: tableFilterAndPaginationForm('/my-user/auth-users/auth-user-curriculums', true, false, false)"></div>
           <br/>
 
@@ -109,7 +109,7 @@
             tablePageSizeModelAttribute = /*[[${tablePageSize}]]*/ null;
             pageNumberModelAttribute = /*[[${pageNumber}]]*/ null;
           /*]]>*/
-          
+
           treatFilterAndPaginationCombosAndUrlParameters(tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableOrderCodeModelAttribute, tablePageSizeModelAttribute, pageNumberModelAttribute);
         });
       </script>

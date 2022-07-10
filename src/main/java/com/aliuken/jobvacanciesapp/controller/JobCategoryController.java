@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -21,19 +23,20 @@ import com.aliuken.jobvacanciesapp.model.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.service.JobCategoryService;
 import com.aliuken.jobvacanciesapp.service.JobVacancyService;
+import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 
 @Controller
 public class JobCategoryController implements GenericControllerInterface {
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
 	@Autowired
 	private JobCategoryService jobCategoryService;
-	
+
 	@Autowired
 	private JobVacancyService jobVacancyService;
-	
+
 	@Override
 	public MessageSource getMessageSource() {
 		return messageSource;
@@ -64,12 +67,13 @@ public class JobCategoryController implements GenericControllerInterface {
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "jobCategory/listJobCategories.html");
 	}
-	
+
 	/**
 	 * Método para renderizar la vista de los Detalles para una determinada categoría
 	 */
@@ -77,7 +81,7 @@ public class JobCategoryController implements GenericControllerInterface {
 	public String view(Model model, @PathVariable("jobCategoryId") long jobCategoryId, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-categories/view/{jobCategoryId}";
 
-		final JobCategory jobCategory = jobCategoryService.findById(jobCategoryId);
+		final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
 		model.addAttribute("jobCategory", jobCategory);
 
 		return this.getNextView(model, operation, language, "jobCategory/jobCategoryDetail.html");
@@ -89,9 +93,9 @@ public class JobCategoryController implements GenericControllerInterface {
 	@GetMapping("/job-categories/create")
 	public String create(Model model, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-categories/create";
-		
+
 		JobCategory jobCategory = new JobCategory();
-		
+
 		model.addAttribute("jobCategory", jobCategory);
 
 		return this.getNextView(model, operation, language, "jobCategory/jobCategoryForm.html");
@@ -104,17 +108,17 @@ public class JobCategoryController implements GenericControllerInterface {
 	public String edit(Model model, @PathVariable("jobCategoryId") long jobCategoryId, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-categories/edit/{jobCategoryId}";
 
-		final JobCategory jobCategory = jobCategoryService.findById(jobCategoryId);
+		final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
 		model.addAttribute("jobCategory", jobCategory);
 
 		return this.getNextView(model, operation, language, "jobCategory/jobCategoryForm.html");
 	}
-	
+
 	/**
 	 * Método para guardar una Categoría en la base de datos
 	 */
 	@PostMapping("/job-categories/save")
-	public String save(Model model, JobCategory jobCategory, BindingResult bindingResult, 
+	public String save(Model model, JobCategory jobCategory, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "POST /job-categories/save";
 
@@ -125,8 +129,8 @@ public class JobCategoryController implements GenericControllerInterface {
 			return this.getNextView(model, operation, language, "jobCategory/jobCategoryForm.html");
 		}
 
-		jobCategoryService.save(jobCategory);
-		
+		jobCategory = jobCategoryService.saveAndFlush(jobCategory);
+
 		String successMsg = this.getInternationalizedMessage(language, "saveJobCategory.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
@@ -136,24 +140,31 @@ public class JobCategoryController implements GenericControllerInterface {
 	/**
 	 * Método para eliminar una Categoría de la base de datos
 	 */
-	@GetMapping("/job-categories/delete/{id}")
+	@GetMapping("/job-categories/delete/{jobCategoryId}")
 	public String delete(@PathVariable("jobCategoryId") long jobCategoryId, RedirectAttributes redirectAttributes, @RequestParam(name="lang", required=false) String language) {
-		jobCategoryService.deleteById(jobCategoryId);
-		
+		JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
+
+		Set<Long> jobVacancyIds = jobCategory.getJobVacancyIds();
+		for(Long jobVacancyId : jobVacancyIds) {
+			jobVacancyService.deleteByIdAndFlush(jobVacancyId);
+		}
+
+		jobCategoryService.deleteByIdAndFlush(jobCategoryId);
+
 		String successMsg = this.getInternationalizedMessage(language, "deleteJobCategory.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
 		return this.getNextRedirect(language, "/job-categories/index");
 	}
-	
+
 	/**
 	 * Metodo que muestra la lista de ofertas con paginacion
 	 */
 	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}")
 	public String getJobVacancies(@PathVariable("jobCategoryId") long jobCategoryId, Model model, @ModelAttribute("tableSearchDTO") TableSearchDTO tableSearchDTO, BindingResult bindingResult, Pageable pageable, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-categories/job-vacancies/{jobCategoryId}";
-		
-		final JobCategory jobCategory = jobCategoryService.findById(jobCategoryId);
+
+		final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
 
 		if (bindingResult.hasErrors()) {
 			final Page<JobVacancy> jobVacancies = Page.empty();
@@ -177,7 +188,8 @@ public class JobCategoryController implements GenericControllerInterface {
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "jobCategory/jobCategoryJobVacancies.html");

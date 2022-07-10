@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp.repository;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.aliuken.jobvacanciesapp.model.AuthRole;
@@ -7,8 +9,9 @@ import com.aliuken.jobvacanciesapp.repository.superinterface.JpaRepositoryWithPa
 
 @Repository
 public interface AuthRoleRepository extends JpaRepositoryWithPaginationAndSorting<AuthRole> {
-	AuthRole findByName(String name);
-	
+	@Query("SELECT ar FROM AuthRole ar WHERE ar.name = :name")
+	AuthRole findByName(@Param("name") String name);
+
 	@Override
 	default Class<AuthRole> getEntityClass() {
 		return AuthRole.class;

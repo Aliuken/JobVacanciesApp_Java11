@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.repository.superinterface;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,43 +27,81 @@ import com.aliuken.jobvacanciesapp.util.StringUtils;
 
 @NoRepositoryBean
 public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
-	public static final Map<Class<? extends AbstractEntity>, SimpleJpaRepository<? extends AbstractEntity, Long>> SIMPLE_JPA_REPOSITORY_MAP = new HashMap<>();
+	public static final Map<Class<? extends AbstractEntity>, JpaRepository<? extends AbstractEntity, Long>> JPA_REPOSITORY_MAP = new HashMap<>();
 
 	abstract Class<T> getEntityClass();
-	
+
 	default T findByIdNotOptional(Long id) {
-		final T entity;
-		if(id != null) {
-			final Optional<T> entityOptional = this.findById(id);
-			if (entityOptional.isPresent()) {
-				entity = entityOptional.get();
-			} else {
-				entity = null;
-			}
-		} else {
-			entity = null;
+		if(id == null) {
+			return null;
 		}
-		
+
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		final Optional<T> entityOptional = jpaRepository.findById(id);
+		if (!entityOptional.isPresent()) {
+			return null;
+		}
+
+		final T entity = entityOptional.get();
+
 		return entity;
 	}
-	
-	default Page<T> findAll(Pageable pageable, TableOrder tableOrder) {
-		final Class<T> entityClass = this.getEntityClass();
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableOrder, entityClass);
-		final Page<T> page = findAll(finalPageable);
+
+	default void deleteByIdAndFlush(Long id) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return;
+		}
+
+		jpaRepository.deleteById(id);
+		jpaRepository.flush();
+	}
+
+	default <S extends T> S saveAndFlush(S abstractEntity) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		abstractEntity = jpaRepository.saveAndFlush(abstractEntity);
+		return abstractEntity;
+	}
+
+	default List<T> findAll() {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		final List<T> result = jpaRepository.findAll();
+
+		return result;
+	}
+
+	default Page<T> findAll(Pageable pageable) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		final Page<T> page = jpaRepository.findAll(pageable);
 
 		return page;
 	}
 
-	default <S extends T> Page<S> findAll(Pageable pageable, TableOrder tableOrder, Example<S> abstractEntityExample) {
-		if(abstractEntityExample == null) {
-			throw new IllegalArgumentException("abstractEntityExample can not be null");
+	default Page<T> findAll(Pageable pageable, TableOrder tableOrder) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
 		}
 
-		Class<S> abstractEntityClass = abstractEntityExample.getProbeType();
-		final SimpleJpaRepository<S, Long> simpleJpaRepository = JpaRepositoryWithPaginationAndSorting.getSimpleJpaRepository(abstractEntityClass);
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableOrder, abstractEntityClass);
-		final Page<S> page = simpleJpaRepository.findAll(abstractEntityExample, finalPageable);
+		final Class<T> entityClass = this.getEntityClass();
+		final Pageable finalPageable = this.getFinalPageable(pageable, tableOrder, entityClass);
+		final Page<T> page = jpaRepository.findAll(finalPageable);
 
 		return page;
 	}
@@ -75,6 +114,41 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		final Class<T> entityClass = this.getEntityClass();
 		final Pageable finalPageable = this.getFinalPageable(pageable, tableOrder, entityClass);
 		final Page<T> page = this.findAll(abstractEntitySpecification, finalPageable);
+
+		return page;
+	}
+
+	default <S extends T> List<S> findAll(Example<S> abstractEntityExample) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		final List<S> result = jpaRepository.findAll(abstractEntityExample);
+
+		return result;
+	}
+
+	default <S extends T> Page<S> findAll(Example<S> abstractEntityExample, Pageable pageable) {
+		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
+		final Page<S> page = jpaRepository.findAll(abstractEntityExample, pageable);
+
+		return page;
+	}
+
+	default <S extends T> Page<S> findAll(Example<S> abstractEntityExample, Pageable pageable, TableOrder tableOrder) {
+		if(abstractEntityExample == null) {
+			throw new IllegalArgumentException("abstractEntityExample can not be null");
+		}
+
+		Class<S> abstractEntityClass = abstractEntityExample.getProbeType();
+		final JpaRepository<S, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, tableOrder, abstractEntityClass);
+		final Page<S> page = jpaRepository.findAll(abstractEntityExample, finalPageable);
 
 		return page;
 	}
@@ -150,17 +224,24 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return finalPageable;
 	}
 
+	default JpaRepository<T, Long> getJpaRepository() {
+		Class<T> abstractEntityClass = this.getEntityClass();
+		JpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
+
+		return jpaRepository;
+	}
+
 	@SuppressWarnings("unchecked")
-	private static <S extends AbstractEntity> SimpleJpaRepository<S, Long> getSimpleJpaRepository(Class<S> abstractEntityClass) {
-		SimpleJpaRepository<S, Long> simpleJpaRepository = (SimpleJpaRepository<S, Long>) SIMPLE_JPA_REPOSITORY_MAP.get(abstractEntityClass);
-		if(simpleJpaRepository == null) {
+	public static <S extends AbstractEntity> JpaRepository<S, Long> getJpaRepository(Class<S> abstractEntityClass) {
+		JpaRepository<S, Long> jpaRepository = (JpaRepository<S, Long>) JPA_REPOSITORY_MAP.get(abstractEntityClass);
+		if(jpaRepository == null) {
 			final JpaContext jpaContext = ApplicationContextUtil.getBean(JpaContext.class);
 			final EntityManager entityManager = jpaContext.getEntityManagerByManagedType(abstractEntityClass);
-			simpleJpaRepository = new SimpleJpaRepository<S, Long>(abstractEntityClass, entityManager);
-			SIMPLE_JPA_REPOSITORY_MAP.put(abstractEntityClass, simpleJpaRepository);
+			jpaRepository = new SimpleJpaRepository<S, Long>(abstractEntityClass, entityManager);
+			JPA_REPOSITORY_MAP.put(abstractEntityClass, jpaRepository);
 		}
 
-		return simpleJpaRepository;
+		return jpaRepository;
 	}
 
 }

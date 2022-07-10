@@ -47,10 +47,10 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 	public JobRequest() {
 		super();
 	}
-	
+
 	public AuthUserCurriculum getAuthUserCurriculum() {
 		final AuthUser authUser = this.getAuthUser();
-		
+
 		final AuthUserCurriculum authUserCurriculum;
 		if(authUser != null && curriculumFileName != null) {
 			authUserCurriculum = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
@@ -60,13 +60,13 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 		} else {
 			authUserCurriculum = null;
 		}
-		
+
 		return authUserCurriculum;
 	}
-	
+
 	public Long getAuthUserCurriculumId() {
 		final AuthUser authUser = this.getAuthUser();
-		
+
 		final Long authUserCurriculumId;
 		if(authUser != null && curriculumFileName != null) {
 			authUserCurriculumId = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
@@ -77,13 +77,13 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 		} else {
 			authUserCurriculumId = null;
 		}
-		
+
 		return authUserCurriculumId;
 	}
-	
+
 	public String getAuthUserCurriculumFilePath() {
 		final AuthUser authUser = this.getAuthUser();
-		
+
 		final String authUserCurriculumFilePath;
 		if(authUser != null && curriculumFileName != null) {
 			authUserCurriculumFilePath = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
@@ -94,13 +94,13 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 		} else {
 			authUserCurriculumFilePath = null;
 		}
-		
+
 		return authUserCurriculumFilePath;
 	}
 
 	public String getAuthUserCurriculumSelectionName() {
 		final AuthUser authUser = this.getAuthUser();
-		
+
 		final String authUserCurriculumSelectionName;
 		if(authUser != null && curriculumFileName != null) {
 			authUserCurriculumSelectionName = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
@@ -111,7 +111,7 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 		} else {
 			authUserCurriculumSelectionName = null;
 		}
-		
+
 		return authUserCurriculumSelectionName;
 	}
 
@@ -125,12 +125,12 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("JobRequest [id=", idString, ", authUser=", authUserEmail, ", jobVacancy=", jobVacancyName, ", comments=", comments, ", curriculumFileName=", curriculumFileName, 
+		final String result = StringUtils.getStringJoined("JobRequest [id=", idString, ", authUser=", authUserEmail, ", jobVacancy=", jobVacancyName, ", comments=", comments, ", curriculumFileName=", curriculumFileName,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

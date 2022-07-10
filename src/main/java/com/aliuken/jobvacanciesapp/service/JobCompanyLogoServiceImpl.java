@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aliuken.jobvacanciesapp.model.AuthUser;
+import com.aliuken.jobvacanciesapp.model.JobCompany;
 import com.aliuken.jobvacanciesapp.model.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.model.dto.TableOrder;
 import com.aliuken.jobvacanciesapp.repository.JobCompanyLogoRepository;
@@ -23,18 +24,23 @@ public class JobCompanyLogoServiceImpl implements JobCompanyLogoService {
 	private JobCompanyLogoRepository jobCompanyLogoRepository;
 
 	@Override
+	public JobCompanyLogo findByJobCompanyAndFileName(JobCompany jobCompany, String fileName) {
+		return jobCompanyLogoRepository.findByJobCompanyAndFileName(jobCompany, fileName);
+	}
+
+	@Override
 	public Class<JobCompanyLogo> getEntityClass() {
 		return JobCompanyLogo.class;
 	}
 
 	@Override
-	public void save(JobCompanyLogo jobCompanyLogo) {
-		jobCompanyLogoRepository.save(jobCompanyLogo);
+	public JobCompanyLogo saveAndFlush(JobCompanyLogo jobCompanyLogo) {
+		return jobCompanyLogoRepository.saveAndFlush(jobCompanyLogo);
 	}
 
 	@Override
-	public void deleteById(Long jobCompanyLogoId) {
-		jobCompanyLogoRepository.deleteById(jobCompanyLogoId);
+	public void deleteByIdAndFlush(Long jobCompanyLogoId) {
+		jobCompanyLogoRepository.deleteByIdAndFlush(jobCompanyLogoId);
 	}
 
 	@Override
@@ -43,7 +49,7 @@ public class JobCompanyLogoServiceImpl implements JobCompanyLogoService {
 	}
 
 	@Override
-	public JobCompanyLogo findById(Long jobCompanyLogoId) {
+	public JobCompanyLogo findByIdNotOptional(Long jobCompanyLogoId) {
 		return jobCompanyLogoRepository.findByIdNotOptional(jobCompanyLogoId);
 	}
 
@@ -53,25 +59,25 @@ public class JobCompanyLogoServiceImpl implements JobCompanyLogoService {
 	}
 
 	@Override
-	public Page<JobCompanyLogo> findAll(Pageable pageable, Example<JobCompanyLogo> example) {
-		return jobCompanyLogoRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<JobCompanyLogo> findAll(Pageable pageable, TableOrder tableOrder) {
 		return jobCompanyLogoRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<JobCompanyLogo> findAll(Pageable pageable, TableOrder tableOrder, Example<JobCompanyLogo> example) {
-		return jobCompanyLogoRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<JobCompanyLogo> findAll(Pageable pageable, TableOrder tableOrder, Specification<JobCompanyLogo> specification) {
 		return jobCompanyLogoRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<JobCompanyLogo> findAll(Example<JobCompanyLogo> example, Pageable pageable) {
+		return jobCompanyLogoRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<JobCompanyLogo> findAll(Example<JobCompanyLogo> example, Pageable pageable, TableOrder tableOrder) {
+		return jobCompanyLogoRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public JobCompanyLogo getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		JobCompanyLogo jobCompanyLogo = new JobCompanyLogo();

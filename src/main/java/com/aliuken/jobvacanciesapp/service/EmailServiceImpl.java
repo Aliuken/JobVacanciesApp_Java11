@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     public SimpleMailMessage templateSimpleMessageEnglish;
-    
+
     @Autowired
     public SimpleMailMessage templateSimpleMessageSpanish;
 
@@ -39,7 +39,7 @@ public class EmailServiceImpl implements EmailService {
     	} else {
     		templateSimpleMessage = templateSimpleMessageEnglish;
     	}
-    	
+
     	final String from = templateSimpleMessage.getFrom();
     	final String text = String.format(templateSimpleMessage.getText(), textTitle, textBody);
 
@@ -60,7 +60,7 @@ public class EmailServiceImpl implements EmailService {
     	} else {
     		templateSimpleMessage = templateSimpleMessageEnglish;
     	}
-    	
+
     	final MimeMessage mimeMessage = emailSender.createMimeMessage();
     	final String from = templateSimpleMessage.getFrom();
     	final String text = String.format(templateSimpleMessage.getText(), textTitle, textBody);

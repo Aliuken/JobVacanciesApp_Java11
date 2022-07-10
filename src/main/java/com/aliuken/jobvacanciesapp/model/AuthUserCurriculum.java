@@ -22,14 +22,14 @@ import lombok.Data;
 		@Index(name="auth_user_curriculum_key_3", columnList="auth_user_id")})
 @Data
 public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
-	
+
 	private static final long serialVersionUID = -8095503029320669346L;
 
 	@NotNull
     @Size(max=255)
     @Column(name="file_name", length=255, nullable=false)
 	private String fileName;
-	
+
 	@NotNull
 	@Size(max=255)
     @Column(name="description", length=255, nullable=false)
@@ -41,7 +41,7 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 
 	public String getFilePath() {
 		final AuthUser authUser = this.getAuthUser();
-		
+
 		final String authUserIdString;
 		if(authUser != null) {
 			Long authUserId = authUser.getId();
@@ -49,11 +49,11 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 		} else {
 			authUserIdString = "temp";
 		}
-		
+
 		final String filePath = StringUtils.getStringJoined(authUserIdString, "/", fileName);
 		return filePath;
 	}
-	
+
 	public String getSelectionName() {
 		final String idString = String.valueOf(this.getId());
 		final String firstRegistrationDateTimeString = DateTimeUtils.convertToString(this.getFirstRegistrationDateTime());
@@ -70,7 +70,7 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("AuthUserCurriculum [id=", idString, ", authUser=", authUserEmail, ", fileName=", fileName, 
+		final String result = StringUtils.getStringJoined("AuthUserCurriculum [id=", idString, ", authUser=", authUserEmail, ", fileName=", fileName,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;

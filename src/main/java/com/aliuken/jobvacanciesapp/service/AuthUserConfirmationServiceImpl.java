@@ -28,13 +28,13 @@ public class AuthUserConfirmationServiceImpl implements AuthUserConfirmationServ
 	}
 
 	@Override
-	public void save(AuthUserConfirmation authUserConfirmation) {
-		authUserConfirmationRepository.save(authUserConfirmation);
+	public AuthUserConfirmation saveAndFlush(AuthUserConfirmation authUserConfirmation) {
+		return authUserConfirmationRepository.saveAndFlush(authUserConfirmation);
 	}
 
 	@Override
-	public void deleteById(Long authUserConfirmationId) {
-		authUserConfirmationRepository.deleteById(authUserConfirmationId);
+	public void deleteByIdAndFlush(Long authUserConfirmationId) {
+		authUserConfirmationRepository.deleteByIdAndFlush(authUserConfirmationId);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class AuthUserConfirmationServiceImpl implements AuthUserConfirmationServ
 	}
 
 	@Override
-	public AuthUserConfirmation findById(Long authUserConfirmationId) {
+	public AuthUserConfirmation findByIdNotOptional(Long authUserConfirmationId) {
 		return authUserConfirmationRepository.findByIdNotOptional(authUserConfirmationId);
 	}
 
@@ -63,25 +63,25 @@ public class AuthUserConfirmationServiceImpl implements AuthUserConfirmationServ
 	}
 
 	@Override
-	public Page<AuthUserConfirmation> findAll(Pageable pageable, Example<AuthUserConfirmation> example) {
-		return authUserConfirmationRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthUserConfirmation> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authUserConfirmationRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<AuthUserConfirmation> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthUserConfirmation> example) {
-		return authUserConfirmationRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<AuthUserConfirmation> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthUserConfirmation> specification) {
 		return authUserConfirmationRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<AuthUserConfirmation> findAll(Example<AuthUserConfirmation> example, Pageable pageable) {
+		return authUserConfirmationRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthUserConfirmation> findAll(Example<AuthUserConfirmation> example, Pageable pageable, TableOrder tableOrder) {
+		return authUserConfirmationRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public AuthUserConfirmation getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		AuthUserConfirmation authUserConfirmation = new AuthUserConfirmation();

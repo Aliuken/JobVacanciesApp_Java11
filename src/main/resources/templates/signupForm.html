@@ -51,14 +51,27 @@
 
             <div class="row">
 
-              <div class="col-md-4 form-group">
+              <div class="col-md-3 form-group">
                 <label for="email" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.email} + ':'"></label>
                 <input type="email" class="form-control" th:field="*{email}" id="email" name="email" required></input>
               </div>
 
-              <div class="col-md-4 form-group">
-                <label for="password" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password} + ':'"></label>
-                <input type="password" class="form-control" th:field="*{password}" id="password" name="password" required></input>
+              <div class="col-md-3 form-group">
+                <label for="password1" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password1} + ':'"></label>
+                <input type="password" class="form-control" th:field="*{password1}" id="password1" name="password1" required></input>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="password2" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password2} + ':'"></label>
+                <input type="password" class="form-control" th:field="*{password2}" id="password2" name="password2" required></input>
               </div>
 
             </div>

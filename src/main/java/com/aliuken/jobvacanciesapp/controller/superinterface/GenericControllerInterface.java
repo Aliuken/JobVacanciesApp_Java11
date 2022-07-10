@@ -10,20 +10,20 @@ import com.aliuken.jobvacanciesapp.util.StringUtils;
 
 public interface GenericControllerInterface {
 	public static final Logger log = LoggerFactory.getLogger(GenericControllerInterface.class);
-	
+
 	abstract MessageSource getMessageSource();
-	
+
 	default String getInternationalizedMessage(String language, String messageName, Object[] messageParameters) {
 		final AuthUserLanguage authUserLanguage = AuthUserLanguage.findByCode(language);
 		final String internationalizedMessage = this.getInternationalizedMessage(authUserLanguage, messageName, messageParameters);
-		
+
 		return internationalizedMessage;
 	}
-	
+
 	default String getInternationalizedMessage(AuthUserLanguage authUserLanguage, String messageName, Object[] messageParameters) {
 		MessageSource messageSource = this.getMessageSource();
 		String message = messageSource.getMessage(messageName, messageParameters, authUserLanguage.getLocale());
-		
+
 		return message;
 	}
 
@@ -52,5 +52,5 @@ public interface GenericControllerInterface {
 		}
 		return nextRedirect;
 	}
-	
+
 }

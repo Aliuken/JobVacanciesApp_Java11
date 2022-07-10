@@ -10,15 +10,15 @@ import com.aliuken.jobvacanciesapp.service.JobCompanyLogoService;
 
 public interface GenericControllerWithJobCompanyLogoInterface extends GenericControllerInterface {
 	public static final Logger log = LoggerFactory.getLogger(GenericControllerWithJobCompanyLogoInterface.class);
-	
+
 	public JobCompanyLogoService getJobCompanyLogoService();
-	
+
 	default void setSelectedJobCompanyLogoForJobCompanyForm(JobCompanyDTO jobCompanyDTO, String jobCompanyLogoUrlParam, boolean forceNoLogoIfBlankUrlParam) {
 		if(jobCompanyLogoUrlParam != null && !jobCompanyLogoUrlParam.isEmpty()) {
 			final Long jobCompanyLogoId = Long.valueOf(jobCompanyLogoUrlParam);
-			
+
 			if(!Constants.NO_SELECTED_LOGO_ID.equals(jobCompanyLogoId)) {
-				final JobCompanyLogo jobCompanyLogo = getJobCompanyLogoService().findById(jobCompanyLogoId);
+				final JobCompanyLogo jobCompanyLogo = getJobCompanyLogoService().findByIdNotOptional(jobCompanyLogoId);
 				if(jobCompanyLogo != null) {
 					String selectedLogoFilePath = jobCompanyLogo.getFilePath();
 					jobCompanyDTO.setSelectedLogo(true);
@@ -40,13 +40,13 @@ public interface GenericControllerWithJobCompanyLogoInterface extends GenericCon
 			}
 		}
 	}
-	
+
 	default void setSelectedJobCompanyLogoForJobVacancyForm(JobCompanyDTO jobCompanyDTO, String jobCompanyLogoUrlParam, boolean forceNoLogoIfBlankUrlParam) {
 		if(jobCompanyLogoUrlParam != null && !jobCompanyLogoUrlParam.isEmpty()) {
 			final Long jobCompanyLogoId = Long.valueOf(jobCompanyLogoUrlParam);
-			
+
 			if(!Constants.NO_SELECTED_LOGO_ID.equals(jobCompanyLogoId)) {
-				final JobCompanyLogo jobCompanyLogo = getJobCompanyLogoService().findById(jobCompanyLogoId);
+				final JobCompanyLogo jobCompanyLogo = getJobCompanyLogoService().findByIdNotOptional(jobCompanyLogoId);
 				if(jobCompanyLogo != null) {
 					String selectedLogoFilePath = jobCompanyLogo.getFilePath();
 					jobCompanyDTO.setSelectedLogo(true);

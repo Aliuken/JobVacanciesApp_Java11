@@ -29,7 +29,7 @@
 
           <form th:action="@{/job-requests/save (lang=${param.lang})}" th:object="${jobRequest}" method="post" enctype="multipart/form-data">
             <div class="row">
-            
+
               <div class="col-md-6">
                 <div class="form-group">
                   <input type="hidden" th:field="*{id}"></input>
@@ -40,19 +40,19 @@
                   <textarea class="form-control" name="comments" th:field="*{comments}" id="comments" rows="2"></textarea>
                 </div>
               </div>
-              
+
               <div class="col-md-6">
                 <label for="curriculumFileCombo" class="form-label mt-2 mb-1" th:text="#{jobRequest.curriculum} + ': '"></label>
                 <select id="curriculumFileCombo" name="curriculumFileCombo" th:field="*{curriculumFileName}" class="form-select mb-3" style="height:40px">
                   <option th:each="authUserCurriculums : ${authUserCurriculums}" th:text="${authUserCurriculums.selectionName}" th:value="${authUserCurriculums.fileName}"></option>
                 </select>
               </div>
-              
+
             </div>
             <hr/>
             <button type="submit" class="btn btn-primary" th:text="#{button.send}"></button>
           </form>
-            
+
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ public enum AuthUserLanguage implements Serializable {
 
 	@NotNull
 	private final String messageValue;
-	
+
 	@NotNull
 	private final Locale locale;
 

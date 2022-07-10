@@ -13,7 +13,8 @@ public class AuthUserForSignupDTO implements Serializable {
 	private static final long serialVersionUID = -7781889193918523592L;
 
 	private String email;
-	private String password;
+	private String password1;
+	private String password2;
     private String name;
     private String surnames;
     private String language;
@@ -25,7 +26,8 @@ public class AuthUserForSignupDTO implements Serializable {
 	public AuthUserForSignupDTO(AuthUser authUser) {
 		if(authUser != null) {
 			this.email = authUser.getEmail();
-			this.password = null;
+			this.password1 = null;
+			this.password2 = null;
 			this.name = authUser.getName();
 			this.surnames = authUser.getSurnames();
 			this.language = authUser.getLanguage().getCode();

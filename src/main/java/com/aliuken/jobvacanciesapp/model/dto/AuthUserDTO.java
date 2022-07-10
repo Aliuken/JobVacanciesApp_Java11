@@ -54,7 +54,7 @@ public class AuthUserDTO implements Serializable {
 		final String firstRegistrationDateTimeString = DateTimeUtils.convertToString(firstRegistrationDateTime);
 		final String authRoleNamesString = authRoleNames.toString();
 
-		final String result = StringUtils.getStringJoined("AuthUserDTO [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", language=", language, ", enabled=", enabledString, ", maxPriorityAuthRoleName=", maxPriorityAuthRoleName, 
+		final String result = StringUtils.getStringJoined("AuthUserDTO [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", language=", language, ", enabled=", enabledString, ", maxPriorityAuthRoleName=", maxPriorityAuthRoleName,
 				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUserEmail=", firstRegistrationAuthUserEmail, ", authRoleNames=", authRoleNamesString, "]");
 
 		return result;

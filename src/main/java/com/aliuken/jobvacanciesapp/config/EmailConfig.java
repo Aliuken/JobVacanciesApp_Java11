@@ -15,7 +15,7 @@ public class EmailConfig {
 	      "<h3>%s</h3>Dear customer,\n\n%s\n\nPlease don't reply to this email.\n\nRegards,\n\nthe JobVacanciesApp team.");
 	    return templateSimpleMessage;
 	}
-	
+
 	@Bean("templateSimpleMessageSpanish")
 	public SimpleMailMessage templateSimpleMessageSpanish() {
 		final SimpleMailMessage templateSimpleMessage = new SimpleMailMessage();

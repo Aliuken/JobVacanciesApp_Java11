@@ -14,11 +14,11 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     }
 
     public static <T> T getBean(Class<T> bean) {
-        return getContext().getBean(bean);
+        return ApplicationContextUtil.getContext().getBean(bean);
     }
 
     public static <T> T getBean(String beanName, Class<T> bean) {
-        return getContext().getBean(beanName, bean);
+        return ApplicationContextUtil.getContext().getBean(beanName, bean);
     }
 
     @Override

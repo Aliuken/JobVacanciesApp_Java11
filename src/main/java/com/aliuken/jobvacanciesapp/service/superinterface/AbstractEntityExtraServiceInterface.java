@@ -64,7 +64,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 
 		return abstractEntityPageWithException;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Page<T> getEntityPage(final TableField tableField, final String tableFieldValue, final TableOrder tableOrder, final Pageable pageable) {
 		final Page<T> page;
@@ -83,7 +83,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 
 					final T entitySearch = this.getNewEntityWithGenericData(entityId, null, null);
 					final Example<T> example = this.getIdExample(entitySearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
@@ -94,10 +94,10 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser authUserSearch = new AuthUser();
 					authUserSearch.setEmail(tableFieldValue);
-					
+
 					final T entitySearch = this.getNewEntityWithGenericData(null, authUserSearch, null);
 					final Example<T> example = this.getFirstRegistrationAuthUserEmailExample(entitySearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
@@ -108,10 +108,10 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser authUserSearch = new AuthUser();
 					authUserSearch.setEmail(tableFieldValue);
-					
+
 					final T entitySearch = this.getNewEntityWithGenericData(null, null, authUserSearch);
 					final Example<T> example = this.getLastModificationAuthUserEmailExample(entitySearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				default: {
@@ -122,7 +122,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 								authUserSearch.setEmail(tableFieldValue);
 
 								final Example<T> example = (Example<T>) this.getEmailExample(authUserSearch);
-								page = this.findAll(pageable, tableOrder, example);
+								page = this.findAll(example, pageable, tableOrder);
 								break;
 							}
 							case NAME: {
@@ -130,7 +130,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 								authUserSearch.setName(tableFieldValue);
 
 								final Example<T> example = (Example<T>) this.getNameExample(authUserSearch);
-								page = this.findAll(pageable, tableOrder, example);
+								page = this.findAll(example, pageable, tableOrder);
 								break;
 							}
 							case SURNAMES: {
@@ -138,7 +138,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 								authUserSearch.setSurnames(tableFieldValue);
 
 								final Example<T> example = (Example<T>) this.getSurnamesExample(authUserSearch);
-								page = this.findAll(pageable, tableOrder, example);
+								page = this.findAll(example, pageable, tableOrder);
 								break;
 							}
 							default: {
@@ -154,7 +154,7 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 		} else {
 			page = this.findAll(pageable, tableOrder);
 		}
-		
+
 		return page;
 	}
 
@@ -162,12 +162,12 @@ public interface AbstractEntityExtraServiceInterface<T extends AbstractEntity> e
 		final Example<T> example = Example.of(abstractEntitySearch, ID_EXAMPLE_MATCHER);
 		return example;
 	}
-	
+
 	default Example<T> getFirstRegistrationAuthUserEmailExample(T abstractEntitySearch){
 		final Example<T> example = Example.of(abstractEntitySearch, FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
 		return example;
 	}
-	
+
 	default Example<T> getLastModificationAuthUserEmailExample(T abstractEntitySearch){
 		final Example<T> example = Example.of(abstractEntitySearch, LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
 		return example;

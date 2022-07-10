@@ -9,15 +9,15 @@ import lombok.Data;
 
 @Data
 public class JobCategoryDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 6033880602495154721L;
-	
+
 	private Long id;
 
 	public JobCategoryDTO() {
 		super();
 	}
-	
+
 	public JobCategoryDTO(JobCategory jobCategory) {
 		if(jobCategory != null) {
 			this.id = jobCategory.getId();

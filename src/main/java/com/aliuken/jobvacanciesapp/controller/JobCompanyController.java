@@ -39,27 +39,32 @@ import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.service.JobCompanyLogoService;
 import com.aliuken.jobvacanciesapp.service.JobCompanyService;
+import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.service.JobVacancyService;
 import com.aliuken.jobvacanciesapp.util.FileUtils;
+import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 
 @Controller
 public class JobCompanyController implements GenericControllerWithJobCompanyLogoInterface {
-	
+
 	@Autowired
 	private JobVacanciesAppConfigPropertiesBean jobVacanciesAppConfigPropertiesBean;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
 	@Autowired
 	private JobCompanyService jobCompanyService;
-	
+
 	@Autowired
 	private JobCompanyLogoService jobCompanyLogoService;
-	
+
 	@Autowired
 	private JobVacancyService jobVacancyService;
-	
+
+	@Autowired
+	private JobRequestService jobRequestService;
+
 	@Autowired
 	private AuthUserService authUserService;
 
@@ -71,12 +76,12 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 		jobCompanyLogosPath = jobVacanciesAppConfigPropertiesBean.getJobCompanyLogosPath();
 		useAjaxToRefreshJobCompanyLogos = jobVacanciesAppConfigPropertiesBean.isUseAjaxToRefreshJobCompanyLogos();
 	}
-	
+
 	@Override
 	public MessageSource getMessageSource() {
 		return messageSource;
 	}
-	
+
 	@Override
 	public JobCompanyLogoService getJobCompanyLogoService() {
 		return jobCompanyLogoService;
@@ -107,12 +112,13 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "jobCompany/listJobCompanies.html");
 	}
-	
+
 	/**
 	 * Método para renderizar la vista de los Detalles para una determinada empresa
 	 */
@@ -120,7 +126,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	public String view(Model model, @PathVariable("jobCompanyId") long jobCompanyId, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-companies/view/{jobCompanyId}";
 
-		final JobCompany jobCompany = jobCompanyService.findById(jobCompanyId);
+		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 		model.addAttribute("jobCompany", jobCompany);
 
 		return this.getNextView(model, operation, language, "jobCompany/jobCompanyDetail.html");
@@ -132,20 +138,20 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	@GetMapping("/job-companies/create")
 	public String create(Model model, @RequestParam(name="lang", required=false) String language, @RequestParam(name="jobCompanyLogo", required=false) String jobCompanyLogoUrlParam) {
 		final String operation = "GET /job-companies/create";
-		
+
 		JobCompanyDTO jobCompanyDTO = new JobCompanyDTO();
-		
+
 		if(!useAjaxToRefreshJobCompanyLogos) {
 			this.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoUrlParam, true);
 		}
-		
+
 		model.addAttribute("jobCompanyDTO", jobCompanyDTO);
 		model.addAttribute("jobCompanyLogo", jobCompanyDTO.getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 
 		return this.getNextView(model, operation, language, "jobCompany/jobCompanyForm.html");
 	}
-	
+
 	/**
 	 * Método para renderizar el formulario para editar una Empresa
 	 */
@@ -153,7 +159,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	public String edit(Model model, @PathVariable("jobCompanyId") long jobCompanyId, @RequestParam(name="lang", required=false) String language, @RequestParam(name="jobCompanyLogo", required=false) String jobCompanyLogoUrlParam) {
 		final String operation = "GET /job-companies/edit/{jobCompanyId}";
 
-		final JobCompany jobCompany = jobCompanyService.findById(jobCompanyId);
+		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 		final JobCompanyDTO jobCompanyDTO = new JobCompanyDTO(jobCompany);
 
 		if(!useAjaxToRefreshJobCompanyLogos) {
@@ -166,7 +172,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 
 		return this.getNextView(model, operation, language, "jobCompany/jobCompanyForm.html");
 	}
-	
+
 	/**
 	 * Método para refrescar el logo de la empresa seleccionada
 	 */
@@ -174,14 +180,14 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	public String refreshLogo(Model model, @RequestParam(name="jobCompanyId", required=false) Long jobCompanyId, @RequestParam(name="jobCompanyLogo", required=false) String jobCompanyLogoUrlParam) {
 		final JobCompanyDTO jobCompanyDTO;
 		if(jobCompanyId != null) {
-			final JobCompany jobCompany = jobCompanyService.findById(jobCompanyId);
+			final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 			jobCompanyDTO = new JobCompanyDTO(jobCompany);
 		} else {
 			jobCompanyDTO = new JobCompanyDTO();
 		}
 
 		this.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoUrlParam, false);
-		
+
 		model.addAttribute("jobCompanyDTO", jobCompanyDTO);
 		model.addAttribute("isJobCompanyForm", true);
 
@@ -192,7 +198,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	 * Método para guardar una Empresa en la base de datos
 	 */
 	@PostMapping("/job-companies/save")
-	public String save(Model model, @ModelAttribute("jobCompanyDTO") JobCompanyDTO jobCompanyDTO, BindingResult bindingResult, 
+	public String save(Model model, @ModelAttribute("jobCompanyDTO") JobCompanyDTO jobCompanyDTO, BindingResult bindingResult,
 			@RequestParam(name="jobCompanySelectedLogoFile", required=false) MultipartFile multipartFile, RedirectAttributes redirectAttributes, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "POST /job-companies/save";
 
@@ -204,7 +210,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 
 			return this.getNextView(model, operation, language, "jobCompany/jobCompanyForm.html");
 		}
-		
+
 		Long id = jobCompanyDTO.getId();
 		final String name = jobCompanyDTO.getName();
 		final String description = jobCompanyDTO.getDescription();
@@ -215,7 +221,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 		JobCompany jobCompany;
 		final String savedJobCompanyLogoFileName;
 		if(id != null) {
-			jobCompany = jobCompanyService.findById(id);
+			jobCompany = jobCompanyService.findByIdNotOptional(id);
 			savedJobCompanyLogoFileName = FileUtils.saveFile(multipartFile, jobCompanyLogosPath + id + "/", FileType.JOB_VACANCY_LOGO);
 		} else {
 			jobCompany = new JobCompany();
@@ -226,7 +232,7 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 
 		if(selectedLogoId != null) {
 			if(!Constants.NO_SELECTED_LOGO_ID.equals(selectedLogoId)) {
-				final JobCompanyLogo selectedLogo = jobCompanyLogoService.findById(selectedLogoId);
+				final JobCompanyLogo selectedLogo = jobCompanyLogoService.findByIdNotOptional(selectedLogoId);
 				final String selectedLogoFileName = selectedLogo.getFileName();
 				jobCompany.setSelectedLogoFileName(selectedLogoFileName);
 			} else {
@@ -246,35 +252,35 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 			for(JobCompanyLogoDTO jobCompanyDTOLogo : jobCompanyLogoDTOs) {
 				final JobCompanyLogo jobCompanyLogo;
 				if(jobCompanyDTOLogo.getId() != null) {
-					jobCompanyLogo = jobCompanyLogoService.findById(id);
+					jobCompanyLogo = jobCompanyLogoService.findByIdNotOptional(id);
 				} else {
 					jobCompanyLogo = new JobCompanyLogo();
 				}
 				jobCompanyLogo.setJobCompany(jobCompany);
 				jobCompanyLogo.setFileName(jobCompanyDTOLogo.getFileName());
-				
+
 				jobCompanyLogos.add(jobCompanyLogo);
 			}
 		}
-		
+
 		JobCompanyLogo jobCompanyLogo = null;
 		if(savedJobCompanyLogoFileName != null) {
 			jobCompanyLogo = new JobCompanyLogo();
 			jobCompanyLogo.setJobCompany(jobCompany);
 			jobCompanyLogo.setFileName(savedJobCompanyLogoFileName);
-			
+
 			jobCompanyLogos.add(jobCompanyLogo);
 		}
 
 		jobCompany.setJobCompanyLogos(jobCompanyLogos);
 
-		jobCompanyService.save(jobCompany);
+		jobCompany = jobCompanyService.saveAndFlush(jobCompany);
 
-		jobCompany = jobCompanyService.findByName(name);
+		//jobCompany = jobCompanyService.findByName(name);
 
 		if(jobCompanyLogo != null) {
 			jobCompanyLogo.setJobCompany(jobCompany);
-			jobCompanyLogoService.save(jobCompanyLogo);
+			jobCompanyLogo = jobCompanyLogoService.saveAndFlush(jobCompanyLogo);
 		}
 
 		if(id == null && savedJobCompanyLogoFileName != null) {
@@ -282,11 +288,13 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 			try {
 				Files.createDirectories(Paths.get(jobCompanyLogosPath + id));
 				Files.move(Paths.get(jobCompanyLogosPath + savedJobCompanyLogoFileName), Paths.get(jobCompanyLogosPath + id + "/" + savedJobCompanyLogoFileName), StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) {
+			} catch (IOException exception) {
 				model.addAttribute("jobCompanyDTO", jobCompanyDTO);
 				model.addAttribute("jobCompanyLogo", jobCompanyDTO.getSelectedLogoId());
 				model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
-				model.addAttribute("errorMsg", e.getMessage());
+
+				String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+				model.addAttribute("errorMsg", rootCauseMessage);
 
 				return this.getNextView(model, operation, language, "jobCompany/jobCompanyForm.html");
 			}
@@ -303,40 +311,39 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 	 */
 	@GetMapping("/job-companies/delete/{jobCompanyId}")
 	public String delete(@PathVariable("jobCompanyId") long jobCompanyId, RedirectAttributes redirectAttributes, @RequestParam(name="lang", required=false) String language) {
-		JobCompany jobCompany = jobCompanyService.findById(jobCompanyId);
-
-		Set<JobCompanyLogo> jobCompanyLogos = jobCompany.getJobCompanyLogos();
-		if(jobCompanyLogos != null) {
-			for(JobCompanyLogo jobCompanyLogo : jobCompanyLogos) {
-				Long jobCompanyLogoId = jobCompanyLogo.getId();
-				jobCompanyLogoService.deleteById(jobCompanyLogoId);
-			}
-		}
+		JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 
 		Set<JobVacancy> jobVacancies = jobCompany.getJobVacancies();
-		if(jobVacancies != null) {
-			for(JobVacancy jobVacancy : jobVacancies) {
-				Long jobVacancyId = jobVacancy.getId();
-				jobVacancyService.deleteById(jobVacancyId);
+		for(JobVacancy jobVacancy : jobVacancies) {
+			Set<Long> jobRequestIds = jobVacancy.getJobRequestIds();
+			for(Long jobRequestId : jobRequestIds) {
+				jobRequestService.deleteByIdAndFlush(jobRequestId);
 			}
+
+			jobVacancyService.deleteByIdAndFlush(jobVacancy.getId());
 		}
 
-		jobCompanyService.deleteById(jobCompanyId);
-		
+		Set<Long> jobCompanyLogoIds = jobCompany.getJobCompanyLogoIds();
+		for(Long jobCompanyLogoId : jobCompanyLogoIds) {
+			jobCompanyLogoService.deleteByIdAndFlush(jobCompanyLogoId);
+		}
+
+		jobCompanyService.deleteByIdAndFlush(jobCompanyId);
+
 		String successMsg = this.getInternationalizedMessage(language, "deleteJobCompany.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
 		return this.getNextRedirect(language, "/job-companies/index");
 	}
-	
+
 	/**
 	 * Metodo que muestra la lista de ofertas con paginacion
 	 */
 	@GetMapping("/job-companies/job-vacancies/{jobCompanyId}")
 	public String getJobVacancies(@PathVariable("jobCompanyId") long jobCompanyId, Model model, @ModelAttribute("tableSearchDTO") TableSearchDTO tableSearchDTO, BindingResult bindingResult, Pageable pageable, @RequestParam(name="lang", required=false) String language) {
 		final String operation = "GET /job-companies/job-vacancies/{jobCompanyId}";
-		
-		final JobCompany jobCompany = jobCompanyService.findById(jobCompanyId);
+
+		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 
 		if (bindingResult.hasErrors()) {
 			final Page<JobVacancy> jobVacancies = Page.empty();
@@ -360,7 +367,8 @@ public class JobCompanyController implements GenericControllerWithJobCompanyLogo
 		model.addAttribute("pageNumber", 0);
 
 		if(exception != null) {
-			model.addAttribute("errorMsg", exception.getMessage());
+			String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
 		}
 
 		return this.getNextView(model, operation, language, "jobCompany/jobCompanyJobVacancies.html");

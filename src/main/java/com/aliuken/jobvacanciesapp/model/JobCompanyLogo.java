@@ -26,7 +26,7 @@ import lombok.Data;
 public class JobCompanyLogo extends AbstractEntity {
 
 	private static final long serialVersionUID = 3937298767687586305L;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_company_id", nullable=false)
@@ -49,11 +49,11 @@ public class JobCompanyLogo extends AbstractEntity {
 		} else {
 			jobCompanyIdString = "temp";
 		}
-		
+
 		final String filePath = StringUtils.getStringJoined(jobCompanyIdString, "/", fileName);
 		return filePath;
 	}
-	
+
 	public String getSelectionName() {
 		final String idString = String.valueOf(this.getId());
 		final String firstRegistrationDateTimeString = DateTimeUtils.convertToString(this.getFirstRegistrationDateTime());
@@ -70,7 +70,7 @@ public class JobCompanyLogo extends AbstractEntity {
 		final String lastModificationDateTimeString = DateTimeUtils.convertToString(this.getLastModificationDateTime());
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("JobCompanyLogo [id=", idString, ", jobCompany=", jobCompanyName, ", fileName=", fileName, 
+		final String result = StringUtils.getStringJoined("JobCompanyLogo [id=", idString, ", jobCompany=", jobCompanyName, ", fileName=", fileName,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;

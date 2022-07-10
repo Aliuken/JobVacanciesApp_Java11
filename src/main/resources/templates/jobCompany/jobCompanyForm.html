@@ -41,7 +41,7 @@
               </div>
             </div>
             <div th:replace="fragments/jobCompanyLogoFragment :: jobCompanyLogoFragment(${jobCompanyDTO}, true)"></div>
-            
+
             <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
             <hr/>
 
@@ -94,9 +94,9 @@
             useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
             refreshUrlModelAttribute = /*[[@{/job-companies/refresh-logo}]]*/ null;
           /*]]>*/
-          
+
           let jobCompanyIdModelAttribute = (jobCompanyDTOModelAttribute != null) ? jobCompanyDTOModelAttribute.id : null;
-          
+
           if(useAjaxToRefreshJobCompanyLogosModelAttribute) {
 	        treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
           } else {

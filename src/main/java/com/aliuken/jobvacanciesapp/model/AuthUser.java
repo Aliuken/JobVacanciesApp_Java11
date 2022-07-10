@@ -75,7 +75,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
     @Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
 	private Set<JobRequest> jobRequests;
-    
+
     @OneToMany(mappedBy="authUser", fetch=FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
@@ -90,17 +90,25 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 		return fullName;
 	}
 
+	public Set<Long> getAuthUserRoleIds() {
+		final Set<Long> authUserRoleIds = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
+				.map(aur -> aur.getId())
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+
+		return authUserRoleIds;
+	}
+
 	public Set<AuthRole> getAuthRoles() {
 		final Set<AuthRole> authRoles = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthRole())
+				.map(aur -> aur.getAuthRole())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoles;
 	}
-	
+
 	public Set<Long> getAuthRoleIds() {
 		final Set<Long> authRoleIds = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthRole())
+				.map(aur -> aur.getAuthRole())
 				.map(ar -> ar.getId())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -109,11 +117,19 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 
 	public Set<String> getAuthRoleNames() {
 		final Set<String> authRoleNames = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
-				.map(aup -> aup.getAuthRole())
+				.map(aur -> aur.getAuthRole())
 				.map(ar -> ar.getName())
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoleNames;
+	}
+
+	public Set<Long> getJobRequestIds() {
+		final Set<Long> jobRequestIds = StreamUtils.ofNullableCollectionParallel(this.getJobRequests())
+				.map(jr -> jr.getId())
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+
+		return jobRequestIds;
 	}
 
 	public Set<JobVacancy> getJobVacancies() {
@@ -123,7 +139,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 
 		return jobVacancies;
 	}
-	
+
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = StreamUtils.ofNullableCollectionParallel(this.getJobRequests())
 				.map(jr -> jr.getJobVacancy())
@@ -141,7 +157,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 
 		return jobVacancyNames;
 	}
-	
+
 	public Set<Long> getAuthUserCurriculumIds() {
 		final Set<Long> authUserCurriculumIds = StreamUtils.ofNullableCollectionParallel(this.getAuthUserCurriculums())
 				.map(auc -> auc.getId())
@@ -162,7 +178,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 		if (this.getAuthUserRoles() == null || this.getAuthUserRoles().isEmpty()) {
 			return null;
 		}
-		
+
 		AuthRole authRole = StreamUtils.ofNullableCollectionParallel(this.getAuthUserRoles())
 				.findFirst()
 				.map(aur -> aur.getAuthRole())
@@ -170,7 +186,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 
 		return authRole;
 	}
-	
+
 	public Long getMaxPriorityAuthRoleId() {
 		if (this.getAuthUserRoles() == null || this.getAuthUserRoles().isEmpty()) {
 			return null;
@@ -211,13 +227,13 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 		final String authRoles = this.getAuthRoleNames().toString();
 		final String jobVacancies = this.getJobVacancyNames().toString();
 
-		final String result = StringUtils.getStringJoined("AuthUser [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", language=", languageCode, ", enabled=", enabledString, 
-			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, 
+		final String result = StringUtils.getStringJoined("AuthUser [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", language=", languageCode, ", enabled=", enabledString,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
 			", authRoles=", authRoles, ", jobVacancies=", jobVacancies, "]");
 
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -239,48 +255,48 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(getId());
-		
+
 		objectOutput.writeUTF(email);
 		objectOutput.writeUTF(name);
 		objectOutput.writeUTF(surnames);
-		
+
 		String languageCode = language.getCode();
 		objectOutput.writeUTF(languageCode);
-		
+
 		objectOutput.writeBoolean(enabled);
-		
+
 		String firstRegistrationDateTimeString = DateTimeUtils.convertToStringForSerialization(getFirstRegistrationDateTime());
 		objectOutput.writeUTF(firstRegistrationDateTimeString);
-		
+
 		objectOutput.writeObject(getFirstRegistrationAuthUser());
-		
+
 		String lastModificationDateTimeString = DateTimeUtils.convertToStringForSerialization(getLastModificationDateTime());
 		objectOutput.writeUTF(lastModificationDateTimeString);
-		
+
 		objectOutput.writeObject(getLastModificationAuthUser());
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
 		setId(objectInput.readLong());
-		
+
 		email = objectInput.readUTF();
 		name = objectInput.readUTF();
 		surnames = objectInput.readUTF();
-		
+
 		String languageCode = objectInput.readUTF();
 		language = AuthUserLanguage.findByCode(languageCode);
-		
+
 		enabled = objectInput.readBoolean();
-		
+
 		String firstRegistrationDateTimeString = objectInput.readUTF();
 		setFirstRegistrationDateTime(DateTimeUtils.convertFromStringForSerialization(firstRegistrationDateTimeString));
-		
+
 		setFirstRegistrationAuthUser((AuthUser) objectInput.readObject());
-		
+
 		String lastModificationDateTimeString = objectInput.readUTF();
 		setLastModificationDateTime(DateTimeUtils.convertFromStringForSerialization(lastModificationDateTimeString));
-		
+
 		setLastModificationAuthUser((AuthUser) objectInput.readObject());
 	}
 

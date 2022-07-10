@@ -41,7 +41,7 @@
               <tr>
                 <th scope="col" th:text="#{abstractEntity.id}"></th>
                 <th scope="col" th:text="#{jobCategory.name}"></th>
-                <th scope="col" th:text="#{jobCategory.description}" style="width:50%"></th>
+                <th scope="col" th:text="#{jobCategory.description}" style="width:35%"></th>
                 <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}"></th>
                 <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
                 <th scope="col" th:text="#{abstractEntity.lastModificationDateTime}"></th>
@@ -103,7 +103,7 @@
             tablePageSizeModelAttribute = /*[[${tablePageSize}]]*/ null;
             pageNumberModelAttribute = /*[[${pageNumber}]]*/ null;
           /*]]>*/
-          
+
           treatFilterAndPaginationCombosAndUrlParameters(tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableOrderCodeModelAttribute, tablePageSizeModelAttribute, pageNumberModelAttribute);
         });
       </script>

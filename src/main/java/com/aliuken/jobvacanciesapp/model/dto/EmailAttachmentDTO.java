@@ -15,7 +15,7 @@ public class EmailAttachmentDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		final String result = StringUtils.getStringJoined("EmailAttachmentDTO [attachmentFileName=", attachmentFileName, 
+		final String result = StringUtils.getStringJoined("EmailAttachmentDTO [attachmentFileName=", attachmentFileName,
 			", attachmentFilePath=", attachmentFilePath, "]");
 
 		return result;

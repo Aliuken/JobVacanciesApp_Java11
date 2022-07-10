@@ -44,8 +44,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: aliuken.developer@gmail.com
-    password: dleookkmwqiksftw
+    username: ${EMAIL_APPLICATION_ACCOUNT_USER}
+    password: ${EMAIL_APPLICATION_ACCOUNT_PASSWORD}
     properties:
       mail:
         transport:

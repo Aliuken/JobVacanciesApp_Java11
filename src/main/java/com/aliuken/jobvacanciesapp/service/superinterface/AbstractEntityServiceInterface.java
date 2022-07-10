@@ -13,22 +13,22 @@ import com.aliuken.jobvacanciesapp.model.dto.TableOrder;
 public interface AbstractEntityServiceInterface<T extends AbstractEntity> {
 	Class<T> getEntityClass();
 
-	void save(T entity);
+	T saveAndFlush(T entity);
 
-	void deleteById(Long entityId);
+	void deleteByIdAndFlush(Long entityId);
 
 	List<T> findAll();
 
-	T findById(Long entityId);
+	T findByIdNotOptional(Long entityId);
 
 	Page<T> findAll(Pageable pageable);
 
-	Page<T> findAll(Pageable pageable, Example<T> example);
-
 	Page<T> findAll(Pageable pageable, TableOrder tableOrder);
 
-	Page<T> findAll(Pageable pageable, TableOrder tableOrder, Example<T> example);
-
 	Page<T> findAll(Pageable pageable, TableOrder tableOrder, Specification<T> specification);
+
+	Page<T> findAll(Example<T> example, Pageable pageable);
+
+	Page<T> findAll(Example<T> example, Pageable pageable, TableOrder tableOrder);
 
 }

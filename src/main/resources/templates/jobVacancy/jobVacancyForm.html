@@ -56,7 +56,7 @@
                   <option th:each="jobCategory : ${jobCategories}" th:value="${jobCategory.id}" th:text="${jobCategory.name}"></option>
                 </select>
               </div>
-              
+
               <div class="col-md-3 form-group">
                 <label for="jobCompanyLogoCombo" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCompany} + ':'"></label>
                 <select id="jobCompanyLogoCombo" name="jobCompanyLogoCombo" class="form-control" th:field="*{jobCompany.id}">
@@ -132,9 +132,9 @@
             useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
             refreshUrlModelAttribute = /*[[@{/job-vacancies/refresh-logo}]]*/ null;
           /*]]>*/
-          
+
           let jobCompanyIdModelAttribute = (jobVacancyDTOModelAttribute != null && jobVacancyDTOModelAttribute.jobCompany != null) ? jobVacancyDTOModelAttribute.jobCompany.id : null;
-          
+
           if(useAjaxToRefreshJobCompanyLogosModelAttribute) {
 	        treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
           } else {

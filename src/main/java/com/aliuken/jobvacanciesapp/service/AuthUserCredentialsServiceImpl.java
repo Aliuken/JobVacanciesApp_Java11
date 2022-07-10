@@ -23,18 +23,28 @@ public class AuthUserCredentialsServiceImpl implements AuthUserCredentialsServic
 	private AuthUserCredentialsRepository authUserCredentialsRepository;
 
 	@Override
+	public AuthUserCredentials findByEmail(String email) {
+		return authUserCredentialsRepository.findByEmail(email);
+	}
+
+	@Override
+	public AuthUserCredentials findByEmailAndEncryptedPassword(String email, String encryptedPassword) {
+		return authUserCredentialsRepository.findByEmailAndEncryptedPassword(email, encryptedPassword);
+	}
+
+	@Override
 	public Class<AuthUserCredentials> getEntityClass() {
 		return AuthUserCredentials.class;
 	}
 
 	@Override
-	public void save(AuthUserCredentials authUserCredentials) {
-		authUserCredentialsRepository.save(authUserCredentials);
+	public AuthUserCredentials saveAndFlush(AuthUserCredentials authUserCredentials) {
+		return authUserCredentialsRepository.saveAndFlush(authUserCredentials);
 	}
 
 	@Override
-	public void deleteById(Long authUserCredentialsId) {
-		authUserCredentialsRepository.deleteById(authUserCredentialsId);
+	public void deleteByIdAndFlush(Long authUserCredentialsId) {
+		authUserCredentialsRepository.deleteByIdAndFlush(authUserCredentialsId);
 	}
 
 	@Override
@@ -43,13 +53,8 @@ public class AuthUserCredentialsServiceImpl implements AuthUserCredentialsServic
 	}
 
 	@Override
-	public AuthUserCredentials findById(Long authUserCredentialsId) {
+	public AuthUserCredentials findByIdNotOptional(Long authUserCredentialsId) {
 		return authUserCredentialsRepository.findByIdNotOptional(authUserCredentialsId);
-	}
-
-	@Override
-	public AuthUserCredentials findByEmail(String email) {
-		return authUserCredentialsRepository.findByEmail(email);
 	}
 
 	@Override
@@ -58,25 +63,25 @@ public class AuthUserCredentialsServiceImpl implements AuthUserCredentialsServic
 	}
 
 	@Override
-	public Page<AuthUserCredentials> findAll(Pageable pageable, Example<AuthUserCredentials> example) {
-		return authUserCredentialsRepository.findAll(example, pageable);
-	}
-
-	@Override
 	public Page<AuthUserCredentials> findAll(Pageable pageable, TableOrder tableOrder) {
 		return authUserCredentialsRepository.findAll(pageable, tableOrder);
-	}
-
-	@Override
-	public Page<AuthUserCredentials> findAll(Pageable pageable, TableOrder tableOrder, Example<AuthUserCredentials> example) {
-		return authUserCredentialsRepository.findAll(pageable, tableOrder, example);
 	}
 
 	@Override
 	public Page<AuthUserCredentials> findAll(Pageable pageable, TableOrder tableOrder, Specification<AuthUserCredentials> specification) {
 		return authUserCredentialsRepository.findAll(pageable, tableOrder, specification);
 	}
-	
+
+	@Override
+	public Page<AuthUserCredentials> findAll(Example<AuthUserCredentials> example, Pageable pageable) {
+		return authUserCredentialsRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public Page<AuthUserCredentials> findAll(Example<AuthUserCredentials> example, Pageable pageable, TableOrder tableOrder) {
+		return authUserCredentialsRepository.findAll(example, pageable, tableOrder);
+	}
+
 	@Override
 	public AuthUserCredentials getNewEntityWithGenericData(Long id, AuthUser firstRegistrationAuthUser, AuthUser lastModificationAuthUser) {
 		AuthUserCredentials authUserCredentials = new AuthUserCredentials();

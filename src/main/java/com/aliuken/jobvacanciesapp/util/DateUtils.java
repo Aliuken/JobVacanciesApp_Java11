@@ -23,17 +23,17 @@ public class DateUtils {
 		final String text = DateUtils.convertToStringWithDefaultValue(localDate, Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD);
 		return text;
 	}
-	
+
 	public static String convertToStringForSerialization(LocalDate localDate) {
 		final String text = DateUtils.convertToStringWithDefaultValue(localDate, Constants.DEFAULT_VALUE_WHEN_SERIALIZING_NULL_STRING);
 		return text;
 	}
-	
+
 	public static LocalDate convertFromStringForSerialization(String dateTimeString) {
 		final LocalDate localDate = DateUtils.convertFromStringWithDefaultValue(dateTimeString, Constants.DEFAULT_VALUE_WHEN_SERIALIZING_NULL_STRING);
 	    return localDate;
 	}
-	
+
 	private static String convertToStringWithDefaultValue(LocalDate localDate, String defaultValue) {
 		final String text;
 		if(localDate != null) {
@@ -44,7 +44,7 @@ public class DateUtils {
 
 		return text;
 	}
-	
+
 	private static LocalDate convertFromStringWithDefaultValue(String dateString, String defaultValue) {
 		final LocalDate localDate;
 		if(dateString != null && !dateString.equals(defaultValue)) {

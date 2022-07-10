@@ -33,7 +33,7 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 	public static final ExampleMatcher JOB_VACANCY_ID_AND_ID_EXAMPLE_MATCHER = ExampleMatcher.matching().withMatcher("jobVacancy.id", ExampleMatcher.GenericPropertyMatchers.exact()).withMatcher("id", ExampleMatcher.GenericPropertyMatchers.exact());
 	public static final ExampleMatcher JOB_VACANCY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = ExampleMatcher.matching().withMatcher("jobVacancy.id", ExampleMatcher.GenericPropertyMatchers.exact()).withMatcher("firstRegistrationAuthUser.email", ExampleMatcher.GenericPropertyMatchers.contains());
 	public static final ExampleMatcher JOB_VACANCY_ID_AND_LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = ExampleMatcher.matching().withMatcher("jobVacancy.id", ExampleMatcher.GenericPropertyMatchers.exact()).withMatcher("lastModificationAuthUser.email", ExampleMatcher.GenericPropertyMatchers.contains());
-	
+
 	default AbstractEntityPageWithException<JobRequest> getJobVacancyJobRequestsPage(final Long jobVacancyId, final TableSearchDTO tableSearchDTO, final Pageable pageable) {
 		Page<JobRequest> page;
 		Exception exception = null;
@@ -46,7 +46,7 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 				page = this.getJobVacancyJobRequestsPage(jobVacancyId, tableField, tableFieldValue, tableOrder, pageable);
 			} else {
 				final Example<JobRequest> example = this.getJobVacancyIdExample(jobVacancyId);
-				page = this.findAll(pageable, example);
+				page = this.findAll(example, pageable);
 			}
 		} catch(Exception e) {
 			if(log.isErrorEnabled()) {
@@ -62,7 +62,7 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 
 		return abstractEntityPageWithException;
 	}
-	
+
 	private Page<JobRequest> getJobVacancyJobRequestsPage(final Long jobVacancyId, final TableField tableField, final String tableFieldValue, final TableOrder tableOrder, final Pageable pageable) {
 		final Page<JobRequest> page;
 		if(tableField != null && tableFieldValue != null && !tableFieldValue.isEmpty()) {
@@ -86,7 +86,7 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 					jobRequestSearch.setJobVacancy(jobVacancy);
 
 					final Example<JobRequest> example = this.getJobVacancyIdAndIdExample(jobRequestSearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
@@ -97,16 +97,16 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser firstRegistrationAuthUser = new AuthUser();
 					firstRegistrationAuthUser.setEmail(tableFieldValue);
-					
+
 					final JobVacancy jobVacancy = new JobVacancy();
 					jobVacancy.setId(jobVacancyId);
-					
+
 					final JobRequest jobRequestSearch = new JobRequest();
 					jobRequestSearch.setFirstRegistrationAuthUser(firstRegistrationAuthUser);
 					jobRequestSearch.setJobVacancy(jobVacancy);
 
 					final Example<JobRequest> example = this.getJobVacancyIdAndFirstRegistrationAuthUserEmailExample(jobRequestSearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
@@ -117,16 +117,16 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser lastModificationAuthUser = new AuthUser();
 					lastModificationAuthUser.setEmail(tableFieldValue);
-					
+
 					final JobVacancy jobVacancy = new JobVacancy();
 					jobVacancy.setId(jobVacancyId);
-					
+
 					final JobRequest jobRequestSearch = new JobRequest();
 					jobRequestSearch.setLastModificationAuthUser(lastModificationAuthUser);
 					jobRequestSearch.setJobVacancy(jobVacancy);
 
 					final Example<JobRequest> example = this.getJobVacancyIdAndLastModificationAuthUserEmailExample(jobRequestSearch);
-					page = this.findAll(pageable, tableOrder, example);
+					page = this.findAll(example, pageable, tableOrder);
 					break;
 				}
 				default: {
@@ -135,19 +135,19 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 			}
 		} else {
 			final Example<JobRequest> example = this.getJobVacancyIdExample(jobVacancyId);
-			page = this.findAll(pageable, tableOrder, example);
+			page = this.findAll(example, pageable, tableOrder);
 		}
-		
+
 		return page;
 	}
-	
+
 	default Example<JobRequest> getJobVacancyIdExample(Long jobVacancyId){
 		final JobVacancy jobVacancy = new JobVacancy();
 		jobVacancy.setId(jobVacancyId);
 
 		final JobRequest jobRequestSearch = new JobRequest();
 		jobRequestSearch.setJobVacancy(jobVacancy);
-		
+
 		final Example<JobRequest> example = Example.of(jobRequestSearch, JOB_VACANCY_ID_EXAMPLE_MATCHER);
 		return example;
 	}
@@ -156,12 +156,12 @@ public interface JobRequestExtraServiceInterface extends AbstractEntityWithAuthU
 		final Example<JobRequest> example = Example.of(jobRequestSearch, JOB_VACANCY_ID_AND_ID_EXAMPLE_MATCHER);
 		return example;
 	}
-	
+
 	default Example<JobRequest> getJobVacancyIdAndFirstRegistrationAuthUserEmailExample(JobRequest jobRequestSearch){
 		final Example<JobRequest> example = Example.of(jobRequestSearch, JOB_VACANCY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
 		return example;
 	}
-	
+
 	default Example<JobRequest> getJobVacancyIdAndLastModificationAuthUserEmailExample(JobRequest jobRequestSearch){
 		final Example<JobRequest> example = Example.of(jobRequestSearch, JOB_VACANCY_ID_AND_LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
 		return example;

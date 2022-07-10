@@ -1,6 +1,8 @@
 package com.aliuken.jobvacanciesapp.controller;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -50,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class HomeController implements GenericControllerInterface {
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -83,7 +85,7 @@ public class HomeController implements GenericControllerInterface {
 
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Override
 	public MessageSource getMessageSource() {
 		return messageSource;
@@ -126,10 +128,18 @@ public class HomeController implements GenericControllerInterface {
 		final String operation = "POST /signup";
 
 		final String email = authUserForSignupDTO.getEmail();
-		final String password = authUserForSignupDTO.getPassword();
+		final String password1 = authUserForSignupDTO.getPassword1();
+		final String password2 = authUserForSignupDTO.getPassword2();
 		final String name = authUserForSignupDTO.getName();
 		final String surnames = authUserForSignupDTO.getSurnames();
 		final String language = authUserForSignupDTO.getLanguage();
+
+		if(!password1.equals(password2)) {
+			String errorMsg = this.getInternationalizedMessage(language, "signupSave.passwordsDontMatch", null);
+			model.addAttribute("errorMsg", errorMsg);
+
+			return this.getNextView(model, operation, language, "signupForm.html");
+		}
 
 		final AuthUserLanguage authUserLanguage = AuthUserLanguage.findByCode(language);
 
@@ -149,17 +159,8 @@ public class HomeController implements GenericControllerInterface {
 		authUser.setSurnames(surnames);
 		authUser.setLanguage(authUserLanguage);
 		authUser.setEnabled(Boolean.FALSE);
-		authUserService.save(authUser);
 
-		final String encryptedPassword = passwordEncoder.encode(password);
-
-		AuthUserCredentials authUserCredentials = authUserCredentialsService.findByEmail(email);
-		if(authUserCredentials == null) {
-			authUserCredentials = new AuthUserCredentials();
-			authUserCredentials.setEmail(email);
-		}
-		authUserCredentials.setEncryptedPassword(encryptedPassword);
-		authUserCredentialsService.save(authUserCredentials);
+		authUser = authUserService.saveAndFlush(authUser);
 
 		final AuthRole authRole = authRoleService.findByName(AuthRole.USER);
 
@@ -169,7 +170,26 @@ public class HomeController implements GenericControllerInterface {
 			authUserRole.setAuthUser(authUser);
 			authUserRole.setAuthRole(authRole);
 		}
-		authUserRoleService.save(authUserRole);
+
+		authUserRole = authUserRoleService.saveAndFlush(authUserRole);
+
+		Set<AuthUserRole> authUserRoles = new TreeSet<>();
+		authUserRoles.add(authUserRole);
+
+		authUser.setAuthUserRoles(authUserRoles);
+
+		authUser = authUserService.saveAndFlush(authUser);
+
+		final String encryptedPassword = passwordEncoder.encode(password1);
+
+		AuthUserCredentials authUserCredentials = authUserCredentialsService.findByEmail(email);
+		if(authUserCredentials == null) {
+			authUserCredentials = new AuthUserCredentials();
+			authUserCredentials.setEmail(email);
+		}
+		authUserCredentials.setEncryptedPassword(encryptedPassword);
+
+		authUserCredentials = authUserCredentialsService.saveAndFlush(authUserCredentials);
 
 		final String uuid = UUID.randomUUID().toString();
 
@@ -179,11 +199,11 @@ public class HomeController implements GenericControllerInterface {
 	        authUserConfirmation.setEmail(email);
 		}
         authUserConfirmation.setUuid(uuid);
-		authUserConfirmationService.save(authUserConfirmation);
+        authUserConfirmation = authUserConfirmationService.saveAndFlush(authUserConfirmation);
 
 		final String appUrl = this.getAppUrl();
 		final String link = StringUtils.getStringJoined(appUrl, "/signup-confirmed?email=", email, "&uuid=", uuid);
-		
+
 		final String subject;
 		final String textTitle;
 		final String textBody;
@@ -198,7 +218,7 @@ public class HomeController implements GenericControllerInterface {
     		textBody = StringUtils.getStringJoined(
     			"<p>Click in the following link to activate your JobVacanciesApp account:</p><p><a href=\"", link, "\">", link, "</a></p><p>You have 24 hours to use the link. After that time, you'll have to register again and activate the account by email to enter in the website.</p><p>Regards,</p> <p>the JobVacanciesApp team</p>");
     	}
-		
+
 		emailService.sendComplexMessage(email, subject, textTitle, textBody, authUserLanguage, true, null);
 
 		String successMsg = this.getInternationalizedMessage(authUserLanguage, "signupSave.successMsg", null);
@@ -215,13 +235,13 @@ public class HomeController implements GenericControllerInterface {
 		final AuthUserConfirmation authUserConfirmation = authUserConfirmationService.findByEmailAndUuid(email, uuid);
 
 		if(authUserConfirmation != null) {
-			final AuthUser authUser = authUserService.findByEmail(email);
+			AuthUser authUser = authUserService.findByEmail(email);
 			authUser.setEnabled(Boolean.TRUE);
 
 			final Long authUserConfirmationId = authUserConfirmation.getId();
 
-			authUserService.save(authUser);
-			authUserConfirmationService.deleteById(authUserConfirmationId);
+			authUser = authUserService.saveAndFlush(authUser);
+			authUserConfirmationService.deleteByIdAndFlush(authUserConfirmationId);
 		}
 
 		String successMsg = this.getInternationalizedMessage(language, "signupConfirmed.successMsg", null);

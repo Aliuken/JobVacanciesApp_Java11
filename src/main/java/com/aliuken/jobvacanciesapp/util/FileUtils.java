@@ -55,13 +55,14 @@ public class FileUtils {
 
 		try {
 			multipartFile.transferTo(finalFilePath);
-		} catch (IOException e) {
+		} catch (IOException exception) {
 			if(log.isErrorEnabled()) {
-				log.error(StringUtils.getStringJoined("Error while trying to save the file ", finalFilePath.toAbsolutePath().toString(), ": ", e.getMessage()));
+				String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+				log.error(StringUtils.getStringJoined("Error while trying to save the file ", finalFilePath.toAbsolutePath().toString(), ": ", rootCauseMessage));
 			}
 			return null;
 		}
-		
+
 		if(log.isDebugEnabled()) {
 			log.debug(StringUtils.getStringJoined("File ", finalFilePath.toAbsolutePath().toString(), " was saved"));
 		}
