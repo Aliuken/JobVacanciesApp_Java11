@@ -1,0 +1,69 @@
+Create branch:
+
+cd /path/to/project
+git checkout -b feature/aliuken
+git push -u origin feature/aliuken
+------------------------------------------------------
+------------------------------------------------------
+
+Upload:
+
+git checkout feature/aliuken
+git add .
+git commit -m "upload description"
+git push
+------------------------------------------------------
+git checkout prerelease
+git pull
+git merge feature/aliuken
+git push
+------------------------------------------------------
+git checkout develop
+git pull
+git merge prerelease
+git push
+------------------------------------------------------
+git checkout main
+git pull
+git merge develop
+git push
+------------------------------------------------------
+git checkout feature/aliuken
+------------------------------------------------------
+------------------------------------------------------
+
+Download:
+
+git checkout main
+git pull
+------------------------------------------------------
+git checkout develop
+git pull
+git merge main
+git push
+------------------------------------------------------
+git checkout prerelease
+git pull
+git merge develop
+git push
+------------------------------------------------------
+git checkout feature/aliuken
+git pull
+git merge prerelease
+git push
+------------------------------------------------------
+------------------------------------------------------
+
+Upload in one step:
+
+git checkout feature/aliuken && git add . && git commit -m "upload description" && git push
+------------------------------------------------------
+git checkout prerelease && git pull && git merge feature/aliuken && git push
+------------------------------------------------------
+git checkout develop && git pull && git merge prerelease && git push
+------------------------------------------------------
+git checkout main && git pull && git merge develop && git push
+------------------------------------------------------
+git checkout feature/aliuken
+------------------------------------------------------
+------------------------------------------------------
