@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.data.domain.Example;
@@ -258,9 +259,9 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default int executeUpdate(String jpqlQuery, Map<String, Object> parameterMap) {
-		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
+		final Query query = getQuery(jpqlQuery, parameterMap);
 
-		int rows = typedQuery.executeUpdate();
+		int rows = query.executeUpdate();
 
 		return rows;
 	}
@@ -276,6 +277,19 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		}
 
 		return typedQuery;
+	}
+	
+	private Query getQuery(String jpqlQuery, Map<String, Object> parameterMap) {
+		final Class<T> abstractEntityClass = this.getEntityClass();
+		final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);
+		final Query query = entityManager.createQuery(jpqlQuery);
+		if (parameterMap != null) {
+			for (Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
+				query.setParameter(parameterMapEntry.getKey(), parameterMapEntry.getValue());
+			}
+		}
+
+		return query;
 	}
 
 	private SimpleJpaRepository<T, Long> getJpaRepository() {
