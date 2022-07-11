@@ -278,7 +278,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 
 		return typedQuery;
 	}
-	
+
 	private Query getQuery(String jpqlQuery, Map<String, Object> parameterMap) {
 		final Class<T> abstractEntityClass = this.getEntityClass();
 		final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);

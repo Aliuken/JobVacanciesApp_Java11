@@ -398,28 +398,28 @@ public class AuthUserRepositoryTest {
 		Assertions.assertNotNull(rootCauseMessage);
 		Assertions.assertEquals("Cannot delete or update a parent row: a foreign key constraint fails (`job-vacancies-app-db`.`auth_user_curriculum`, CONSTRAINT `auth_user_curriculum_foreign_key_3` FOREIGN KEY (`auth_user_id`) REFERENCES `auth_user` (`id`))", rootCauseMessage);
 	}
-	
+
 	@Test
 	public void testLock_UpdateOk() {
 		int rows = authUserRepository.lock(1L);
 
 		Assertions.assertEquals(1, rows);
 	}
-	
+
 	@Test
 	public void testLock_AlreadyLocked() {
 		int rows = authUserRepository.lock(7L);
 
 		Assertions.assertEquals(1, rows);
 	}
-	
+
 	@Test
 	public void testUnlock_UpdateOk() {
 		int rows = authUserRepository.unlock(7L);
 
 		Assertions.assertEquals(1, rows);
 	}
-	
+
 	@Test
 	public void testUnlock_AlreadyUnlocked() {
 		int rows = authUserRepository.unlock(1L);
