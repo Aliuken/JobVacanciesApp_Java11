@@ -119,7 +119,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return page;
 	}
 
-	default Page<T> findAll(Specification<T> abstractEntitySpecification, Pageable pageable) {
+	private Page<T> findAll(Specification<T> abstractEntitySpecification, Pageable pageable) {
 		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
 		if (jpaRepository == null) {
 			return null;
@@ -278,7 +278,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return typedQuery;
 	}
 
-	default SimpleJpaRepository<T, Long> getJpaRepository() {
+	private SimpleJpaRepository<T, Long> getJpaRepository() {
 		final Class<T> abstractEntityClass = this.getEntityClass();
 		final SimpleJpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
 
