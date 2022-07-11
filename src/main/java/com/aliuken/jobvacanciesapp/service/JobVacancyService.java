@@ -10,7 +10,7 @@ import com.aliuken.jobvacanciesapp.service.superinterface.JobVacancyExtraService
 
 public interface JobVacancyService extends JobVacancyExtraServiceInterface {
 
-	List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(boolean highlighted, JobVacancyStatus status);
+	List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(Boolean highlighted, JobVacancyStatus status);
 
 	List<JobVacancy> findAllHighlighted();
 

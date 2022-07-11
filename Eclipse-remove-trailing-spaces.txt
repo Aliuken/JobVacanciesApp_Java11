@@ -13,4 +13,5 @@ Search -> File Search -> Regular expression ->
 
 Replace... ->
 
-  With: $1
+  With:
+  $1

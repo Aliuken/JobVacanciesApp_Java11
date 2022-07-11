@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -108,7 +110,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 
 	default Page<T> findAll(Pageable pageable, TableOrder tableOrder, Specification<T> abstractEntitySpecification) {
 		if(abstractEntitySpecification == null) {
-			throw new IllegalArgumentException("abstractEntitySpecification can not be null");
+			throw new IllegalArgumentException("abstractEntitySpecification cannot be null");
 		}
 
 		final Class<T> entityClass = this.getEntityClass();
@@ -142,7 +144,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 
 	default <S extends T> Page<S> findAll(Example<S> abstractEntityExample, Pageable pageable, TableOrder tableOrder) {
 		if(abstractEntityExample == null) {
-			throw new IllegalArgumentException("abstractEntityExample can not be null");
+			throw new IllegalArgumentException("abstractEntityExample cannot be null");
 		}
 
 		Class<S> abstractEntityClass = abstractEntityExample.getProbeType();
@@ -155,7 +157,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 
 	private <S extends T> Pageable getFinalPageable(Pageable pageable, TableOrder tableOrder, Class<S> abstractEntityClass) {
 		if(pageable == null) {
-			throw new IllegalArgumentException("pageable can not be null");
+			throw new IllegalArgumentException("pageable cannot be null");
 		}
 
 		final Pageable finalPageable;
@@ -224,9 +226,42 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return finalPageable;
 	}
 
+	default T executeQuerySingleResult(String jpqlQuery, Map<String, Object> parameterMap) {
+		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
+
+		T result;
+		try {
+			result = typedQuery.getSingleResult();
+		} catch(NoResultException exception) {
+			result = null;
+		}
+
+		return result;
+	}
+
+	default List<T> executeQueryResultList(String jpqlQuery, Map<String, Object> parameterMap) {
+		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
+		final List<T> result = typedQuery.getResultList();
+
+		return result;
+	}
+
+	private TypedQuery<T> getTypedQuery(String jpqlQuery, Map<String, Object> parameterMap) {
+		final Class<T> abstractEntityClass = this.getEntityClass();
+		final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);
+		final TypedQuery<T> typedQuery = entityManager.createQuery(jpqlQuery, abstractEntityClass);
+		if(parameterMap != null) {
+			for(Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
+				typedQuery.setParameter(parameterMapEntry.getKey(), parameterMapEntry.getValue());
+			}
+		}
+
+		return typedQuery;
+	}
+
 	default JpaRepository<T, Long> getJpaRepository() {
-		Class<T> abstractEntityClass = this.getEntityClass();
-		JpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
+		final Class<T> abstractEntityClass = this.getEntityClass();
+		final JpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
 
 		return jpaRepository;
 	}
@@ -235,13 +270,19 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	public static <S extends AbstractEntity> JpaRepository<S, Long> getJpaRepository(Class<S> abstractEntityClass) {
 		JpaRepository<S, Long> jpaRepository = (JpaRepository<S, Long>) JPA_REPOSITORY_MAP.get(abstractEntityClass);
 		if(jpaRepository == null) {
-			final JpaContext jpaContext = ApplicationContextUtil.getBean(JpaContext.class);
-			final EntityManager entityManager = jpaContext.getEntityManagerByManagedType(abstractEntityClass);
+			final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);
 			jpaRepository = new SimpleJpaRepository<S, Long>(abstractEntityClass, entityManager);
 			JPA_REPOSITORY_MAP.put(abstractEntityClass, jpaRepository);
 		}
 
 		return jpaRepository;
+	}
+
+	private static <S extends AbstractEntity> EntityManager getEntityManager(Class<S> abstractEntityClass) {
+		final JpaContext jpaContext = ApplicationContextUtil.getBean(JpaContext.class);
+		final EntityManager entityManager = jpaContext.getEntityManagerByManagedType(abstractEntityClass);
+
+		return entityManager;
 	}
 
 }

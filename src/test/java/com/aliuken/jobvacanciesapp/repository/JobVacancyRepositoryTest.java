@@ -46,7 +46,7 @@ public class JobVacancyRepositoryTest {
 
 	@Test
 	public void testFindByHighlightedAndStatusOrderByIdDesc_Ok() {
-		List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(false, JobVacancyStatus.CREATED);
+		List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(Boolean.FALSE, JobVacancyStatus.CREATED);
 
 		Assertions.assertNotNull(jobVacancies);
 		Assertions.assertEquals(5, jobVacancies.size());
@@ -80,7 +80,7 @@ public class JobVacancyRepositoryTest {
 
 	@Test
 	public void testFindByHighlightedAndStatusOrderByIdDesc_NullStatus() {
-		List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(false, null);
+		List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(Boolean.FALSE, null);
 
 		Assertions.assertNotNull(jobVacancies);
 		Assertions.assertTrue(jobVacancies.isEmpty());

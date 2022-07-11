@@ -24,7 +24,7 @@ public class JobVacancyServiceImpl implements JobVacancyService {
 	private JobVacancyRepository jobVacancyRepository;
 
 	@Override
-	public List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(boolean highlighted, JobVacancyStatus status) {
+	public List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(Boolean highlighted, JobVacancyStatus status) {
 		return jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(highlighted, status);
 	}
 
@@ -55,7 +55,7 @@ public class JobVacancyServiceImpl implements JobVacancyService {
 
 	@Override
 	public List<JobVacancy> findAllHighlighted() {
-		return jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(true, JobVacancyStatus.APPROVED);
+		return jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(Boolean.TRUE, JobVacancyStatus.APPROVED);
 	}
 
 	@Override
