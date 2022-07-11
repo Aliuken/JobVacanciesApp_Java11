@@ -64,7 +64,7 @@ The database of the application comes with 8 predefined users with the following
 ```
 
 NOTES:
-* The users **anonymous@aliuken.com** is used for the operations were the user is still not logged in. You cannot logged in as the anonymous user as it doesn't have password and role.
+* The users **anonymous@aliuken.com** is used for the operations when the user is still not logged in. You cannot logged in as the anonymous user as it doesn't have password and role.
 * The users **antonio@aliuken.com** and **pai.mei@aliuken.com** can still not be used. They require confirmation via email.
 * The priority order of the roles is: **administrator > supervisor > user**.
 * When you create a user for your personal email account, its role will be "user".
