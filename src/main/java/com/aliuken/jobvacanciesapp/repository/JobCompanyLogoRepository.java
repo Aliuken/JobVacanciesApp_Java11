@@ -19,7 +19,8 @@ public interface JobCompanyLogoRepository extends JpaRepositoryWithPaginationAnd
 		parameterMap.put("jobCompany", jobCompany);
 		parameterMap.put("fileName", fileName);
 
-		JobCompanyLogo jobCompanyLogo = this.executeQuerySingleResult("SELECT jcl FROM JobCompanyLogo jcl WHERE jcl.jobCompany = :jobCompany AND jcl.fileName = :fileName", parameterMap);
+		JobCompanyLogo jobCompanyLogo = this.executeQuerySingleResult(
+			"SELECT jcl FROM JobCompanyLogo jcl WHERE jcl.jobCompany = :jobCompany AND jcl.fileName = :fileName", parameterMap);
 		return jobCompanyLogo;
 	}
 

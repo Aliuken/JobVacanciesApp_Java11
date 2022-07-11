@@ -20,7 +20,8 @@ public interface AuthUserCredentialsRepository extends JpaRepositoryWithPaginati
 		Map<String, Object> parameterMap = new HashMap<>();
 		parameterMap.put("email", email);
 
-		AuthUserCredentials authUserCredentials = this.executeQuerySingleResult("SELECT auc FROM AuthUserCredentials auc WHERE auc.email = :email", parameterMap);
+		AuthUserCredentials authUserCredentials = this.executeQuerySingleResult(
+			"SELECT auc FROM AuthUserCredentials auc WHERE auc.email = :email", parameterMap);
 		return authUserCredentials;
 	}
 
@@ -29,7 +30,8 @@ public interface AuthUserCredentialsRepository extends JpaRepositoryWithPaginati
 		parameterMap.put("email", email);
 		parameterMap.put("encryptedPassword", encryptedPassword);
 
-		AuthUserCredentials authUserCredentials = this.executeQuerySingleResult("SELECT auc FROM AuthUserCredentials auc WHERE auc.email = :email AND auc.encryptedPassword = :encryptedPassword", parameterMap);
+		AuthUserCredentials authUserCredentials = this.executeQuerySingleResult(
+			"SELECT auc FROM AuthUserCredentials auc WHERE auc.email = :email AND auc.encryptedPassword = :encryptedPassword", parameterMap);
 		return authUserCredentials;
 	}
 

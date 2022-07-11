@@ -17,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -28,18 +27,18 @@ import com.aliuken.jobvacanciesapp.util.ApplicationContextUtil;
 import com.aliuken.jobvacanciesapp.util.StringUtils;
 
 @NoRepositoryBean
-public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
-	public static final Map<Class<? extends AbstractEntity>, JpaRepository<? extends AbstractEntity, Long>> JPA_REPOSITORY_MAP = new HashMap<>();
+public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity> extends JpaRepository<T, Long> {
+	public static final Map<Class<? extends AbstractEntity>, SimpleJpaRepository<? extends AbstractEntity, Long>> JPA_REPOSITORY_MAP = new HashMap<>();
 
 	abstract Class<T> getEntityClass();
 
 	default T findByIdNotOptional(Long id) {
-		if(id == null) {
+		if (id == null) {
 			return null;
 		}
 
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -54,8 +53,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default void deleteByIdAndFlush(Long id) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return;
 		}
 
@@ -64,8 +63,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default <S extends T> S saveAndFlush(S abstractEntity) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -74,8 +73,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default List<T> findAll() {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -85,8 +84,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default Page<T> findAll(Pageable pageable) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -96,8 +95,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default Page<T> findAll(Pageable pageable, TableOrder tableOrder) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -109,7 +108,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default Page<T> findAll(Pageable pageable, TableOrder tableOrder, Specification<T> abstractEntitySpecification) {
-		if(abstractEntitySpecification == null) {
+		if (abstractEntitySpecification == null) {
 			throw new IllegalArgumentException("abstractEntitySpecification cannot be null");
 		}
 
@@ -120,9 +119,20 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return page;
 	}
 
+	default Page<T> findAll(Specification<T> abstractEntitySpecification, Pageable pageable) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
+			return null;
+		}
+
+		Page<T> page = jpaRepository.findAll(abstractEntitySpecification, pageable);
+
+		return page;
+	}
+
 	default <S extends T> List<S> findAll(Example<S> abstractEntityExample) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -132,8 +142,8 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default <S extends T> Page<S> findAll(Example<S> abstractEntityExample, Pageable pageable) {
-		JpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
+		SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if (jpaRepository == null) {
 			return null;
 		}
 
@@ -143,7 +153,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 	}
 
 	default <S extends T> Page<S> findAll(Example<S> abstractEntityExample, Pageable pageable, TableOrder tableOrder) {
-		if(abstractEntityExample == null) {
+		if (abstractEntityExample == null) {
 			throw new IllegalArgumentException("abstractEntityExample cannot be null");
 		}
 
@@ -155,66 +165,67 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return page;
 	}
 
-	private <S extends T> Pageable getFinalPageable(Pageable pageable, TableOrder tableOrder, Class<S> abstractEntityClass) {
-		if(pageable == null) {
+	private <S extends T> Pageable getFinalPageable(Pageable pageable, TableOrder tableOrder,
+			Class<S> abstractEntityClass) {
+		if (pageable == null) {
 			throw new IllegalArgumentException("pageable cannot be null");
 		}
 
 		final Pageable finalPageable;
-		if(tableOrder == null) {
+		if (tableOrder == null) {
 			finalPageable = pageable;
-		} else if(TableOrder.ID_ASC.equals(tableOrder)) {
+		} else if (TableOrder.ID_ASC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
-		} else if(TableOrder.ID_DESC.equals(tableOrder)) {
+		} else if (TableOrder.ID_DESC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "id"));
-		} else if(TableOrder.FIRST_REGISTRATION_DATE_TIME_ASC.equals(tableOrder)) {
+		} else if (TableOrder.FIRST_REGISTRATION_DATE_TIME_ASC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "firstRegistrationDateTime"));
-		} else if(TableOrder.FIRST_REGISTRATION_DATE_TIME_DESC.equals(tableOrder)) {
+		} else if (TableOrder.FIRST_REGISTRATION_DATE_TIME_DESC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "firstRegistrationDateTime"));
-		} else if(TableOrder.FIRST_REGISTRATION_AUTH_USER_EMAIL_ASC.equals(tableOrder)) {
+		} else if (TableOrder.FIRST_REGISTRATION_AUTH_USER_EMAIL_ASC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "firstRegistrationAuthUser.email"));
-		} else if(TableOrder.FIRST_REGISTRATION_AUTH_USER_EMAIL_DESC.equals(tableOrder)) {
+		} else if (TableOrder.FIRST_REGISTRATION_AUTH_USER_EMAIL_DESC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "firstRegistrationAuthUser.email"));
-		} else if(TableOrder.LAST_MODIFICATION_DATE_TIME_ASC.equals(tableOrder)) {
+		} else if (TableOrder.LAST_MODIFICATION_DATE_TIME_ASC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "lastModificationDateTime"));
-		} else if(TableOrder.LAST_MODIFICATION_DATE_TIME_DESC.equals(tableOrder)) {
+		} else if (TableOrder.LAST_MODIFICATION_DATE_TIME_DESC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "lastModificationDateTime"));
-		} else if(TableOrder.LAST_MODIFICATION_AUTH_USER_EMAIL_ASC.equals(tableOrder)) {
+		} else if (TableOrder.LAST_MODIFICATION_AUTH_USER_EMAIL_ASC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "lastModificationAuthUser.email"));
-		} else if(TableOrder.LAST_MODIFICATION_AUTH_USER_EMAIL_DESC.equals(tableOrder)) {
+		} else if (TableOrder.LAST_MODIFICATION_AUTH_USER_EMAIL_DESC.equals(tableOrder)) {
 			finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "lastModificationAuthUser.email"));
-		} else if(TableOrder.EMAIL_ASC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.EMAIL_ASC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "email"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "authUser.email"));
 			}
-		} else if(TableOrder.EMAIL_DESC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.EMAIL_DESC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "email"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "authUser.email"));
 			}
-		} else if(TableOrder.NAME_ASC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.NAME_ASC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "name"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "authUser.name"));
 			}
-		} else if(TableOrder.NAME_DESC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.NAME_DESC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "name"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "authUser.name"));
 			}
-		} else if(TableOrder.SURNAMES_ASC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.SURNAMES_ASC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "surnames"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "authUser.surnames"));
 			}
-		} else if(TableOrder.SURNAMES_DESC.equals(tableOrder)) {
-			if(AuthUser.class.equals(abstractEntityClass)) {
+		} else if (TableOrder.SURNAMES_DESC.equals(tableOrder)) {
+			if (AuthUser.class.equals(abstractEntityClass)) {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "surnames"));
 			} else {
 				finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "authUser.surnames"));
@@ -232,7 +243,7 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		T result;
 		try {
 			result = typedQuery.getSingleResult();
-		} catch(NoResultException exception) {
+		} catch (NoResultException exception) {
 			result = null;
 		}
 
@@ -246,12 +257,20 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return result;
 	}
 
+	default int executeUpdate(String jpqlQuery, Map<String, Object> parameterMap) {
+		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
+
+		int rows = typedQuery.executeUpdate();
+
+		return rows;
+	}
+
 	private TypedQuery<T> getTypedQuery(String jpqlQuery, Map<String, Object> parameterMap) {
 		final Class<T> abstractEntityClass = this.getEntityClass();
 		final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);
 		final TypedQuery<T> typedQuery = entityManager.createQuery(jpqlQuery, abstractEntityClass);
-		if(parameterMap != null) {
-			for(Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
+		if (parameterMap != null) {
+			for (Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
 				typedQuery.setParameter(parameterMapEntry.getKey(), parameterMapEntry.getValue());
 			}
 		}
@@ -259,17 +278,17 @@ public interface JpaRepositoryWithPaginationAndSorting<T extends AbstractEntity>
 		return typedQuery;
 	}
 
-	default JpaRepository<T, Long> getJpaRepository() {
+	default SimpleJpaRepository<T, Long> getJpaRepository() {
 		final Class<T> abstractEntityClass = this.getEntityClass();
-		final JpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
+		final SimpleJpaRepository<T, Long> jpaRepository = JpaRepositoryWithPaginationAndSorting.getJpaRepository(abstractEntityClass);
 
 		return jpaRepository;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <S extends AbstractEntity> JpaRepository<S, Long> getJpaRepository(Class<S> abstractEntityClass) {
-		JpaRepository<S, Long> jpaRepository = (JpaRepository<S, Long>) JPA_REPOSITORY_MAP.get(abstractEntityClass);
-		if(jpaRepository == null) {
+	public static <S extends AbstractEntity> SimpleJpaRepository<S, Long> getJpaRepository(Class<S> abstractEntityClass) {
+		SimpleJpaRepository<S, Long> jpaRepository = (SimpleJpaRepository<S, Long>) JPA_REPOSITORY_MAP.get(abstractEntityClass);
+		if (jpaRepository == null) {
 			final EntityManager entityManager = JpaRepositoryWithPaginationAndSorting.getEntityManager(abstractEntityClass);
 			jpaRepository = new SimpleJpaRepository<S, Long>(abstractEntityClass, entityManager);
 			JPA_REPOSITORY_MAP.put(abstractEntityClass, jpaRepository);

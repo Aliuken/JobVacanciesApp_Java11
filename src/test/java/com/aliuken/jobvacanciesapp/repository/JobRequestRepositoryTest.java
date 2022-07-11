@@ -15,9 +15,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.aliuken.jobvacanciesapp.MainApplication;
-import com.aliuken.jobvacanciesapp.model.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.AuthUser;
 import com.aliuken.jobvacanciesapp.model.JobRequest;
+import com.aliuken.jobvacanciesapp.model.JobVacancy;
 import com.aliuken.jobvacanciesapp.util.ApplicationContextUtil;
 import com.aliuken.jobvacanciesapp.util.ThrowableUtils;
 

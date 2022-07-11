@@ -24,7 +24,8 @@ public interface JobRequestRepository extends JpaRepositoryWithPaginationAndSort
 		parameterMap.put("authUser", authUser);
 		parameterMap.put("jobVacancy", jobVacancy);
 
-		JobRequest jobRequest = this.executeQuerySingleResult("SELECT jr FROM JobRequest jr WHERE jr.authUser = :authUser AND jr.jobVacancy = :jobVacancy", parameterMap);
+		JobRequest jobRequest = this.executeQuerySingleResult(
+			"SELECT jr FROM JobRequest jr WHERE jr.authUser = :authUser AND jr.jobVacancy = :jobVacancy", parameterMap);
 		return jobRequest;
 	}
 
@@ -33,7 +34,8 @@ public interface JobRequestRepository extends JpaRepositoryWithPaginationAndSort
 		parameterMap.put("authUser", authUser);
 		parameterMap.put("curriculumFileName", curriculumFileName);
 
-		List<JobRequest> jobRequests = this.executeQueryResultList("SELECT jr FROM JobRequest jr WHERE jr.authUser = :authUser AND jr.curriculumFileName = :curriculumFileName", parameterMap);
+		List<JobRequest> jobRequests = this.executeQueryResultList(
+			"SELECT jr FROM JobRequest jr WHERE jr.authUser = :authUser AND jr.curriculumFileName = :curriculumFileName", parameterMap);
 		return jobRequests;
 	}
 

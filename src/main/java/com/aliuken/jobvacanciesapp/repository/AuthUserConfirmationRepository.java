@@ -20,7 +20,8 @@ public interface AuthUserConfirmationRepository extends JpaRepositoryWithPaginat
 		Map<String, Object> parameterMap = new HashMap<>();
 		parameterMap.put("email", email);
 
-		AuthUserConfirmation authUserConfirmation = this.executeQuerySingleResult("SELECT auc FROM AuthUserConfirmation auc WHERE auc.email = :email", parameterMap);
+		AuthUserConfirmation authUserConfirmation = this.executeQuerySingleResult(
+			"SELECT auc FROM AuthUserConfirmation auc WHERE auc.email = :email", parameterMap);
 		return authUserConfirmation;
 	}
 
@@ -29,7 +30,8 @@ public interface AuthUserConfirmationRepository extends JpaRepositoryWithPaginat
 		parameterMap.put("email", email);
 		parameterMap.put("uuid", uuid);
 
-		AuthUserConfirmation authUserConfirmation = this.executeQuerySingleResult("SELECT auc FROM AuthUserConfirmation auc WHERE auc.email = :email AND auc.uuid = :uuid", parameterMap);
+		AuthUserConfirmation authUserConfirmation = this.executeQuerySingleResult(
+			"SELECT auc FROM AuthUserConfirmation auc WHERE auc.email = :email AND auc.uuid = :uuid", parameterMap);
 		return authUserConfirmation;
 	}
 

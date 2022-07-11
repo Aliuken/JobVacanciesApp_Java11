@@ -20,7 +20,8 @@ public interface JobVacancyRepository extends JpaRepositoryWithPaginationAndSort
 		parameterMap.put("highlighted", highlighted);
 		parameterMap.put("status", status);
 
-		List<JobVacancy> jobVacancies = this.executeQueryResultList("SELECT jv FROM JobVacancy jv WHERE jv.highlighted = :highlighted AND jv.status = :status ORDER BY id desc", parameterMap);
+		List<JobVacancy> jobVacancies = this.executeQueryResultList(
+			"SELECT jv FROM JobVacancy jv WHERE jv.highlighted = :highlighted AND jv.status = :status ORDER BY id desc", parameterMap);
 		return jobVacancies;
 	}
 

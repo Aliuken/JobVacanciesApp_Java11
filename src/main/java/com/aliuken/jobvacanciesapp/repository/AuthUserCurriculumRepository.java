@@ -19,7 +19,8 @@ public interface AuthUserCurriculumRepository extends JpaRepositoryWithPaginatio
 		parameterMap.put("authUser", authUser);
 		parameterMap.put("fileName", fileName);
 
-		AuthUserCurriculum authUserCurriculum = this.executeQuerySingleResult("SELECT auc FROM AuthUserCurriculum auc WHERE auc.authUser = :authUser AND auc.fileName = :fileName", parameterMap);
+		AuthUserCurriculum authUserCurriculum = this.executeQuerySingleResult(
+			"SELECT auc FROM AuthUserCurriculum auc WHERE auc.authUser = :authUser AND auc.fileName = :fileName", parameterMap);
 		return authUserCurriculum;
 	}
 

@@ -20,7 +20,8 @@ public interface AuthUserRoleRepository extends JpaRepositoryWithPaginationAndSo
 		parameterMap.put("authUser", authUser);
 		parameterMap.put("authRole", authRole);
 
-		AuthUserRole authUserRole = this.executeQuerySingleResult("SELECT aur FROM AuthUserRole aur WHERE aur.authUser = :authUser AND aur.authRole = :authRole", parameterMap);
+		AuthUserRole authUserRole = this.executeQuerySingleResult(
+			"SELECT aur FROM AuthUserRole aur WHERE aur.authUser = :authUser AND aur.authRole = :authRole", parameterMap);
 		return authUserRole;
 	}
 

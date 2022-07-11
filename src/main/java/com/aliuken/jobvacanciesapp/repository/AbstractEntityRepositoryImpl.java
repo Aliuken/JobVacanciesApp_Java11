@@ -10,16 +10,16 @@ import com.aliuken.jobvacanciesapp.model.AbstractEntity;
 @Repository
 public class AbstractEntityRepositoryImpl<T extends AbstractEntity> implements AbstractEntityRepository<T> {
 	@PersistenceContext
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	public T refreshEntity(T abstractEntity) {
-		if(abstractEntity == null) {
+		if (abstractEntity == null) {
 			return null;
 		}
 
 		Long abstractEntityId = abstractEntity.getId();
-		if(abstractEntityId == null) {
+		if (abstractEntityId == null) {
 			return null;
 		}
 
