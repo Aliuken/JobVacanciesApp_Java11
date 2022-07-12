@@ -14,13 +14,13 @@ public class JobVacancyStatusConverter implements AttributeConverter<JobVacancyS
 			return null;
 		}
 
-		return jobVacancyStatus.getCode();
+		final String jobVacancyStatusCode = jobVacancyStatus.getCode();
+		return jobVacancyStatusCode;
 	}
 
 	@Override
 	public JobVacancyStatus convertToEntityAttribute(String code) {
-		JobVacancyStatus jobVacancyStatus = JobVacancyStatus.findByCode(code);
-
+		final JobVacancyStatus jobVacancyStatus = JobVacancyStatus.findByCode(code);
 		return jobVacancyStatus;
 	}
 

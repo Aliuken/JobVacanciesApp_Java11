@@ -34,96 +34,85 @@ public class DateTimeUtils {
 	}
 
 	private static String convertToStringWithDefaultValue(LocalDateTime localDateTime, String defaultValue) {
-		final String text;
-		if(localDateTime != null) {
-			text = localDateTime.format(Constants.DATE_TIME_FORMATTER);
-		} else {
-			text = defaultValue;
+		if(localDateTime == null) {
+			return defaultValue;
 		}
 
+		final String text = localDateTime.format(Constants.DATE_TIME_FORMATTER);
 		return text;
 	}
 
 	private static LocalDateTime convertFromStringWithDefaultValue(String dateTimeString, String defaultValue) {
-		final LocalDateTime localDateTime;
-		if(dateTimeString != null && !dateTimeString.equals(defaultValue)) {
-			localDateTime = LocalDateTime.parse(dateTimeString, Constants.DATE_TIME_FORMATTER);
-		} else {
-			localDateTime = null;
+		if(dateTimeString == null || dateTimeString.equals(defaultValue)) {
+			return null;
 		}
+
+		final LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, Constants.DATE_TIME_FORMATTER);
 
 	    return localDateTime;
 	}
 
 	public static String convertToString(LocalDateTime localDateTime) {
-		final String text;
-		if(localDateTime != null) {
-			text = localDateTime.format(Constants.DATE_TIME_FORMATTER);
-		} else {
-			text = null;
+		if(localDateTime == null) {
+			return null;
 		}
 
+		final String text = localDateTime.format(Constants.DATE_TIME_FORMATTER);
 		return text;
 	}
 
 	public static LocalDateTime convertFromString(String dateTimeString) {
-		final LocalDateTime localDateTime;
-		if(dateTimeString != null) {
-			localDateTime = LocalDateTime.parse(dateTimeString, Constants.DATE_TIME_FORMATTER);
-		} else {
-			localDateTime = null;
+		if(dateTimeString == null) {
+			return null;
 		}
 
+		final LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, Constants.DATE_TIME_FORMATTER);
 	    return localDateTime;
 	}
 
 	public static Date convertToDate(LocalDateTime localDateTime) {
-		final Date date;
-		if(localDateTime != null) {
-			final ZoneId zoneId = ZoneId.systemDefault();
-			final ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
-			final Instant instant = zonedDateTime.toInstant();
-			date = Date.from(instant);
-		} else {
-			date = null;
+		if(localDateTime == null) {
+			return null;
 		}
+
+		final ZoneId zoneId = ZoneId.systemDefault();
+		final ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+		final Instant instant = zonedDateTime.toInstant();
+		final Date date = Date.from(instant);
 
 	    return date;
 	}
 
 	public static LocalDateTime convertFromDate(Date date) {
-		final LocalDateTime localDateTime;
-		if(date != null) {
-			final Instant instant = date.toInstant();
-			final ZoneId zoneId = ZoneId.systemDefault();
-			localDateTime = LocalDateTime.ofInstant(instant, zoneId);
-		} else {
-			localDateTime = null;
+		if(date == null) {
+			return null;
 		}
+
+		final Instant instant = date.toInstant();
+		final ZoneId zoneId = ZoneId.systemDefault();
+		final LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zoneId);
 
 	    return localDateTime;
 	}
 
 	public static String convertFromDateToString(Date date) {
-		final String text;
-		if(date != null) {
-			final LocalDateTime localDateTime = DateTimeUtils.convertFromDate(date);
-			text = DateTimeUtils.convertToString(localDateTime);
-		} else {
-			text = null;
+		if(date == null) {
+			return null;
 		}
+
+		final LocalDateTime localDateTime = DateTimeUtils.convertFromDate(date);
+		final String text = DateTimeUtils.convertToString(localDateTime);
 
 		return text;
 	}
 
 	public static Date convertFromStringToDate(String dateTimeString) {
-		final Date date;
-		if(dateTimeString != null) {
-			final LocalDateTime localDateTime = DateTimeUtils.convertFromString(dateTimeString);
-			date = DateTimeUtils.convertToDate(localDateTime);
-		} else {
-			date = null;
+		if(dateTimeString == null) {
+			return null;
 		}
+
+		final LocalDateTime localDateTime = DateTimeUtils.convertFromString(dateTimeString);
+		final Date date = DateTimeUtils.convertToDate(localDateTime);
 
 		return date;
 	}

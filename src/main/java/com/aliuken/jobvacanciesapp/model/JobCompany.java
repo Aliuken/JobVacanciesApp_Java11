@@ -96,60 +96,56 @@ public class JobCompany extends AbstractEntity {
 	}
 
 	public JobCompanyLogo getSelectedJobCompanyLogo() {
-		final JobCompanyLogo selectedJobCompanyLogo;
-		if(selectedLogoFileName != null) {
-			selectedJobCompanyLogo = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
-					.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-					.findFirst()
-					.orElse(null);
-		} else {
-			selectedJobCompanyLogo = null;
+		if(selectedLogoFileName == null) {
+			return null;
 		}
+
+		final JobCompanyLogo selectedJobCompanyLogo = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
+				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+				.findFirst()
+				.orElse(null);
 
 		return selectedJobCompanyLogo;
 	}
 
 	public Long getSelectedJobCompanyLogoId() {
-		final Long selectedJobCompanyLogoId;
-		if(selectedLogoFileName != null) {
-			selectedJobCompanyLogoId = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
-					.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-					.map(jcl -> jcl.getId())
-					.findFirst()
-					.orElse(null);
-		} else {
-			selectedJobCompanyLogoId = null;
+		if(selectedLogoFileName == null) {
+			return null;
 		}
+
+		final Long selectedJobCompanyLogoId = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
+				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+				.map(jcl -> jcl.getId())
+				.findFirst()
+				.orElse(null);
 
 		return selectedJobCompanyLogoId;
 	}
 
 	public String getSelectedJobCompanyLogoFilePath() {
-		final String selectedJobCompanyLogoFilePath;
-		if(selectedLogoFileName != null) {
-			selectedJobCompanyLogoFilePath = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
-					.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-					.map(jcl -> jcl.getFilePath())
-					.findFirst()
-					.orElse(Constants.NO_SELECTED_LOGO_FILE_PATH);
-		} else {
-			selectedJobCompanyLogoFilePath = Constants.NO_SELECTED_LOGO_FILE_PATH;
+		if(selectedLogoFileName == null) {
+			return Constants.NO_SELECTED_LOGO_FILE_PATH;
 		}
+
+		final String selectedJobCompanyLogoFilePath = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
+				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+				.map(jcl -> jcl.getFilePath())
+				.findFirst()
+				.orElse(Constants.NO_SELECTED_LOGO_FILE_PATH);
 
 		return selectedJobCompanyLogoFilePath;
 	}
 
 	public String getSelectedJobCompanyLogoSelectionName() {
-		final String selectedJobCompanyLogoSelectionName;
-		if(selectedLogoFileName != null) {
-			selectedJobCompanyLogoSelectionName = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
-					.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-					.map(jcl -> jcl.getSelectionName())
-					.findFirst()
-					.orElse(null);
-		} else {
-			selectedJobCompanyLogoSelectionName = null;
+		if(selectedLogoFileName == null) {
+			return null;
 		}
+
+		final String selectedJobCompanyLogoSelectionName = StreamUtils.ofNullableCollectionParallel(this.getJobCompanyLogos())
+				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+				.map(jcl -> jcl.getSelectionName())
+				.findFirst()
+				.orElse(null);
 
 		return selectedJobCompanyLogoSelectionName;
 	}

@@ -85,7 +85,7 @@ public class JdbcPersistentTokenRepositoryImpl extends JdbcUserDetailsManager im
 		} catch (IncorrectResultSizeDataAccessException ex) {
 			this.logger.error(LogMessage.format("Querying token for series '%s' returned more than one value. Series should be unique", seriesId));
 		} catch (DataAccessException ex) {
-			this.logger.error("Failed to load token for series " + seriesId, ex);
+			this.logger.error(LogMessage.format("Failed to load token for series '%s'", seriesId), ex);
 		}
 		return null;
 	}

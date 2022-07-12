@@ -11,25 +11,21 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
 
 	@Override
 	public Date convertToDatabaseColumn(LocalDate localDate) {
-		final Date sqlDate;
-		if (localDate != null) {
-			sqlDate = Date.valueOf(localDate);
-		} else {
-			sqlDate = null;
+		if (localDate == null) {
+			return null;
 		}
 
+		final Date sqlDate = Date.valueOf(localDate);
 		return sqlDate;
 	}
 
 	@Override
 	public LocalDate convertToEntityAttribute(Date sqlDate) {
-		final LocalDate localDate;
-		if (sqlDate != null) {
-			localDate = sqlDate.toLocalDate();
-		} else {
-			localDate = null;
+		if (sqlDate == null) {
+			return null;
 		}
 
+		final LocalDate localDate = sqlDate.toLocalDate();
 		return localDate;
 	}
 

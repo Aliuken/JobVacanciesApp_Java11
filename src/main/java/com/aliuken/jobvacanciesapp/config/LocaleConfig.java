@@ -21,14 +21,11 @@ public class LocaleConfig {
 			@Override
 			public Locale resolveLocale(HttpServletRequest httpServletRequest) {
 				String language = httpServletRequest.getParameter("lang");
-
-				Locale locale;
-				if (language != null && !language.isEmpty()) {
-					locale = StringUtils.parseLocaleString(language);
-				} else {
-					locale = Locale.US;
+				if (language == null || language.isEmpty()) {
+					return Locale.US;
 				}
 
+				final Locale locale = StringUtils.parseLocaleString(language);
 				return locale;
 			}
 		};

@@ -35,97 +35,86 @@ public class DateUtils {
 	}
 
 	private static String convertToStringWithDefaultValue(LocalDate localDate, String defaultValue) {
-		final String text;
-		if(localDate != null) {
-			text = localDate.format(Constants.DATE_FORMATTER);
-		} else {
-			text = defaultValue;
+		if(localDate == null) {
+			return defaultValue;
 		}
+
+		final String text = localDate.format(Constants.DATE_FORMATTER);
 
 		return text;
 	}
 
 	private static LocalDate convertFromStringWithDefaultValue(String dateString, String defaultValue) {
-		final LocalDate localDate;
-		if(dateString != null && !dateString.equals(defaultValue)) {
-			localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
-		} else {
-			localDate = null;
+		if(dateString == null || dateString.equals(defaultValue)) {
+			return null;
 		}
 
+		final LocalDate localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
 	    return localDate;
 	}
 
 	public static String convertToString(LocalDate localDate) {
-		final String text;
-		if(localDate != null) {
-			text = localDate.format(Constants.DATE_FORMATTER);
-		} else {
-			text = null;
+		if(localDate == null) {
+			return null;
 		}
 
+		final String text = localDate.format(Constants.DATE_FORMATTER);
 		return text;
 	}
 
 	public static LocalDate convertFromString(String dateString) {
-		final LocalDate localDate;
-		if(dateString != null) {
-			localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
-		} else {
-			localDate = null;
+		if(dateString == null) {
+			return null;
 		}
 
+		final LocalDate localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
 	    return localDate;
 	}
 
 	public static Date convertToDate(LocalDate localDate) {
-		final Date date;
-		if(localDate != null) {
-			final ZoneId zoneId = ZoneId.systemDefault();
-			final LocalDateTime localDateTime = localDate.atStartOfDay();
-			final ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
-			final Instant instant = zonedDateTime.toInstant();
-			date = Date.from(instant);
-		} else {
-			date = null;
+		if(localDate == null) {
+			return null;
 		}
+
+		final ZoneId zoneId = ZoneId.systemDefault();
+		final LocalDateTime localDateTime = localDate.atStartOfDay();
+		final ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+		final Instant instant = zonedDateTime.toInstant();
+		final Date date = Date.from(instant);
 
 	    return date;
 	}
 
 	public static LocalDate convertFromDate(Date date) {
-		final LocalDate localDate;
-		if(date != null) {
-			final Instant instant = date.toInstant();
-			final ZoneId zoneId = ZoneId.systemDefault();
-			localDate = LocalDate.ofInstant(instant, zoneId);
-		} else {
-			localDate = null;
+		if(date == null) {
+			return null;
 		}
+
+		final Instant instant = date.toInstant();
+		final ZoneId zoneId = ZoneId.systemDefault();
+		final LocalDate localDate = LocalDate.ofInstant(instant, zoneId);
 
 	    return localDate;
 	}
 
 	public static String convertFromDateToString(Date date) {
-		final String text;
-		if(date != null) {
-			final LocalDate localDate = DateUtils.convertFromDate(date);
-			text = DateUtils.convertToString(localDate);
-		} else {
-			text = null;
+		if(date == null) {
+			return null;
 		}
+
+		final LocalDate localDate = DateUtils.convertFromDate(date);
+		final String text = DateUtils.convertToString(localDate);
 
 		return text;
 	}
 
 	public static Date convertFromStringToDate(String dateTimeString) {
-		final Date date;
-		if(dateTimeString != null) {
-			final LocalDate localDate = DateUtils.convertFromString(dateTimeString);
-			date = DateUtils.convertToDate(localDate);
-		} else {
-			date = null;
+		if(dateTimeString == null) {
+			return null;
 		}
+
+		final LocalDate localDate = DateUtils.convertFromString(dateTimeString);
+		final Date date = DateUtils.convertToDate(localDate);
 
 		return date;
 	}

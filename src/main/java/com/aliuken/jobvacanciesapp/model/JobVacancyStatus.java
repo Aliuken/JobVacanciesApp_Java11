@@ -30,16 +30,16 @@ public enum JobVacancyStatus implements Serializable {
 	}
 
 	public static JobVacancyStatus findByCode(final String code) {
-		if(code != null && !code.isEmpty()) {
-			JobVacancyStatus jobVacancyStatus = EnumSet.allOf(JobVacancyStatus.class).stream().parallel()
-		       .filter(value -> value.code.equals(code))
-		       .findFirst()
-		       .orElseThrow(() -> new IllegalArgumentException("JobVacancyStatus code does not exist"));
-
-			return jobVacancyStatus;
-		} else {
+		if(code == null || code.isEmpty()) {
 			return null;
 		}
+
+		final JobVacancyStatus jobVacancyStatus = EnumSet.allOf(JobVacancyStatus.class).stream().parallel()
+				.filter(value -> value.code.equals(code))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("JobVacancyStatus code does not exist"));
+
+		return jobVacancyStatus;
 	}
 
 }

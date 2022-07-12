@@ -3,7 +3,6 @@ package com.aliuken.jobvacanciesapp.util;
 public class ThrowableUtils {
 	public static String getRootCauseMessage(Throwable throwable) {
 		Throwable rootCause = ThrowableUtils.getRootCause(throwable);
-
 		if(rootCause == null) {
 			return null;
 		}

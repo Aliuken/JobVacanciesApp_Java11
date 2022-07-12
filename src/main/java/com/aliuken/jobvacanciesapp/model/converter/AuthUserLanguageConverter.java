@@ -14,13 +14,13 @@ public class AuthUserLanguageConverter implements AttributeConverter<AuthUserLan
 			return null;
 		}
 
-		return authUserLanguage.getCode();
+		final String authUserLanguageCode = authUserLanguage.getCode();
+		return authUserLanguageCode;
 	}
 
 	@Override
 	public AuthUserLanguage convertToEntityAttribute(String code) {
-		AuthUserLanguage authUserLanguage = AuthUserLanguage.findByCode(code);
-
+		final AuthUserLanguage authUserLanguage = AuthUserLanguage.findByCode(code);
 		return authUserLanguage;
 	}
 

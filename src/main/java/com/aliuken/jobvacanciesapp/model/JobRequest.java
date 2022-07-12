@@ -50,67 +50,59 @@ public class JobRequest extends AbstractEntityWithAuthUser {
 
 	public AuthUserCurriculum getAuthUserCurriculum() {
 		final AuthUser authUser = this.getAuthUser();
-
-		final AuthUserCurriculum authUserCurriculum;
-		if(authUser != null && curriculumFileName != null) {
-			authUserCurriculum = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
-					.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-					.findFirst()
-					.orElse(null);
-		} else {
-			authUserCurriculum = null;
+		if(authUser == null || curriculumFileName == null) {
+			return null;
 		}
+
+		final AuthUserCurriculum authUserCurriculum = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
+				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+				.findFirst()
+				.orElse(null);
 
 		return authUserCurriculum;
 	}
 
 	public Long getAuthUserCurriculumId() {
 		final AuthUser authUser = this.getAuthUser();
-
-		final Long authUserCurriculumId;
-		if(authUser != null && curriculumFileName != null) {
-			authUserCurriculumId = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
-					.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-					.map(auc -> auc.getId())
-					.findFirst()
-					.orElse(null);
-		} else {
-			authUserCurriculumId = null;
+		if(authUser == null || curriculumFileName == null) {
+			return null;
 		}
+
+		final Long authUserCurriculumId = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
+				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+				.map(auc -> auc.getId())
+				.findFirst()
+				.orElse(null);
 
 		return authUserCurriculumId;
 	}
 
 	public String getAuthUserCurriculumFilePath() {
 		final AuthUser authUser = this.getAuthUser();
-
-		final String authUserCurriculumFilePath;
-		if(authUser != null && curriculumFileName != null) {
-			authUserCurriculumFilePath = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
-					.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-					.map(auc -> auc.getFilePath())
-					.findFirst()
-					.orElse(null);
-		} else {
-			authUserCurriculumFilePath = null;
+		if(authUser == null || curriculumFileName == null) {
+			return null;
 		}
+
+		final String authUserCurriculumFilePath = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
+				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+				.map(auc -> auc.getFilePath())
+				.findFirst()
+				.orElse(null);
 
 		return authUserCurriculumFilePath;
 	}
 
 	public String getAuthUserCurriculumSelectionName() {
 		final AuthUser authUser = this.getAuthUser();
-
-		final String authUserCurriculumSelectionName;
-		if(authUser != null && curriculumFileName != null) {
-			authUserCurriculumSelectionName = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
-					.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-					.map(auc -> auc.getSelectionName())
-					.findFirst()
-					.orElse(null);
-		} else {
-			authUserCurriculumSelectionName = null;
+		if(authUser == null || curriculumFileName == null) {
+			return null;
 		}
+
+		final String authUserCurriculumSelectionName = StreamUtils.ofNullableCollectionParallel(authUser.getAuthUserCurriculums())
+				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+				.map(auc -> auc.getSelectionName())
+				.findFirst()
+				.orElse(null);
 
 		return authUserCurriculumSelectionName;
 	}

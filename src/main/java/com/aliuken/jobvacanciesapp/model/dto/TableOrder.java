@@ -51,16 +51,16 @@ public enum TableOrder implements Serializable {
 	}
 
 	public static TableOrder findByCode(final String code) {
-		if(code != null && !code.isEmpty()) {
-			TableOrder tableOrder = EnumSet.allOf(TableOrder.class).stream().parallel()
-		       .filter(value -> value.code.equals(code))
-		       .findFirst()
-		       .orElseThrow(() -> new IllegalArgumentException("TableOrder code does not exist"));
-
-			return tableOrder;
-		} else {
+		if(code == null || code.isEmpty()) {
 			return null;
 		}
+
+		final TableOrder tableOrder = EnumSet.allOf(TableOrder.class).stream().parallel()
+				.filter(value -> value.code.equals(code))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("TableOrder code does not exist"));
+
+		return tableOrder;
 	}
 
 	public static TableOrder[] valuesWithoutAuthUser() {

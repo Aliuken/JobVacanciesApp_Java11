@@ -24,16 +24,16 @@ public enum TablePageSize implements Serializable {
 	}
 
 	public static TablePageSize findByCode(final String code) {
-		if(code != null && !code.isEmpty()) {
-			TablePageSize tablePageSize = EnumSet.allOf(TablePageSize.class).stream().parallel()
-		       .filter(value -> value.code.equals(code))
-		       .findFirst()
-		       .orElseThrow(() -> new IllegalArgumentException("TablePageSize code does not exist"));
-
-			return tablePageSize;
-		} else {
+		if(code == null || code.isEmpty()) {
 			return null;
 		}
+
+		final TablePageSize tablePageSize = EnumSet.allOf(TablePageSize.class).stream().parallel()
+				.filter(value -> value.code.equals(code))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("TablePageSize code does not exist"));
+
+		return tablePageSize;
 	}
 
 }

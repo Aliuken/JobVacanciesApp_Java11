@@ -42,16 +42,16 @@ public enum TableField implements Serializable {
 	}
 
 	public static TableField findByCode(final String code) {
-		if(code != null && !code.isEmpty()) {
-			TableField tableField = EnumSet.allOf(TableField.class).stream().parallel()
-		       .filter(e -> code.equals(e.code))
-		       .findFirst()
-		       .orElseThrow(() -> new IllegalArgumentException("TableField code does not exist"));
-
-			return tableField;
-		} else {
+		if(code == null || code.isEmpty()) {
 			return null;
 		}
+
+		final TableField tableField = EnumSet.allOf(TableField.class).stream().parallel()
+				.filter(e -> code.equals(e.code))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("TableField code does not exist"));
+
+		return tableField;
 	}
 
 	public static TableField[] valuesWithoutAuthUser() {

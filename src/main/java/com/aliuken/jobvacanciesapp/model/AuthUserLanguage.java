@@ -38,16 +38,16 @@ public enum AuthUserLanguage implements Serializable {
 	}
 
 	public static AuthUserLanguage findByCode(final String code) {
-		if(code != null && !code.isEmpty()) {
-			AuthUserLanguage authUserLanguage = EnumSet.allOf(AuthUserLanguage.class).stream().parallel()
-		       .filter(value -> value.code.equals(code))
-		       .findFirst()
-		       .orElseThrow(() -> new IllegalArgumentException("AuthUserLanguage code does not exist"));
-
-			return authUserLanguage;
-		} else {
+		if(code == null || code.isEmpty()) {
 			return null;
 		}
+
+		final AuthUserLanguage authUserLanguage = EnumSet.allOf(AuthUserLanguage.class).stream().parallel()
+				.filter(value -> value.code.equals(code))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("AuthUserLanguage code does not exist"));
+
+		return authUserLanguage;
 	}
 
 }
