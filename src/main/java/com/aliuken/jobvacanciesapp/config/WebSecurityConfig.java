@@ -99,7 +99,7 @@ public class WebSecurityConfig {
 
 	private static final String[] getStaticResourcesArray() {
 		return new String[]{
-			"/images/**", "/job-company-logos/**", "/auth-user-curriculum-files/**", "/jobvacanciesapp-javascript-utils/**", "/jquery/**", "/jquery-ui-1.13.1/**", "/jquery-timepicker-addon-1.6.3-dist/**", "/tinymce-6.1.0/**", "/bootstrap-5.2.0-dist/**", "/MDB5-STANDARD-UI-KIT-Free-4.2.0/**"};
+			"/images/**", "/job-company-logos/**", "/auth-user-curriculum-files/**", "/jobvacanciesapp-javascript-utils/**", "/jquery/**", "/jquery-ui-1.13.2/**", "/jquery-timepicker-addon-1.6.3-dist/**", "/tinymce-6.1.0/**", "/bootstrap-5.2.0-dist/**", "/MDB5-STANDARD-UI-KIT-Free-4.3.0/**"};
 	}
 
 	private final ViewsAllowedDTO getViewsAllowedDTO() {

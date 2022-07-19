@@ -15,7 +15,7 @@ The technologies currently used are:
 * **JUnit 5** for unit testing.
 * **Lombok** to generate the model objects and for logging.
 * **Docker** (with **Dockerfile** and **Docker Compose**).
-* **Bootstrap 5.2.0**, **Material Design for Bootstrap 4.2.0** and **jQuery UI 1.13.1** for the look-and-feel.
+* **Bootstrap 5.2.0**, **Material Design for Bootstrap 4.3.0** and **jQuery UI 1.13.2** for the look-and-feel.
 * **Font Awesome 6.1.1** for the icons.
 * **jQuery 3.6.0** to make an easier use of **JavaScript**.
 * **jQuery Timepicker Addon 1.6.3** for the calendar element.
