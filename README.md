@@ -6,7 +6,7 @@
 
 The technologies currently used are:
 * **OpenJDK 11** as the Java implementation.
-* **Spring Boot 2.7.1** (using **Spring Security**, **Spring MVC** and **Spring Data JPA**).
+* **Spring Boot 2.7.2** (using **Spring Security**, **Spring MVC** and **Spring Data JPA**).
 * **Maven** as the dependency manager and for building the application.
 * **Thymeleaf** as the HTML5 template engine.
 * **Apache Tomcat** as the web server.
