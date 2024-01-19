@@ -1,0 +1,33 @@
+<div th:fragment="tablePagination(endpoint, entitiesTotalPages, entitiesNumber)" class="container-fluid mx-1 px-1 my-2 py-1" id="paginationContainer" name="paginationContainer">
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination" th:with="firstPageNumber = 0, lastPageNumber = ((${entitiesTotalPages} > 0) ? (${entitiesTotalPages} - 1) : 0)">
+      <li class="page-item" th:if="${entitiesNumber} != ${firstPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=${firstPageNumber})}" class="page-link" th:text="#{pagination.firstPage}"></a>
+      </li>
+      <li class="page-item disabled" th:if="${entitiesNumber} == ${firstPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=${firstPageNumber})}" class="page-link" th:text="#{pagination.firstPage}"></a>
+      </li>
+      <li class="page-item" th:if="${entitiesNumber} > ${firstPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=(${entitiesNumber} - 1))}" class="page-link" th:text="#{pagination.previousPage}"></a>
+      </li>
+      <li class="page-item disabled" th:if="${entitiesNumber} <= ${firstPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=(${entitiesNumber} - 1))}" class="page-link" th:text="#{pagination.previousPage}"></a>
+      </li>
+      &nbsp;&nbsp;&nbsp;
+      <li class="page-item" th:if="${entitiesNumber} < ${lastPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=(${entitiesNumber} + 1))}" class="page-link" th:text="#{pagination.nextPage}"></a>
+      </li>
+      <li class="page-item disabled" th:if="${entitiesNumber} >= ${lastPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=(${entitiesNumber} + 1))}" class="page-link" th:text="#{pagination.nextPage}"></a>
+      </li>
+      <li class="page-item" th:if="${entitiesNumber} != ${lastPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=${lastPageNumber})}" class="page-link" th:text="#{pagination.lastPage}"></a>
+      </li>
+      <li class="page-item disabled" th:if="${entitiesNumber} == ${lastPageNumber}">
+        <a th:href="@{${endpoint} (languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=${lastPageNumber})}" class="page-link" th:text="#{pagination.lastPage}"></a>
+      </li>
+    </ul>
+  </nav>
+
+</div>

@@ -1,0 +1,140 @@
+<div th:fragment="tableFilterAndPaginationForm(endpoint, showFilterForm, isAuthUserEntity, containsDifferentAuthUsers, predefinedFilter, isUnmodifiableEntity)" class="container-fluid mx-1 px-1 my-2 py-1" id="filterFormContainer" name="filterFormContainer">
+
+  <form th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="entityWithAuthUserFields=${isAuthUserEntity == true or containsDifferentAuthUsers == true}">
+
+    <div th:if="${showBindingResultErrors == true} and ${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+      <span th:text="#{error.correctFields} + ':'"></span>
+      <ul>
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+      </ul>
+    </div>
+
+    <div class="mb-1" th:if="${errorMsg != null}">
+      <br/>
+      <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <div class="mb-1" th:if="${successMsg != null}">
+      <br/>
+      <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <input type="hidden" th:field="*{languageParam}" th:value="${param.languageParam}"></input>
+    <input type="hidden" th:field="*{pageNumber}" th:value="'0'"></input>
+
+    <div th:if="${predefinedFilter == 'authUser'}" class="mx-0 px-0 my-0 py-0">
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{table.filteredByAuthUser} + ':'"></label>
+      <br/>
+      <label for="filterByAuthUserId" class="mx-0 px-0 my-2 py-0" th:text="#{abstractEntity.id} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByAuthUserId" name="filterByAuthUserId" class="mx-0 px-1 my-2 py-0" th:value="${authUserId}" disabled></input>
+      &nbsp;&nbsp;&nbsp;
+      <label for="filterByAuthUserEmail" class="mx-0 px-0 my-2 py-0" th:text="#{authUser.email} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByAuthUserEmail" name="filterByAuthUserEmail" class="mx-0 px-1 my-2 py-0" th:value="${authUserEmail}" size="100" disabled></input>
+      <br/>
+      <br/>
+    </div>
+
+    <div th:if="${predefinedFilter == 'jobCategory'}" class="mx-0 px-0 my-0 py-0">
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{table.filteredByJobCategory} + ':'"></label>
+      <br/>
+      <label for="filterByJobCategoryId" class="mx-0 px-0 my-2 py-0" th:text="#{abstractEntity.id} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobCategoryId" name="filterByJobCategoryId" class="mx-0 px-1 my-2 py-0" th:value="${jobCategoryId}" disabled></input>
+      &nbsp;&nbsp;&nbsp;
+      <label for="filterByJobCategoryName" class="mx-0 px-0 my-2 py-0" th:text="#{jobCategory.name} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobCategoryName" name="filterByJobCategoryName" class="mx-0 px-1 my-2 py-0" th:value="${jobCategoryName}" size="100" disabled></input>
+      <br/>
+      <br/>
+    </div>
+
+    <div th:if="${predefinedFilter == 'jobCompany'}" class="mx-0 px-0 my-0 py-0">
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{table.filteredByJobCompany} + ':'"></label>
+      <br/>
+      <label for="filterByJobCompanyId" class="mx-0 px-0 my-2 py-0" th:text="#{abstractEntity.id} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobCompanyId" name="filterByJobCompanyId" class="mx-0 px-1 my-2 py-0" th:value="${jobCompanyId}" disabled></input>
+      &nbsp;&nbsp;&nbsp;
+      <label for="filterByJobCompanyName" class="mx-0 px-0 my-2 py-0" th:text="#{jobCompany.name} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobCompanyName" name="filterByJobCompanyName" class="mx-0 px-1 my-2 py-0" th:value="${jobCompanyName}" size="100" disabled></input>
+      <br/>
+      <br/>
+    </div>
+
+    <div th:if="${predefinedFilter == 'jobVacancy'}" class="mx-0 px-0 my-0 py-0">
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{table.filteredByJobVacancy} + ':'"></label>
+      <br/>
+      <label for="filterByJobVacancyId" class="mx-0 px-0 my-2 py-0" th:text="#{abstractEntity.id} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobVacancyId" name="filterByJobVacancyId" class="mx-0 px-1 my-2 py-0" th:value="${jobVacancyId}" disabled></input>
+      &nbsp;&nbsp;&nbsp;
+      <label for="filterByJobVacancyName" class="mx-0 px-0 my-2 py-0" th:text="#{jobVacancy.name} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByJobVacancyName" name="filterByJobVacancyName" class="mx-0 px-1 my-2 py-0" th:value="${jobVacancyName}" size="100" disabled></input>
+      <br/>
+      <br/>
+    </div>
+
+    <div th:if="${showFilterForm} == true" class="mx-0 px-0 my-0 py-0">
+      <label th:text="#{filterContainer.label} + ':'"></label>
+      <br/>
+      <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.searchFor} + ':'"></label>
+      &nbsp;
+      <select th:if="${entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.enumtype.TableField).values()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      <select th:if="${entityWithAuthUserFields && isUnmodifiableEntity}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.enumtype.TableField).valuesWithoutLastModification()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      <select th:if="${!entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.enumtype.TableField).valuesWithoutAuthUser()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      <select th:if="${!entityWithAuthUserFields && isUnmodifiableEntity}" id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.enumtype.TableField).valuesWithoutAuthUserAndLastModification()}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+      </select>
+      &nbsp;&nbsp;&nbsp;
+      <label for="tableFieldValue" class="form-label mt-2 mb-1" th:text="#{table.searchForWithValue} + ':'"></label>
+      &nbsp;
+      <input type="text" id="tableFieldValue" name="tableFieldValue" th:field="*{tableFieldValue}"></input>
+      &nbsp;
+      <button type="submit" th:text="#{button.filter}"></button>
+      <br/>
+      <br/>
+    </div>
+    <label th:text="#{paginationContainer.label} + ':'"></label>
+    <br/>
+    <label for="tableOrderCombo" class="form-label mt-2 mb-1" th:text="#{table.orderBy} + ':'"></label>
+    &nbsp;
+    <select th:if="${entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.enumtype.TableOrder).values()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    <select th:if="${entityWithAuthUserFields && isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.enumtype.TableOrder).valuesWithoutLastModification()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    <select th:if="${!entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.enumtype.TableOrder).valuesWithoutAuthUser()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    <select th:if="${!entityWithAuthUserFields && isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.enumtype.TableOrder).valuesWithoutAuthUserAndLastModification()}">
+      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    </select>
+    &nbsp;&nbsp;&nbsp;
+    <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>
+    &nbsp;
+    <select id="pageSizeCombo" name="pageSizeCombo" th:field="*{pageSize}" required>
+      <option th:each="pageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).valuesWithoutByDefault()}" th:value="${pageSize.value}" th:text="#{${pageSize.messageName}}"></option>
+    </select>
+
+  </form>
+
+</div>

@@ -1,0 +1,64 @@
+package com.aliuken.jobvacanciesapp.model.dto;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.domain.Page;
+
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+
+import lombok.Data;
+
+@Data
+public class AbstractEntityPageWithExceptionDTO<T extends AbstractEntity> implements Serializable {
+	private static final long serialVersionUID = 7013173615371005888L;
+
+	private static final AbstractEntityPageWithExceptionDTO<? extends AbstractEntity> NO_ARGS_INSTANCE = new AbstractEntityPageWithExceptionDTO<>(Page.empty(), null);
+
+	@NotNull
+	private final Page<T> page;
+
+	private final Exception exception;
+
+	public static AbstractEntityPageWithExceptionDTO<? extends AbstractEntity> getNewInstance() {
+		return NO_ARGS_INSTANCE;
+	}
+
+	@Override
+	public String toString() {
+		final String pageString = page.toString();
+		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+
+		final String result = StringUtils.getStringJoined("AbstractEntityPageWithExceptionDTO [page=", pageString, ", exception=", rootCauseMessage, "]");
+		return result;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(page, exception);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(obj == null) {
+			return false;
+		}
+		if(getClass() != obj.getClass()) {
+			return false;
+		}
+
+		final AbstractEntityPageWithExceptionDTO<T> other = GenericsUtils.cast(obj);
+
+		final boolean result = Objects.equals(page, other.page) && Objects.equals(exception, other.exception);
+		return result;
+	}
+
+}

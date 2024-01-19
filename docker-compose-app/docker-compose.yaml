@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  app-db-service:
+    image: mysql:8.0
+    container_name: app-db-container
+    networks:
+      - internal-net-app
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=job-vacancies-app-db
+      - MYSQL_ROOT_PASSWORD=admin
+    restart: on-failure
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../src/main/resources/db_dumps:/docker-entrypoint-initdb.d
+    cap_add:
+      - SYS_NICE
+    healthcheck:
+      test: "mysql -uroot -padmin -e 'select 1'"
+      interval: 1s
+      retries: 120
+
+  app-service:
+    image: job-vacancies-app:latest
+    container_name: app-container
+    networks:
+      - internal-net-app
+      - external-net-app
+    ports:
+      - "9090:8080"
+    environment:
+      - MYSQL_HOST=app-db-container
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=admin
+    restart: on-failure
+    volumes:
+      - /AppData_Java11/JobVacanciesApp:/AppData_Java11/JobVacanciesApp
+    build:
+      context: ..
+      dockerfile: docker-compose-app/Dockerfile
+    depends_on:
+      app-db-service:
+        condition: service_healthy
+
+networks:
+  internal-net-app:
+    driver: bridge
+  external-net-app:
+    external: true
+
+volumes:
+  mysql-data:
+    driver: local
