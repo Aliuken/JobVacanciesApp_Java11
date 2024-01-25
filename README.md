@@ -457,22 +457,22 @@ The ad-hoc overwritable properties are the following:
 ### 7.5. Ad-hoc overwriting properties
 
 The ad-hoc overwriting properties are the following:
-* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Indicates the default application language that overwrites the "jobvacanciesapp.defaultLanguageCode" property. Possible values (defined in the enum **Language**):
+* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Overwrites the default application language (defined in the property "jobvacanciesapp.defaultLanguageCode"). Possible values (defined in the enum **Language**):
     * **null**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultLanguageCode** will be applied.
     * **en**: Meaning that the default language is "English".
     * **es**: Meaning that the default language is "Spanish".
-* **jobvacanciesapp.anonymousAccessPermissionNameOverwritten**: Indicates the anonymous-access configuration type that overwrites the "jobvacanciesapp.anonymousAccessAllowed" property. Possible values (defined in the enum **AnonymousAccessPermission**):
+* **jobvacanciesapp.anonymousAccessPermissionNameOverwritten**: Overwrites the anonymous-access configuration type (defined in the property "jobvacanciesapp.anonymousAccessAllowed"). Possible values (defined in the enum **AnonymousAccessPermission**):
     * **ACCESS_BY_PROPERTY**: The initial value and a possible value after a restart. Meaning that the anonymous access is configured through the property **jobvacanciesapp.anonymousAccessAllowed**.
     * **ACCESS_ALLOWED**: Meaning that the anonymous access is allowed.
     * **ACCESS_NOT_ALLOWED**: Meaning that the anonymous access is not allowed.
-* **jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten**: Indicates the default initialTablePageSize that overwrites the "jobvacanciesapp.defaultInitialTablePageSizeValue" property. Possible values (defined in the enum **TablePageSize**):
+* **jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten**: Overwrites the default initialTablePageSize (defined in the property "jobvacanciesapp.defaultInitialTablePageSizeValue"). Possible values (defined in the enum **TablePageSize**):
     * **0**: The initial value and a possible value after a restart. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultInitialTablePageSizeValue** will be applied.
     * **5**, **10**, **25**, **50**, **100**, **250** and **500**: Meaning the quantity specified by the name.
-* **jobvacanciesapp.defaultColorModeCodeOverwritten**: Indicates the default colorMode that overwrites the "jobvacanciesapp.defaultColorModeCode" property. Possible values (defined in the enum **ColorMode**):
+* **jobvacanciesapp.defaultColorModeCodeOverwritten**: Overwrites the default colorMode (defined in the property "jobvacanciesapp.defaultColorModeCode"). Possible values (defined in the enum **ColorMode**):
     * **-**: The initial value and a possible value after a restart. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultColorModeCode** will be applied.
     * **L**: Meaning that the default color mode is "light".
     * **D**: Meaning that the default color mode is "dark".
-* **jobvacanciesapp.userInterfaceFrameworkCodeOverwritten**: Indicates the UI framework of the application that overwrites the "jobvacanciesapp.userInterfaceFrameworkCode" property. Possible values (defined in the enum **UserInterfaceFramework**):
+* **jobvacanciesapp.userInterfaceFrameworkCodeOverwritten**: Overwrites the UI framework of the application (defined in the property "jobvacanciesapp.userInterfaceFrameworkCode"). Possible values (defined in the enum **UserInterfaceFramework**):
     * **null**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.userInterfaceFrameworkCode** will be applied.
     * **M**: Meaning that the UI framework is "Material Design".
     * **B**: Meaning that the UI framework is "Bootstrap".
