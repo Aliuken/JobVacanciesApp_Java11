@@ -457,7 +457,7 @@ The ad-hoc overwritable properties are the following:
 ### 7.5. Ad-hoc overwriting properties
 
 The ad-hoc overwriting properties are the following:
-* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Overwrites the default application language (defined in the property "jobvacanciesapp.defaultLanguageCode"). Possible values (defined in the enum **Language**):
+* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Overwrites the default app language (defined in the property "jobvacanciesapp.defaultLanguageCode"). Possible values (defined in the enum **Language**):
     * **null**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultLanguageCode** will be applied.
     * **en**: Meaning that the default language is "English".
     * **es**: Meaning that the default language is "Spanish".
