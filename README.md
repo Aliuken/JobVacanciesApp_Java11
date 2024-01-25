@@ -439,14 +439,14 @@ The ad-hoc non-overwritable properties are the following:
 ### 7.4. Ad-hoc overwritable properties
 
 The ad-hoc overwritable properties are the following:
-* **jobvacanciesapp.defaultLanguageCode**: Indicates the language by default of the application. Initial value: "en". Possible values (defined in the enum **Language**):
+* **jobvacanciesapp.defaultLanguageCode**: Indicates the default language of the application. Initial value: "en". Possible values (defined in the enum **Language**):
     * **en**: Meaning that the default language used is "English".
     * **es**: Meaning that the default language used is "Spanish".
 * **jobvacanciesapp.anonymousAccessAllowed**: Indicates whether anonymous users can enter the application or not. Initial value: "false". Possible values: "true" or "false".
-* **jobvacanciesapp.defaultInitialTablePageSizeValue**: Indicates the initial table page size by default. Initial value: "5". Possible values (defined in the enum **TablePageSize**):
+* **jobvacanciesapp.defaultInitialTablePageSizeValue**: Indicates the default initial table page size. Initial value: "5". Possible values (defined in the enum **TablePageSize**):
     * **0**: Meaning "by default" and, in this property, is ignored and replaced by the value "5".
     * **5**, **10**, **25**, **50**, **100**, **250** and **500**: Meaning the quantity specified by the name.
-* **jobvacanciesapp.defaultColorModeCode**: Indicates the color mode by default. Initial value: "L". Possible values (defined in the enum **ColorMode**):
+* **jobvacanciesapp.defaultColorModeCode**: Indicates the default color mode. Initial value: "L". Possible values (defined in the enum **ColorMode**):
     * **-**: Meaning "by default" and, in this property, is ignored and replaced by the value "L".
     * **L**: Meaning that the default color mode is "light".
     * **D**: Meaning that the default color mode is "dark".
@@ -457,7 +457,7 @@ The ad-hoc overwritable properties are the following:
 ### 7.5. Ad-hoc overwriting properties
 
 The ad-hoc overwriting properties are the following:
-* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Indicates the language by default of the application that overwrites the "jobvacanciesapp.defaultLanguageCode" property. Possible values (defined in the enum **Language**):
+* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Indicates the default language of the application that overwrites the "jobvacanciesapp.defaultLanguageCode" property. Possible values (defined in the enum **Language**):
     * **null**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultLanguageCode** will be applied.
     * **en**: Meaning that the default language is "English".
     * **es**: Meaning that the default language is "Spanish".
@@ -465,10 +465,10 @@ The ad-hoc overwriting properties are the following:
     * **ACCESS_BY_PROPERTY**: The initial value and a possible value after a restart. Meaning that the anonymous access is configured through the property **jobvacanciesapp.anonymousAccessAllowed**.
     * **ACCESS_ALLOWED**: Meaning that the anonymous access is allowed.
     * **ACCESS_NOT_ALLOWED**: Meaning that the anonymous access is not allowed.
-* **jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten**: Indicates the initial table page size by default that overwrites the "jobvacanciesapp.defaultInitialTablePageSizeValue" property. Possible values (defined in the enum **TablePageSize**):
+* **jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten**: Indicates the default initial table page size that overwrites the "jobvacanciesapp.defaultInitialTablePageSizeValue" property. Possible values (defined in the enum **TablePageSize**):
     * **0**: The initial value and a possible value after a restart. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultInitialTablePageSizeValue** will be applied.
     * **5**, **10**, **25**, **50**, **100**, **250** and **500**: Meaning the quantity specified by the name.
-* **jobvacanciesapp.defaultColorModeCodeOverwritten**: Indicates the color mode by default that overwrites the "jobvacanciesapp.defaultColorModeCode" property. Possible values (defined in the enum **ColorMode**):
+* **jobvacanciesapp.defaultColorModeCodeOverwritten**: Indicates the default color mode that overwrites the "jobvacanciesapp.defaultColorModeCode" property. Possible values (defined in the enum **ColorMode**):
     * **-**: The initial value and a possible value after a restart. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultColorModeCode** will be applied.
     * **L**: Meaning that the default color mode is "light".
     * **D**: Meaning that the default color mode is "dark".
