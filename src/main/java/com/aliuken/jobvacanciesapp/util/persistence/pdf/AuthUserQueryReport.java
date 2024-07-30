@@ -1,0 +1,363 @@
+package com.aliuken.jobvacanciesapp.util.persistence.pdf;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.data.domain.Page;
+
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder.GenericTableBuilder;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
+	private static final float[] TITLE_COLUMN_WIDTHS = new float[]{1};
+	private static final int TITLE_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_CENTER;
+	private static final Font TITLE_CELL_FONT = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+
+	private static final float[] URL_TABLE_COLUMN_WIDTHS = new float[]{20};
+	private static final String[] URL_TABLE_COLUMN_MESSAGE_NAMES = new String[]{"queryReport.url"};
+	private static final int URL_TABLE_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_LEFT;
+	private static final Font URL_TABLE_CELL_FONT = new Font(Font.FontFamily.HELVETICA, 0, Font.NORMAL);
+
+	private static final float[] RESULT_TABLE_COLUMN_WIDTHS = new float[]{5, 5, 5, 5};
+	private static final String[] RESULT_TABLE_COLUMN_MESSAGE_NAMES = new String[]{"queryReport.tableHeader.keys", "queryReport.tableHeader.userFields", "queryReport.tableHeader.commonFields", "queryReport.tableHeader.otherFields"};
+	private static final int RESULT_TABLE_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_LEFT;
+	private static final Font RESULT_TABLE_CELL_FONT = new Font(Font.FontFamily.HELVETICA, 7, Font.NORMAL);
+
+	private final AuthUserEntityQuery authUserEntityQuery;
+	private final String[][] contentArray;
+
+	public static <T extends AbstractEntity> AuthUserQueryReport<T> generatePdfDocument(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<T> entityPage) {
+		AuthUserQueryReport<T> result;
+		try(final AuthUserQueryReport<T> authUserQueryReport = new AuthUserQueryReport<>(byteArrayOutputStream, authUserEntityQuery, entityPage)) {
+			authUserQueryReport.open();
+			authUserQueryReport.createContent();
+			result = authUserQueryReport;
+		} catch(final Exception exception) {
+			if(log.isErrorEnabled()) {
+				final String authUserEntityQueryString = Objects.toString(authUserEntityQuery);
+				final String stackTrace = ThrowableUtils.getStackTrace(exception);
+				log.error(StringUtils.getStringJoined("Error when saving an AuthUserQueryReport with authUserEntityQuery \"", authUserEntityQueryString, "\". Exception: ", stackTrace));
+			}
+			result = null;
+		}
+		return result;
+	}
+
+	private AuthUserQueryReport(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<T> entityPage) throws DocumentException, IOException {
+		super(authUserEntityQuery.getInitialPdfDocumentPageFormat(), authUserEntityQuery.getFinalPdfDocumentPageFormat(), byteArrayOutputStream);
+		this.authUserEntityQuery = authUserEntityQuery;
+		this.contentArray = this.createContentArrayFromPage(entityPage);
+		this.addPageEventHelper();
+	}
+
+	@SuppressWarnings("unchecked")
+	private String[][] createContentArrayFromPage(final Page<T> entityPage) {
+		final List<AbstractEntity> entityList = (List<AbstractEntity>) entityPage.getContent();
+
+		final String[][] contentArray;
+		if(entityList != null && !entityList.isEmpty()) {
+			final AbstractEntity abstractEntity = entityList.get(0);
+			if(abstractEntity.isPrintableEntity()) {
+				final List<String[]> contentList = Constants.PARALLEL_STREAM_UTILS.convertList(entityList,
+						entity -> entity.getGroupedFields(), AbstractEntity.class, String[].class);
+				contentArray = contentList.toArray(new String[][]{});
+			} else {
+				contentArray = new String[0][0];
+			}
+		} else {
+			contentArray = new String[0][0];
+		}
+		return contentArray;
+	}
+
+	@Override
+	public String getLeftFooter() {
+		final String leftFooter;
+		if(authUserEntityQuery != null) {
+			final AuthUser authUser = authUserEntityQuery.getAuthUser();
+
+			final String authUserId;
+			if(authUser != null) {
+				authUserId = authUser.getIdString();
+			} else {
+				authUserId = null;
+			}
+
+			final String queryId = authUserEntityQuery.getIdString();
+			final LocalDateTime queryDateTime = authUserEntityQuery.getFirstRegistrationDateTime();
+			final String queryDateTimeString = Constants.DATE_TIME_UTILS.convertToString(queryDateTime);
+
+			leftFooter = StringUtils.getStringJoined("[", authUserId, ", ", queryId, "] - ", queryDateTimeString);
+		} else {
+			leftFooter = null;
+		}
+
+		return leftFooter;
+	}
+
+	private void createContent() throws DocumentException {
+		final PdfWriter pdfWriter = getPdfWriter();
+		addDocListener(pdfWriter);
+
+		final Chapter chapter = new Chapter(0);
+		chapter.setNumberDepth(0);
+		chapter.setTriggerNewPage(false);
+
+		final PdfPTable firstPageTitleTable = this.createFirstPageTitleTable();
+		chapter.add(firstPageTitleTable);
+
+		final Paragraph separatorParagraph1 = new Paragraph(Chunk.NEWLINE);
+		chapter.add(separatorParagraph1);
+
+		final PdfPTable userAndQueryTable = this.createUserAndQueryTable();
+		chapter.add(userAndQueryTable);
+
+		final Paragraph separatorParagraph2 = new Paragraph(Chunk.NEWLINE);
+		chapter.add(separatorParagraph2);
+
+		final PdfPTable queryUrlTable = this.createQueryUrlTable();
+		chapter.add(queryUrlTable);
+
+		final Paragraph separatorParagraph3 = new Paragraph(Chunk.NEWLINE);
+		chapter.add(separatorParagraph3);
+
+		final PdfPTable queryResultTable = this.createQueryResultTable();
+		chapter.add(queryResultTable);
+
+		add(chapter);
+	}
+
+	private PdfPTable createFirstPageTitleTable() throws DocumentException {
+		final String firstPageTitle = getFirstPageTitle();
+		final String[][] contentArray = new String[][]{{firstPageTitle}};
+
+		final GenericTableBuilder titleTableBuilder = new GenericTableBuilder(null, TITLE_COLUMN_WIDTHS, TITLE_CELL_HORIZONTAL_ALIGNMENT, TITLE_CELL_FONT, contentArray, false, false);
+		final PdfPTable titleTable = titleTableBuilder.build();
+
+		return titleTable;
+	}
+
+	private String getFirstPageTitle() {
+		final String firstPageTitle;
+		if(authUserEntityQuery != null) {
+			final Language queryLanguage = authUserEntityQuery.getLanguage();
+			firstPageTitle = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.title", null);
+		} else {
+			firstPageTitle = StringUtils.getInternationalizedMessage("en", "queryReport.title", null);
+		}
+		return firstPageTitle;
+	}
+
+	private PdfPTable createUserAndQueryTable() throws DocumentException {
+		final PdfPTable userAndQueryTable = new PdfPTable(3);
+		userAndQueryTable.setWidths(new int[]{3, 1, 3});
+		userAndQueryTable.setWidthPercentage(90);
+		userAndQueryTable.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+		userAndQueryTable.getDefaultCell().setVerticalAlignment(PdfPTable.ALIGN_TOP);
+		userAndQueryTable.getDefaultCell().setBorderColor(BaseColor.WHITE);
+
+		final PdfPTable userTable = this.createUserTable();
+		userAndQueryTable.addCell(userTable);
+
+		final PdfPCell separatorCell = this.createSeparatorCell();
+		userAndQueryTable.addCell(separatorCell);
+
+		final PdfPTable queryTable = this.createQueryTable();
+		userAndQueryTable.addCell(queryTable);
+
+		return userAndQueryTable;
+	}
+
+	private PdfPTable createUserTable() throws DocumentException {
+		final String userTitle;
+		final List<PdfPCell> userInfo;
+		if(authUserEntityQuery != null) {
+			final Language queryLanguage = authUserEntityQuery.getLanguage();
+			final AuthUser authUser = authUserEntityQuery.getAuthUser();
+
+			userTitle = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user", null);
+			userInfo = this.getUserInfo(queryLanguage, authUser);
+		} else {
+			userTitle = StringUtils.getInternationalizedMessage("en", "queryReport.user", null);
+			userInfo = new ArrayList<>();
+		}
+
+		final PdfPTable userTable = PdfDocument.createSearchCriteriaTable(userTitle, userInfo);
+		return userTable;
+	}
+
+	private List<PdfPCell> getUserInfo(final Language queryLanguage, final AuthUser authUser) {
+		final List<PdfPCell> userInfo = new ArrayList<>();
+		if(authUser != null) {
+			final Language userLanguage = authUser.getLanguage();
+
+			final String idField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.id", null);
+			final String nameField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.name", null);
+			final String emailField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.email", null);
+			final String roleField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.role", null);
+			final String languageField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.language", null);
+			final String pdfDocumentPageFormatField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.user.pdfDocumentPageFormat", null);
+
+			final AuthRole maxPriorityAuthRole = authUser.getMaxPriorityAuthRole();
+			final String maxPriorityAuthRoleMessage = (maxPriorityAuthRole != null) ? maxPriorityAuthRole.getMessage(queryLanguage) : null;
+
+			final String userLanguageMessage = userLanguage.getMessage(queryLanguage);
+
+			final PdfDocumentPageFormat initialPdfDocumentPageFormat = this.getInitialPdfDocumentPageFormat();
+			final PdfDocumentPageFormat finalPdfDocumentPageFormat = this.getFinalPdfDocumentPageFormat();
+			final String pdfDocumentPageFormatMessage = Constants.ENUM_UTILS.getConfigurableEnumMessage(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, PdfDocumentPageFormat.class, queryLanguage);
+
+			PdfDocument.addCellWithPhrase(userInfo, idField, authUser.getIdString());
+			PdfDocument.addCellWithPhrase(userInfo, nameField, authUser.getFullName());
+			PdfDocument.addCellWithPhrase(userInfo, emailField, authUser.getEmail());
+			PdfDocument.addCellWithPhrase(userInfo, roleField, maxPriorityAuthRoleMessage);
+			PdfDocument.addCellWithPhrase(userInfo, languageField, userLanguageMessage);
+			PdfDocument.addCellWithPhrase(userInfo, pdfDocumentPageFormatField, pdfDocumentPageFormatMessage);
+			PdfDocument.addCellWithPhrase(userInfo, null, null);
+
+			final String predefinedFilterName = authUserEntityQuery.getPredefinedFilterName();
+			final String predefinedFilterValue = authUserEntityQuery.getPredefinedFilterValue();
+			if(predefinedFilterName != null && !predefinedFilterName.isEmpty() && predefinedFilterValue != null) {
+				PdfDocument.addCellWithPhrase(userInfo, null, null);
+			}
+
+			final String filterName = authUserEntityQuery.getFilterName();
+			final String filterValue = authUserEntityQuery.getFilterValue();
+			if(filterName != null && !filterName.isEmpty() && filterValue != null) {
+				PdfDocument.addCellWithPhrase(userInfo, null, null);
+			}
+		}
+		return userInfo;
+	}
+
+	private PdfPCell createSeparatorCell() {
+		final PdfPCell separatorCell = new PdfPCell();
+		separatorCell.setBorder(PdfPCell.NO_BORDER);
+		separatorCell.setVerticalAlignment(PdfPTable.ALIGN_TOP);
+		return separatorCell;
+	}
+
+	private PdfPTable createQueryTable() throws DocumentException {
+		final String queryTitle;
+		final List<PdfPCell> queryInfo;
+		if(authUserEntityQuery != null) {
+			final Language queryLanguage = authUserEntityQuery.getLanguage();
+			final TableOrder tableOrder = authUserEntityQuery.getTableOrder();
+			final TablePageSize tablePageSize = authUserEntityQuery.getTablePageSize();
+
+			queryTitle = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query", null);
+			queryInfo = this.getQueryInfo(queryLanguage, tableOrder, tablePageSize);
+		} else {
+			queryTitle = StringUtils.getInternationalizedMessage("en", "queryReport.query", null);
+			queryInfo = new ArrayList<>();
+		}
+
+		final PdfPTable queryTable = PdfDocument.createSearchCriteriaTable(queryTitle, queryInfo);
+		return queryTable;
+	}
+
+	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableOrder tableOrder, final TablePageSize tablePageSize) {
+		final List<PdfPCell> queryInfo = new ArrayList<>();
+
+		final String idField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.id", null);
+		final String dateField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.date", null);
+		final String orderField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.order", null);
+		final String pageSizeField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageSize", null);
+		final String languageField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.language", null);
+		final String pageNumberField = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageNumber", null);
+		final String filterFields = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.filters", null);
+
+		final String tableOrderMessage = tableOrder.getMessage(queryLanguage);
+		final String tablePageSizeMessage = tablePageSize.getMessage(queryLanguage);
+		final String queryLanguageMessage = queryLanguage.getMessage(queryLanguage);
+
+		PdfDocument.addCellWithPhrase(queryInfo, idField, authUserEntityQuery.getIdString());
+		PdfDocument.addCellWithPhrase(queryInfo, dateField, authUserEntityQuery.getFirstRegistrationDateTimeString());
+		PdfDocument.addCellWithPhrase(queryInfo, orderField, tableOrderMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, pageSizeField, tablePageSizeMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, languageField, queryLanguageMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, pageNumberField, authUserEntityQuery.getRealPageNumberString());
+
+		PdfDocument.addCellWithPhrase(queryInfo, filterFields, null);
+
+		final String predefinedFilterName = authUserEntityQuery.getPredefinedFilterName();
+		final String predefinedFilterValue = authUserEntityQuery.getPredefinedFilterValue();
+		if(predefinedFilterName != null && !predefinedFilterName.isEmpty() && predefinedFilterValue != null) {
+			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", predefinedFilterName), predefinedFilterValue);
+		}
+
+		final String filterName = authUserEntityQuery.getFilterName();
+		final String filterValue = authUserEntityQuery.getFilterValue();
+		if(filterName != null && !filterName.isEmpty() && filterValue != null) {
+			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", filterName), filterValue);
+		}
+
+		return queryInfo;
+	}
+
+	private PdfPTable createQueryUrlTable() throws DocumentException {
+		final String[] columnNames = this.getColumnNames(URL_TABLE_COLUMN_MESSAGE_NAMES);
+		columnNames[0] = StringUtils.getStringJoined(columnNames[0], ": ", authUserEntityQuery.getQueryUrl());
+		final GenericTableBuilder searchUrlTableBuilder = new GenericTableBuilder(columnNames, URL_TABLE_COLUMN_WIDTHS, URL_TABLE_CELL_HORIZONTAL_ALIGNMENT, URL_TABLE_CELL_FONT, null, false, false);
+		final PdfPTable searchResultTable = searchUrlTableBuilder.build();
+		return searchResultTable;
+	}
+
+	private PdfPTable createQueryResultTable() throws DocumentException {
+		final String[] columnNames = this.getColumnNames(RESULT_TABLE_COLUMN_MESSAGE_NAMES);
+		final GenericTableBuilder searchResultTableBuilder = new GenericTableBuilder(columnNames, RESULT_TABLE_COLUMN_WIDTHS, RESULT_TABLE_CELL_HORIZONTAL_ALIGNMENT, RESULT_TABLE_CELL_FONT, contentArray, true, true);
+		final PdfPTable searchResultTable = searchResultTableBuilder.build();
+		return searchResultTable;
+	}
+
+	private String[] getColumnNames(final String[] columnMessageNames) {
+		final String[] columnNames;
+		if(columnMessageNames != null) {
+			final String queryLanguageCode;
+			if(authUserEntityQuery != null) {
+				queryLanguageCode = authUserEntityQuery.getLanguage().getCode();
+			} else {
+				queryLanguageCode = "en";
+			}
+
+			columnNames = new String[columnMessageNames.length];
+			int columnIndex = 0;
+			for(String columnMessageName : columnMessageNames) {
+				final String columnName = StringUtils.getInternationalizedMessage(queryLanguageCode, columnMessageName, null);
+				columnNames[columnIndex] = columnName;
+				columnIndex++;
+			}
+		} else {
+			columnNames = new String[0];
+		}
+
+		return columnNames;
+	}
+}

@@ -1,0 +1,176 @@
+package com.aliuken.jobvacanciesapp.controller;
+
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithPredefinedFilter;
+import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
+import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
+import com.aliuken.jobvacanciesapp.service.JobCompanyLogoService;
+import com.aliuken.jobvacanciesapp.service.JobCompanyService;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.web.MvcUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class JobCompanyJobCompanyLogoController extends AbstractEntityControllerWithPredefinedFilter<JobCompanyLogo> {
+
+	@Autowired
+	private JobCompanyService jobCompanyService;
+
+	@Autowired
+	private JobCompanyLogoService jobCompanyLogoService;
+
+	/**
+	 * Method to show the list of job vacancies of a company with pagination
+	 */
+	@GetMapping("/job-companies/job-company-logos/{jobCompanyId}")
+	public String getJobCompanyLogos(Model model, Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+		final String operation = "GET /job-companies/job-company-logos/{jobCompanyId}";
+
+		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
+		final String jobCompanyName = (jobCompany != null) ? jobCompany.getName() : null;
+
+		try {
+			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+				if(log.isDebugEnabled()) {
+					final String tableSearchDtoString = Objects.toString(tableSearchDTO);
+					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
+				}
+
+				final Page<JobCompanyLogo> jobCompanyLogos = Page.empty();
+				model.addAttribute("jobCompanyId", jobCompanyId);
+				model.addAttribute("jobCompanyName", jobCompanyName);
+				model.addAttribute("jobCompanyLogos", jobCompanyLogos);
+				model.addAttribute("paginationUrl", this.getPaginationUrl(jobCompanyId));
+				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
+
+				return MvcUtils.getNextViewWithTable("jobCompany/jobCompanyJobCompanyLogos.html", model, operation, tableSearchDTO, false);
+			}
+
+			if(bindingResult.hasErrors()) {
+				final String errors = bindingResult.getAllErrors().toString();
+
+				if(log.isErrorEnabled()) {
+					log.error(StringUtils.getStringJoined("Some errors were detected when binding some parameters to a model object: ", errors));
+				}
+
+				final Page<JobCompanyLogo> jobCompanyLogos = Page.empty();
+				model.addAttribute("jobCompanyId", jobCompanyId);
+				model.addAttribute("jobCompanyName", jobCompanyName);
+				model.addAttribute("jobCompanyLogos", jobCompanyLogos);
+				model.addAttribute("paginationUrl", this.getPaginationUrl(jobCompanyId));
+				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
+				model.addAttribute("org.springframework.validation.BindingResult.tableSearchDTO", bindingResult);
+
+				return MvcUtils.getNextViewWithTable("jobCompany/jobCompanyJobCompanyLogos.html", model, operation, tableSearchDTO, true);
+			}
+
+			final AbstractEntityPageWithExceptionDTO<JobCompanyLogo> pageWithExceptionDTO = jobCompanyLogoService.getJobCompanyJobCompanyLogosPage(jobCompanyId, tableSearchDTO, pageable);
+			final Page<JobCompanyLogo> jobCompanyLogos = pageWithExceptionDTO.getPage();
+			final Exception exception = pageWithExceptionDTO.getException();
+
+			model.addAttribute("jobCompanyId", jobCompanyId);
+			model.addAttribute("jobCompanyName", jobCompanyName);
+			model.addAttribute("jobCompanyLogos", jobCompanyLogos);
+			model.addAttribute("paginationUrl", this.getPaginationUrl(jobCompanyId));
+			model.addAttribute("exportToPdfUrl", this.getExportToPdfUrl(jobCompanyId));
+
+			if(exception != null) {
+				final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+				model.addAttribute("errorMsg", rootCauseMessage);
+			}
+
+			return MvcUtils.getNextViewWithTable("jobCompany/jobCompanyJobCompanyLogos.html", model, operation, tableSearchDTO, true);
+
+		} catch(final Exception exception) {
+			if(log.isErrorEnabled()) {
+				final String stackTrace = ThrowableUtils.getStackTrace(exception);
+				log.error(StringUtils.getStringJoined("An exception happened when executing a controller method. Exception: ", stackTrace));
+			}
+
+			final Page<JobCompanyLogo> jobCompanyLogos = Page.empty();
+			model.addAttribute("jobCompanyId", jobCompanyId);
+			model.addAttribute("jobCompanyName", jobCompanyName);
+			model.addAttribute("jobCompanyLogos", jobCompanyLogos);
+			model.addAttribute("paginationUrl", this.getPaginationUrl(jobCompanyId));
+			model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
+
+			final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+			model.addAttribute("errorMsg", rootCauseMessage);
+
+			return MvcUtils.getNextViewWithTable("jobCompany/jobCompanyJobCompanyLogos.html", model, operation, tableSearchDTO, true);
+		}
+	}
+
+	/**
+	 * Method to export the list of company logos with pagination to pdf
+	 */
+	@GetMapping("/job-companies/job-company-logos/{jobCompanyId}/export-to-pdf")
+	@ResponseBody
+	public byte[] exportToPdf(Model model, Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult,
+			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+			@RequestParam(name="languageParam", required=false) String languageCode,
+			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
+			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="pageSize", required=false) Integer pageSize,
+			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
+
+		final String jobCompanyIdString = String.valueOf(jobCompanyId);
+		tableSearchDTO = new TableSearchDTO(languageCode, Constants.JOB_COMPANY_PREDEFINED_FILTER_NAME, jobCompanyIdString, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+
+		this.getJobCompanyLogos(model, pageable, jobCompanyId, tableSearchDTO, bindingResult);
+		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_COMPANY_LOGO, httpServletRequest, httpServletResponse);
+		return pdfByteArray;
+	}
+
+	/**
+	 * Method to delete a job vacancy of a company
+	 */
+	@GetMapping("/job-companies/job-company-logos/delete/{jobCompanyId}/{jobCompanyLogoId}")
+	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCompanyId") long jobCompanyId, @PathVariable("jobCompanyLogoId") long jobCompanyLogoId,
+			@RequestParam(name="languageParam", required=false) String languageCode,
+			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
+			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="pageSize", required=false) String pageSize,
+			@RequestParam(name="pageNumber", required=false) String pageNumber) {
+
+		jobCompanyLogoService.deleteByIdAndFlush(jobCompanyLogoId);
+
+		final String successMsg = StringUtils.getInternationalizedMessage(languageCode, "deleteJobCompanyLogo.successMsg", null);
+		redirectAttributes.addFlashAttribute("successMsg", successMsg);
+
+		return MvcUtils.getNextRedirectWithTable("/job-companies/job-company-logos/" + jobCompanyId, languageCode, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+	}
+
+	@Override
+	public String getPaginationUrl(final String predefinedFilterIdString) {
+		return StringUtils.getStringJoined("/job-companies/job-company-logos/", predefinedFilterIdString);
+	}
+}

@@ -1,0 +1,515 @@
+> [!IMPORTANT]
+> In the next sections, we use:
+> * **app** as the abbreviation for **application**.
+> * **pkg** as the abbreviation for **Java package**.
+> * **prop** as the abbreviation for **property**.
+
+# JobVacanciesApp_Java11
+
+## 1. About JobVacanciesApp_Java11
+
+**JobVacanciesApp_Java11** is an open-source web application made with **OpenJDK 11** and **Spring Boot 2.7** to learn how to make a website to manage job vacancies using state-of-the-art Spring-related technologies.
+
+The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **SOLID principles** and the **SOA architecture**.
+
+### 1.1. About JobVacanciesApp_AppData_Java11
+
+This repository makes use of the data contained in the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11), which contains the following files that are external to the project:
+* The [Curriculum Vitae files](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/auth-user-curriculum-files), [entity query files](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/auth-user-entity-query-files), [company logo files](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/job-company-logos) and [log files](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/log-files) that are used in JobVacanciesApp.
+* The Elastic Stack configuration files used to monitor/analyze the JobVacanciesApp logs, where:
+    * [Filebeat](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/ElasticStack/filebeat-config) is configured so that the TRACE and DEBUG logs are ignored, the multiline logs (like Java Stack Traces) are grouped in a single log entry and the output is sent to Logstash (port 5044).
+    * [Logstash](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/ElasticStack/logstash-config) reads the input from Beats (port 5044), splits each entry into different data (timestamp, level, pid, thread, class and submessage) and sends the output to Elasticsearch (port 9200).
+    * [Elasticsearch](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/ElasticStack/elasticsearch-config) is deployed in the port 9200 as a single-node cluster (jobVacanciesAppCluster).
+    * [Kibana](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/ElasticStack/kibana-config) is deployed in the port 5601 and reads the input from Elasticsearch (port 9200).
+
+> [!NOTE]
+> **Filebeat** is a subtype of **Beats** (from the Elastic Stack) to read data from files.
+
+### 1.2. Other related projects
+
+Other related projects include:
+* [JobVacanciesApp_Java17](https://github.com/Aliuken/JobVacanciesApp_Java17) and [JobVacanciesApp_AppData_Java17](https://github.com/Aliuken/JobVacanciesApp_AppData_Java17), which use **Java 17** and **Spring Boot 3.3**.
+
+## 2. Design patterns
+
+The following design patterns are used in the application:
+* **MVC**: Through @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC and using the utility class MvcUtils.
+* **Open Session in View**: Through the "spring.jpa.open-in-view" property.
+* **DTO**: In the package [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto).
+* **DAO**: Through @Repository interfaces (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)) and @Entity classes (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
+* **Singleton**: It is used when we want a single instance of a class and it is not possible to use enums, @Autowired or utility classes (with only static methods). This pattern is used in the packages:
+    * [com.aliuken.jobvacanciesapp.model.dto.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter): To get EntityToDtoConverter instances statically in controllers, DTOs, JUnit tests and other converters.
+    * [com.aliuken.jobvacanciesapp.util.javase](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase): To get the ConfigurableEnumUtils instance statically to execute its instance methods (that use generics).
+    * [com.aliuken.jobvacanciesapp.util.javase.stream](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream): To get StreamUtils instances statically (of type SequentialStreamUtils or ParallelStreamUtils) to execute its instance methods (that use generics).
+    * [com.aliuken.jobvacanciesapp.util.javase.time](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time): To add the TemporalUtils instances (dateUtils and dateTimeUtils) as static variables in the thymeleafViewResolver (in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)).
+    * [com.aliuken.jobvacanciesapp.util.security](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/security): To add springSecurityUtils as a static variable in the thymeleafViewResolver (in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)).
+* **Factory**: To create JPA entity instances (pkg: [com.aliuken.jobvacanciesapp.model.entity.factory](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/factory)).
+
+## 3. Technologies
+
+### 3.1. Core technologies
+
+The core technologies currently used are:
+* **OpenJDK 11**: As the Java SE implementation (using the default garbage collector: **G1 GC**).
+* **Spring Boot 2.7.18**: Starting in the class "MainApp" (which is annotated with @SpringBootApplication and is restartable through the method "MainApp.restartApp(...)").
+* **Java EE 8** "javax" classes, including:
+    * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits, @Email).
+    * **Servlet** API, **Java Persistence API** (**JPA**) and **Mail** API.
+* **Maven**: As the dependency manager and for building the application.
+* **Git**: As the version control system.
+* **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
+* **Spring Tool Suite** (**STS**): As the IDE (based on **Eclipse**).
+* **JUnit 5**: For unit testing.
+* **Lombok**: To generate:
+    * The model entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)) with @Data.
+    * The DTOs as immutable objects (pkg: [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto)) with @Data and final attributes.
+    * The "log" variable used for logging (with @Slf4j).
+* **Configuration**: Explained in section "7. Configuration and application properties".
+* **Internationalization** (**i18n**): It uses Locale and MessageSource (in the interface [Internationalizable](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/superinterface/Internationalizable.java)) and is configured in [LocaleConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/LocaleConfig.java) (as in <https://www.baeldung.com/spring-boot-internationalization>). Built for:
+    * **English**: Using the file [src/main/resources/messages_en.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/messages_en.properties).
+    * **Spanish**: Using the file [src/main/resources/messages_es.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/messages_es.properties).
+* **Logging**: By using:
+    * The implementation of the **SLF4J** API for **Logback** (with @Slf4j from Lombok).
+    * The utility classes **ControllerAspectLoggingUtils** and **RepositoryAspectLoggingUtils**.
+* **Utilities**: There are multiple utility classes in the package [com.aliuken.jobvacanciesapp.util](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util).
+* **Markdown**: As the file format (***.md**) of the [documentation files](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/documentation).
+
+### 3.2. Java SE core technologies
+
+> [!IMPORTANT]
+> The utility classes related to Java SE are in the package [com.aliuken.jobvacanciesapp.util.javase](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase).
+
+The Java SE core technologies currently used are:
+* **Java annotations**: The following ones (pkg: [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation)):
+    * **@ServiceMethod**: To annotate the methods of the classes annotated with Spring's @Service.
+    * **@RepositoryMethod**: To annotate the methods of the classes annotated with Spring's @Repository and @NoRepositoryBean.
+    * **@LazyEntityRelationGetter**: To annotate the getters of the classes annotated with JPA's @Entity that make use of a @OneToMany relationship.
+* **Java enums**: Located in the packages:
+    * [com.aliuken.jobvacanciesapp.model.entity.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype) (when they are used in JPA entities).
+    * [com.aliuken.jobvacanciesapp.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype) (when they are not used in JPA entities).
+* **Java parallel streams**: To iterate over elements using the following methods of ParallelStreamUtils:
+    * **ofNullableCollection**: For JPA entity methods annotated with @LazyEntityRelationGetter.
+    * **ofEnum**: For Java enum methods.
+    * **joinArrays/joinLists/joinSets**: To mix multiple arrays/lists/sets into one.
+    * **convertArray/convertList/convertSet**: Used in [EntityToDtoConverter](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter/superclass/EntityToDtoConverter.java) to convert JPA entities to DTOs.
+* **Java NIO API**: To deal with files and folders by using:
+    * The standard Java classes "Path", "Paths", "Files", "DirectoryStream" and "DirectoryStream.Filter".
+    * The enum "FileType" and the utility classes "FileUtils" and "FileNameUtils".
+* **java.time API**: To deal with dates (including time) by using:
+    * The standard Java classes "LocalDate" and "LocalDateTime".
+    * The utility classes "DateUtils" and "DateTimeUtils" (of type "TemporalUtils").
+* **Java try-with-resources**: Used in the classes:
+    * **FileType**: Over "DirectoryStream&lt;Path&gt;".
+    * **ThrowableUtils**: Over "StringWriter" and "PrintWriter".
+    * **FileUtils**: Over "ServletOutputStream" and "ZipFile".
+    * **AuthUserQueryReport**: Over "AuthUserQueryReport&lt;T&gt;".
+* **Java Locale class**: In "StringUtils.getInternationalizedMessage", to deal with internationalization (i18n).
+
+### 3.3. Spring Core technologies
+
+> [!IMPORTANT]
+> The utility classes related to Spring Core are in the package [com.aliuken.jobvacanciesapp.util.springcore](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore).
+
+The Spring Core technologies currently used are:
+* **Dependency Injection** (**DI**): Using:
+    * Beans created with **@Component**, **@Controller**, **@Service** and **@Repository**.
+    * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
+    * **@Autowired** to get the reference to the beans created by the previous methods.
+    * The utility class **BeanFactoryUtils** to get, refresh and replace beans statically.
+* **Aspect-Oriented Programming** (**AOP**): Explained in detail in the section "3.7. AOP technologies".
+* **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
+* **Spring MessageSource interface**: In "StringUtils.getInternationalizedMessage", to deal with internationalization (i18n). It is configured in [LocaleConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/LocaleConfig.java).
+
+### 3.4. Web technologies
+
+> [!IMPORTANT]
+> The utility classes related to the web are in the package [com.aliuken.jobvacanciesapp.util.web](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/web).
+
+The web technologies currently used are:
+* **Spring MVC**: Configured in [WebMvcConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebMvcConfig.java).
+* **HTTP/2 (over TCP)**: As the application-layer communication protocol (in the OSI model).
+* **Apache Tomcat**: As the HTTP/2 web server. It has a web container (for Servlets and JSPs), but not an EJB container. It is configured in [WebServerConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebServerConfig.java).
+* **HTML5** files: For the web pages. Located in [src/main/resources/templates](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates).
+* **Thymeleaf**: As the HTML5 template engine (configured in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)), using:
+    * The decorator **template.html** (which uses **thymeleaf-layout-dialect** to create the layout template).
+    * **Other fragments** in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments). More info about fragments at <https://www.thymeleaf.org/doc/articles/layouts.html>.
+* **Static resources**: Like images or JavaScript or CSS files. Located in [src/main/resources/static](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static).
+* **Bootstrap 5.3.3** and **Material Design for Bootstrap 7.3.2**: For the look-and-feel.
+* **Font Awesome Free For The Web 6.6.0**: For the application icons.
+* **jQuery 3.7.1**: To make an easier use of **JavaScript**.
+* **jQuery UI 1.13.3** and **jQuery Timepicker Addon 1.6.3**: For the calendar UI-input element.
+* **TinyMCE Community 7.2.1**: For the rich text editor.
+* The following **ad-hoc static files** (located in [src/main/resources/static/jobvacanciesapp-utils](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static/jobvacanciesapp-utils)):
+    * **calendar-input-element.css** and **calendar-input-element.js**: For the calendar UI-input element.
+    * **rich-text-editor.css** and **rich-text-editor.js**: For the rich text editor. The TinyMCE ["Full featured demo: Non-Premium Plugins only"](https://www.tiny.cloud/docs/tinymce/latest/full-featured-open-source-demo) CSS and JS code was copied in those files.
+    * **ajax-utils.js**: With an **AJAX** call to refresh the company logo from model attributes without reloading the full page.
+    * **url-params-utils.js**: To reload the full pages depending on URL parameters extracted from session attributes and model attributes.
+
+> [!NOTE]
+> The decorator [template.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/template.html) has the following Thymeleaf fragments:
+> * **additionalStyles**: Which is a variable fragment used to add new CSS files or &lt;style&gt; tags.
+> * **menu**: Which is the fixed fragment [menu.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/menu.html).
+> * **mainContent**: Which is a variable fragment used to contain the main content (in HTML) of the page.
+> * **footer**: Which is the fixed fragment [footer.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/footer.html).
+> * **additionalScripts**: Which is a variable fragment used to add new JS files or &lt;script&gt; tags.
+>
+> Other Thymeleaf fragments (in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments)) are:
+> * **jobCompanyLogoFragment**: Which is used to show the selected company logo in "jobCompanyForm.html" and "jobVacancyForm.html".
+> * **jumbotron**: Which is used to show the classic Bootstrap's Jumbotron in "home.html".
+> * **tableFilterAndPaginationForm**: Which is used to show the filter and pagination forms in pages that have a table. Those forms are shown above the table.
+> * **tablePaginationNav**: Which is used to show the pagination buttons in pages that have a table. Those buttons are shown below the table.
+>
+> The DTO [TableSearchDTO](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/TableSearchDTO.java) is used to store the URL parameters regarding filter, sorting and pagination in pages that have a table. Those parameters are:
+> * **languageParam**: Which is the selected language (one of the codes defined in [Language](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java)).
+> * **tableFieldCode**: Which is the filtered field name (one of the codes defined in [TableField](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableField.java)).
+> * **tableFieldValue**: Which is the filtered field value.
+> * **tableOrderCode**: Which is a value that determines the field to be sorted and the sort direction (one of the codes defined in [TableOrder](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableOrder.java)).
+> * **pageSize**: Which the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
+> * **pageNumber**: Which is the number of the current page.
+
+### 3.5. Data technologies
+
+> [!IMPORTANT]
+> The utility classes related to persistence are in the package [com.aliuken.jobvacanciesapp.util.persistence](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence).
+
+The data technologies currently used are:
+* **Spring Data JPA**: To make an easier use of **JPA**. Configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java).
+* **Hibernate**: As the ORM and **JPA** implementation.
+* **MySQL Community Server 8.0**: As the main DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
+* **H2**: As the in-memory DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
+* **iText Core itextpdf 5.5.13.4**: As the Java library to export queries to PDFs.
+* **Transactions**: Defined with Spring using:
+    * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
+    * **@Transactional** in the @Service classes (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
+* **AbstractEntity**: A superclass for all the JPA entities that has:
+    * An "id" of type Long.
+    * The dateTime and user of the "first registration" of the entity.
+    * The dateTime and user of the "last modification" of the entity.
+* **JPA converters**: Between DB types and entity fields (pkg: [com.aliuken.jobvacanciesapp.model.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/converter)).
+* **DTO converters**: Between JPA entities and DTOs (pkg: [com.aliuken.jobvacanciesapp.model.dto.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter)).
+* **Date formatters**: For LocalDate and LocalDateTime (pkg: [com.aliuken.jobvacanciesapp.model.formatter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/formatter)).
+* **UpgradedJpaRepository**: A subinterface of "JpaRepository<AbstractEntity, Long>" (from Spring Data JPA) to deal with pagination, sorting, query by example and query by specification.
+* **DatabaseUtils**: To get objects (of type ExampleMatcher or Predicate) used in complex dynamic queries.
+* **FileUtils**, **FileNameUtils** and **FileType**: To manage the persistence in files (of query PDFs, logos and curriculums).
+* **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
+
+> [!NOTE]
+> In **UpgradedJpaRepository**, the method "saveAndFlush(S entity)" is used both to update and create an entity, depending on whether it already existed or not in the database.
+>
+> In **PersistenceConfig**, "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section "7.2. ConfigPropertiesBean").
+>
+> The **Entity-Relationship Diagram** of the database is in the following files:
+> * **As an image** in: [documentation/Entity-Relationship-Diagram.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png).
+> * **As a draw.io file** (that can be modified using the [draw.io website](https://www.draw.io) or the [drawio-desktop app](https://github.com/jgraph/drawio-desktop/releases)) in: [documentation/Entity-Relationship-Diagram.drawio](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.drawio).
+
+### 3.6. Security technologies
+
+> [!IMPORTANT]
+> The utility classes related to security are in the package [com.aliuken.jobvacanciesapp.util.security](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/security).
+
+The security technologies currently used are:
+* **Spring Security**: Configured in [WebSecurityConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java).
+* **BCrypt**: As the Spring Security password encoder.
+* **CustomAuthenticationHandler**: To handle the processes of:
+    * **Login**: By adding the authenticated user to the session as the attribute "sessionAuthUser".
+    * **Logout**: By removing the session attribute "sessionAuthUser" and redirecting to the result of the call "getRedirectEndpoint(nextDefaultLanguage, nextAnonymousAccessPermission, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextUserInterfaceFramework)".
+* **SpringSecurityUtils**: Utility class to manage the security from Java code in HTML pages with Thymeleaf (instead of using the tag attribute "sec:authorize", which is impossible to debug).
+* **SessionUtils**: Utility class to get the sessionAuthUser object from the following origins:
+    * From the Authentication object of Spring Security.
+    * From the "sessionAuthUser" attribute of the HttpSession object of the Servlet API.
+* **JdbcTokenByEmailRepository**: A class that makes use of the DB table auth_persistent_logins to implement the "remember me based on the email" (instead of the "remember me based on the username" implemented in the class [JdbcTokenRepositoryImpl](https://github.com/spring-projects/spring-security/blob/main/web/src/main/java/org/springframework/security/web/authentication/rememberme/JdbcTokenRepositoryImpl.java) of Spring Security).
+* **AllowedViewsEnum**: An enum that contains the allowed views for each role (anonymous, user, supervisor and administrator) when the anonymous access is allowed and when it is not allowed.
+* **EmailService**: The service to send the confirmation email to new registered users (using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish).
+* **dependency-check-maven**: A maven plugin to generate a report with the dependency vulnerabilities in "target/dependency-check-report.html". By default, the Dependency Check is skipped by the configuration "&lt;skip&gt;true&lt;/skip&gt;" because it is a time-consuming task. To learn more this plugin, check out these links:
+    * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven>
+    * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven/check-mojo.html>
+
+### 3.7. AOP technologies
+
+> [!IMPORTANT]
+> The utility classes related to AOP are in the package [com.aliuken.jobvacanciesapp.util.springcore.aop](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop).
+
+AOP (Aspect-Oriented Programming) is used to deal with cross-cutting concerns in the different layers of the application (controllers, services and DAOs/entities).
+
+Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.aspect](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect)) are implemented with **Spring AOP** and **AspectJ** and configured in [AopConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/AopConfig.java):
+* **ControllerAspect**: For logging multiple stats in controllers (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)). It works around methods annotated with @RequestMapping, @GetMapping or @PostMapping and uses:
+    * The call "EndpointType.getInstance(httpMethod, informedPath)" where the informedPath is used to match with regular expressions that can contain "([^/]+)" to represent a path parameter (formed by consecutive characters without "/").
+    * The DB time inside the controller, calculated in RepositoryAspect.
+* **ServiceAspect**: To create an EntityManagerFactory when the current one is closed. It works around methods annotated with @ServiceMethod in services (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
+* **RepositoryAspect**: To get and log the DB time inside and outside of controllers. It works around methods annotated with @RepositoryMethod in DAOs (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)) or @LazyEntityRelationGetter in JPA entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
+
+> [!NOTE]
+> Therefore, the annotations used as AOP pointcuts are:
+> * **@RequestMapping**, **@GetMapping** and **@PostMapping**: Properly from Spring to define controllers.
+> * **@ServiceMethod**, **@RepositoryMethod** and **@LazyEntityRelationGetter**: Defined in the package [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation) specifically to be used as AOP pointcuts.
+>
+> Also, the following utility classes are used in the AOP aspects:
+> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/rest/ControllerAspectRestUtils.java): Used in ControllerAspect to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
+> * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/ControllerAspectLoggingUtils.java): Used in ControllerAspect to log multiple stats.
+> * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/RepositoryAspectLoggingUtils.java): Used in RepositoryAspect to log multiple stats.
+
+### 3.8. Other technologies
+
+Other technologies currently used are:
+* **Docker Compose for the app** (in [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-compose-app/docker-compose.yaml)). It uses:
+    * In **app-db-service**: The latest MySQL 8.0 Docker image ("mysql:8.0").
+    * In **app-service**: The file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-compose-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
+* **Docker Compose for the Elastic Stack** (in [docker-compose-elastic-stack/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-compose-elastic-stack/docker-compose.yaml)). It uses:
+    * The **Elastic Stack 8.14.3** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat &rArr; Logstash &rArr; Elasticsearch &rArr; Kibana".
+* **GenericControllerAdvice**: To be able to:
+    * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
+    * Handle the exception thrown when uploading a file (logo or curriculum) too big (more than 10 MB).
+* **AbstractEntityServiceSuperclass**: An abstract class that contains the default implementation for the most common service methods (by calling the UpgradedJpaRepository repository methods).
+* **Ehcache**: Configured in [CacheConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/CacheConfig.java) and in the property **jobvacanciesapp.useEntityManagerCache**. It is used in UpgradedJpaRepository to create the **entityManagerCache** of type "Cache<Class<? extends AbstractEntity>, EntityManager>" to get the EntityManager of a JPA entity class. The execution flow starts by calling to "UpgradedJpaRepository.getEntityManagerConfigurable(entityClass)" and is the following:
+
+```txt
+| useEntityManagerCache | Is the searched     | Execution flow                                         |
+| property value        | class in the cache? | (after calling to getEntityManagerConfigurable)        |
+|-----------------------|---------------------|--------------------------------------------------------|
+| true                  | Yes                 | getEntityManagerCacheable                              |
+| true                  | No                  | getEntityManagerCacheable => getEntityManagerNotCached |
+| false                 | N/A                 | getEntityManagerNotCached                              |
+```
+
+## 4. Execution procedure
+
+### 4.1. Run the application using an IDE
+
+> [!IMPORTANT]
+> Before running the application, install **MySQL Workbench** and:
+> * **Configure a connection** like the one in [documentation/MySQL-Workbench-connection.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/MySQL-Workbench-connection.png) (where the password is "admin").
+> * **Reset the database** using the previous connection and running the script **mysql-dump.sql**.
+>
+> To run the application, I recommend using **Spring Tool Suite** (which is an IDE based on **Eclipse**).
+>
+> The Elastic Stack cannot be run using an IDE. It can only be run using Docker Compose.
+
+Steps:
+* **Run JobVacanciesApp_Java11 in an IDE**: as a Spring Boot application
+* **Open the JobVacanciesApp URL in a web browser**: <http://localhost:8080>
+
+### 4.2. Run and stop the application and the Elastic Stack using Docker Compose
+
+> [!IMPORTANT]
+> Before running the application or the Elastic Stack, run the script: **./docker-stop.sh**
+
+Steps:
+
+* To run the application with Docker Compose:
+    * **Execute this command in a new terminal**: ./docker-compose-app-start.sh
+    * **Open the JobVacanciesApp URL in a web browser**: <http://localhost:9090>
+
+* To run the Elastic Stack with Docker Compose:
+    * **Execute this command in a new terminal**: ./docker-compose-elastic-stack-start.sh
+    * **Open the Kibana URL in a web browser**: <http://localhost:5601>
+
+* To stop everything with Docker Compose:
+    * **Press in the terminals previously opened**: Ctrl + C
+    * **Execute this command in one terminal**: ./docker-stop.sh
+
+## 5. Explanation of the docker-compose.yaml files
+
+> [!IMPORTANT]
+> In the next sections, the path "/AppData_Java11" is the folder in my PC (which is Linux) that contains the data from the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11).
+
+### 5.1. Explanation of the docker-compose.yaml for the application
+
+In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-compose-app/docker-compose.yaml):
+* **../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
+* **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
+* **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot application (through the file **docker-compose-app/Dockerfile**) after that.
+* **internal-net-app** is used to communicate the Spring Boot application with the database.
+* **external-net-app** is used to communicate the Spring Boot application with the user.
+
+### 5.2. Explanation of the docker-compose.yaml for the Elastic Stack
+
+In the file [docker-compose-elastic-stack/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-compose-elastic-stack/docker-compose.yaml):
+* **/AppData_Java11/JobVacanciesApp/log-files** is the folder that has the log files used in the application.
+* **/AppData_Java11/ElasticStack** is the folder that has the configuration files for the Elastic Stack.
+* **healthcheck** and **service_healthy** are used to check when each service started correctly, to start their dependent services after that. The startup order is: "Elasticsearch &rArr; Kibana &rArr; Logstash &rArr; Filebeat".
+* **internal-net-elastic-stack** is used to communicate the services.
+* **external-net-elastic-stack** is used to communicate the Kibana service with the user.
+
+## 6. Security credentials
+
+### 6.1. Existent credentials to access the application
+
+The database of the application comes with 9 predefined users with the following credentials and roles:
+
+```txt
+| Id | Email                 | Password | Role          | CreatedByUser |
+|----|-----------------------|----------|---------------|---------------|
+|  1 | anonymous@aliuken.com |          |               |               |
+|  2 | aliuken@aliuken.com   | qwerty1  | administrator |               |
+|  3 | luis@aliuken.com      | qwerty2  | supervisor    |             2 |
+|  4 | marisol@aliuken.com   | qwerty3  | supervisor    |             2 |
+|  5 | daniel@aliuken.com    | qwerty4  | user          |             1 |
+|  6 | miguel@aliuken.com    | qwerty5  | user          |             1 |
+|  7 | raul@aliuken.com      | qwerty6  | user          |             1 |
+|  8 | antonio@aliuken.com   | qwerty7  | user          |             1 |
+|  9 | pai.mei@aliuken.com   | qwerty8  | user          |             1 |
+```
+
+where:
+* The user **anonymous@aliuken.com** is used for the operations when the user is still not logged in. You cannot log in as the anonymous user as it doesn't have password and role.
+* The user **antonio@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=antonio@aliuken.com&uuid=cd939918-565d-41f1-a100-992594729dc4&languageParam=en> with a web browser).
+* The user **pai.mei@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=pai.mei@aliuken.com&uuid=a0396f47-50e8-470d-94ba-16f981cdfad6&languageParam=en> with a web browser).
+* The priority order of the roles is: **administrator > supervisor > user > anonymous**.
+* The **allowed views for each user role** are explained in section "7.6. Other configurations".
+
+### 6.2. New credentials to access the application
+
+You can create new users (for your personal email accounts) in two ways:
+* **Using the web application** (through the "sign up"): So that users will be created with the role "user".
+* **Using SQL in the database** (with MySQL Workbench): So that you can create users with any role.
+
+**EmailService** (the service to send, to new registered users, the email to confirm the account registration) was implemented (using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish) based on the following page: <https://www.baeldung.com/spring-email>.
+
+In order to send the email, you need to create a **Gmail SMTP account with an application password** (not an ordinary password) and pass to the application the account user and password (in the environment variables **APPLICATION_EMAIL_ACCOUNT_USER** and **APPLICATION_EMAIL_ACCOUNT_PASSWORD**).
+
+Currently (due to security changes made in Gmail SMTP accounts), the email cannot be sent and an error is shown instead. In order to confirm your account registration, you have to search for the account activation link in the log written before the call to **emailService.sendMail(emailDataDTO)** (in **HomeController**) and open it in a web browser. That log is like this: "Trying to send an email to '<DESTINATION_EMAIL_ADDRESS>' with the account activation link '<ACCOUNT_ACTIVATION_LINK>'".
+
+### 6.3. Credentials to access the Elastic Stack
+
+The Elastic Stack has 2 predefined users with the following passwords:
+
+```txt
+| Username      | Password  |
+|---------------|-----------|
+| elastic       | changeme1 |
+| kibana_system | changeme2 |
+```
+
+where:
+* The **elastic** user must be used to access the Kibana.
+* These credentials were created based on the **minimal security for Elasticsearch** (as indicated here: <https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html>).
+
+## 7. Configuration and application properties
+
+### 7.1. Configuration summary
+
+The configuration of the application is defined in 3 ways:
+* In the classes in the package [com.aliuken.jobvacanciesapp.config](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/config).
+* In the following **application.properties** files:
+    * [src/main/resources/application.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/application.properties) (the main one).
+    * [src/test/resources/application.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/application.properties) (the one used for tests).
+* In the bean [ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java): Which reads the **ad-hoc properties** (the ones that start with "jobvacanciesapp.") from the corresponding **application.properties** file.
+
+> [!NOTE]
+> The **application.properties** files contain:
+> * **Ad-hoc properties**: That start with "jobvacanciesapp." and are read by [ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java).
+> * **Standard properties**: That don't start with "jobvacanciesapp." and are read by Spring Boot.
+
+### 7.2. ConfigPropertiesBean
+
+The bean [ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java) is declared to be:
+* **Singleton**: Through the annotation @Component and a private constructor, so that the instance is only accessed through @Autowired.
+* **Immutable**: Through the private constructor (where all its properties are set using Spring @Value annotation) and final attributes (with only their getters).
+
+The properties read in [ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java) are called **ad-hoc properties** and their name always start with "jobvacanciesapp.". There are 3 types of ad-hoc properties:
+* **Ad-hoc non-overwritable properties**: Which are properties that follow these rules:
+    * Their initial value is defined in the file **application.properties**.
+    * Their value never changes during the application execution.
+    * They cannot be overwritten by any other properties.
+* **Ad-hoc overwritable properties**: Which are properties that follow these rules:
+    * Their initial value is defined in the file **application.properties**.
+    * Their value never changes during the application execution.
+    * They can be overwritten by ad-hoc overwriting properties.
+* **Ad-hoc overwriting properties**: Which are properties that follow these rules:
+    * Their initial value is defined in **ConfigPropertiesBean** (they are not defined in any properties file).
+    * Their value can only be changed by the administrator by forcing an **application restart**.
+    * They can overwrite the value of ad-hoc overwritable properties.
+
+> [!NOTE]
+> To deal with ad-hoc overwritable and overwriting properties, two classes were created:
+> * [ConfigurableEnum](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/superinterface/ConfigurableEnum.java): To store the configurable property values as Java enums.
+> * [ConfigurableEnumUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java): To manage ConfigurableEnum elements.
+>
+> The purpose of the **application restart** is merely to overwrite ad-hoc properties and it can only be done by the administrator with the following sequence of calls:
+> * **In sessionAuthUserForm.html**: GET /my-user/application/configure
+> * **In SessionAuthUserController**: GET /my-user/application/configure => configureApplicationForm.html
+> * **In configureApplicationForm.html**: POST /my-user/application/configure
+> * **In SessionAuthUserController**: POST /my-user/application/configure => /logout
+> * **In CustomAuthenticationHandler**: logout(...) => /login
+> * **In loginForm.html**: T(com.aliuken.jobvacanciesapp.MainApp).restartApp(...)
+> * **In MainApp**: MainApp.restartApp(...) => MainApp.springApplication.run(MainApp.args)
+
+### 7.3. Ad-hoc non-overwritable properties
+
+The ad-hoc non-overwritable properties are the following:
+* **jobvacanciesapp.authUserCurriculumFilesPath**: Indicates the folder where the curriculums are stored. Initial value: "/AppData_Java11/JobVacanciesApp/auth-user-curriculum-files/".
+* **jobvacanciesapp.authUserEntityQueryFilesPath**: Indicates the folder where the entity query files are stored. Initial value: "/AppData_Java11/JobVacanciesApp/auth-user-entity-query-files/".
+* **jobvacanciesapp.jobCompanyLogosPath**: Indicates the folder where the company logos are stored. Initial value: "/AppData_Java11/JobVacanciesApp/job-company-logos/".
+* **jobvacanciesapp.useAjaxToRefreshJobCompanyLogos**: Indicates whether the company logos can be refreshed without reloading the full page (using AJAX) or not (using URL parameters). Initial value: "true". Possible values: "true" or "false".
+* **jobvacanciesapp.useEntityManagerCache**: Indicates if the cache **entityManagerCache** is used or not to get the EntityManager for an AbstractEntity subclass. Initial value: "true". Possible values: "true" or "false".
+* **jobvacanciesapp.useParallelStreams**: Indicates if the application should use parallel or sequential streams. Initial value: "true". Possible values: "true" or "false".
+
+### 7.4. Ad-hoc overwritable properties
+
+The ad-hoc overwritable properties are the following:
+* **jobvacanciesapp.defaultAnonymousAccessPermissionValue**: Indicates whether anonymous users can enter the application or not. Initial value: "false". Possible values (from [AnonymousAccessPermission](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/AnonymousAccessPermission.java)):
+    * **-**: Meaning "by default" and, in this property, is ignored and replaced by the value "F".
+    * **T**: Meaning true (so that the anonymous access is allowed).
+    * **F**: Meaning false (so that the anonymous access is not allowed).
+* **jobvacanciesapp.defaultColorModeCode**: Indicates the default colorMode. Initial value: "L". Possible values (from [ColorMode](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/ColorMode.java)):
+    * **-**: Meaning "by default" and, in this property, is ignored and replaced by the value "L".
+    * **L**: Meaning that the default color mode is "light".
+    * **D**: Meaning that the default color mode is "dark".
+* **jobvacanciesapp.defaultLanguageCode**: Indicates the default application language. Initial value: "en". Possible values (from [Language](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java)):
+    * **--**: Meaning "by default" and, in this property, is ignored and replaced by the value "en".
+    * **en**: Meaning that the default language used is "English".
+    * **es**: Meaning that the default language used is "Spanish".
+* **jobvacanciesapp.defaultPdfDocumentPageFormatCode**: Indicates the page format for the query PDF documents. Initial value: "A4V". Possible values (from [PdfDocumentPageFormat](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/PdfDocumentPageFormat.java)):
+    * **---**: Meaning "by default" and, in this property, is ignored and replaced by the value "A4V".
+    * **A3V**: Meaning "Vertical A3".
+    * **A3H**: Meaning "Horizontal A3".
+    * **A4V**: Meaning "Vertical A4".
+    * **A4H**: Meaning "Horizontal A4".
+* **jobvacanciesapp.defaultInitialTablePageSizeValue**: Indicates the default initialTablePageSize. Initial value: "5". Possible values (from [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)):
+    * **0**: Meaning "by default" and, in this property, is ignored and replaced by the value "5".
+    * **5**, **10**, **25**, **50**, **100**, **250** and **500**: Meaning the quantity specified by the name.
+* **jobvacanciesapp.defaultUserInterfaceFrameworkCode**: Indicates the UI framework of the application. Initial value: "M". Possible values (from [UserInterfaceFramework](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/UserInterfaceFramework.java)):
+    * **-**: Meaning "by default" and, in this property, is ignored and replaced by the value "M".
+    * **M**: Meaning that the UI framework used is "Material Design".
+    * **B**: Meaning that the UI framework used is "Bootstrap".
+
+### 7.5. Ad-hoc overwriting properties
+
+The ad-hoc overwriting properties are the following:
+* **jobvacanciesapp.defaultAnonymousAccessPermissionValueOverwritten**: Overwrites the anonymous-access configuration type (defined in prop "jobvacanciesapp.defaultAnonymousAccessPermissionValue"). Possible values (from [AnonymousAccessPermission](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/AnonymousAccessPermission.java)):
+    * **-**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultAnonymousAccessPermissionValue** will be applied.
+    * **T**: Meaning true (so that the anonymous access is allowed).
+    * **F**: Meaning false (so that the anonymous access is not allowed).
+* **jobvacanciesapp.defaultColorModeCodeOverwritten**: Overwrites the default colorMode (defined in prop "jobvacanciesapp.defaultColorModeCode"). Possible values (from [ColorMode](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/ColorMode.java)):
+    * **-**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultColorModeCode** will be applied.
+    * **L**: Meaning that the default color mode is "light".
+    * **D**: Meaning that the default color mode is "dark".
+* **jobvacanciesapp.defaultLanguageCodeOverwritten**: Overwrites the default app language (defined in prop "jobvacanciesapp.defaultLanguageCode"). Possible values (from [Language](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java)):
+    * **--**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultLanguageCode** will be applied.
+    * **en**: Meaning that the default language is "English".
+    * **es**: Meaning that the default language is "Spanish".
+* **jobvacanciesapp.defaultPdfDocumentPageFormatCodeOverwritten**: Overwrites the page format for the query PDF documents (defined in prop "jobvacanciesapp.defaultPdfDocumentPageFormatCode"). Possible values (from [PdfDocumentPageFormat](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/PdfDocumentPageFormat.java)):
+    * **---**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultPdfDocumentPageFormatCode** will be applied.
+    * **A3V**: Meaning "Vertical A3".
+    * **A3H**: Meaning "Horizontal A3".
+    * **A4V**: Meaning "Vertical A4".
+    * **A4H**: Meaning "Horizontal A4".
+* **jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten**: Overwrites the default initialTablePageSize (defined in prop "jobvacanciesapp.defaultInitialTablePageSizeValue"). Possible values (from [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)):
+    * **0**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultInitialTablePageSizeValue** will be applied.
+    * **5**, **10**, **25**, **50**, **100**, **250** and **500**: Meaning the quantity specified by the name.
+* **jobvacanciesapp.defaultUserInterfaceFrameworkCodeOverwritten**: Overwrites the UI framework of the application (defined in prop "jobvacanciesapp.defaultUserInterfaceFrameworkCode"). Possible values (from [UserInterfaceFramework](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/UserInterfaceFramework.java)):
+    * **-**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultUserInterfaceFrameworkCode** will be applied.
+    * **M**: Meaning that the UI framework is "Material Design".
+    * **B**: Meaning that the UI framework is "Bootstrap".
+
+### 7.6. Other configurations
+
+Other configurations include:
+
+* The **allowed views for each user role** (anonymous, user, supervisor and administrator), which:
+    * Depend on the value of the properties **jobvacanciesapp.anonymousAccessPermissionOverwritten** and **jobvacanciesapp.defaultAnonymousAccessPermissionValue**.
+    * Are retrieved in the call **AllowedViewsEnum.getInstance(anonymousAccessAllowed)** of [WebSecurityConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java).
+
+* The **allowed file extensions for curriculums and company logos**, which are:
+    * Declared in the enums **FileType.CURRICULUM** and **FileType.JOB_COMPANY_LOGO** respectively.
+    * Validated in the methods **isAllowedFileExtension** and **checkAllowedFileExtension** of **FileType**.
