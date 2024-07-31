@@ -92,7 +92,7 @@ public class GenericTableBuilder implements PdfPTableEvent {
 		final boolean isHeaderWithContent = this.contentArray != null;
 
 		GenericTableBuilder.addHeaderRow(fullTable, columnNames, isHeaderWithContent);
-		
+
 		final String[][] contentArray;
 		if(isHeaderWithContent) {
 			contentArray = this.contentArray;
