@@ -18,6 +18,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder.GenericTableBuilder;
@@ -44,6 +45,10 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 	private static final String[] URL_TABLE_COLUMN_MESSAGE_NAMES = new String[]{"queryReport.url"};
 	private static final int URL_TABLE_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_LEFT;
 	private static final Font URL_TABLE_CELL_FONT = new Font(Font.FontFamily.HELVETICA, 0, Font.NORMAL);
+
+	private static final float[] EMPTY_RESULT_COLUMN_WIDTHS = new float[]{1};
+	private static final int EMPTY_RESULT_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_CENTER;
+	private static final Font EMPTY_RESULT_CELL_FONT = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
 
 	private static final float[] RESULT_TABLE_COLUMN_WIDTHS = new float[]{5, 5, 5, 5};
 	private static final String[] RESULT_TABLE_COLUMN_MESSAGE_NAMES = new String[]{"queryReport.tableHeader.keys", "queryReport.tableHeader.userFields", "queryReport.tableHeader.commonFields", "queryReport.tableHeader.otherFields"};
@@ -331,9 +336,18 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 	}
 
 	private PdfPTable createQueryResultTable() throws DocumentException {
-		final String[] columnNames = this.getColumnNames(RESULT_TABLE_COLUMN_MESSAGE_NAMES);
-		final GenericTableBuilder searchResultTableBuilder = new GenericTableBuilder(columnNames, RESULT_TABLE_COLUMN_WIDTHS, RESULT_TABLE_CELL_HORIZONTAL_ALIGNMENT, RESULT_TABLE_CELL_FONT, contentArray, true, true);
-		final PdfPTable searchResultTable = searchResultTableBuilder.build();
+		final PdfPTable searchResultTable;
+		if(LogicalUtils.isNotNullNorEmpty(contentArray)) {
+			final String[] columnNames = this.getColumnNames(RESULT_TABLE_COLUMN_MESSAGE_NAMES);
+			final GenericTableBuilder searchResultTableBuilder = new GenericTableBuilder(columnNames, RESULT_TABLE_COLUMN_WIDTHS, RESULT_TABLE_CELL_HORIZONTAL_ALIGNMENT, RESULT_TABLE_CELL_FONT, contentArray, true, true);
+			searchResultTable = searchResultTableBuilder.build();
+		} else {
+			final String emptyResultText = getEmptyResultText();
+			final String[][] contentArray = new String[][]{{emptyResultText}};
+
+			final GenericTableBuilder titleTableBuilder = new GenericTableBuilder(null, EMPTY_RESULT_COLUMN_WIDTHS, EMPTY_RESULT_CELL_HORIZONTAL_ALIGNMENT, EMPTY_RESULT_CELL_FONT, contentArray, false, false);
+			searchResultTable = titleTableBuilder.build();
+		}
 		return searchResultTable;
 	}
 
@@ -359,5 +373,16 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		}
 
 		return columnNames;
+	}
+
+	private String getEmptyResultText() {
+		final String emptyResultText;
+		if(authUserEntityQuery != null) {
+			final Language queryLanguage = authUserEntityQuery.getLanguage();
+			emptyResultText = StringUtils.getInternationalizedMessage(queryLanguage, "queryReport.emptyResultText", null);
+		} else {
+			emptyResultText = StringUtils.getInternationalizedMessage("en", "queryReport.emptyResultText", null);
+		}
+		return emptyResultText;
 	}
 }
