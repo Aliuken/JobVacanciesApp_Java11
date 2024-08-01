@@ -82,7 +82,7 @@ The core technologies currently used are:
 The Java SE core technologies currently used are:
 * **Java annotations**: The following ones (pkg: [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation)):
     * **@ServiceMethod**: To annotate the methods of the classes annotated with Spring's @Service.
-    * **@RepositoryMethod**: To annotate the methods of the classes annotated with Spring's @Repository and @NoRepositoryBean.
+    * **@RepositoryMethod**: To annotate the methods that access the DB in the classes annotated with Spring's @Repository or @NoRepositoryBean.
     * **@LazyEntityRelationGetter**: To annotate the getters of the classes annotated with JPA's @Entity that make use of a @OneToMany relationship.
 * **Java enums**: Located in the packages:
     * [com.aliuken.jobvacanciesapp.model.entity.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype) (when they are used in JPA entities).
