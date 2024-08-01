@@ -94,10 +94,10 @@ The Java SE core technologies currently used are:
     * **convertArray/convertList/convertSet**: Used in [EntityToDtoConverter](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter/superclass/EntityToDtoConverter.java) to convert JPA entities to DTOs.
 * **Java NIO API**: To deal with files and folders by using:
     * The standard Java classes "Path", "Paths", "Files", "DirectoryStream" and "DirectoryStream.Filter".
-    * The enum "FileType" and the utility classes "FileUtils" and "FileNameUtils".
+    * The enum [FileType](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java) and the utility classes [FileUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileUtils.java) and [FileNameUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileNameUtils.java).
 * **java.time API**: To deal with dates (including time) by using:
     * The standard Java classes "LocalDate" and "LocalDateTime".
-    * The utility classes "DateUtils" and "DateTimeUtils" (of type "TemporalUtils").
+    * The utility classes [DateUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/DateUtils.java) and [DateTimeUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/DateTimeUtils.java) (of type [TemporalUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/superinterface/TemporalUtils.java)).
 * **Java try-with-resources**: Used in the classes:
     * **FileType**: Over "DirectoryStream&lt;Path&gt;".
     * **ThrowableUtils**: Over "StringWriter" and "PrintWriter".
