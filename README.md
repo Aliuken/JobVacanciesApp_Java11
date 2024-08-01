@@ -513,3 +513,6 @@ Other configurations include:
 * The **allowed file extensions for curriculums and company logos**, which are:
     * Declared in the enums **FileType.CURRICULUM** and **FileType.JOB_COMPANY_LOGO** respectively.
     * Validated in the methods **isAllowedFileExtension** and **checkAllowedFileExtension** of [FileType](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java).
+
+> [!NOTE]
+> The files for curriculums or company logos can be compressed inside of a zip file. The method getFolderAllowedFilesRecursive of [FileType](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java) search the files with the allowed extensions in the whole list of files inside the zip file.
