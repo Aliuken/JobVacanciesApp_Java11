@@ -87,7 +87,7 @@ The Java SE core technologies currently used are:
 * **Java enums**: Located in the packages:
     * [com.aliuken.jobvacanciesapp.model.entity.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype) (when they are used in JPA entities).
     * [com.aliuken.jobvacanciesapp.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype) (when they are not used in JPA entities).
-* **Java parallel streams**: To iterate over elements using the following methods of ParallelStreamUtils:
+* **Java streams**: To iterate over elements using the following methods of [SequentialStreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/SequentialStreamUtils.java) or [ParallelStreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/ParallelStreamUtils.java) (of type [StreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/superclass/StreamUtils.java)):
     * **ofNullableCollection**: For JPA entity methods annotated with @LazyEntityRelationGetter.
     * **ofEnum**: For Java enum methods.
     * **joinArrays/joinLists/joinSets**: To mix multiple arrays/lists/sets into one.
@@ -115,7 +115,7 @@ The Spring Core technologies currently used are:
     * Beans created with **@Component**, **@Controller**, **@Service** and **@Repository**.
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
-    * The utility class **BeanFactoryUtils** to get, refresh and replace beans statically.
+    * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically.
 * **Aspect-Oriented Programming** (**AOP**): Explained in detail in the section "3.7. AOP technologies".
 * **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In "StringUtils.getInternationalizedMessage", to deal with internationalization (i18n). It is configured in [LocaleConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/LocaleConfig.java).
