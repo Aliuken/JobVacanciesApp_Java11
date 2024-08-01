@@ -33,7 +33,7 @@ Other related projects include:
 ## 2. Design patterns
 
 The following design patterns are used in the application:
-* **MVC**: Through @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC and using the utility class MvcUtils.
+* **MVC**: Through @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC and using the utility class [MvcUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/web/MvcUtils.java).
 * **Open Session in View**: Through the "spring.jpa.open-in-view" property.
 * **DTO**: In the package [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto).
 * **DAO**: Through @Repository interfaces (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)) and @Entity classes (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
