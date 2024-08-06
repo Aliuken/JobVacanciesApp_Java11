@@ -224,6 +224,9 @@ The security technologies currently used are:
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven>
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven/check-mojo.html>
 
+> [!NOTE]
+> One possible improvement would be to ask the user for a **mobile phone number** and store it in the DB to implement **two-factor authentication by sending an SMS**.
+
 ### 3.7. AOP technologies
 
 > [!IMPORTANT]
