@@ -227,7 +227,7 @@ The security technologies currently used are:
 > [!NOTE]
 > Other possible improvements would be:
 > - Using a **captcha** in the **user registration**.
-> - Asking the user for a **mobile phone number** and store it in the DB to implement **two-factor authentication by sending an SMS** (with a random authentication code).
+> - Asking the user for a **mobile phone number** and store it in the DB to implement **two-factor authentication by sending an SMS** (with a random authentication code). This feature could be optional by configuration.
 
 ### 3.7. AOP technologies
 
