@@ -15,6 +15,7 @@ import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils
 public class Constants {
 
 	public static final String EMPTY_STRING = "";
+	public static final String SPACE = " ";
 
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
