@@ -162,7 +162,7 @@ The web technologies currently used are:
 > * **tableFilterAndPaginationForm**: Which is used (in the pages that have a table) to show the filter and pagination forms. Those forms are shown above the table.
 > * **tablePaginationNav**: Which is used (in the pages that have a table) to show the pagination buttons. Those buttons are shown below the table.
 >
-> To check if the current page has a table, the function **getIsPageWithTable()** of [page-dom-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-dom-utils.js) is used.
+> The JS function **getIsPageWithTable()** of [page-dom-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-dom-utils.js) is used to check if the current page has a table.
 >
 > The DTO [TableSearchDTO](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/TableSearchDTO.java) is used to store the URL parameters regarding filter, sorting and pagination in pages that have a table. Those parameters are:
 > * **languageParam**: Which is the selected language (one of the codes defined in [Language](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java)).
