@@ -199,9 +199,9 @@ The data technologies currently used are:
 * **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
 
 > [!NOTE]
-> In **UpgradedJpaRepository**, the method "saveAndFlush(S entity)" is used both to update and create an entity, depending on whether it already existed or not in the database.
+> In [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java), the method "saveAndFlush(S entity)" is used both to update and create an entity, depending on whether it already existed or not in the database.
 >
-> In **PersistenceConfig**, "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section "7.2. ConfigPropertiesBean").
+> In [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java), "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section "7.2. ConfigPropertiesBean").
 >
 > The **Entity-Relationship Diagram** of the database is in the following files:
 > * **As an image** in: [documentation/Entity-Relationship-Diagram.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png).
@@ -272,8 +272,8 @@ Other technologies currently used are:
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
     * Handle the exception thrown when uploading a file (logo or curriculum) too big (more than 10 MB).
-* **AbstractEntityServiceSuperclass**: An abstract class that contains the default implementation for the most common service methods (by calling the UpgradedJpaRepository repository methods).
-* **Ehcache**: Configured in [CacheConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/CacheConfig.java) and in the property **jobvacanciesapp.useEntityManagerCache**. It is used in UpgradedJpaRepository to create the **entityManagerCache** of type "Cache<Class<? extends AbstractEntity>, EntityManager>" to get the EntityManager of a JPA entity class. The execution flow starts by calling to "UpgradedJpaRepository.getEntityManagerConfigurable(entityClass)" and is the following:
+* **AbstractEntityServiceSuperclass**: An abstract class that contains the default implementation for the most common service methods (by calling the [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java) repository methods).
+* **Ehcache**: Configured in [CacheConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/CacheConfig.java) and in the property **jobvacanciesapp.useEntityManagerCache**. It is used in [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java) to create the **entityManagerCache** of type "Cache<Class<? extends AbstractEntity>, EntityManager>" to get the EntityManager of a JPA entity class. The execution flow starts by calling to "UpgradedJpaRepository.getEntityManagerConfigurable(entityClass)" and is the following:
 
 ```txt
 | useEntityManagerCache | Is the searched     | Execution flow                                         |
