@@ -29,8 +29,10 @@ public class ControllerAspectLoggingUtils {
 	}
 
 	public static String getTraceType(final ControllerDependentTraceType controllerDependentTraceType) {
+		final boolean isInsideController = ControllerAspect.getIsInsideController();
+
 		final String finalTraceType;
-		if(ControllerAspect.getInsideController()) {
+		if(isInsideController) {
 			finalTraceType = controllerDependentTraceType.getTraceInsideController();
 		} else {
 			finalTraceType = controllerDependentTraceType.getTraceOutsideController();

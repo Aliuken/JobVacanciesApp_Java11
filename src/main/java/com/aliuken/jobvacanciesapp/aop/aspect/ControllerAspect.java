@@ -53,10 +53,10 @@ public class ControllerAspect {
 //	@Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
 //	private static final void deleteMapping(){}
 
-	private static boolean insideController = false;
+	private static boolean isInsideController = false;
 
-	public static boolean getInsideController() {
-		return ControllerAspect.insideController;
+	public static boolean getIsInsideController() {
+		return ControllerAspect.isInsideController;
 	}
 
 	@Before("execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()")
@@ -113,7 +113,7 @@ public class ControllerAspect {
 			}
 		}
 
-		ControllerAspect.insideController = true;
+		ControllerAspect.isInsideController = true;
 	}
 
 	@AfterReturning(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()", returning = "returnValue")
@@ -138,7 +138,7 @@ public class ControllerAspect {
 	 * Advise that is executed after executing the REST controllers when the result is obtained correctly
 	 */
 	private void adviseAfterExecutionInControllersCommon(final JoinPoint joinPoint, final RequestMethod requestMethod, final String mappingPath, final String returnValue) {
-		ControllerAspect.insideController = false;
+		ControllerAspect.isInsideController = false;
 
 		final String statsResult = ControllerAspectLoggingUtils.endMDC();
 
@@ -171,7 +171,7 @@ public class ControllerAspect {
 	 * Advise that is executed after executing the REST controllers when an exception is thrown
 	 */
 	private void adviseAfterExceptionIsThrownInControllersCommon(final JoinPoint joinPoint, final RequestMethod requestMethod, final String mappingPath, final Exception exception) {
-		ControllerAspect.insideController = false;
+		ControllerAspect.isInsideController = false;
 
 		final String statsResult = ControllerAspectLoggingUtils.endMDC();
 

@@ -104,9 +104,11 @@ public class RepositoryAspect {
 			result = joinPoint.proceed();
 		} finally {
 			if(repositoryAspectOrigin != null) {
+				final boolean isInsideController = ControllerAspect.getIsInsideController();
 				final long timeInside = System.currentTimeMillis() - inputTimeMillis;
+
 				final String dbTimeString;
-				if(ControllerAspect.getInsideController()) {
+				if(isInsideController) {
 					final long dbTime = RepositoryAspectLoggingUtils.MDCgetDBTime() + timeInside;
 					RepositoryAspectLoggingUtils.MDCputDBTime(dbTime);
 					dbTimeString = StringUtils.getStringJoined(" [total db ts: ", String.valueOf(dbTime), " ms]");
