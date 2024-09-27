@@ -115,6 +115,7 @@ public class RepositoryAspect {
 				} else {
 					dbTimeString = Constants.EMPTY_STRING;
 				}
+
 				if(log.isInfoEnabled()) {
 					final String traceType = ControllerAspectLoggingUtils.getTraceType(ControllerDependentTraceType.DATABASE_TRACE);
 					final String methodName = joinPoint.getSignature().getName();
