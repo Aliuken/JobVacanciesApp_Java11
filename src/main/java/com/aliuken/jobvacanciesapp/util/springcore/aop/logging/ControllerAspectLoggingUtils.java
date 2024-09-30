@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
-import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
@@ -26,18 +24,6 @@ public class ControllerAspectLoggingUtils {
 
 	private ControllerAspectLoggingUtils() throws InstantiationException {
 		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", ControllerAspectLoggingUtils.class.getName()));
-	}
-
-	public static String getTraceType(final ControllerDependentTraceType controllerDependentTraceType) {
-		final boolean isInsideController = ControllerAspect.getIsInsideController();
-
-		final String finalTraceType;
-		if(isInsideController) {
-			finalTraceType = controllerDependentTraceType.getTraceInsideController();
-		} else {
-			finalTraceType = controllerDependentTraceType.getTraceOutsideController();
-		}
-		return finalTraceType;
 	}
 
 	public static void initMDC(final String operation, final String mappingPath, final RequestMethod requestMethod, final HttpServletRequest request) {

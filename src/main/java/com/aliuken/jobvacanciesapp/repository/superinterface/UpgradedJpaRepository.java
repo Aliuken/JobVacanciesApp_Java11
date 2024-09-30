@@ -35,6 +35,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
+import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
@@ -44,7 +45,6 @@ import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntit
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.springcore.aop.logging.ControllerAspectLoggingUtils;
 import com.aliuken.jobvacanciesapp.util.springcore.aop.logging.RepositoryAspectLoggingUtils;
 import com.aliuken.jobvacanciesapp.util.springcore.di.BeanFactoryUtils;
 
@@ -403,7 +403,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		final String entityClassName = (entityClass != null) ? entityClass.getSimpleName() : null;
 
 		if(log.isInfoEnabled()) {
-			final String traceType = ControllerAspectLoggingUtils.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_INPUT_TRACE);
+			final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_INPUT_TRACE);
 			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. entityManager requested for entityClass ", entityClassName));
 		}
 
@@ -431,7 +431,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 			final long bytes = entityManagerCacheStatistics.getTierStatistics().get("OnHeap").getOccupiedByteSize();
 			final String formattedStatistics = String.format("hits/misses: %d/%d, items: %d, size (bytes): %d", hits, misses, size, bytes);
 
-			final String traceType = ControllerAspectLoggingUtils.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_SUMMARY_TRACE);
+			final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_SUMMARY_TRACE);
 			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. cache statistics: ", formattedStatistics));
 		}
 
@@ -440,7 +440,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 
 	private static void logGetEntityManagerCacheableResponse(final String source, final String entityClassName, final EntityManager entityManager) {
 		if(log.isInfoEnabled()) {
-			final String traceType = ControllerAspectLoggingUtils.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_OUTPUT_TRACE);
+			final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_OUTPUT_TRACE);
 			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. entityManager obtained from ", source, " for entityClass ", entityClassName, " -> ", (entityManager != null) ? "NOT_NULL" : "NULL"));
 		}
 	}

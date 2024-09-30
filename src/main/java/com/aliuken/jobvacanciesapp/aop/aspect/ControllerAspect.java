@@ -21,6 +21,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -57,6 +58,16 @@ public class ControllerAspect {
 
 	public static boolean getIsInsideController() {
 		return ControllerAspect.isInsideController;
+	}
+
+	public static String getTraceType(final ControllerDependentTraceType controllerDependentTraceType) {
+		final String finalTraceType;
+		if(isInsideController) {
+			finalTraceType = controllerDependentTraceType.getTraceInsideController();
+		} else {
+			finalTraceType = controllerDependentTraceType.getTraceOutsideController();
+		}
+		return finalTraceType;
 	}
 
 	@Before("execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()")

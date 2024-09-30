@@ -9,7 +9,6 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.enumtype.RepositoryAspectOrigin;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.springcore.aop.logging.ControllerAspectLoggingUtils;
 import com.aliuken.jobvacanciesapp.util.springcore.aop.logging.RepositoryAspectLoggingUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -105,7 +104,7 @@ public class RepositoryAspect {
 				}
 
 				if(log.isInfoEnabled()) {
-					final String traceType = ControllerAspectLoggingUtils.getTraceType(ControllerDependentTraceType.DATABASE_TRACE);
+					final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.DATABASE_TRACE);
 					final String methodName = joinPoint.getSignature().getName();
 					log.info(StringUtils.getStringJoined(traceType, repositoryAspectOrigin.name(), ". [", methodName, "] [db ts: ", String.valueOf(timeInside), " ms]", dbTimeString));
 				}
