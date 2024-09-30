@@ -2,9 +2,7 @@ package com.aliuken.jobvacanciesapp.util.springcore.aop.logging;
 
 import org.slf4j.MDC;
 
-import com.aliuken.jobvacanciesapp.aop.aspect.RepositoryAspect;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
-import com.aliuken.jobvacanciesapp.enumtype.RepositoryAspectOrigin;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 /**
@@ -16,20 +14,6 @@ public class RepositoryAspectLoggingUtils {
 
 	private RepositoryAspectLoggingUtils() throws InstantiationException {
 		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", RepositoryAspectLoggingUtils.class.getName()));
-	}
-
-	public static RepositoryAspectOrigin getRepositoryAspectOrigin() {
-		final RepositoryAspectOrigin repositoryAspectOrigin;
-		if(RepositoryAspect.getInsideSpecificRepository() && !RepositoryAspect.getInsideUpgradedJpaRepository()) {
-			repositoryAspectOrigin = RepositoryAspectOrigin.SPECIFIC_JPA_REPO;
-		} else if(RepositoryAspect.getInsideUpgradedJpaRepository()) {
-			repositoryAspectOrigin = RepositoryAspectOrigin.UPGRADED_JPA_REPO;
-		} else if(RepositoryAspect.getInsideLazyEntityRelationGetter()) {
-			repositoryAspectOrigin = RepositoryAspectOrigin.LAZY_JPA_RELATION;
-		} else {
-			repositoryAspectOrigin = null;
-		}
-		return repositoryAspectOrigin;
 	}
 
 	public static long MDCgetDBTime() {

@@ -27,31 +27,19 @@ public class RepositoryAspect {
 	@Pointcut("@annotation(com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter)")
 	private static final void lazyEntityRelationGetter(){}
 
-	private static boolean insideSpecificRepository = false;
-	private static boolean insideUpgradedJpaRepository = false;
-	private static boolean insideLazyEntityRelationGetter = false;
-
-	public static boolean getInsideSpecificRepository() {
-		return insideSpecificRepository;
-	}
-
-	public static boolean getInsideUpgradedJpaRepository() {
-		return insideUpgradedJpaRepository;
-	}
-
-	public static boolean getInsideLazyEntityRelationGetter() {
-		return insideLazyEntityRelationGetter;
-	}
+	private static boolean isInsideSpecificRepository = false;
+	private static boolean isInsideUpgradedJpaRepository = false;
+	private static boolean isInsideLazyEntityRelationGetter = false;
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.repository.*.*(..)) && repositoryMethod()")
 	public Object adviseAroundExecutionInRepositories(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificRepository && !insideUpgradedJpaRepository && !insideLazyEntityRelationGetter) {
+		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
-				insideSpecificRepository = true;
+				isInsideSpecificRepository = true;
 				result = this.adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(joinPoint);
 			} finally {
-				insideSpecificRepository = false;
+				isInsideSpecificRepository = false;
 			}
 		} else {
 			result = joinPoint.proceed();
@@ -62,12 +50,12 @@ public class RepositoryAspect {
 	@Around("execution(public * com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository.*(..)) && repositoryMethod()")
 	public Object adviseAroundExecutionInUpgradedJpaRepository(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificRepository && !insideUpgradedJpaRepository && !insideLazyEntityRelationGetter) {
+		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
-				insideUpgradedJpaRepository = true;
+				isInsideUpgradedJpaRepository = true;
 				result = this.adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(joinPoint);
 			} finally {
-				insideUpgradedJpaRepository = false;
+				isInsideUpgradedJpaRepository = false;
 			}
 		} else {
 			result = joinPoint.proceed();
@@ -78,12 +66,12 @@ public class RepositoryAspect {
 	@Around("execution(public * com.aliuken.jobvacanciesapp.model.entity.*.*(..)) && lazyEntityRelationGetter()")
 	public Object adviseAroundLazyEntityRelationGetters(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificRepository && !insideUpgradedJpaRepository && !insideLazyEntityRelationGetter) {
+		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
-				insideLazyEntityRelationGetter = true;
+				isInsideLazyEntityRelationGetter = true;
 				result = this.adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(joinPoint);
 			} finally {
-				insideLazyEntityRelationGetter = false;
+				isInsideLazyEntityRelationGetter = false;
 			}
 		} else {
 			result = joinPoint.proceed();
@@ -97,7 +85,7 @@ public class RepositoryAspect {
 	private Object adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final long inputTimeMillis = System.currentTimeMillis();
 
-		final RepositoryAspectOrigin repositoryAspectOrigin = RepositoryAspectLoggingUtils.getRepositoryAspectOrigin();
+		final RepositoryAspectOrigin repositoryAspectOrigin = RepositoryAspect.getRepositoryAspectOrigin();
 
 		Object result;
 		try {
@@ -125,5 +113,19 @@ public class RepositoryAspect {
 		}
 
 		return result;
+	}
+
+	private static RepositoryAspectOrigin getRepositoryAspectOrigin() {
+		final RepositoryAspectOrigin repositoryAspectOrigin;
+		if(isInsideSpecificRepository && !isInsideUpgradedJpaRepository) {
+			repositoryAspectOrigin = RepositoryAspectOrigin.SPECIFIC_JPA_REPO;
+		} else if(isInsideUpgradedJpaRepository) {
+			repositoryAspectOrigin = RepositoryAspectOrigin.UPGRADED_JPA_REPO;
+		} else if(isInsideLazyEntityRelationGetter) {
+			repositoryAspectOrigin = RepositoryAspectOrigin.LAZY_JPA_RELATION;
+		} else {
+			repositoryAspectOrigin = null;
+		}
+		return repositoryAspectOrigin;
 	}
 }

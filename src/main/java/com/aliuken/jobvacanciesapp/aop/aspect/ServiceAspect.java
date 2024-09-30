@@ -22,19 +22,19 @@ public class ServiceAspect {
 	@Pointcut("@annotation(com.aliuken.jobvacanciesapp.annotation.ServiceMethod)")
 	private static final void serviceMethod(){}
 
-	private static boolean insideSpecificService = false;
-	private static boolean insideServiceSuperinterface = false;
-	private static boolean insideSecurity = false;
+	private static boolean isInsideSpecificService = false;
+	private static boolean isInsideServiceSuperinterface = false;
+	private static boolean isInsideSecurity = false;
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.service.*.*(..)) && serviceMethod()")
 	public Object adviseAroundExecutionInServices(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificService && !insideServiceSuperinterface && !insideSecurity) {
+		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
-				insideSpecificService = true;
+				isInsideSpecificService = true;
 				result = this.adviseAroundExecutionInServicesCommon(joinPoint);
 			} finally {
-				insideSpecificService = false;
+				isInsideSpecificService = false;
 			}
 		} else {
 			result = joinPoint.proceed();
@@ -45,12 +45,12 @@ public class ServiceAspect {
 	@Around("execution(public * com.aliuken.jobvacanciesapp.service.superclass.*.*(..)) && serviceMethod()")
 	public Object adviseAroundExecutionInServiceInterfaces(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificService && !insideServiceSuperinterface && !insideSecurity) {
+		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
-				insideServiceSuperinterface = true;
+				isInsideServiceSuperinterface = true;
 				result = this.adviseAroundExecutionInServicesCommon(joinPoint);
 			} finally {
-				insideServiceSuperinterface = false;
+				isInsideServiceSuperinterface = false;
 			}
 		} else {
 			result = joinPoint.proceed();
@@ -61,12 +61,12 @@ public class ServiceAspect {
 	@Around("execution(public * com.aliuken.jobvacanciesapp.security.*.*(..)) && serviceMethod()")
 	public Object adviseAroundExecutionInHandlers(final ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
-		if(!insideSpecificService && !insideServiceSuperinterface && !insideSecurity) {
+		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
-				insideSecurity = true;
+				isInsideSecurity = true;
 				result = this.adviseAroundExecutionInServicesCommon(joinPoint);
 			} finally {
-				insideSecurity = false;
+				isInsideSecurity = false;
 			}
 		} else {
 			result = joinPoint.proceed();
