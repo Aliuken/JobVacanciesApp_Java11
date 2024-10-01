@@ -71,7 +71,8 @@ The core technologies currently used are:
     * **Spanish**: Using the file [src/main/resources/messages_es.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/messages_es.properties).
 * **Logging**: By using:
     * The implementation of the **SLF4J** API for **Logback** (with @Slf4j from Lombok).
-    * The utility classes **ControllerAspectLoggingUtils** and **RepositoryAspectLoggingUtils**.
+    * The utility class [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
+    * The utility class [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 * **Utilities**: There are multiple utility classes in the package [com.aliuken.jobvacanciesapp.util](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util).
 * **Markdown**: As the file format (***.md**) of the [documentation files](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/documentation).
 
@@ -257,9 +258,9 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * **@ServiceMethod**, **@RepositoryMethod** and **@LazyEntityRelationGetter**: Defined in the package [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation) specifically to be used as AOP pointcuts.
 >
 > Also, the following utility classes are used in the AOP aspects:
-> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/rest/ControllerAspectRestUtils.java): Used in ControllerAspect to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
-> * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/ControllerAspectLoggingUtils.java): Used in ControllerAspect to log multiple stats.
-> * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/RepositoryAspectLoggingUtils.java): Used in RepositoryAspect to log multiple stats.
+> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/rest/ControllerAspectRestUtils.java): Used in **ControllerAspect** to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
+> * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
+> * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 
 ### 3.8. Other technologies
 
