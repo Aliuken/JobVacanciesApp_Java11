@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.springcore.di.BeanFactoryUtils;
@@ -11,7 +12,8 @@ import com.aliuken.jobvacanciesapp.util.springcore.di.BeanFactoryUtils;
 public class I18nUtils {
 
 	private I18nUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", I18nUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static String getInternationalizedMessage(final String languageCode, final String messageName, final Object[] messageParameters) {

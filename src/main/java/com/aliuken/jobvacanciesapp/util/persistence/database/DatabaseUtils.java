@@ -17,7 +17,8 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 public class DatabaseUtils {
 
 	private DatabaseUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", DatabaseUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static ExampleMatcher getExampleMatcherWithExactOneField(final String tableFieldPath) {

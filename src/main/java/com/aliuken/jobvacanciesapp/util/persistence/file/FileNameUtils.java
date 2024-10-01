@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.util.persistence.file;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
@@ -12,7 +13,8 @@ public class FileNameUtils {
 	private static final String EXTENSION_PATTERN = "^(.+)\\.([^.]+$)";
 
 	private FileNameUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", FileNameUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	/**

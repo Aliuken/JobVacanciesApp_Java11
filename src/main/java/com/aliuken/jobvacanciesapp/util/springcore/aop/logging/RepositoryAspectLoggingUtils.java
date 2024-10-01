@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.util.springcore.aop.logging;
 
 import org.slf4j.MDC;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
@@ -13,7 +14,8 @@ public class RepositoryAspectLoggingUtils {
 	private static final long ZERO_TIME = 0L;
 
 	private RepositoryAspectLoggingUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", RepositoryAspectLoggingUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static long MDCgetDBTime() {

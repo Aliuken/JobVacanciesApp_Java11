@@ -3,13 +3,16 @@ package com.aliuken.jobvacanciesapp.util.javase;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ThrowableUtils {
 
 	private ThrowableUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", ThrowableUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static String getRootCauseMessage(final Throwable throwable) {

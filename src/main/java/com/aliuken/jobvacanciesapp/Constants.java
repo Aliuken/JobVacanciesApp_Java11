@@ -52,4 +52,6 @@ public class Constants {
 	public static final String JOB_VACANCY_PREDEFINED_FILTER_NAME = "jobVacancy";
 
 	public static final ConfigurableEnumUtils ENUM_UTILS = ConfigurableEnumUtils.getInstance();
+
+	public static final String INSTANTIATION_NOT_ALLOWED = "Cannot instantiate class ";
 }

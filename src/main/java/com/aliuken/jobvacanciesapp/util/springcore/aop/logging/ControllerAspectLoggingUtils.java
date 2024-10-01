@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
@@ -23,7 +24,8 @@ public class ControllerAspectLoggingUtils {
 	private static final String ZERO_TIME_STRING = Long.toString(0L);
 
 	private ControllerAspectLoggingUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", ControllerAspectLoggingUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static void initMDC(final String operation, final String mappingPath, final RequestMethod requestMethod, final HttpServletRequest request) {

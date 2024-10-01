@@ -3,10 +3,13 @@ package com.aliuken.jobvacanciesapp.util.javase;
 import java.util.Collection;
 import java.util.Map;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
 public class LogicalUtils {
 
 	private LogicalUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", LogicalUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	//----------------------------------------------------------------------------------------------------------------------------

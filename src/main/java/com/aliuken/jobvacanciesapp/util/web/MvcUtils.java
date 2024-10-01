@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MvcUtils {
 
 	private MvcUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", MvcUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static String getNextView(final String nextView, final Model model, final String operation, final String languageCode) {

@@ -11,7 +11,8 @@ import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 public class StringUtils {
 
 	private StringUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", StringUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	public static String getStringJoined(final CharSequence... elements) {

@@ -40,7 +40,8 @@ public class FileUtils {
 	public static final String ZIP_EXTENSION = ".zip";
 
 	private FileUtils() throws InstantiationException {
-		throw new InstantiationException(StringUtils.getStringJoined("Cannot instantiate class ", FileUtils.class.getName()));
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
 	/**
