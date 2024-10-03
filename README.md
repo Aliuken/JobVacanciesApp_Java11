@@ -52,7 +52,7 @@ The following design patterns are used in the application:
 
 The core technologies currently used are:
 * **OpenJDK 11**: As the Java SE implementation (using the default garbage collector: **G1 GC**).
-* **Spring Boot 2.7.18**: Starting in the class "MainClass" (which is annotated with @SpringBootApplication and is restartable through the method "MainClass.restartApp(...)").
+* **Spring Boot 2.7.18**: Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java) (which is annotated with @SpringBootApplication and is restartable through the method "MainClass.restartApp(...)").
 * **Java EE 8** "javax" classes, including:
     * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits, @Email).
     * **Servlet** API, **Java Persistence API** (**JPA**) and **Mail** API.
@@ -61,7 +61,7 @@ The core technologies currently used are:
 * **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
 * **Spring Tool Suite** (**STS**): As the IDE (based on **Eclipse**).
 * **JUnit 5**: For unit testing.
-* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes "ControllerAspect", "ServiceAspect" and "RepositoryAspect". Explained in detail in the section "3.7. AOP technologies".
+* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in detail in the section "3.7. AOP technologies".
 * **Lombok**: To generate:
     * The model entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)) with @Data.
     * The DTOs as immutable objects (pkg: [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto)) with @Data and final attributes.
