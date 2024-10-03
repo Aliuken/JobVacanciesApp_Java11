@@ -51,8 +51,8 @@ The following design patterns are used in the application:
 ### 3.1. Core technologies
 
 The core technologies currently used are:
-* **OpenJDK 11**: As the Java SE implementation (using the default garbage collector: **G1 GC**).
-* **Spring Boot 2.7.18**: Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java) (which is annotated with @SpringBootApplication and is restartable through the method "MainClass.restartApp(...)").
+* **OpenJDK 11**: As the Java SE implementation (using the default garbage collector: **G1 GC**). Explained in **[3.2. Java SE core technologies]**(https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies).
+* **Spring Boot 2.7.18**: Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java) (which is annotated with @SpringBootApplication and is restartable through the method "MainClass.restartApp(...)"). Explained in **[3.3. Spring Core technologies]**(https://github.com/Aliuken/JobVacanciesApp_Java11#33-spring-core-technologies).
 * **Java EE 8** "javax" classes, including:
     * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits, @Email).
     * **Servlet** API, **Java Persistence API** (**JPA**) and **Mail** API.
