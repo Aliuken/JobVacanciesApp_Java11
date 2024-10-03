@@ -153,7 +153,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	}
 
 //	public void setSecurityFilterChain(final String nextDefaultLanguageCode, final String nextDefaultAnonymousAccessPermissionValue, final String nextDefaultInitialTablePageSizeValue, final String nextDefaultColorModeCode, final String nextDefaultUserInterfaceFrameworkCode, final String nextDefaultPdfDocumentPageFormatCode) throws Exception {
-//		MainApp.restartApp(nextDefaultLanguageCode, nextDefaultAnonymousAccessPermissionValue, nextDefaultInitialTablePageSizeValue, nextDefaultColorModeCode, nextDefaultUserInterfaceFrameworkCode, nextDefaultPdfDocumentPageFormatCode);
+//		MainClass.restartApp(nextDefaultLanguageCode, nextDefaultAnonymousAccessPermissionValue, nextDefaultInitialTablePageSizeValue, nextDefaultColorModeCode, nextDefaultUserInterfaceFrameworkCode, nextDefaultPdfDocumentPageFormatCode);
 //		BeanUtils.refreshBean("springSecurityFilterChain");
 //	}
 

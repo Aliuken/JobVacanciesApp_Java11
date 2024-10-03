@@ -20,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.MainApp;
+import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
@@ -44,7 +44,7 @@ import com.aliuken.jobvacanciesapp.util.springcore.di.BeanFactoryUtils;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(classes = {MainApp.class, BeanFactoryUtils.class, ConfigPropertiesBean.class})
+@ContextConfiguration(classes = {MainClass.class, BeanFactoryUtils.class, ConfigPropertiesBean.class})
 @Sql("classpath:db_dumps/h2-dump.sql")
 public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 	@Autowired

@@ -203,7 +203,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.aliuken.jobvacanciesapp.MainApp</mainClass>
+							<mainClass>com.aliuken.jobvacanciesapp.MainClass</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

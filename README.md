@@ -52,7 +52,7 @@ The following design patterns are used in the application:
 
 The core technologies currently used are:
 * **OpenJDK 11**: As the Java SE implementation (using the default garbage collector: **G1 GC**).
-* **Spring Boot 2.7.18**: Starting in the class "MainApp" (which is annotated with @SpringBootApplication and is restartable through the method "MainApp.restartApp(...)").
+* **Spring Boot 2.7.18**: Starting in the class "MainClass" (which is annotated with @SpringBootApplication and is restartable through the method "MainClass.restartApp(...)").
 * **Java EE 8** "javax" classes, including:
     * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits, @Email).
     * **Servlet** API, **Java Persistence API** (**JPA**) and **Mail** API.
@@ -451,8 +451,8 @@ The properties read in [ConfigPropertiesBean](https://github.com/Aliuken/JobVaca
 > * **In configureApplicationForm.html**: POST /my-user/application/configure
 > * **In SessionAuthUserController**: POST /my-user/application/configure => /logout
 > * **In CustomAuthenticationHandler**: logout(...) => /login
-> * **In loginForm.html**: T(com.aliuken.jobvacanciesapp.MainApp).restartApp(...)
-> * **In MainApp**: MainApp.restartApp(...) => restartExecutorService.submit => MainApp.springApplication.run(MainApp.args)
+> * **In loginForm.html**: T(com.aliuken.jobvacanciesapp.MainClass).restartApp(...)
+> * **In MainClass**: MainClass.restartApp(...) => restartExecutorService.submit => MainClass.springApplication.run(MainClass.args)
 
 ### 7.3. Ad-hoc non-overwritable properties
 

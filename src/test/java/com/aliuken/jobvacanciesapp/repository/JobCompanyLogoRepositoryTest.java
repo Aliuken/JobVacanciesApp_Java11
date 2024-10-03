@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.MainApp;
+import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyLogoConverter;
@@ -32,7 +32,7 @@ import com.aliuken.jobvacanciesapp.util.springcore.di.BeanFactoryUtils;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(classes = {MainApp.class, BeanFactoryUtils.class, ConfigPropertiesBean.class})
+@ContextConfiguration(classes = {MainClass.class, BeanFactoryUtils.class, ConfigPropertiesBean.class})
 @Sql("classpath:db_dumps/h2-dump.sql")
 public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 	@Autowired

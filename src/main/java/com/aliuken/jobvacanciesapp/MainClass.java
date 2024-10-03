@@ -12,7 +12,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.support.GenericApplicationContext;
 
 @SpringBootApplication
-public class MainApp {
+public class MainClass {
 	private static volatile String[] args;
 	private static volatile SpringApplication springApplication;
 	private static volatile GenericApplicationContext applicationContext;
@@ -26,9 +26,9 @@ public class MainApp {
 	});
 
 	public static void main(String[] args) {
-		MainApp.args = args;
-		MainApp.springApplication = new SpringApplicationBuilder(MainApp.class).application();
-		MainApp.applicationContext = (GenericApplicationContext) MainApp.springApplication.run(args);
+		MainClass.args = args;
+		MainClass.springApplication = new SpringApplicationBuilder(MainClass.class).application();
+		MainClass.applicationContext = (GenericApplicationContext) MainClass.springApplication.run(args);
 	}
 
 	public static void restartApp(final String nextDefaultLanguageCode, final String nextDefaultAnonymousAccessPermissionValue, final String nextDefaultInitialTablePageSizeValue, final String nextDefaultColorModeCode, final String nextDefaultUserInterfaceFrameworkCode, final String nextDefaultPdfDocumentPageFormatCode) {
@@ -53,10 +53,10 @@ public class MainApp {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultPdfDocumentPageFormatCodeOverwritten", nextDefaultPdfDocumentPageFormatCode);
 			}
 
-			MainApp.restartExecutorService.submit(() -> {
-				MainApp.applicationContext.close();
-				MainApp.springApplication = new SpringApplicationBuilder(MainApp.class).properties(additionalPropertiesMap).application();
-				MainApp.applicationContext = (GenericApplicationContext) MainApp.springApplication.run(MainApp.args);
+			MainClass.restartExecutorService.submit(() -> {
+				MainClass.applicationContext.close();
+				MainClass.springApplication = new SpringApplicationBuilder(MainClass.class).properties(additionalPropertiesMap).application();
+				MainClass.applicationContext = (GenericApplicationContext) MainClass.springApplication.run(MainClass.args);
 			});
 		}
 	}
