@@ -61,12 +61,12 @@ The core technologies currently used are:
 * **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
 * **Spring Tool Suite** (**STS**): As the IDE (based on **Eclipse**).
 * **JUnit 5**: For unit testing.
-* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in section "3.7. AOP technologies".
+* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in section [3.7. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#37-aop-technologies).
 * **Lombok**: To generate:
     * The model entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)) with @Data.
     * The DTOs as immutable objects (pkg: [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto)) with @Data and final attributes.
     * The "log" variable used for logging (with @Slf4j).
-* **Configuration**: Explained in section "7. Configuration and application properties".
+* **Configuration**: Explained in section [7. Configuration and application properties](https://github.com/Aliuken/JobVacanciesApp_Java11#7-configuration-and-application-properties).
 * **Internationalization** (**i18n**): It uses Locale and MessageSource (in the interface [Internationalizable](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/superinterface/Internationalizable.java)) and is configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java) (as in <https://www.baeldung.com/spring-boot-internationalization>). Built for:
     * **English**: Using the file [src/main/resources/messages_en.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/messages_en.properties).
     * **Spanish**: Using the file [src/main/resources/messages_es.properties](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/messages_es.properties).
@@ -120,7 +120,7 @@ The Spring Core technologies currently used are:
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
     * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically.
-* **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section "3.7. AOP technologies".
+* **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section [3.7. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#37-aop-technologies).
 * **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with internationalization (i18n). Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
 
@@ -203,7 +203,7 @@ The data technologies currently used are:
 > [!NOTE]
 > In [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java), the method "saveAndFlush(S entity)" is used both to update and create an entity, depending on whether it already existed or not in the database.
 >
-> In [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java), "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section "7.2. ConfigPropertiesBean").
+> In [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java), "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section [7.2. ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11#72-configpropertiesbean)).
 >
 > The **Entity-Relationship Diagram** of the database is in the following files:
 > * **As an image** in: [documentation/Entity-Relationship-Diagram.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png).
@@ -376,7 +376,7 @@ where:
 * The user **antonio@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=antonio@aliuken.com&uuid=cd939918-565d-41f1-a100-992594729dc4&languageParam=en> with a web browser).
 * The user **pai.mei@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=pai.mei@aliuken.com&uuid=a0396f47-50e8-470d-94ba-16f981cdfad6&languageParam=en> with a web browser).
 * The priority order of the roles is: **administrator > supervisor > user > anonymous**.
-* The **allowed views for each user role** are explained in section "7.6. Other configurations".
+* The **allowed views for each user role** are explained in section [7.6. Other configurations](https://github.com/Aliuken/JobVacanciesApp_Java11#76-other-configurations).
 
 ### 6.2. New credentials to access the application
 
