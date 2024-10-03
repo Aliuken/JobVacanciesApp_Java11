@@ -61,7 +61,7 @@ The core technologies currently used are:
 * **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
 * **Spring Tool Suite** (**STS**): As the IDE (based on **Eclipse**).
 * **JUnit 5**: For unit testing.
-* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in detail in section "3.7. AOP technologies".
+* **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in section "3.7. AOP technologies".
 * **Lombok**: To generate:
     * The model entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)) with @Data.
     * The DTOs as immutable objects (pkg: [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto)) with @Data and final attributes.
@@ -120,7 +120,7 @@ The Spring Core technologies currently used are:
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
     * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically.
-* **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in detail in section "3.7. AOP technologies".
+* **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section "3.7. AOP technologies".
 * **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with internationalization (i18n). Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
 
