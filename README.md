@@ -119,7 +119,7 @@ The Spring Core technologies currently used are:
     * Beans created with **@Component**, **@Controller**, **@Service** and **@Repository**.
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
-    * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically.
+    * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically. It uses internally Spring's **ApplicationContextAware** and **GenericApplicationContext**.
 * **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section **[3.7. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#37-aop-technologies)**.
 * **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with internationalization (i18n). Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
