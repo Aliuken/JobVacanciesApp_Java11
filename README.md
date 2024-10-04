@@ -373,8 +373,8 @@ The database of the application comes with 9 predefined users with the following
 
 where:
 * The user **anonymous@aliuken.com** is used for the operations when the user is still not logged in. You cannot log in as the anonymous user as it doesn't have password and role.
-* The user **antonio@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=antonio@aliuken.com&uuid=cd939918-565d-41f1-a100-992594729dc4&languageParam=en> with a web browser).
-* The user **pai.mei@aliuken.com** can still not be used. It requires confirmation via email (by accessing the link <http://localhost:8080/signup-confirmed?email=pai.mei@aliuken.com&uuid=a0396f47-50e8-470d-94ba-16f981cdfad6&languageParam=en> with a web browser).
+* The user **antonio@aliuken.com** cannot be used until it is confirmed via email (by accessing the link <http://localhost:8080/signup-confirmed?email=antonio@aliuken.com&uuid=cd939918-565d-41f1-a100-992594729dc4&languageParam=en> with a web browser).
+* The user **pai.mei@aliuken.com** cannot be used until it is confirmed via email (by accessing the link <http://localhost:8080/signup-confirmed?email=pai.mei@aliuken.com&uuid=a0396f47-50e8-470d-94ba-16f981cdfad6&languageParam=en> with a web browser).
 * The priority order of the roles is: **administrator > supervisor > user > anonymous**.
 * The **allowed views for each user role** are explained in section **[7.6. Other configurations](https://github.com/Aliuken/JobVacanciesApp_Java11#76-other-configurations)**.
 
