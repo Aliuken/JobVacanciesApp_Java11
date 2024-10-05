@@ -221,7 +221,7 @@ The security technologies currently used are:
 * **BCrypt**: As the Spring Security password encoder.
 * **CustomAuthenticationHandler**: To handle the processes of:
     * **Login**: By adding the authenticated user to the session as the attribute "sessionAuthUser".
-    * **Logout**: By removing the session attribute "sessionAuthUser" and redirecting to the result of the call "getRedirectEndpoint(nextDefaultLanguage, nextAnonymousAccessPermission, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextUserInterfaceFramework)".
+    * **Logout**: By removing the session attribute "sessionAuthUser" and redirecting to the result of the call "this.getRedirectEndpoint(...)".
 * **SpringSecurityUtils**: Utility class to manage the security from Java code in HTML pages with Thymeleaf (instead of using the tag attribute "sec:authorize", which is impossible to debug).
 * **SessionUtils**: Utility class to get the sessionAuthUser object from the following origins:
     * From the Authentication object of Spring Security.
