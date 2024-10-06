@@ -106,6 +106,7 @@ The Java SE core technologies currently used are:
     * **ThrowableUtils**: Over "StringWriter" and "PrintWriter".
     * **FileUtils**: Over "ServletOutputStream" and "ZipFile".
     * **AuthUserQueryReport**: Over "AuthUserQueryReport&lt;T&gt;".
+* **Java varargs**: When needed (adding to the name of the last argument the suffix "Varargs").
 * **Java StringJoiner class**: In [StringUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/StringUtils.java), to deal with String concatenation.
 * **Java Locale class**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with internationalization (i18n).
 
