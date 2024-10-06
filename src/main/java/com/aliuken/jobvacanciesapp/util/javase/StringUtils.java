@@ -15,12 +15,12 @@ public class StringUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static String getStringJoined(final CharSequence... elementsVararg) {
+	public static String getStringJoined(final CharSequence... elementsVarargs) {
 		final CharSequence delimiter = Constants.EMPTY_STRING;
 
 		final StringJoiner stringJoiner = new StringJoiner(delimiter);
-		if(elementsVararg != null) {
-			for(final CharSequence element : elementsVararg) {
+		if(elementsVarargs != null) {
+			for(final CharSequence element : elementsVarargs) {
 				stringJoiner.add(element);
 			}
 		}

@@ -28,13 +28,13 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 	@NotNull
 	private final String allowedLowerCaseFileExtensionsString;
 
-	private FileType(final String... allowedFileExtensionsVararg) {
-		if(LogicalUtils.isNullOrEmpty(allowedFileExtensionsVararg)) {
+	private FileType(final String... allowedFileExtensionsVarargs) {
+		if(LogicalUtils.isNullOrEmpty(allowedFileExtensionsVarargs)) {
 			throw new IllegalArgumentException("FileType allowedFileExtensions must not be null nor empty");
 		}
 
 		final List<String> allowedLowerCaseFileExtensions = new ArrayList<>();
-		for(String allowedFileExtension : allowedFileExtensionsVararg) {
+		for(String allowedFileExtension : allowedFileExtensionsVarargs) {
 			if(allowedFileExtension != null) {
 				allowedFileExtension = allowedFileExtension.toLowerCase();
 				allowedLowerCaseFileExtensions.add(allowedFileExtension);
