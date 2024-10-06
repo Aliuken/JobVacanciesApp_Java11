@@ -53,12 +53,12 @@ public class SpringSecurityUtils {
 		return result;
 	}
 
-	public boolean hasAnyAuthority(final String... authorityNames) {
-		if(LogicalUtils.isNotNullNorEmpty(authorityNames)) {
+	public boolean hasAnyAuthority(final String... authorityNamesVararg) {
+		if(LogicalUtils.isNotNullNorEmpty(authorityNamesVararg)) {
 			final Set<String> grantedAuthorityNames = this.getAuthorityNames();
 
 			if(LogicalUtils.isNotNullNorEmpty(grantedAuthorityNames)) {
-				for(final String authorityName : authorityNames) {
+				for(final String authorityName : authorityNamesVararg) {
 					if(grantedAuthorityNames.contains(authorityName)) {
 						return true;
 					}
@@ -69,8 +69,8 @@ public class SpringSecurityUtils {
 		return false;
 	}
 
-	public boolean isAuthenticatedAndHasAnyAuthority(final String... authorityNames) {
-		final boolean isAuthenticatedAndHasAnyAuthority = (this.isAuthenticated() && this.hasAnyAuthority(authorityNames));
+	public boolean isAuthenticatedAndHasAnyAuthority(final String... authorityNamesVararg) {
+		final boolean isAuthenticatedAndHasAnyAuthority = (this.isAuthenticated() && this.hasAnyAuthority(authorityNamesVararg));
 		return isAuthenticatedAndHasAnyAuthority;
 	}
 
