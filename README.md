@@ -195,8 +195,8 @@ The data technologies currently used are:
 * **Spring Data JPA**: To make an easier use of **JPA**. Configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java).
 * **Hibernate**: As the ORM and **JPA** implementation.
 * **JPQL**: In the methods annotated with @RepositoryMethod in @Repository classes (instead of using **SQL**).
-* **MySQL Community Server 8.0**: As the main DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
-* **H2**: As the in-memory DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
+* **MySQL Community Server 8.0**: As the main DB (SQL script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
+* **H2**: As the in-memory DB for testing (SQL script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
 * **iText Core itextpdf 5.5.13.4**: As the Java library to export queries to PDFs.
 * **Transactions**: Defined with Spring using:
     * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
@@ -306,7 +306,7 @@ Other technologies currently used are:
 > [!IMPORTANT]
 > Before running the application, install **MySQL Workbench** and:
 > * **Configure a connection** like the one in [documentation/MySQL-Workbench-connection.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/MySQL-Workbench-connection.png) (where the password is "admin").
-> * **Reset the database** using the previous connection and running the script **mysql-dump.sql**.
+> * **Reset the database** using the previous connection and running the SQL script **mysql-dump.sql**.
 >
 > To run the application, I recommend using **Spring Tool Suite** (which is an IDE based on **Eclipse**).
 >
@@ -319,7 +319,7 @@ Steps:
 ### 4.2. Run and stop the application and the Elastic Stack using Docker Compose
 
 > [!IMPORTANT]
-> Before running the application or the Elastic Stack, run the script: **sudo ./docker-stop.sh**
+> Before running the application or the Elastic Stack, run the command: **sudo ./docker-stop.sh**
 
 Steps:
 
