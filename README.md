@@ -1,6 +1,7 @@
 > [!IMPORTANT]
 > In the next sections, we use:
 > * **app** as the abbreviation for **application**.
+> * **DB** as the abbreviation for **database**.
 > * **JS** as the abbreviation for **JavaScript**.
 > * **OS** as the abbreviation for **operating system**.
 > * **pkg** as the abbreviation for **Java package**.
