@@ -4,6 +4,7 @@
 > * **DB** as the abbreviation for **database**.
 > * **JS** as the abbreviation for **JavaScript**.
 > * **OS** as the abbreviation for **operating system**.
+> * **PC** as the abbreviation for **personal computer**.
 > * **pkg** as the abbreviation for **Java package**.
 > * **prop** as the abbreviation for **property**.
 >
