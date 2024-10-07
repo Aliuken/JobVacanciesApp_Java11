@@ -42,13 +42,13 @@ Other related projects include:
 
 The following design patterns are used in the application:
 * **MVC** (**Model-View-Controller**): Through:
-** @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC.
-** The utility class [MvcUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/web/MvcUtils.java).
+    * @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC.
+    * The utility class [MvcUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/web/MvcUtils.java).
 * **Open Session in View**: Through the "spring.jpa.open-in-view" property.
 * **DTO** (**Data Transfer Object**): In the package [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto).
 * **DAO** (**Data Access Object**): Through:
-** @Repository interfaces (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)).
-** @Entity classes (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
+    * @Repository interfaces (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)).
+    * @Entity classes (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
 * **Singleton**: It is used when we want a single instance of a class and it is not possible to use enums, @Autowired or utility classes (with only static methods). This pattern is used in the packages:
     * [com.aliuken.jobvacanciesapp.model.dto.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter): To get EntityToDtoConverter instances statically in controllers, DTOs, JUnit tests and other converters.
     * [com.aliuken.jobvacanciesapp.util.javase](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase): To get the ConfigurableEnumUtils instance statically to execute its instance methods (that use generics).
