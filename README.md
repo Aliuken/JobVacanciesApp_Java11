@@ -1,11 +1,12 @@
 > [!IMPORTANT]
-> The PC used to develop and execute the application has a GNU/Linux OS.
->
 > In the next sections, we use:
 > * **app** as the abbreviation for **application**.
 > * **JS** as the abbreviation for **JavaScript**.
+> * **OS** as the abbreviation for **operating system**.
 > * **pkg** as the abbreviation for **Java package**.
 > * **prop** as the abbreviation for **property**.
+>
+> The PC used to develop and execute the application has a **GNU/Linux** OS.
 
 # JobVacanciesApp_Java11
 
