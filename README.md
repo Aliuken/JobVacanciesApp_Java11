@@ -3,6 +3,7 @@
 > * **app** as the abbreviation for **application**.
 > * **config** as the abbreviation for **configuration**.
 > * **DB** as the abbreviation for **database**.
+> * **ELK** as the abbreviation for **Elastic Stack**.
 > * **JS** as the abbreviation for **JavaScript**.
 > * **OS** as the abbreviation for **operating system**.
 > * **PC** as the abbreviation for **personal computer**.
