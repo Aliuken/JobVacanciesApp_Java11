@@ -1,4 +1,6 @@
 > [!IMPORTANT]
+> The PC used to develop and execute the application has a GNU/Linux OS.
+>
 > In the next sections, we use:
 > * **app** as the abbreviation for **application**.
 > * **JS** as the abbreviation for **JavaScript**.
