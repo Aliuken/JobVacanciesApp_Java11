@@ -13,7 +13,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.aliuken.jobvacanciesapp.model.formatter.LocalDateFormatter;
 import com.aliuken.jobvacanciesapp.model.formatter.LocalDateTimeFormatter;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -31,16 +31,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	private LocalDateTimeFormatter localDateTimeFormatter;
 
 	@Override
-	public void addResourceHandlers(final ResourceHandlerRegistry resourceHandlerRegistry) {
-		final String authUserCurriculumFilesPath = configPropertiesBean.getAuthUserCurriculumFilesPath();
-		final String authUserEntityQueryFilesPath = configPropertiesBean.getAuthUserEntityQueryFilesPath();
-		final String jobCompanyLogosPath = configPropertiesBean.getJobCompanyLogosPath();
-		final String resourceLocation1 = StringUtils.getStringJoined("file:", authUserCurriculumFilesPath);
-		final String resourceLocation2 = StringUtils.getStringJoined("file:", authUserEntityQueryFilesPath);
-		final String resourceLocation3 = StringUtils.getStringJoined("file:", jobCompanyLogosPath);
-		resourceHandlerRegistry.addResourceHandler("/auth-user-curriculum-files/**").addResourceLocations(resourceLocation1);
-		resourceHandlerRegistry.addResourceHandler("/auth-user-entity-query-files/**").addResourceLocations(resourceLocation2);
-		resourceHandlerRegistry.addResourceHandler("/job-company-logos/**").addResourceLocations(resourceLocation3);
+	public void addFormatters(final FormatterRegistry formatterRegistry) {
+		formatterRegistry.addFormatterForFieldType(LocalDate.class, localDateFormatter);
+		formatterRegistry.addFormatterForFieldType(LocalDateTime.class, localDateTimeFormatter);
 	}
 
 	@Override
@@ -50,8 +43,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void addFormatters(final FormatterRegistry formatterRegistry) {
-		formatterRegistry.addFormatterForFieldType(LocalDate.class, localDateFormatter);
-		formatterRegistry.addFormatterForFieldType(LocalDateTime.class, localDateTimeFormatter);
+	public void addResourceHandlers(final ResourceHandlerRegistry resourceHandlerRegistry) {
+		final String authUserCurriculumFilesPath = configPropertiesBean.getAuthUserCurriculumFilesPath();
+		final String authUserEntityQueryFilesPath = configPropertiesBean.getAuthUserEntityQueryFilesPath();
+		final String jobCompanyLogosPath = configPropertiesBean.getJobCompanyLogosPath();
+		final String resourceLocation1 = FileUtils.getFileResourceLocation(authUserCurriculumFilesPath);
+		final String resourceLocation2 = FileUtils.getFileResourceLocation(authUserEntityQueryFilesPath);
+		final String resourceLocation3 = FileUtils.getFileResourceLocation(jobCompanyLogosPath);
+		resourceHandlerRegistry.addResourceHandler("/auth-user-curriculum-files/**").addResourceLocations(resourceLocation1);
+		resourceHandlerRegistry.addResourceHandler("/auth-user-entity-query-files/**").addResourceLocations(resourceLocation2);
+		resourceHandlerRegistry.addResourceHandler("/job-company-logos/**").addResourceLocations(resourceLocation3);
 	}
 }

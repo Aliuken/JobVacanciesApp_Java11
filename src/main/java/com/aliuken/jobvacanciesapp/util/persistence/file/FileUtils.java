@@ -45,6 +45,14 @@ public class FileUtils {
 	}
 
 	/**
+	 * Method to get the resource location of a file path
+	 */
+	public static String getFileResourceLocation(final String filePathString) {
+		final String resourceLocation = StringUtils.getStringJoined("file:", filePathString);
+		return resourceLocation;
+	}
+
+	/**
 	 * Method to store and download a query pdf file
 	 */
 	public static <T extends AbstractEntity> byte[] storeAndDownloadPdf(final TableSearchDTO tableSearchDTO,
