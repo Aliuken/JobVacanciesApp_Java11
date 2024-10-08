@@ -5,7 +5,7 @@
 ```cmd
 sudo ./docker-stop.sh
 sudo ./docker-compose-app-start.sh
-sudo ./docker-compose-elastic-stack-start.sh
+sudo ./docker-compose-elk-start.sh
 ```
 
 ## 2. Commands to access the database

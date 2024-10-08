@@ -6,7 +6,7 @@ services:
     container_name: filebeat-container
     command: filebeat -e -strict.perms=false
     networks:
-      - internal-net-elastic-stack
+      - internal-net-elk
     volumes:
       - /AppData_Java11/JobVacanciesApp/log-files:/var/log/jobVacanciesApp:ro
       - /AppData_Java11/ElasticStack/filebeat-config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
@@ -23,7 +23,7 @@ services:
     image: docker.elastic.co/logstash/logstash:8.15.1
     container_name: logstash-container
     networks:
-      - internal-net-elastic-stack
+      - internal-net-elk
     ports:
       - "5044:5044"
     volumes:
@@ -45,7 +45,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.1
     container_name: elasticsearch-container
     networks:
-      - internal-net-elastic-stack
+      - internal-net-elk
     ports:
       - 9200:9200
       - 9300:9300
@@ -71,8 +71,8 @@ services:
     container_name: kibana-container
     command: ./bin/kibana-create-keystore.sh
     networks:
-      - internal-net-elastic-stack
-      - external-net-elastic-stack
+      - internal-net-elk
+      - external-net-elk
     ports:
       - 5601:5601
     volumes:
@@ -88,9 +88,9 @@ services:
       retries: 50
 
 networks:
-  internal-net-elastic-stack:
+  internal-net-elk:
     driver: bridge
-  external-net-elastic-stack:
+  external-net-elk:
     external: true
 
 volumes:

@@ -282,7 +282,7 @@ Other technologies currently used are:
 * **Docker Compose for the app** (in [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/docker-compose.yaml)). It uses:
     * In **app-db-service**: The latest MySQL 8.0 Docker image ("mysql:8.0").
     * In **app-service**: The file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
-* **Docker Compose for the Elastic Stack** (in [docker-compose-elastic-stack/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elastic-stack/docker-compose.yaml)). It uses:
+* **Docker Compose for the Elastic Stack** (in [docker-compose-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elk/docker-compose.yaml)). It uses:
     * The **Elastic Stack 8.15.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat &rArr; Logstash &rArr; Elasticsearch &rArr; Kibana".
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
@@ -328,7 +328,7 @@ Steps:
     * **Open the JobVacanciesApp URL in a web browser**: <http://localhost:9080>
 
 * To run the Elastic Stack with Docker Compose:
-    * **Execute this command in a new terminal**: sudo ./docker-compose-elastic-stack-start.sh
+    * **Execute this command in a new terminal**: sudo ./docker-compose-elk-start.sh
     * **Open the Kibana URL in a web browser**: <http://localhost:5601>
 
 * To stop everything with Docker Compose:
@@ -339,7 +339,7 @@ Steps:
 
 > [!IMPORTANT]
 > In the next sections:
-> * The folders **docker-compose-app** and **docker-compose-elastic-stack** and **lib** (which is created after compiling) are located inside the folder [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context).
+> * The folders **docker-compose-app** and **docker-compose-elk** and **lib** (which is created after compiling) are located inside the folder [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context).
 > * The path **/AppData_Java11** is the folder in my PC (which is Linux) that contains the data from the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11).
 
 ### 5.1. Explanation of the docker-compose.yaml for the application
@@ -357,12 +357,12 @@ In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/
 
 ### 5.2. Explanation of the docker-compose.yaml for the Elastic Stack
 
-In the file [docker-compose-elastic-stack/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elastic-stack/docker-compose.yaml):
+In the file [docker-compose-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elk/docker-compose.yaml):
 * **/AppData_Java11/JobVacanciesApp/log-files** is the folder that has the log files used in the application.
 * **/AppData_Java11/ElasticStack** is the folder that has the configuration files for the Elastic Stack.
 * **healthcheck** and **service_healthy** are used to check when each service started correctly, to start their dependent services after that. The startup order is: "Elasticsearch &rArr; Kibana &rArr; Logstash &rArr; Filebeat".
-* **internal-net-elastic-stack** is used to communicate the Elastic Stack services among them.
-* **external-net-elastic-stack** is used to communicate the Kibana service with the end user.
+* **internal-net-elk** is used to communicate the Elastic Stack services among them.
+* **external-net-elk** is used to communicate the Kibana service with the end user.
 
 ## 6. Security credentials
 
