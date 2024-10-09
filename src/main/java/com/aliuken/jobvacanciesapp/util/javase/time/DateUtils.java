@@ -24,6 +24,16 @@ public class DateUtils implements TemporalUtils<LocalDate> {
 	}
 
 	@Override
+	public String getTemporalPattern() {
+		return DATE_PATTERN;
+	}
+
+	@Override
+	public DateTimeFormatter getTemporalFormatter() {
+		return DATE_FORMATTER;
+	}
+
+	@Override
 	public String convertToStringForWebPageField(final LocalDate localDate) {
 		final String text = this.convertToStringWithDefaultValue(localDate, Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD);
 		return text;
