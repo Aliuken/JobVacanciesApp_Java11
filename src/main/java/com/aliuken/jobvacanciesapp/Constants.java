@@ -2,7 +2,6 @@ package com.aliuken.jobvacanciesapp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
@@ -20,8 +19,7 @@ public class Constants {
 	public static final String MAP_ENTRY_PREFIX = "\n- ";
 	public static final String KEY_VALUE_SEPARATOR = " -> ";
 
-	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	public static final ConfigurableEnumUtils ENUM_UTILS = ConfigurableEnumUtils.getInstance();
 
 	public static final TemporalUtils<LocalDate> DATE_UTILS = DateUtils.getInstance();
 	public static final TemporalUtils<LocalDateTime> DATE_TIME_UTILS = DateTimeUtils.getInstance();
@@ -50,8 +48,6 @@ public class Constants {
 	public static final String JOB_CATEGORY_PREDEFINED_FILTER_NAME = "jobCategory";
 	public static final String JOB_COMPANY_PREDEFINED_FILTER_NAME = "jobCompany";
 	public static final String JOB_VACANCY_PREDEFINED_FILTER_NAME = "jobVacancy";
-
-	public static final ConfigurableEnumUtils ENUM_UTILS = ConfigurableEnumUtils.getInstance();
 
 	public static final String INSTANTIATION_NOT_ALLOWED = "Cannot instantiate class ";
 }

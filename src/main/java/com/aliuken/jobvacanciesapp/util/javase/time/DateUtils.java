@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import com.aliuken.jobvacanciesapp.Constants;
@@ -13,6 +14,8 @@ import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils
 public class DateUtils implements TemporalUtils<LocalDate> {
 
 	private static final DateUtils SINGLETON_INSTANCE = new DateUtils();
+	private static final String DATE_PATTERN = "dd-MM-yyyy";
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
 
 	private DateUtils(){}
 
@@ -43,7 +46,7 @@ public class DateUtils implements TemporalUtils<LocalDate> {
 			return defaultValue;
 		}
 
-		final String text = localDate.format(Constants.DATE_FORMATTER);
+		final String text = localDate.format(DATE_FORMATTER);
 		return text;
 	}
 
@@ -52,7 +55,7 @@ public class DateUtils implements TemporalUtils<LocalDate> {
 			return null;
 		}
 
-		final LocalDate localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
+		final LocalDate localDate = LocalDate.parse(dateString, DATE_FORMATTER);
 		return localDate;
 	}
 
@@ -62,7 +65,7 @@ public class DateUtils implements TemporalUtils<LocalDate> {
 			return null;
 		}
 
-		final String text = localDate.format(Constants.DATE_FORMATTER);
+		final String text = localDate.format(DATE_FORMATTER);
 		return text;
 	}
 
@@ -72,7 +75,7 @@ public class DateUtils implements TemporalUtils<LocalDate> {
 			return null;
 		}
 
-		final LocalDate localDate = LocalDate.parse(dateString, Constants.DATE_FORMATTER);
+		final LocalDate localDate = LocalDate.parse(dateString, DATE_FORMATTER);
 		return localDate;
 	}
 

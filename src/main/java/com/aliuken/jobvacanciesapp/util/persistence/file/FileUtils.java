@@ -36,6 +36,7 @@ import net.lingala.zip4j.ZipFile;
 
 @Slf4j
 public class FileUtils {
+	private static final String FILE_RESOURCE_LOCATION_PREFIX = "file:";
 	public static final String PDF_EXTENSION = ".pdf";
 	public static final String ZIP_EXTENSION = ".zip";
 
@@ -48,7 +49,7 @@ public class FileUtils {
 	 * Method to get the resource location of a file path
 	 */
 	public static String getFileResourceLocation(final String filePathString) {
-		final String resourceLocation = StringUtils.getStringJoined("file:", filePathString);
+		final String resourceLocation = StringUtils.getStringJoined(FILE_RESOURCE_LOCATION_PREFIX, filePathString);
 		return resourceLocation;
 	}
 
