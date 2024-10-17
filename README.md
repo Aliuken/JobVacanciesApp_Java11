@@ -18,7 +18,7 @@
 
 **JobVacanciesApp_Java11** is an open-source web application made with **OpenJDK 11** and **Spring Boot 2.7** to learn how to make a website to manage job vacancies using state-of-the-art Spring-related technologies.
 
-The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **SOLID principles** and the **SOA architecture**.
+The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **SOLID principles** in a **monolithic architecture**.
 
 ### 1.1. About JobVacanciesApp_AppData_Java11
 
