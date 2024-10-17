@@ -10,7 +10,7 @@ sudo docker network rm "external-net-app"
 sudo docker network rm "external-net-elk"
 
 sudo docker kill $(docker ps -q)
-sudo docker rm $(docker ps -a -q)
+sudo docker rm -f -v $(docker ps -a -q)
 sudo docker rmi $(docker images -q)
 
 sudo docker system prune -f --volumes
