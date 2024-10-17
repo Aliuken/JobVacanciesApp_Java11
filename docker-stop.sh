@@ -13,4 +13,4 @@ sudo docker kill $(docker ps -q)
 sudo docker rm -f -v $(docker ps -a -q)
 sudo docker rmi $(docker images -q)
 
-sudo docker system prune -f --volumes
+sudo docker system prune -a -f --volumes
