@@ -15,6 +15,7 @@ services:
     restart: on-failure
     volumes:
       - mysql-data:/var/lib/mysql
+      - mysql-logs:/var/log/mysql
       - ../../src/main/resources/db_dumps:/docker-entrypoint-initdb.d
     cap_add:
       - SYS_NICE
@@ -69,4 +70,6 @@ networks:
 
 volumes:
   mysql-data:
+    driver: local
+  mysql-logs:
     driver: local
