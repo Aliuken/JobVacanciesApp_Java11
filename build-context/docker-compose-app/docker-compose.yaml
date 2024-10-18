@@ -2,28 +2,28 @@ name: "app-j11"
 
 services:
   app-db-service:
-    image: mysql:${DB_VERSION}
+    image: mysql:${DB_VERSION:-latest}
     container_name: app-db-container
     networks:
       internal-net-app:
         ipv4_address: 192.168.10.3
         ipv6_address: 2001:3984:3989::13
     ports:
-      - ${DB_PORT}:3306
+      - ${DB_PORT:-3306}:3306
     environment:
       - MYSQL_DATABASE=job-vacancies-app-db
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}
     restart: on-failure
     volumes:
       - mysql-data:/var/lib/mysql
-#      - mysql-logs:/var/log/mysql
       - ../../src/main/resources/db_dumps:/docker-entrypoint-initdb.d
+#      - mysql-logs:/var/log/mysql
     cap_add:
       - SYS_NICE
     env_file:
       - .env
     healthcheck:
-      test: "mysql -uroot -padmin -e 'select 1'"
+      test: "mysql -uroot -p${DB_ROOT_PASSWORD:-root} -e 'select 1'"
       interval: 1s
       retries: 120
 
@@ -38,7 +38,7 @@ services:
 #        ipv4_address: 192.168.20.2
 #        ipv6_address: 2001:3984:3990::22
     ports:
-      - ${APP_PORT}:8080
+      - ${APP_PORT:-8080}:8080
     environment:
       - MYSQL_HOST=app-db-container
       - MYSQL_PORT=3306
