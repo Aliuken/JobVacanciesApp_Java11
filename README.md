@@ -339,7 +339,9 @@ Steps:
 
 > [!IMPORTANT]
 > In the next sections:
-> * The folders **docker-compose-app**, **docker-compose-elk** and **lib** (which is created after compiling) are located inside the folder [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context).
+> * The folder [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context) is the build context of [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile) and contains:
+>     * The folders **docker-compose-app**, **docker-compose-elk** and **lib** (which is created, with the jar of the app, after compiling).
+>     * The files [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/Dockerfile-start.sh) (which can only be executed executed manually) and [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/.dockerignore) (to ignore every file/folder inside [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context) except the folder **build-context/lib** and its contents.
 > * The path **/AppData_Java11** is the folder in my PC (which is Linux) that contains the data from the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11).
 
 ### 5.1. Explanation of the docker-compose.yaml for the application
@@ -348,12 +350,10 @@ In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/
 * Its variables are configured in the file [docker-compose-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/.env).
 * **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
-* **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot application after that (through the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile) that reads the jar files inside the **build-context/lib** folder).
+* **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
+* The Spring Boot app is started through the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), that reads the jar files inside the **build-context/lib** folder.
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
-
-> [!NOTE]
-> The file **docker-compose-app/Dockerfile** is used in **docker-compose-app/docker-compose.yaml**. However, the files [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/Dockerfile-start.sh) and [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/.dockerignore) are never used. They would only be used if the first one is executed manually.
 
 ### 5.2. Explanation of the docker-compose.yaml for the Elastic Stack
 
