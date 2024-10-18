@@ -351,7 +351,7 @@ In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/
 * **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), that reads the jar files inside the **build-context/lib** folder. The OS of the image is Alpine Linux which reduces the size of the image.
+* The Spring Boot app is started through the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), that reads the jar files inside **build-context/lib**. The OS of the image is Alpine Linux which reduces the size of the image.
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
