@@ -347,7 +347,7 @@ Steps:
 ### 5.1. Explanation of the docker-compose.yaml for the application
 
 In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/docker-compose.yaml):
-* Its variables are configured in the file [docker-compose-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/.env).
+* Its variables are configured in the file [docker-compose-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/.env) overriding the default values.
 * **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
