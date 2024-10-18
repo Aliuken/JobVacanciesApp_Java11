@@ -28,7 +28,7 @@ services:
       retries: 120
 
   app-service:
-    image: job-vacancies-app:${APP_VERSION}
+    image: job-vacancies-app:${APP_VERSION:-1.0}
     container_name: app-container
     networks:
       internal-net-app:
