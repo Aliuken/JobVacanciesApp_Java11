@@ -9,10 +9,10 @@ USER jobVacanciesAppUser:jobVacanciesAppGroup
 
 EXPOSE 8080
 
-ARG PRINT_ARG=default_value
-RUN echo "PRINT_ARG: ${PRINT_ARG}"
-
 ARG JAR_FILE=./lib/*.jar
 COPY ${JAR_FILE} /opt/apps/jobVacanciesApp/jobVacanciesApp.jar
+
+ARG PRINT_ARG=default_value
+RUN echo "PRINT_ARG: ${PRINT_ARG}"
 
 CMD ["java", "-jar", "/opt/apps/jobVacanciesApp/jobVacanciesApp.jar"]
