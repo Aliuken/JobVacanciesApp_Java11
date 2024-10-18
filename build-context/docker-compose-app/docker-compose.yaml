@@ -35,8 +35,8 @@ services:
         ipv4_address: 192.168.10.2
         ipv6_address: 2001:3984:3989::12
       external-net-app:
-        ipv4_address: 192.168.20.2
-        ipv6_address: 2001:3984:3990::22
+#        ipv4_address: 192.168.20.2
+#        ipv6_address: 2001:3984:3990::22
     ports:
       - ${APP_PORT}:8080
     environment:
@@ -71,15 +71,19 @@ networks:
         - subnet: 2001:3984:3989::/64
           gateway: 2001:3984:3989::11
   external-net-app:
+    external: true
     driver: bridge
     enable_ipv6: true
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.20.0/24
-          gateway: 192.168.20.1
-        - subnet: 2001:3984:3990::/64
-          gateway: 2001:3984:3990::21
+#  external-net-app:
+#    driver: bridge
+#    enable_ipv6: true
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 192.168.20.0/24
+#          gateway: 192.168.20.1
+#        - subnet: 2001:3984:3990::/64
+#          gateway: 2001:3984:3990::21
 
 volumes:
   mysql-data:
