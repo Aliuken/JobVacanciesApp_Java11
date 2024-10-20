@@ -279,10 +279,10 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 ### 3.8. Other technologies
 
 Other technologies currently used are:
-* **Docker Compose for the app** (in [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/docker-compose.yaml)). It uses:
+* **Docker Compose for the app** (in [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml)). It uses:
     * In **app-db-service**: The latest MySQL 8.0 Docker image ("mysql:8.0").
-    * In **app-service**: The file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
-* **Docker Compose for the Elastic Stack** (in [docker-compose-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elk/docker-compose.yaml)). It uses:
+    * In **app-service**: The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
+* **Docker Compose for the Elastic Stack** (in [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose.yaml)). It uses:
     * The **Elastic Stack 8.15.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat &rArr; Logstash &rArr; Elasticsearch &rArr; Kibana".
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
@@ -338,26 +338,36 @@ Steps:
 ## 5. Explanation of the docker-compose.yaml files
 
 > [!IMPORTANT]
-> In the next sections:
-> * The path **/AppData_Java11** is the folder in my PC (which is Linux) that contains the data from the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11).
-> * The folder [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context) is the build context of the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile) and contains:
->     * The folders **docker-compose-app**, **docker-compose-elk** and **lib** (which is created, with the jar of the app, after compiling).
->     * The files [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/Dockerfile-start.sh) (which can only be executed manually) and [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/.dockerignore) (to ignore every file/folder inside [build-context](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context), except the folder **build-context/lib** and its contents).
+> In the next sections, the path **/AppData_Java11** is the folder in my PC (which is Linux) that contains the data from the repository [JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11).
 
 ### 5.1. Explanation of the docker-compose.yaml for the application
 
-In the file [docker-compose-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/docker-compose.yaml):
-* Its variables are configured in the file [docker-compose-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/.env) overriding the default values.
-* **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
+> [!IMPORTANT]
+> The folder [build-context-app](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app) is the build context of the Docker Compose for the app and contains:
+> * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml), with the description of the containers **app-container** and **app-db-container**.
+> * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
+> * The folder **lib**, which is created with the jar of the app after compiling.
+> * The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), used in **docker-compose.yaml** to create the **app-container** image.
+> * The file [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile-start.sh), with an example of how to create the image from the Dockerfile and run the container from the image without using Docker Compose.
+> * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.dockerignore), to ignore every file inside [build-context-app](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app) (except the folder **lib** and its contents) when building the **Dockerfile** image.
+
+In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml):
+* Its variables are configured in the file [docker-compose-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.env) overriding the default values.
+* **../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [docker-compose-app/Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-app/Dockerfile), that reads the jar files inside **build-context/lib**. The OS of the image is Alpine Linux which reduces the size of the image.
+* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), that reads the jar files inside **build-context-app/lib**. The OS of the image is Alpine Linux which reduces the size of the image.
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
 ### 5.2. Explanation of the docker-compose.yaml for the Elastic Stack
 
-In the file [docker-compose-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context/docker-compose-elk/docker-compose.yaml):
+> [!IMPORTANT]
+> The folder [build-context-elk](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk) is the build context of the Docker Compose for the Elastic Stack and contains:
+> * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose.yaml), with the description of the containers **filebeat-container**, **logstash-container**, **elasticsearch-container** and **kibana-container**.
+> * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
+
+In the file [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose.yaml):
 * **/AppData_Java11/JobVacanciesApp/log-files** is the folder that has the log files used in the application.
 * **/AppData_Java11/ElasticStack** is the folder that has the configuration files for the Elastic Stack.
 * **healthcheck** and **service_healthy** are used to check when each service started correctly, to start their dependent services after that. The startup order is: "Elasticsearch &rArr; Kibana &rArr; Logstash &rArr; Filebeat".

@@ -1,3 +1,3 @@
 clear
-cd build-context/docker-compose-app
+cd build-context-app
 sudo ./docker-compose-start.sh

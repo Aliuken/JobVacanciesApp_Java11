@@ -1,7 +1,7 @@
-cd build-context/docker-compose-app
+cd build-context-app
 sudo ./docker-compose-stop.sh
 
-cd ../docker-compose-elk
+cd ../build-context-elk
 sudo ./docker-compose-stop.sh
 
 sudo docker volume rm $(sudo docker volume ls -q)

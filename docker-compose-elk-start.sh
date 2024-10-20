@@ -1,3 +1,3 @@
 clear
-cd build-context/docker-compose-elk
+cd build-context-elk
 sudo ./docker-compose-start.sh

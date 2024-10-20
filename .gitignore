@@ -1,5 +1,5 @@
 /target/
-/build-context/lib/*.jar
+/build-context-app/lib/*.jar
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

@@ -228,7 +228,7 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>${project.packaging}</type>
-									<outputDirectory>build-context/lib</outputDirectory>
+									<outputDirectory>build-context-app/lib</outputDirectory>
 									<destFileName>job-vacancies-app.jar</destFileName>
 								</artifactItem>
 							</artifactItems>
