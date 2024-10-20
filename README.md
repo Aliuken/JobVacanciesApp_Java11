@@ -345,6 +345,7 @@ Steps:
 > [!IMPORTANT]
 > The folder [build-context-app](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app) is the build context of the Docker Compose for the application and contains:
 > * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml), with the description of the containers **app-container** and **app-db-container**.
+> * The file [.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.env), to override the **docker-compose.yaml** variables' default values.
 > * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
 > * The folder **lib**, which is created with the jar of the app after compiling.
 > * The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), used in **docker-compose.yaml** to create the **app-container** image.
@@ -352,7 +353,6 @@ Steps:
 > * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the folder **lib** and its contents) when building the **Dockerfile** image.
 
 In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml):
-* Its variables are configured in the file [build-context-app/.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.env) overriding the default values.
 * **../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **curriculums**, **company logos** and **log files** used in the application.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.

@@ -1,3 +1,5 @@
+.dockerignore
+.env
 docker-compose.yaml
 docker-compose-start.sh
 docker-compose-stop.sh
