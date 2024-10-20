@@ -343,7 +343,7 @@ Steps:
 ### 5.1. Explanation of the docker-compose.yaml for the application
 
 > [!IMPORTANT]
-> The folder [build-context-app](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app) is the build context of the Docker Compose for the app and contains:
+> The folder [build-context-app](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app) is the build context of the Docker Compose for the application and contains:
 > * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml), with the description of the containers **app-container** and **app-db-container**.
 > * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
 > * The folder **lib**, which is created with the jar of the app after compiling.
