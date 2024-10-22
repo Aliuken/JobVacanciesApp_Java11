@@ -351,7 +351,7 @@ Steps:
 > * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
 > * The folder **lib**, which is created with the jar of the app after compiling.
 > * The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), used in **docker-compose.yaml** to create the **app-container** image.
-> * The file [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile-start.sh), with an example of how to create the image from the Dockerfile and run the container from the image without using Docker Compose.
+> * The file [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile-start.sh), with an example of how to create the image from the **Dockerfile** and run the container from the image without using Docker Compose.
 > * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the folder **lib** and its contents) when building the **Dockerfile** image.
 
 In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/docker-compose.yaml):
