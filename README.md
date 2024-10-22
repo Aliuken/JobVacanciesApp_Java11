@@ -135,7 +135,7 @@ The Spring Core technologies currently used are:
     * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/di/BeanFactoryUtils.java) to get, refresh and replace beans statically. It uses internally Spring's **ApplicationContextAware** and **GenericApplicationContext**.
 * **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section **[3.7. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#37-aop-technologies)**.
 * **Spring Expression Language** (**SpEL**): Used to express values dynamically in the HTML pages.
-* **Spring @Value annotation**: To get values from "application.properties" or "application.yaml" files.
+* **Spring @Value annotation**: To get config values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with internationalization (i18n). Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
 
 ### 3.4. Web technologies
