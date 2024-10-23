@@ -259,14 +259,16 @@ The security technologies currently used are:
 > [!IMPORTANT]
 > The utility classes related to AOP are in the package [com.aliuken.jobvacanciesapp.util.springcore.aop](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/springcore/aop).
 
-AOP (Aspect-Oriented Programming) is used to deal with cross-cutting concerns in the different layers of the application (controllers, services and DAOs/entities).
+AOP (Aspect-Oriented Programming) is implemented (with **Spring AOP** and **AspectJ**) to deal with cross-cutting concerns in different layers of the app (controllers, services and DAOs/entities) and configured in [AopConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/AopConfig.java).
 
-Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.aspect](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect)) are implemented with **Spring AOP** and **AspectJ** and configured in [AopConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/AopConfig.java):
+Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.aspect](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect)) were created:
 * **ControllerAspect**: For logging multiple stats in controllers (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)). It works around methods annotated with @RequestMapping, @GetMapping or @PostMapping and uses:
     * The call "EndpointType.getInstance(httpMethod, informedPath)" where the informedPath is used to match with one of the regular expressions defined in [EndpointType](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/EndpointType.java). Those regex can contain "([^/]+)" to represent a path parameter (formed by consecutive characters without "/").
     * The DB time inside the controller, calculated in RepositoryAspect.
 * **ServiceAspect**: To create an EntityManagerFactory when the current one is closed. It works around methods annotated with @ServiceMethod in services (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
-* **RepositoryAspect**: To get and log the DB time inside and outside of controllers. It works around methods annotated with @RepositoryMethod in DAOs (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)) or @LazyEntityRelationGetter in JPA entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
+* **RepositoryAspect**: To get and log the DB time inside and outside of controllers. It works around methods annotated with:
+    * @RepositoryMethod in DAOs (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)).
+    * @LazyEntityRelationGetter in JPA entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
 
 > [!NOTE]
 > Therefore, the annotations used as AOP pointcuts are:
