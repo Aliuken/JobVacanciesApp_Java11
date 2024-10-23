@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javax.validation.constraints.NotNull;
@@ -16,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpMethod;
 
 import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.model.dto.EndpointPatternDTO;
+import com.aliuken.jobvacanciesapp.model.dto.EndpointRegexPatternDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -107,30 +105,16 @@ public enum EndpointType implements Serializable {
 	APPLICATION_CONFIGURE_SAVE_FORM(POST, "/my-user/application/configure", "Save application configuration form");
 
 	@NotNull
-	private final EndpointPatternDTO endpointPatternDTO;
+	private final EndpointRegexPatternDTO endpointRegexPatternDTO;
 
-	@NotNull
-	private final String description;
-
-	private static final Map<EndpointPatternDTO, EndpointType> ENDPOINT_TYPE_MAP = EndpointType.getEndpointTypeMap();
+	private static final Map<EndpointRegexPatternDTO, EndpointType> ENDPOINT_TYPE_MAP = EndpointType.getEndpointTypeMap();
 
 	private EndpointType(final HttpMethod  httpMethod, final String pathRegex, final String description) {
-		this.endpointPatternDTO = EndpointType.createEndpointPatternDTO(httpMethod, pathRegex);
-		this.description = description;
+		this.endpointRegexPatternDTO = EndpointRegexPatternDTO.getNewInstance(httpMethod, pathRegex, description);
 	}
 
-	private static EndpointPatternDTO createEndpointPatternDTO(final HttpMethod httpMethod, final String pathRegex) {
-		final Pattern pathPattern = Pattern.compile(pathRegex);
-		final EndpointPatternDTO endpointPatternDTO = EndpointPatternDTO.getNewInstance(httpMethod, pathPattern);
-		return endpointPatternDTO;
-	}
-
-	public EndpointPatternDTO getEndpointPatternDTO() {
-		return endpointPatternDTO;
-	}
-
-	public String getDescription() {
-		return description;
+	public EndpointRegexPatternDTO getEndpointRegexPatternDTO() {
+		return endpointRegexPatternDTO;
 	}
 
 	public static EndpointType getInstance(final String httpMethod, String path) {
@@ -138,26 +122,25 @@ public enum EndpointType implements Serializable {
 			path = path.substring(0, path.length() - 1);
 		}
 
-		for(final Map.Entry<EndpointPatternDTO, EndpointType> endpointTypeMapEntry : ENDPOINT_TYPE_MAP.entrySet()) {
-			final EndpointPatternDTO endpointPatternDTO = endpointTypeMapEntry.getKey();
+		for(final Map.Entry<EndpointRegexPatternDTO, EndpointType> endpointTypeMapEntry : ENDPOINT_TYPE_MAP.entrySet()) {
+			final EndpointRegexPatternDTO endpointRegexPatternDTO = endpointTypeMapEntry.getKey();
 
-			if(endpointPatternDTO.getHttpMethod().equals(httpMethod)) {
-				final Matcher matcher = endpointPatternDTO.getPathPattern().matcher(path);
+			boolean matches = endpointRegexPatternDTO.matches(httpMethod, path);
 
-				if(matcher.matches()) {
-					final EndpointType endpointType = endpointTypeMapEntry.getValue();
+			if(matches) {
+				final EndpointType endpointType = endpointTypeMapEntry.getValue();
 
-					if(log.isInfoEnabled()) {
-						final String endpointTypeString = (endpointType != null) ? endpointType.toString() : null;
+				if(log.isInfoEnabled()) {
+					final String endpointRegexPatternString = endpointRegexPatternDTO.getEndpointRegexPatternAsString();
+					final String endpointTypeString = (endpointType != null) ? endpointType.toString() : null;
 
-						final String logTrace = StringUtils.getStringJoined(
-							"  The endpoint '", httpMethod, " ", path, "' matched with the endpoint pattern '", endpointPatternDTO.getEndpointPatternAsString(), "'. The EndpointType ", endpointTypeString, " will be used");
+					final String logTrace = StringUtils.getStringJoined(
+						"  The endpoint '", httpMethod, " ", path, "' matched with the endpoint pattern '", endpointRegexPatternString, "'. The EndpointType ", endpointTypeString, " will be used");
 
-						log.info(logTrace);
-					}
-
-					return endpointType;
+					log.info(logTrace);
 				}
+
+				return endpointType;
 			}
 		}
 
@@ -171,14 +154,14 @@ public enum EndpointType implements Serializable {
 		return null;
 	}
 
-	private static Map<EndpointPatternDTO, EndpointType> getEndpointTypeMap() {
+	private static Map<EndpointRegexPatternDTO, EndpointType> getEndpointTypeMap() {
 		final EndpointType[] endpointTypes = EndpointType.values();
 
-		final Map<EndpointPatternDTO, EndpointType> endpointTypeMap = new HashMap<>();
+		final Map<EndpointRegexPatternDTO, EndpointType> endpointTypeMap = new HashMap<>();
 		final Consumer<EndpointType> endpointTypeConsumer = (endpointType -> {
 			if(endpointType != null) {
-				final EndpointPatternDTO endpointPatternDTO = endpointType.getEndpointPatternDTO();
-				endpointTypeMap.put(endpointPatternDTO, endpointType);
+				final EndpointRegexPatternDTO endpointRegexPatternDTO = endpointType.getEndpointRegexPatternDTO();
+				endpointTypeMap.put(endpointRegexPatternDTO, endpointType);
 			}
 		});
 
