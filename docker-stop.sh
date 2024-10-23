@@ -1,3 +1,5 @@
+clear
+
 cd build-context-app
 sudo ./docker-compose-stop.sh
 
