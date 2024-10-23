@@ -44,10 +44,10 @@ public class EndpointRegexPatternDTO implements Serializable {
 		return endpointRegexPatternDTO;
 	}
 
-	public boolean matches(final String httpMethodNameToMatch, final String pathRegexToMatch) {
+	public boolean matches(final String httpMethodNameToMatch, final String pathToMatch) {
 		final boolean result;
 		if(httpMethodName.equals(httpMethodNameToMatch)) {
-			final Matcher matcher = pathRegexPattern.matcher(pathRegexToMatch);
+			final Matcher matcher = pathRegexPattern.matcher(pathToMatch);
 			result = matcher.matches();
 		} else {
 			result = false;
