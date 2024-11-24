@@ -302,7 +302,7 @@ Other technologies currently used are:
     * In **app-db-service**: The latest MySQL 8.0 Docker image ("mysql:8.0").
     * In **app-service**: The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
 * **Docker Compose for the Elastic Stack** (in [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose.yaml)). It uses:
-    * The **Elastic Stack 8.16.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat &rArr; Logstash &rArr; Elasticsearch &rArr; Kibana".
+    * The **Elastic Stack 8.16.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat **&rArr;** Logstash **&rArr;** Elasticsearch **&rArr;** Kibana".
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
     * Handle the exception thrown when uploading a file (logo or curriculum) too big (more than 10 MB).
@@ -389,7 +389,7 @@ In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/J
 In the file [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/build-context-elk/docker-compose.yaml):
 * **/AppData_Java11/JobVacanciesApp/log-files** is the folder that has the log files used in the application.
 * **/AppData_Java11/ElasticStack** is the folder that has the configuration files for the Elastic Stack.
-* **healthcheck** and **service_healthy** are used to check when each service started correctly, to start their dependent services after that. The startup order is: "Elasticsearch &rArr; Kibana &rArr; Logstash &rArr; Filebeat".
+* **healthcheck** and **service_healthy** are used to check when each service started correctly, to start their dependent services after that. The startup order is: "Elasticsearch **&rArr;** Kibana **&rArr;** Logstash **&rArr;** Filebeat".
 * **internal-net-elk** is used to communicate the Elastic Stack services among them.
 * **external-net-elk** is used to communicate the Kibana service with the end user.
 
@@ -457,7 +457,7 @@ The Elastic Stack has 2 predefined users with the following passwords:
 ```
 
 where:
-* The **elastic** user must be used to access the Kibana.
+* The **elastic** user must be used to access the Kibana (via <http://localhost:5601>).
 * These credentials were created based on the **minimal security for Elasticsearch** (as indicated here: <https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html>).
 
 ## 7. Configuration and application properties
@@ -505,12 +505,12 @@ The properties read in [ConfigPropertiesBean](https://github.com/Aliuken/JobVaca
 >
 > The purpose of the **application restart** is merely to overwrite ad-hoc properties and it can only be done by the administrator with the following sequence of calls:
 > 1. **In sessionAuthUserForm.html** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/authUser/sessionAuthUserForm.html): GET /my-user/app/config
-> 2. **In SessionAuthUserController** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java): GET /my-user/app/config &rArr; applicationConfigForm.html
+> 2. **In SessionAuthUserController** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java): GET /my-user/app/config **&rArr;** applicationConfigForm.html
 > 3. **In applicationConfigForm.html** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/app/applicationConfigForm.html): POST /my-user/app/config
-> 4. **In SessionAuthUserController** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java): POST /my-user/app/config &rArr; /logout
-> 5. **In CustomAuthenticationHandler** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java): logout(...) &rArr; /login
+> 4. **In SessionAuthUserController** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java): POST /my-user/app/config **&rArr;** /logout
+> 5. **In CustomAuthenticationHandler** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java): logout(...) **&rArr;** /login
 > 6. **In loginForm.html** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/loginForm.html): T(com.aliuken.jobvacanciesapp.MainClass).restartApp(...)
-> 7. **In MainClass** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java): MainClass.restartApp(...) &rArr; restartExecutorService.submit &rArr; MainClass.springApplication.run(MainClass.args)
+> 7. **In MainClass** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java): MainClass.restartApp(...) **&rArr;** restartExecutorService.submit **&rArr;** MainClass.springApplication.run(MainClass.args)
 
 ### 7.3. Ad-hoc non-overwritable properties
 
