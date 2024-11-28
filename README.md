@@ -5,6 +5,7 @@
 > * **DB** as the abbreviation for **database**.
 > * **ELK** as the abbreviation for **Elastic Stack**.
 > * **i18n** as the abbreviation for **internationalization**.
+> * **info** as the abbreviation for **information**.
 > * **JS** as the abbreviation for **JavaScript**.
 > * **OS** as the abbreviation for **operating system**.
 > * **PC** as the abbreviation for **personal computer**.
