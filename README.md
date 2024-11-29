@@ -196,7 +196,7 @@ The web technologies currently used are:
 > * **languageParam**: Which is the selected language (one of the codes defined in [Language](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java)).
 > * **tableFieldCode**: Which is the filtered field name (one of the codes defined in [TableField](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableField.java)).
 > * **tableFieldValue**: Which is the filtered field value.
-> * **tableOrderCode**: Which is a value that determines the field to be sorted and the sort direction through the pair **[TableField + Sort.Direction]**  (one of the codes defined in [TableOrder](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableOrder.java)).
+> * **tableOrderCode**: Which is a value that determines the field to be sorted and the sort direction (ASC or DESC) through the pair **[TableField + Sort.Direction]**  (one of the codes defined in [TableOrder](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableOrder.java)).
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
 
