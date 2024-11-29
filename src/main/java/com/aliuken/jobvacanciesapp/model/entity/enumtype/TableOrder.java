@@ -9,24 +9,25 @@ import org.springframework.data.domain.Sort;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 public enum TableOrder implements Serializable, Internationalizable {
-	ID_ASC("idAsc", "tableOrder.idAsc", TableField.ID, Sort.Direction.ASC),
-	ID_DESC("idDesc", "tableOrder.idDesc", TableField.ID, Sort.Direction.DESC),
-	EMAIL_ASC("emailAsc", "tableOrder.emailAsc", TableField.EMAIL, Sort.Direction.ASC),
-	EMAIL_DESC("emailDesc", "tableOrder.emailDesc", TableField.EMAIL, Sort.Direction.DESC),
-	NAME_ASC("nameAsc", "tableOrder.nameAsc", TableField.NAME, Sort.Direction.ASC),
-	NAME_DESC("nameDesc", "tableOrder.nameDesc", TableField.NAME, Sort.Direction.DESC),
-	SURNAMES_ASC("surnamesAsc", "tableOrder.surnamesAsc", TableField.SURNAMES, Sort.Direction.ASC),
-	SURNAMES_DESC("surnamesDesc", "tableOrder.surnamesDesc", TableField.SURNAMES, Sort.Direction.DESC),
-	FIRST_REGISTRATION_DATE_TIME_ASC("firstRegistrationDateTimeAsc", "tableOrder.firstRegistrationDateTimeAsc", TableField.FIRST_REGISTRATION_DATE_TIME, Sort.Direction.ASC),
-	FIRST_REGISTRATION_DATE_TIME_DESC("firstRegistrationDateTimeDesc", "tableOrder.firstRegistrationDateTimeDesc", TableField.FIRST_REGISTRATION_DATE_TIME, Sort.Direction.DESC),
-	FIRST_REGISTRATION_AUTH_USER_EMAIL_ASC("firstRegistrationAuthUserEmailAsc", "tableOrder.firstRegistrationAuthUserEmailAsc", TableField.FIRST_REGISTRATION_AUTH_USER_EMAIL, Sort.Direction.ASC),
-	FIRST_REGISTRATION_AUTH_USER_EMAIL_DESC("firstRegistrationAuthUserEmailDesc", "tableOrder.firstRegistrationAuthUserEmailDesc", TableField.FIRST_REGISTRATION_AUTH_USER_EMAIL, Sort.Direction.DESC),
-	LAST_MODIFICATION_DATE_TIME_ASC("lastModificationDateTimeAsc", "tableOrder.lastModificationDateTimeAsc", TableField.LAST_MODIFICATION_DATE_TIME, Sort.Direction.ASC),
-	LAST_MODIFICATION_DATE_TIME_DESC("lastModificationDateTimeDesc", "tableOrder.lastModificationDateTimeDesc", TableField.LAST_MODIFICATION_DATE_TIME, Sort.Direction.DESC),
-	LAST_MODIFICATION_AUTH_USER_EMAIL_ASC("lastModificationAuthUserEmailAsc", "tableOrder.lastModificationAuthUserEmailAsc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.ASC),
-	LAST_MODIFICATION_AUTH_USER_EMAIL_DESC("lastModificationAuthUserEmailDesc", "tableOrder.lastModificationAuthUserEmailDesc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.DESC);
+	ID_ASC("idAsc", TableField.ID, Sort.Direction.ASC),
+	ID_DESC("idDesc", TableField.ID, Sort.Direction.DESC),
+	EMAIL_ASC("emailAsc", TableField.EMAIL, Sort.Direction.ASC),
+	EMAIL_DESC("emailDesc", TableField.EMAIL, Sort.Direction.DESC),
+	NAME_ASC("nameAsc", TableField.NAME, Sort.Direction.ASC),
+	NAME_DESC("nameDesc", TableField.NAME, Sort.Direction.DESC),
+	SURNAMES_ASC("surnamesAsc", TableField.SURNAMES, Sort.Direction.ASC),
+	SURNAMES_DESC("surnamesDesc", TableField.SURNAMES, Sort.Direction.DESC),
+	FIRST_REGISTRATION_DATE_TIME_ASC("firstRegistrationDateTimeAsc", TableField.FIRST_REGISTRATION_DATE_TIME, Sort.Direction.ASC),
+	FIRST_REGISTRATION_DATE_TIME_DESC("firstRegistrationDateTimeDesc", TableField.FIRST_REGISTRATION_DATE_TIME, Sort.Direction.DESC),
+	FIRST_REGISTRATION_AUTH_USER_EMAIL_ASC("firstRegistrationAuthUserEmailAsc", TableField.FIRST_REGISTRATION_AUTH_USER_EMAIL, Sort.Direction.ASC),
+	FIRST_REGISTRATION_AUTH_USER_EMAIL_DESC("firstRegistrationAuthUserEmailDesc", TableField.FIRST_REGISTRATION_AUTH_USER_EMAIL, Sort.Direction.DESC),
+	LAST_MODIFICATION_DATE_TIME_ASC("lastModificationDateTimeAsc", TableField.LAST_MODIFICATION_DATE_TIME, Sort.Direction.ASC),
+	LAST_MODIFICATION_DATE_TIME_DESC("lastModificationDateTimeDesc", TableField.LAST_MODIFICATION_DATE_TIME, Sort.Direction.DESC),
+	LAST_MODIFICATION_AUTH_USER_EMAIL_ASC("lastModificationAuthUserEmailAsc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.ASC),
+	LAST_MODIFICATION_AUTH_USER_EMAIL_DESC("lastModificationAuthUserEmailDesc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.DESC);
 
 	@NotNull
 	private final String code;
@@ -40,9 +41,11 @@ public enum TableOrder implements Serializable, Internationalizable {
 	@NotNull
 	private final Sort.Direction sortDirection;
 
-	private TableOrder(final String code, final String messageName, final TableField tableField, final Sort.Direction sortDirection) {
+	private static final String MESSAGE_NAME_PREFIX = "tableOrder.";
+
+	private TableOrder(final String code, final TableField tableField, final Sort.Direction sortDirection) {
 		this.code = code;
-		this.messageName = messageName;
+		this.messageName = StringUtils.getStringJoined(MESSAGE_NAME_PREFIX, code);
 		this.tableField = tableField;
 		this.sortDirection = sortDirection;
 	}
