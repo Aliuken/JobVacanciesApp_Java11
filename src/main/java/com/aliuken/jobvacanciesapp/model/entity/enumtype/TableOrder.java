@@ -45,7 +45,7 @@ public enum TableOrder implements Serializable, Internationalizable {
 
 	private TableOrder(final String code, final TableField tableField, final Sort.Direction sortDirection) {
 		this.code = code;
-		this.messageName = StringUtils.getStringJoined(MESSAGE_NAME_PREFIX, code);
+		this.messageName = StringUtils.getStringJoined(TableOrder.MESSAGE_NAME_PREFIX, code);
 		this.tableField = tableField;
 		this.sortDirection = sortDirection;
 	}
