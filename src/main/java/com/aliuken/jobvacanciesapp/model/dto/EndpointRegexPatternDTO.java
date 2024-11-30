@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.http.HttpMethod;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 import lombok.Data;
@@ -56,7 +57,7 @@ public class EndpointRegexPatternDTO implements Serializable {
 	}
 
 	public String getEndpointRegexPatternAsString() {
-		final String result = StringUtils.getStringJoined(httpMethodName, " ", pathRegex);
+		final String result = StringUtils.getStringJoined(httpMethodName, Constants.SPACE, pathRegex);
 		return result;
 	}
 

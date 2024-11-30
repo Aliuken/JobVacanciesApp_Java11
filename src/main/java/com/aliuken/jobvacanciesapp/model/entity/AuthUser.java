@@ -112,7 +112,7 @@ public class AuthUser extends AbstractEntity implements Externalizable {
 
 	@NotNull
 	public String getFullName() {
-		String fullName = StringUtils.getStringJoined(name, " ", surnames);
+		String fullName = StringUtils.getStringJoined(name, Constants.SPACE, surnames);
 		return fullName;
 	}
 

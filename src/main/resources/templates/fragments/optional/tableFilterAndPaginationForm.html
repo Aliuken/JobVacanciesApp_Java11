@@ -119,19 +119,19 @@
     </div>
     <label th:text="#{paginationContainer.label} + ':'"></label>
     <br/>
-    <label for="tableOrderCombo" class="form-label mt-2 mb-1" th:text="#{table.orderBy} + ':'"></label>
+    <label for="tableSortingCombo" class="form-label mt-2 mb-1" th:text="#{table.orderBy} + ':'"></label>
     &nbsp;
-    <select th:if="${entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder).values()}">
-      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    <select th:if="${entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).values()}">
+      <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
     </select>
-    <select th:if="${entityWithAuthUserFields && isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder).valuesWithoutLastModification()}">
-      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    <select th:if="${entityWithAuthUserFields && isUnmodifiableEntity}" id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).valuesWithoutLastModification()}">
+      <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
     </select>
-    <select th:if="${!entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder).valuesWithoutAuthUser()}">
-      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    <select th:if="${!entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).valuesWithoutAuthUser()}">
+      <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
     </select>
-    <select th:if="${!entityWithAuthUserFields && isUnmodifiableEntity}" id="tableOrderCombo" name="tableOrderCombo" th:field="*{tableOrderCode}" th:with="tableOrders=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder).valuesWithoutAuthUserAndLastModification()}">
-      <option th:each="tableOrder : ${tableOrders}" th:value="${tableOrder.code}" th:text="#{${tableOrder.messageName}}"></option>
+    <select th:if="${!entityWithAuthUserFields && isUnmodifiableEntity}" id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).valuesWithoutAuthUserAndLastModification()}">
+      <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
     </select>
     &nbsp;&nbsp;&nbsp;
     <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>

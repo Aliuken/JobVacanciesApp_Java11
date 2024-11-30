@@ -59,7 +59,7 @@
                   <a th:href="@{/job-categories/job-vacancies/{id} (id=${jobCategory.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobVacancies}">
                     <i class="fas fa-lg fa-table" aria-hidden="true"></i>
                   </a>
-                  <a th:href="@{/job-categories/delete/{id} (id=${jobCategory.id}, languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCategory.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCategory}">
+                  <a th:href="@{/job-categories/delete/{id} (id=${jobCategory.id}, languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableSortingCode=${param.tableSortingCode}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCategory.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCategory}">
                     <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
                   </a>
                 </td>

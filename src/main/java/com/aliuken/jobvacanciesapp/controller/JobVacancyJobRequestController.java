@@ -135,12 +135,12 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final String jobVacancyIdString = String.valueOf(jobVacancyId);
-		tableSearchDTO = new TableSearchDTO(languageCode, Constants.JOB_VACANCY_PREDEFINED_FILTER_NAME, jobVacancyIdString, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, Constants.JOB_VACANCY_PREDEFINED_FILTER_NAME, jobVacancyIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getJobRequests(model, pageable, jobVacancyId, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);
@@ -155,7 +155,7 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -164,7 +164,7 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/job-requests/" + jobVacancyId, languageCode, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/job-requests/" + jobVacancyId, languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	@Override

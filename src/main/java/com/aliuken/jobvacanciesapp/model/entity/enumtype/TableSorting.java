@@ -11,7 +11,7 @@ import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
-public enum TableOrder implements Serializable, Internationalizable {
+public enum TableSorting implements Serializable, Internationalizable {
 	ID_ASC("idAsc", TableField.ID, Sort.Direction.ASC),
 	ID_DESC("idDesc", TableField.ID, Sort.Direction.DESC),
 	EMAIL_ASC("emailAsc", TableField.EMAIL, Sort.Direction.ASC),
@@ -41,11 +41,11 @@ public enum TableOrder implements Serializable, Internationalizable {
 	@NotNull
 	private final Sort.Direction sortDirection;
 
-	private static final String MESSAGE_NAME_PREFIX = "tableOrder.";
+	private static final String MESSAGE_NAME_PREFIX = "tableSorting.";
 
-	private TableOrder(final String code, final TableField tableField, final Sort.Direction sortDirection) {
+	private TableSorting(final String code, final TableField tableField, final Sort.Direction sortDirection) {
 		this.code = code;
-		this.messageName = StringUtils.getStringJoined(TableOrder.MESSAGE_NAME_PREFIX, code);
+		this.messageName = StringUtils.getStringJoined(TableSorting.MESSAGE_NAME_PREFIX, code);
 		this.tableField = tableField;
 		this.sortDirection = sortDirection;
 	}
@@ -67,40 +67,40 @@ public enum TableOrder implements Serializable, Internationalizable {
 		return sortDirection;
 	}
 
-	public static TableOrder findByCode(final String code) {
+	public static TableSorting findByCode(final String code) {
 		if(LogicalUtils.isNullOrEmptyString(code)) {
 			return null;
 		}
 
-		final TableOrder tableOrder = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableOrder.class)
+		final TableSorting tableSorting = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
 			.filter(value -> value.code.equals(code))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("TableOrder code does not exist"));
+			.orElseThrow(() -> new IllegalArgumentException("TableSorting code does not exist"));
 
-		return tableOrder;
+		return tableSorting;
 	}
 
-	public static TableOrder[] valuesWithoutAuthUser() {
-		final TableOrder[] tableOrders = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableOrder.class)
+	public static TableSorting[] valuesWithoutAuthUser() {
+		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
 			.filter(e -> !e.tableField.isAuthUserField())
-			.toArray(TableOrder[]::new);
+			.toArray(TableSorting[]::new);
 
-		return tableOrders;
+		return tableSortings;
 	}
 
-	public static TableOrder[] valuesWithoutLastModification() {
-		final TableOrder[] tableOrders = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableOrder.class)
+	public static TableSorting[] valuesWithoutLastModification() {
+		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
 			.filter(e -> !e.tableField.isLastModificationField())
-			.toArray(TableOrder[]::new);
+			.toArray(TableSorting[]::new);
 
-		return tableOrders;
+		return tableSortings;
 	}
 
-	public static TableOrder[] valuesWithoutAuthUserAndLastModification() {
-		final TableOrder[] tableOrders = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableOrder.class)
+	public static TableSorting[] valuesWithoutAuthUserAndLastModification() {
+		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
 			.filter(e -> (!e.tableField.isAuthUserField() && !e.tableField.isLastModificationField()))
-			.toArray(TableOrder[]::new);
+			.toArray(TableSorting[]::new);
 
-		return tableOrders;
+		return tableSortings;
 	}
 }

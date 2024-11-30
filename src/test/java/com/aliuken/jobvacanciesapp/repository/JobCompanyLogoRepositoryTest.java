@@ -298,7 +298,7 @@ public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4Spr
 
 		final String jobCompanyLogoIdString = jobCompanyLogo.getIdString();
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(jobCompanyLogo.getFirstRegistrationDateTime());
-		final String selectionName = StringUtils.getStringJoined("Logo ", jobCompanyLogoIdString, " ", firstRegistrationDateTimeString);
+		final String selectionName = StringUtils.getStringJoined("Logo ", jobCompanyLogoIdString, Constants.SPACE, firstRegistrationDateTimeString);
 		Assertions.assertEquals(selectionName, jobCompanyLogo.getSelectionName());
 
 		Assertions.assertNotNull(jobCompanyLogo.getFirstRegistrationDateTime());
@@ -339,7 +339,7 @@ public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4Spr
 
 		final String jobCompanyLogoIdString = Objects.toString(jobCompanyLogoDTO.getId());
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
-		final String selectionName = StringUtils.getStringJoined("Logo ", jobCompanyLogoIdString, " ", firstRegistrationDateTimeString);
+		final String selectionName = StringUtils.getStringJoined("Logo ", jobCompanyLogoIdString, Constants.SPACE, firstRegistrationDateTimeString);
 		Assertions.assertEquals(selectionName, jobCompanyLogoDTO.getSelectionName());
 	}
 }

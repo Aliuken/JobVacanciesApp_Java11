@@ -130,7 +130,7 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
@@ -138,7 +138,7 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 		final Long sessionAuthUserId = sessionAuthUser.getId();
 		final String sessionAuthUserIdString = String.valueOf(sessionAuthUserId);
 
-		tableSearchDTO = new TableSearchDTO(languageCode, Constants.AUTH_USER_PREDEFINED_FILTER_NAME, sessionAuthUserIdString, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, Constants.AUTH_USER_PREDEFINED_FILTER_NAME, sessionAuthUserIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getJobRequests(httpServletRequest, model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);

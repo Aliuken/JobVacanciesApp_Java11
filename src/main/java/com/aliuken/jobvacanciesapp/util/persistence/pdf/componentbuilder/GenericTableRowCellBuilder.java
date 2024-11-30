@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder;
 
 import java.util.List;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -96,7 +97,7 @@ public class GenericTableRowCellBuilder implements PdfPCellEvent {
 			if(lineIndex < cellTextLines.length) {
 				cellTextLine = cellTextLines[lineIndex];
 			} else {
-				cellTextLine = " ";
+				cellTextLine = Constants.SPACE;
 			}
 
 			final PdfPCell cell = GenericTableRowCellBuilder.getCellTableLine(defaultCell, cellTextLine, cellEvent,

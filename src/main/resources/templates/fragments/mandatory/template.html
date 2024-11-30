@@ -111,18 +111,18 @@
           if(isPageWithTable) {
             let tableFieldCodeModelAttribute;
             let tableFieldValueModelAttribute;
-            let tableOrderCodeModelAttribute;
+            let tableSortingCodeModelAttribute;
             let pageSizeModelAttribute;
             let pageNumberModelAttribute;
             /*<![CDATA[*/
               tableFieldCodeModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableFieldCode : null}]]*/ null;
               tableFieldValueModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableFieldValue : null}]]*/ null;
-              tableOrderCodeModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableOrderCode : null}]]*/ null;
+              tableSortingCodeModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableSortingCode : null}]]*/ null;
               pageSizeModelAttribute = /*[[${configPropertiesBean.getInitialTablePageSizeValue(param.pageSize)}]]*/ null;
               pageNumberModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.pageNumber : null}]]*/ null;
             /*]]>*/
 
-            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableOrderCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
+            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
           } else {
             treatLanguageComboAndUrlParameter(languageSessionAttribute, languageModelAttribute, defaultLanguage);
           }

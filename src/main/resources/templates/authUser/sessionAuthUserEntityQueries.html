@@ -23,7 +23,7 @@
                 <th scope="col" th:text="#{authUserEntityQuery.language}"></th>
                 <th scope="col" th:text="#{authUserEntityQuery.predefinedFilter}"></th>
                 <th scope="col" th:text="#{authUserEntityQuery.filter}"></th>
-                <th scope="col" th:text="#{authUserEntityQuery.tableOrder}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.tableSorting}"></th>
                 <th scope="col" th:text="#{authUserEntityQuery.tablePageSize}"></th>
                 <th scope="col" th:text="#{authUserEntityQuery.pageNumber}"></th>
                 <th scope="col" th:text="#{authUserEntityQuery.finalResultFileName}"></th>
@@ -41,7 +41,7 @@
                 <td th:text="#{${authUserEntityQuery.language.messageName}}"></td>
                 <td th:text="${authUserEntityQuery.predefinedFilterName} + ': ' + ${authUserEntityQuery.predefinedFilterValue}"></td>
                 <td th:text="${authUserEntityQuery.filterName} + ': ' + ${authUserEntityQuery.filterValue}"></td>
-                <td th:text="#{${authUserEntityQuery.tableOrder.messageName}}"></td>
+                <td th:text="#{${authUserEntityQuery.tableSorting.messageName}}"></td>
                 <td th:text="#{${authUserEntityQuery.tablePageSize.messageName}}"></td>
                 <td th:text="${authUserEntityQuery.pageNumber}"></td>
                 <td th:text="${authUserEntityQuery.finalResultFileName}"></td>
@@ -51,7 +51,7 @@
                   <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
                 </td>
                 <td>
-                  <a th:href="@{/my-user/auth-user-entity-queries/delete/{id} (id=${authUserEntityQuery.id}, languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableOrderCode=${param.tableOrderCode}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUserEntityQuery.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUserEntityQuery}">
+                  <a th:href="@{/my-user/auth-user-entity-queries/delete/{id} (id=${authUserEntityQuery.id}, languageParam=${param.languageParam}, tableFieldCode=${param.tableFieldCode}, tableFieldValue=${param.tableFieldValue}, tableSortingCode=${param.tableSortingCode}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUserEntityQuery.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUserEntityQuery}">
                     <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
                   </a>
                   <a th:href="@{/auth-user-entity-query-files/{entityQueryFilePath} (entityQueryFilePath=${authUserEntityQuery.filePath}, languageParam=${param.languageParam})}" target="_blank" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.downloadEntityQuery}">

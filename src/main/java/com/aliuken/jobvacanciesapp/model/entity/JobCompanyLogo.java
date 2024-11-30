@@ -64,7 +64,7 @@ public class JobCompanyLogo extends AbstractEntity {
 	public String getSelectionName() {
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();
-		final String selectionName = StringUtils.getStringJoined("Logo ", idString, " ", firstRegistrationDateTimeString);
+		final String selectionName = StringUtils.getStringJoined("Logo ", idString, Constants.SPACE, firstRegistrationDateTimeString);
 		return selectionName;
 	}
 

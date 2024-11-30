@@ -135,12 +135,12 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final String authUserIdString = String.valueOf(authUserId);
-		tableSearchDTO = new TableSearchDTO(languageCode, Constants.AUTH_USER_PREDEFINED_FILTER_NAME, authUserIdString, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, Constants.AUTH_USER_PREDEFINED_FILTER_NAME, authUserIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getJobRequests(model, pageable, authUserId, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);
@@ -155,7 +155,7 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -164,7 +164,7 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/auth-users/job-requests/" + authUserId, languageCode, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/auth-users/job-requests/" + authUserId, languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	@Override

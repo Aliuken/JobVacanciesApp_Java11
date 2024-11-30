@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
@@ -64,7 +65,7 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 	public String getSelectionName() {
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();
-		final String selectionName = StringUtils.getStringJoined("CV ", idString, " ", firstRegistrationDateTimeString);
+		final String selectionName = StringUtils.getStringJoined("CV ", idString, Constants.SPACE, firstRegistrationDateTimeString);
 		return selectionName;
 	}
 

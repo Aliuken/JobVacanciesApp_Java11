@@ -117,7 +117,7 @@ public abstract class PdfDocument extends Document implements AutoCloseable {
 			phrase.add(new Phrase(StringUtils.getStringJoined(fieldName, Constants.FIELD_NAME_VALUE_SEPARATOR), PdfDocument.BOLD_FONT));
 			phrase.add(new Phrase(fieldValue, PdfDocument.NORMAL_FONT));
 		} else {
-			phrase = new Phrase(" ", PdfDocument.NORMAL_FONT);
+			phrase = new Phrase(Constants.SPACE, PdfDocument.NORMAL_FONT);
 		}
 
 		final PdfPCell cell = new PdfPCell(phrase);

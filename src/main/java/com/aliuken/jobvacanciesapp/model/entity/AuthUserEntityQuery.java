@@ -15,7 +15,7 @@ import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
@@ -66,8 +66,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 	private String filterValue;
 
 	@NotNull
-	@Column(name = "table_order", nullable = false)
-	private TableOrder tableOrder;
+	@Column(name = "table_sorting", nullable = false)
+	private TableSorting tableSorting;
 
 	@NotNull
 	@Column(name = "table_page_size", nullable = false)
@@ -100,14 +100,14 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		this.predefinedFilterValue = tableSearchDTO.getPredefinedFilterValue();
 		this.filterName = tableSearchDTO.getTableFieldCode();
 		this.filterValue = tableSearchDTO.getTableFieldValue();
-		this.tableOrder = TableOrder.findByCode(tableSearchDTO.getTableOrderCode());
+		this.tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 		this.tablePageSize = TablePageSize.findByValue(tableSearchDTO.getPageSize());
 		this.pageNumber = tableSearchDTO.getPageNumber();
 		this.queryUrl= queryUrl;
 	}
 
 	public String getOriginalResultFileName() {
-		final String originalResultFileName = StringUtils.getStringJoined(pageEntity.getValue(), "-", this.getIdString(), FileUtils.PDF_EXTENSION);
+		final String originalResultFileName = StringUtils.getStringJoined(pageEntity.getValue(), Constants.HYPHEN, this.getIdString(), FileUtils.PDF_EXTENSION);
 		return originalResultFileName;
 	}
 
@@ -141,9 +141,9 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		return languageName;
 	}
 
-	public String getTableOrderName() {
-		final String tableOrderName = Objects.toString(tableOrder);
-		return tableOrderName;
+	public String getTableSortingName() {
+		final String tableSortingName = Objects.toString(tableSorting);
+		return tableSortingName;
 	}
 
 	public String getTablePageSizeName() {
@@ -191,7 +191,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final String initialPdfDocumentPageFormatName = this.getInitialPdfDocumentPageFormatName();
 		final String finalPdfDocumentPageFormatName = this.getFinalPdfDocumentPageFormatName();
 		final String languageName = this.getLanguageName();
-		final String tableOrderName = this.getTableOrderName();
+		final String tableSortingName = this.getTableSortingName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
 
@@ -203,7 +203,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 			StyleApplier.getBoldString("predefinedFilterValue: "), predefinedFilterValue, "\n",
 			StyleApplier.getBoldString("filterName: "), filterName, "\n",
 			StyleApplier.getBoldString("filterValue: "), filterValue, "\n",
-			StyleApplier.getBoldString("tableOrder: "), tableOrderName, "\n",
+			StyleApplier.getBoldString("tableSorting: "), tableSortingName, "\n",
 			StyleApplier.getBoldString("tablePageSize: "), tablePageSizeName, "\n",
 			StyleApplier.getBoldString("pageNumber: "), pageNumberString, "\n",
 			StyleApplier.getBoldString("queryUrl: "), queryUrl, "\n",
@@ -218,7 +218,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final String initialPdfDocumentPageFormatName = this.getInitialPdfDocumentPageFormatName();
 		final String finalPdfDocumentPageFormatName = this.getFinalPdfDocumentPageFormatName();
 		final String languageName = this.getLanguageName();
-		final String tableOrderName = this.getTableOrderName();
+		final String tableSortingName = this.getTableSortingName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();
@@ -230,7 +230,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 				", initialPdfDocumentPageFormat=", initialPdfDocumentPageFormatName, ", finalPdfDocumentPageFormat=", finalPdfDocumentPageFormatName, ", language=", languageName,
 				", predefinedFilterName=", predefinedFilterName, ", predefinedFilterValue=", predefinedFilterValue,
 				", filterName=", filterName, ", filterValue=", filterValue,
-				", tableOrder=", tableOrderName, ", tablePageSize=", tablePageSizeName, ", pageNumber=", pageNumberString,
+				", tableSorting=", tableSortingName, ", tablePageSize=", tablePageSizeName, ", pageNumber=", pageNumberString,
 				", queryUrl=", queryUrl, ", finalResultFileName=", finalResultFileName,
 				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail,
 				", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
@@ -243,7 +243,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ Objects.hash(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, language, predefinedFilterName, predefinedFilterValue, filterName, filterValue, tableOrder, tablePageSize, pageNumber, queryUrl, finalResultFileName);
+				+ Objects.hash(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, language, predefinedFilterName, predefinedFilterValue, filterName, filterValue, tableSorting, tablePageSize, pageNumber, queryUrl, finalResultFileName);
 
 		return result;
 	}
@@ -257,7 +257,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		return Objects.equals(initialPdfDocumentPageFormat, other.initialPdfDocumentPageFormat) && Objects.equals(finalPdfDocumentPageFormat, other.finalPdfDocumentPageFormat) && Objects.equals(language, other.language)
 				&& Objects.equals(predefinedFilterName, other.predefinedFilterName) && Objects.equals(predefinedFilterValue, other.predefinedFilterValue)
 				&& Objects.equals(filterName, other.filterName) && Objects.equals(filterValue, other.filterValue)
-				&& Objects.equals(tableOrder, other.tableOrder) && Objects.equals(tablePageSize, other.tablePageSize) && Objects.equals(pageNumber, other.pageNumber)
+				&& Objects.equals(tableSorting, other.tableSorting) && Objects.equals(tablePageSize, other.tablePageSize) && Objects.equals(pageNumber, other.pageNumber)
 				&& Objects.equals(queryUrl, other.queryUrl) && Objects.equals(finalResultFileName, other.finalResultFileName);
 	}
 }

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 
 public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity> {
@@ -24,9 +24,9 @@ public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity> {
 
 	public abstract Page<T> findAll(Pageable pageable);
 
-	public abstract Page<T> findAll(Pageable pageable, TableOrder tableOrder);
+	public abstract Page<T> findAll(Pageable pageable, TableSorting tableSorting);
 
-	public abstract Page<T> findAll(Pageable pageable, TableOrder tableOrder, Specification<T> specification);
+	public abstract Page<T> findAll(Pageable pageable, TableSorting tableSorting, Specification<T> specification);
 
 	public abstract Page<T> findAll(Specification<T> specification, Pageable pageable);
 
@@ -34,7 +34,7 @@ public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity> {
 
 	public abstract <S extends T> Page<S> findAll(Example<S> example, Pageable pageable);
 
-	public abstract <S extends T> Page<S> findAll(Example<S> example, Pageable pageable, TableOrder tableOrder);
+	public abstract <S extends T> Page<S> findAll(Example<S> example, Pageable pageable, TableSorting tableSorting);
 
 	public abstract T refreshEntity(T entity);
 

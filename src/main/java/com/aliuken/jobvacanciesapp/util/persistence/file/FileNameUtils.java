@@ -23,12 +23,12 @@ public class FileNameUtils {
 	public static String getFinalFolderName(String folderName) {
 		final String randomAlphanumeric = StringUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
 
-		folderName = folderName.replace(" ", "-");
+		folderName = folderName.replace(Constants.SPACE, Constants.HYPHEN);
 		while(folderName.contains("--")) {
-			folderName = folderName.replace("--", "-");
+			folderName = folderName.replace("--", Constants.HYPHEN);
 		}
 
-		folderName = StringUtils.getStringJoined(folderName, "-", randomAlphanumeric);
+		folderName = StringUtils.getStringJoined(folderName, Constants.HYPHEN, randomAlphanumeric);
 
 		return folderName;
 	}
@@ -42,12 +42,12 @@ public class FileNameUtils {
 		final String randomAlphanumeric = StringUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
 
 		fileName = fileName.substring(0, fileName.length() - (lowerCaseFileExtension.length() + 1));
-		fileName = fileName.replace(" ", "-");
+		fileName = fileName.replace(Constants.SPACE, Constants.HYPHEN);
 		while(fileName.contains("--")) {
-			fileName = fileName.replace("--", "-");
+			fileName = fileName.replace("--", Constants.HYPHEN);
 		}
 
-		fileName = StringUtils.getStringJoined(fileName, "-", randomAlphanumeric, ".", lowerCaseFileExtension);
+		fileName = StringUtils.getStringJoined(fileName, Constants.HYPHEN, randomAlphanumeric, Constants.DOT, lowerCaseFileExtension);
 
 		return fileName;
 	}

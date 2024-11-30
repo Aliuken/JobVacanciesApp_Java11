@@ -138,11 +138,11 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
-		tableSearchDTO = new TableSearchDTO(languageCode, null, null, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, null, null, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);
@@ -257,7 +257,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
 			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
-			@RequestParam(name="tableOrderCode", required=false) String tableOrderCode,
+			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -266,7 +266,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-requests/index", languageCode, tableFieldCode, tableFieldValue, tableOrderCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-requests/index", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	/**

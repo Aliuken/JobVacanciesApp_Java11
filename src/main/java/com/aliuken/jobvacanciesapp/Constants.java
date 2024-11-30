@@ -15,6 +15,8 @@ public class Constants {
 
 	public static final String EMPTY_STRING = "";
 	public static final String SPACE = " ";
+	public static final String HYPHEN = "-";
+	public static final String DOT = ".";
 	public static final String FIELD_NAME_VALUE_SEPARATOR = ": ";
 	public static final String MAP_ENTRY_PREFIX = "\n- ";
 	public static final String KEY_VALUE_SEPARATOR = " -> ";
@@ -38,8 +40,8 @@ public class Constants {
 	public static final Long NO_SELECTED_LOGO_ID = 0L;
 	public static final String NO_SELECTED_LOGO_FILE_PATH = "no-logo.png";
 
-	public static final String DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD = "-";
-	public static final String DEFAULT_VALUE_WHEN_SERIALIZING_NULL_STRING = "-";
+	public static final String DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD = Constants.HYPHEN;
+	public static final String DEFAULT_VALUE_WHEN_SERIALIZING_NULL_STRING = Constants.HYPHEN;
 
 	public static final String HOME_PATH = "/";
 	public static final String LOGIN_PATH = "/login";

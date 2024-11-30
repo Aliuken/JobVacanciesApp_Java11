@@ -15,7 +15,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableOrder;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
@@ -269,11 +269,11 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		final List<PdfPCell> queryInfo;
 		if(authUserEntityQuery != null) {
 			final Language queryLanguage = authUserEntityQuery.getLanguage();
-			final TableOrder tableOrder = authUserEntityQuery.getTableOrder();
+			final TableSorting tableSorting = authUserEntityQuery.getTableSorting();
 			final TablePageSize tablePageSize = authUserEntityQuery.getTablePageSize();
 
 			queryTitle = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query", null);
-			queryInfo = this.getQueryInfo(queryLanguage, tableOrder, tablePageSize);
+			queryInfo = this.getQueryInfo(queryLanguage, tableSorting, tablePageSize);
 		} else {
 			queryTitle = I18nUtils.getInternationalizedMessage("en", "queryReport.query", null);
 			queryInfo = new ArrayList<>();
@@ -283,7 +283,7 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		return queryTable;
 	}
 
-	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableOrder tableOrder, final TablePageSize tablePageSize) {
+	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableSorting tableSorting, final TablePageSize tablePageSize) {
 		final List<PdfPCell> queryInfo = new ArrayList<>();
 
 		final String idField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.id", null);
@@ -294,13 +294,13 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		final String pageNumberField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageNumber", null);
 		final String filterFields = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.filters", null);
 
-		final String tableOrderMessage = tableOrder.getMessage(queryLanguage);
+		final String tableSortingMessage = tableSorting.getMessage(queryLanguage);
 		final String tablePageSizeMessage = tablePageSize.getMessage(queryLanguage);
 		final String queryLanguageMessage = queryLanguage.getMessage(queryLanguage);
 
 		PdfDocument.addCellWithPhrase(queryInfo, idField, authUserEntityQuery.getIdString());
 		PdfDocument.addCellWithPhrase(queryInfo, dateField, authUserEntityQuery.getFirstRegistrationDateTimeString());
-		PdfDocument.addCellWithPhrase(queryInfo, orderField, tableOrderMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, orderField, tableSortingMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, pageSizeField, tablePageSizeMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, languageField, queryLanguageMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, pageNumberField, authUserEntityQuery.getRealPageNumberString());
