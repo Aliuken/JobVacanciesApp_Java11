@@ -30,8 +30,8 @@ import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -119,7 +119,7 @@
     </div>
     <label th:text="#{paginationContainer.label} + ':'"></label>
     <br/>
-    <label for="tableSortingCombo" class="form-label mt-2 mb-1" th:text="#{table.orderBy} + ':'"></label>
+    <label for="tableSortingCombo" class="form-label mt-2 mb-1" th:text="#{table.sortBy} + ':'"></label>
     &nbsp;
     <select th:if="${entityWithAuthUserFields && !isUnmodifiableEntity}" id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).values()}">
       <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
