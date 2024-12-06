@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 import javax.validation.constraints.NotNull;
 
@@ -80,27 +81,28 @@ public enum TableSorting implements Serializable, Internationalizable {
 		return tableSorting;
 	}
 
-	public static TableSorting[] valuesWithoutAuthUser() {
+	public static TableSorting[] values(final boolean entityWithAuthUserFields, final boolean isUnmodifiableEntity) {
 		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
-			.filter(e -> !e.tableField.isAuthUserField())
+			.filter(TableSorting.valuesPredicate(entityWithAuthUserFields, isUnmodifiableEntity))
 			.toArray(TableSorting[]::new);
-
 		return tableSortings;
 	}
 
-	public static TableSorting[] valuesWithoutLastModification() {
-		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
-			.filter(e -> !e.tableField.isLastModificationField())
-			.toArray(TableSorting[]::new);
-
-		return tableSortings;
-	}
-
-	public static TableSorting[] valuesWithoutAuthUserAndLastModification() {
-		final TableSorting[] tableSortings = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSorting.class)
-			.filter(e -> (!e.tableField.isAuthUserField() && !e.tableField.isLastModificationField()))
-			.toArray(TableSorting[]::new);
-
-		return tableSortings;
+	private static Predicate<? super TableSorting> valuesPredicate(final boolean entityWithAuthUserFields, final boolean isUnmodifiableEntity) {
+		final Predicate<? super TableSorting> valuesPredicate;
+		if(entityWithAuthUserFields) {
+			if(isUnmodifiableEntity) {
+				valuesPredicate = (tableSorting -> !tableSorting.tableField.isLastModificationField());
+			} else {
+				valuesPredicate = (tableSorting -> true);
+			}
+		} else {
+			if(isUnmodifiableEntity) {
+				valuesPredicate = (tableSorting -> (!tableSorting.tableField.isAuthUserField() && !tableSorting.tableField.isLastModificationField()));
+			} else {
+				valuesPredicate = (tableSorting -> !tableSorting.tableField.isAuthUserField());
+			}
+		}
+		return valuesPredicate;
 	}
 }

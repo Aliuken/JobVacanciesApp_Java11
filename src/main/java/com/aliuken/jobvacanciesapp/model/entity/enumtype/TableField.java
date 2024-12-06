@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 import javax.validation.constraints.NotNull;
 
@@ -85,27 +86,28 @@ public enum TableField implements Serializable, Internationalizable {
 		return tableField;
 	}
 
-	public static TableField[] valuesWithoutLastModification() {
+	public static TableField[] values(final boolean entityWithAuthUserFields, final boolean isUnmodifiableEntity) {
 		final TableField[] tableFields = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
-			.filter(e -> !e.isLastModificationField)
+			.filter(TableField.valuesPredicate(entityWithAuthUserFields, isUnmodifiableEntity))
 			.toArray(TableField[]::new);
-
 		return tableFields;
 	}
 
-	public static TableField[] valuesWithoutAuthUser() {
-		final TableField[] tableFields = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
-			.filter(e -> !e.isAuthUserField)
-			.toArray(TableField[]::new);
-
-		return tableFields;
-	}
-
-	public static TableField[] valuesWithoutAuthUserAndLastModification() {
-		final TableField[] tableFields = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
-			.filter(e -> (!e.isAuthUserField && !e.isLastModificationField))
-			.toArray(TableField[]::new);
-
-		return tableFields;
+	private static Predicate<? super TableField> valuesPredicate(final boolean entityWithAuthUserFields, final boolean isUnmodifiableEntity) {
+		final Predicate<? super TableField> valuesPredicate;
+		if(entityWithAuthUserFields) {
+			if(isUnmodifiableEntity) {
+				valuesPredicate = (tableField -> !tableField.isLastModificationField);
+			} else {
+				valuesPredicate = (tableField -> true);
+			}
+		} else {
+			if(isUnmodifiableEntity) {
+				valuesPredicate = (tableField -> (!tableField.isAuthUserField && !tableField.isLastModificationField));
+			} else {
+				valuesPredicate = (tableField -> !tableField.isAuthUserField);
+			}
+		}
+		return valuesPredicate;
 	}
 }
