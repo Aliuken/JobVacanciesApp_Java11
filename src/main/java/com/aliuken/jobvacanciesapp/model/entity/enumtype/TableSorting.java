@@ -30,6 +30,11 @@ public enum TableSorting implements Serializable, Internationalizable {
 	LAST_MODIFICATION_AUTH_USER_EMAIL_ASC("lastModificationAuthUserEmailAsc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.ASC),
 	LAST_MODIFICATION_AUTH_USER_EMAIL_DESC("lastModificationAuthUserEmailDesc", TableField.LAST_MODIFICATION_AUTH_USER_EMAIL, Sort.Direction.DESC);
 
+	private final static Predicate<TableSorting> VALUES_PREDICATE = (tableSorting -> true);
+	private final static Predicate<TableSorting> VALUES_WITHOUT_AUTH_USER_PREDICATE = (tableSorting -> !tableSorting.tableField.isAuthUserField());
+	private final static Predicate<TableSorting> VALUES_WITHOUT_LAST_MODIFICATION = (tableSorting -> !tableSorting.tableField.isLastModificationField());
+	private final static Predicate<TableSorting> VALUES_WITHOUT_AUTH_USER_AND_LAST_MODIFICATION_PREDICATE = (tableSorting -> (!tableSorting.tableField.isAuthUserField() && !tableSorting.tableField.isLastModificationField()));
+
 	@NotNull
 	private final String code;
 
@@ -92,15 +97,15 @@ public enum TableSorting implements Serializable, Internationalizable {
 		final Predicate<? super TableSorting> valuesPredicate;
 		if(entityWithAuthUserFields) {
 			if(isUnmodifiableEntity) {
-				valuesPredicate = (tableSorting -> !tableSorting.tableField.isLastModificationField());
+				valuesPredicate = TableSorting.VALUES_WITHOUT_LAST_MODIFICATION;
 			} else {
-				valuesPredicate = (tableSorting -> true);
+				valuesPredicate = TableSorting.VALUES_PREDICATE;
 			}
 		} else {
 			if(isUnmodifiableEntity) {
-				valuesPredicate = (tableSorting -> (!tableSorting.tableField.isAuthUserField() && !tableSorting.tableField.isLastModificationField()));
+				valuesPredicate = TableSorting.VALUES_WITHOUT_AUTH_USER_AND_LAST_MODIFICATION_PREDICATE;
 			} else {
-				valuesPredicate = (tableSorting -> !tableSorting.tableField.isAuthUserField());
+				valuesPredicate = TableSorting.VALUES_WITHOUT_AUTH_USER_PREDICATE;
 			}
 		}
 		return valuesPredicate;

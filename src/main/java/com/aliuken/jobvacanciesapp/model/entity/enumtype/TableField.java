@@ -20,6 +20,11 @@ public enum TableField implements Serializable, Internationalizable {
 	LAST_MODIFICATION_DATE_TIME("lastModificationDateTime", "lastModificationDateTime", "abstractEntity.lastModificationDateTime", false, true),
 	LAST_MODIFICATION_AUTH_USER_EMAIL("lastModificationAuthUserEmail", "lastModificationAuthUser.email", "abstractEntity.lastModificationAuthUserEmail", false, true);
 
+	private final static Predicate<TableField> VALUES_PREDICATE = (tableField -> true);
+	private final static Predicate<TableField> VALUES_WITHOUT_AUTH_USER_PREDICATE = (tableField -> !tableField.isAuthUserField);
+	private final static Predicate<TableField> VALUES_WITHOUT_LAST_MODIFICATION = (tableField -> !tableField.isLastModificationField);
+	private final static Predicate<TableField> VALUES_WITHOUT_AUTH_USER_AND_LAST_MODIFICATION_PREDICATE = (tableField -> (!tableField.isAuthUserField && !tableField.isLastModificationField));
+
 	@NotNull
 	private final String code;
 
@@ -97,15 +102,15 @@ public enum TableField implements Serializable, Internationalizable {
 		final Predicate<? super TableField> valuesPredicate;
 		if(entityWithAuthUserFields) {
 			if(isUnmodifiableEntity) {
-				valuesPredicate = (tableField -> !tableField.isLastModificationField);
+				valuesPredicate = TableField.VALUES_WITHOUT_LAST_MODIFICATION;
 			} else {
-				valuesPredicate = (tableField -> true);
+				valuesPredicate = TableField.VALUES_PREDICATE;
 			}
 		} else {
 			if(isUnmodifiableEntity) {
-				valuesPredicate = (tableField -> (!tableField.isAuthUserField && !tableField.isLastModificationField));
+				valuesPredicate = TableField.VALUES_WITHOUT_AUTH_USER_AND_LAST_MODIFICATION_PREDICATE;
 			} else {
-				valuesPredicate = (tableField -> !tableField.isAuthUserField);
+				valuesPredicate = TableField.VALUES_WITHOUT_AUTH_USER_PREDICATE;
 			}
 		}
 		return valuesPredicate;
