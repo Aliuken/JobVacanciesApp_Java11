@@ -64,8 +64,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 				}
 
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("jobVacancyId", jobVacancyId);
-				model.addAttribute("jobVacancyName", jobVacancyName);
+				model.addAttribute("predefinedFilterField1", jobVacancyId);
+				model.addAttribute("predefinedFilterField2", jobVacancyName);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl(jobVacancyId));
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -76,8 +76,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("jobVacancyId", jobVacancyId);
-				model.addAttribute("jobVacancyName", jobVacancyName);
+				model.addAttribute("predefinedFilterField1", jobVacancyId);
+				model.addAttribute("predefinedFilterField2", jobVacancyName);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl(jobVacancyId));
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -91,8 +91,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			final Page<JobRequest> jobRequests = pageWithExceptionDTO.getPage();
 			final Throwable throwable = pageWithExceptionDTO.getThrowable();
 
-			model.addAttribute("jobVacancyId", jobVacancyId);
-			model.addAttribute("jobVacancyName", jobVacancyName);
+			model.addAttribute("predefinedFilterField1", jobVacancyId);
+			model.addAttribute("predefinedFilterField2", jobVacancyName);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl(jobVacancyId));
 			model.addAttribute("exportToPdfUrl", this.getExportToPdfUrl(jobVacancyId));
@@ -111,8 +111,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			}
 
 			final Page<JobRequest> jobRequests = Page.empty();
-			model.addAttribute("jobVacancyId", jobVacancyId);
-			model.addAttribute("jobVacancyName", jobVacancyName);
+			model.addAttribute("predefinedFilterField1", jobVacancyId);
+			model.addAttribute("predefinedFilterField2", jobVacancyName);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl(jobVacancyId));
 			model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);

@@ -75,8 +75,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 				}
 
 				final Page<AuthUserEntityQuery> authUserEntityQueries = Page.empty();
-				model.addAttribute("authUserId", sessionAuthUserId);
-				model.addAttribute("authUserEmail", sessionAuthUserEmail);
+				model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+				model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 				model.addAttribute("authUserEntityQueries", authUserEntityQueries);
 				model.addAttribute("paginationUrl", this.getPaginationUrl());
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -87,8 +87,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
 				final Page<AuthUserEntityQuery> authUserEntityQueries = Page.empty();
-				model.addAttribute("authUserId", sessionAuthUserId);
-				model.addAttribute("authUserEmail", sessionAuthUserEmail);
+				model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+				model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 				model.addAttribute("authUserEntityQueries", authUserEntityQueries);
 				model.addAttribute("paginationUrl", this.getPaginationUrl());
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -102,8 +102,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			final Page<AuthUserEntityQuery> authUserEntityQueries = pageWithExceptionDTO.getPage();
 			final Throwable throwable = pageWithExceptionDTO.getThrowable();
 
-			model.addAttribute("authUserId", sessionAuthUserId);
-			model.addAttribute("authUserEmail", sessionAuthUserEmail);
+			model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+			model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 			model.addAttribute("authUserEntityQueries", authUserEntityQueries);
 			model.addAttribute("paginationUrl", this.getPaginationUrl());
 			model.addAttribute("exportToPdfUrl", this.getExportToPdfUrl());
@@ -123,8 +123,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			}
 
 			final Page<AuthUserEntityQuery> authUserEntityQueries = Page.empty();
-			model.addAttribute("authUserId", sessionAuthUserId);
-			model.addAttribute("authUserEmail", sessionAuthUserEmail);
+			model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+			model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 			model.addAttribute("authUserEntityQueries", authUserEntityQueries);
 			model.addAttribute("paginationUrl", this.getPaginationUrl());
 			model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);

@@ -64,8 +64,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 				}
 
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("authUserId", authUserId);
-				model.addAttribute("authUserEmail", authUserEmail);
+				model.addAttribute("predefinedFilterField1", authUserId);
+				model.addAttribute("predefinedFilterField2", authUserEmail);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl(authUserId));
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -76,8 +76,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("authUserId", authUserId);
-				model.addAttribute("authUserEmail", authUserEmail);
+				model.addAttribute("predefinedFilterField1", authUserId);
+				model.addAttribute("predefinedFilterField2", authUserEmail);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl(authUserId));
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -91,8 +91,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			final Page<JobRequest> jobRequests = pageWithExceptionDTO.getPage();
 			final Throwable throwable = pageWithExceptionDTO.getThrowable();
 
-			model.addAttribute("authUserId", authUserId);
-			model.addAttribute("authUserEmail", authUserEmail);
+			model.addAttribute("predefinedFilterField1", authUserId);
+			model.addAttribute("predefinedFilterField2", authUserEmail);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl(authUserId));
 			model.addAttribute("exportToPdfUrl", this.getExportToPdfUrl(authUserId));
@@ -111,8 +111,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			}
 
 			final Page<JobRequest> jobRequests = Page.empty();
-			model.addAttribute("authUserId", authUserId);
-			model.addAttribute("authUserEmail", authUserEmail);
+			model.addAttribute("predefinedFilterField1", authUserId);
+			model.addAttribute("predefinedFilterField2", authUserEmail);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl(authUserId));
 			model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);

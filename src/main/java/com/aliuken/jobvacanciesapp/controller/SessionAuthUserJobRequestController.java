@@ -59,8 +59,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 				}
 
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("authUserId", sessionAuthUserId);
-				model.addAttribute("authUserEmail", sessionAuthUserEmail);
+				model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+				model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl());
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -71,8 +71,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
 				final Page<JobRequest> jobRequests = Page.empty();
-				model.addAttribute("authUserId", sessionAuthUserId);
-				model.addAttribute("authUserEmail", sessionAuthUserEmail);
+				model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+				model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 				model.addAttribute("jobRequests", jobRequests);
 				model.addAttribute("paginationUrl", this.getPaginationUrl());
 				model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);
@@ -86,8 +86,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 			final Page<JobRequest> jobRequests = pageWithExceptionDTO.getPage();
 			final Throwable throwable = pageWithExceptionDTO.getThrowable();
 
-			model.addAttribute("authUserId", sessionAuthUserId);
-			model.addAttribute("authUserEmail", sessionAuthUserEmail);
+			model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+			model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl());
 			model.addAttribute("exportToPdfUrl", this.getExportToPdfUrl());
@@ -106,8 +106,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 			}
 
 			final Page<JobRequest> jobRequests = Page.empty();
-			model.addAttribute("authUserId", sessionAuthUserId);
-			model.addAttribute("authUserEmail", sessionAuthUserEmail);
+			model.addAttribute("predefinedFilterField1", sessionAuthUserId);
+			model.addAttribute("predefinedFilterField2", sessionAuthUserEmail);
 			model.addAttribute("jobRequests", jobRequests);
 			model.addAttribute("paginationUrl", this.getPaginationUrl());
 			model.addAttribute("exportToPdfUrl", EXPORT_TO_PDF_DISABLED_VALUE);

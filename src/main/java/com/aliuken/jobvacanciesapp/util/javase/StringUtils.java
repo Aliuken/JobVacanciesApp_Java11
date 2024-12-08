@@ -15,6 +15,30 @@ public class StringUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
+	public static String lowerCaseFirstCharacter(String string) {
+		if (LogicalUtils.isNullOrEmptyString(string)) {
+	        return string;
+	    }
+
+	    char c[] = string.toCharArray();
+	    c[0] = Character.toLowerCase(c[0]);
+
+	    string = new String(c);
+	    return string;
+	}
+
+	public static String upperCaseFirstCharacter(String string) {
+		if (LogicalUtils.isNullOrEmptyString(string)) {
+	        return string;
+	    }
+
+	    char c[] = string.toCharArray();
+	    c[0] = Character.toUpperCase(c[0]);
+
+	    string = new String(c);
+	    return string;
+	}
+
 	public static String getStringJoined(final CharSequence... elementsVarargs) {
 		final CharSequence delimiter = Constants.EMPTY_STRING;
 
