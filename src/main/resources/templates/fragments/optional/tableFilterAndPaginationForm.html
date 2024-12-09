@@ -31,14 +31,11 @@
       <input type="hidden" th:field="*{predefinedFilterValue}" th:value="${predefinedFilterField2}"></input>
       <label class="mx-0 px-0 my-0 py-0" th:text="#{'table.filteredBy' + ${T(com.aliuken.jobvacanciesapp.util.javase.StringUtils).upperCaseFirstCharacter(predefinedFilterName)}} + ':'"></label>
       <br/>
-      <label for="filterByPredefinedFilterField1" class="mx-0 px-0 my-2 py-0" th:text="#{abstractEntity.id} + ':'"></label>
+      <label for="filterByPredefinedFilterField1" class="mx-0 px-0 my-2 py-0" th:text="#{${predefinedFilterName} + 'PredefinedFilterField1'} + ':'"></label>
       &nbsp;
       <input type="text" id="filterByPredefinedFilterField1" name="filterByPredefinedFilterField1" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField1}" disabled></input>
       &nbsp;&nbsp;&nbsp;
-      <label th:if="${predefinedFilterName == 'authUser'}" for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{authUser.email} + ':'"></label>
-      <label th:if="${predefinedFilterName == 'jobCategory'}" for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{jobCategory.name} + ':'"></label>
-      <label th:if="${predefinedFilterName == 'jobCompany'}" for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{jobCompany.name} + ':'"></label>
-      <label th:if="${predefinedFilterName == 'jobVacancy'}" for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{jobVacancy.name} + ':'"></label>
+      <label for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{${predefinedFilterName} + 'PredefinedFilterField2'} + ':'"></label>
       &nbsp;
       <input type="text" id="filterByPredefinedFilterField2" name="filterByPredefinedFilterField2" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField2}" size="100" disabled></input>
       <br/>
