@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithPredefinedFilter;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
@@ -139,8 +139,10 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
+		final String predefinedFilterEntityName = PredefinedFilterEntity.AUTH_USER.getUpperCasedEntityName();
 		final String authUserIdString = String.valueOf(authUserId);
-		tableSearchDTO = new TableSearchDTO(languageCode, Constants.AUTH_USER_PREDEFINED_FILTER_NAME, authUserIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+
+		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, authUserIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getJobRequests(model, pageable, authUserId, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);

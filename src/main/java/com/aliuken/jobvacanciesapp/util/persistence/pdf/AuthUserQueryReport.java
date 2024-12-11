@@ -242,9 +242,9 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 			PdfDocument.addCellWithPhrase(userInfo, pdfDocumentPageFormatField, pdfDocumentPageFormatMessage);
 			PdfDocument.addCellWithPhrase(userInfo, null, null);
 
-			final String predefinedFilterName = authUserEntityQuery.getPredefinedFilterName();
+			final String predefinedFilterEntityName = authUserEntityQuery.getPredefinedFilterEntityName();
 			final String predefinedFilterValue = authUserEntityQuery.getPredefinedFilterValue();
-			if(predefinedFilterName != null && !predefinedFilterName.isEmpty() && predefinedFilterValue != null) {
+			if(LogicalUtils.isNotNullNorEmptyString(predefinedFilterEntityName) && predefinedFilterValue != null) {
 				PdfDocument.addCellWithPhrase(userInfo, null, null);
 			}
 
@@ -307,10 +307,10 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 
 		PdfDocument.addCellWithPhrase(queryInfo, filterFields, null);
 
-		final String predefinedFilterName = authUserEntityQuery.getPredefinedFilterName();
+		final String predefinedFilterEntityName = authUserEntityQuery.getPredefinedFilterEntityName();
 		final String predefinedFilterValue = authUserEntityQuery.getPredefinedFilterValue();
-		if(predefinedFilterName != null && !predefinedFilterName.isEmpty() && predefinedFilterValue != null) {
-			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", predefinedFilterName), predefinedFilterValue);
+		if(LogicalUtils.isNotNullNorEmptyString(predefinedFilterEntityName) && predefinedFilterValue != null) {
+			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", predefinedFilterEntityName), predefinedFilterValue);
 		}
 
 		final String filterName = authUserEntityQuery.getFilterName();

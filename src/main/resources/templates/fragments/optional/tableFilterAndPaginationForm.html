@@ -1,6 +1,6 @@
 <div th:fragment="tableFilterAndPaginationForm(endpoint, showFilterForm, isAuthUserEntity, containsDifferentAuthUsers, predefinedFilterName, isUnmodifiableEntity)" class="container-fluid mx-1 px-1 my-2 py-1" id="filterFormContainer" name="filterFormContainer">
 
-  <form id="tableFilterAndPaginationForm" th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="entityWithAuthUserFields=${isAuthUserEntity == true or containsDifferentAuthUsers == true}">
+  <form id="tableFilterAndPaginationForm" th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="entityWithAuthUserFields=${isAuthUserEntity == true or containsDifferentAuthUsers == true}, lowerCasedPredefinedFilterEntityName=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity).getLowerCasedEntityNameByEntityName(predefinedFilterName)}">
 
     <div th:if="${showBindingResultErrors == true} and ${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
       <span th:text="#{error.correctFields} + ':'"></span>
@@ -27,15 +27,15 @@
     <input type="hidden" th:field="*{pageNumber}" th:value="'0'"></input>
     <input type="hidden" th:field="*{predefinedFilterName}" th:value="${predefinedFilterName}"></input>
 
-    <div th:if="${predefinedFilterName != null}" class="mx-0 px-0 my-0 py-0">
+    <div th:if="${lowerCasedPredefinedFilterEntityName != null}" class="mx-0 px-0 my-0 py-0">
       <input type="hidden" th:field="*{predefinedFilterValue}" th:value="${predefinedFilterField2}"></input>
-      <label class="mx-0 px-0 my-0 py-0" th:text="#{'table.filteredBy' + ${T(com.aliuken.jobvacanciesapp.util.javase.StringUtils).upperCaseFirstCharacter(predefinedFilterName)}} + ':'"></label>
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{'table.filteredBy' + ${predefinedFilterName}} + ':'"></label>
       <br/>
-      <label for="filterByPredefinedFilterField1" class="mx-0 px-0 my-2 py-0" th:text="#{${predefinedFilterName} + 'PredefinedFilterField1'} + ':'"></label>
+      <label for="filterByPredefinedFilterField1" class="mx-0 px-0 my-2 py-0" th:text="#{${lowerCasedPredefinedFilterEntityName} + 'PredefinedFilterField1'} + ':'"></label>
       &nbsp;
       <input type="text" id="filterByPredefinedFilterField1" name="filterByPredefinedFilterField1" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField1}" disabled></input>
       &nbsp;&nbsp;&nbsp;
-      <label for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{${predefinedFilterName} + 'PredefinedFilterField2'} + ':'"></label>
+      <label for="filterByPredefinedFilterField2" class="mx-0 px-0 my-2 py-0" th:text="#{${lowerCasedPredefinedFilterEntityName} + 'PredefinedFilterField2'} + ':'"></label>
       &nbsp;
       <input type="text" id="filterByPredefinedFilterField2" name="filterByPredefinedFilterField2" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField2}" size="100" disabled></input>
       <br/>

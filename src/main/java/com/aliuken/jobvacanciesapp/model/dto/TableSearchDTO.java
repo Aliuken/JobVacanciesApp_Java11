@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
@@ -67,6 +68,11 @@ public class TableSearchDTO implements Serializable {
 		return NO_ARGS_INSTANCE;
 	}
 
+	public PredefinedFilterEntity getPredefinedFilterEntity() {
+		final PredefinedFilterEntity predefinedFilterEntity = PredefinedFilterEntity.findByEntityName(predefinedFilterName);
+		return predefinedFilterEntity;
+	}
+
 	//If not all pagination URL parameters -> empty table (in Java)
 	public boolean hasAllParameters() {
 		final boolean hasAllParameters = (LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam) && tableFieldCode != null && tableFieldValue != null && LogicalUtils.isNotNullNorEmptyString(tableSortingCode) && pageSize != null && pageNumber != null);
@@ -75,9 +81,11 @@ public class TableSearchDTO implements Serializable {
 
 	@Override
 	public String toString() {
+		final PredefinedFilterEntity predefinedFilterEntity = this.getPredefinedFilterEntity();
+		final String predefinedFilterEntityName = Objects.toString(predefinedFilterEntity);
 		final String pageSizeString = Objects.toString(pageSize);
 		final String pageNumberString = Objects.toString(pageNumber);
-		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam, ", predefinedFilterName=", predefinedFilterName, ", predefinedFilterValue=", predefinedFilterValue, ", tableFieldCode=", tableFieldCode, ", tableFieldValue=", tableFieldValue, ", tableSortingCode=", tableSortingCode, ", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
+		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam, ", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue, ", tableFieldCode=", tableFieldCode, ", tableFieldValue=", tableFieldValue, ", tableSortingCode=", tableSortingCode, ", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
 		return result;
 	}
 }

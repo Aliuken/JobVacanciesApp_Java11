@@ -41,7 +41,6 @@ public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFram
 		} else {
 			userInterfaceFramework = null;
 		}
-
 		return userInterfaceFramework;
 	}
 

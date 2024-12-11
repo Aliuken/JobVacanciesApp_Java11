@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithPredefinedFilter;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
@@ -27,6 +26,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.service.JobCategoryService;
 import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.service.JobVacancyService;
@@ -145,8 +145,10 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
+		final String predefinedFilterEntityName = PredefinedFilterEntity.JOB_CATEGORY.getUpperCasedEntityName();
 		final String jobCategoryIdString = String.valueOf(jobCategoryId);
-		tableSearchDTO = new TableSearchDTO(languageCode, Constants.JOB_CATEGORY_PREDEFINED_FILTER_NAME, jobCategoryIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+
+		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, jobCategoryIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getJobVacancies(model, pageable, jobCategoryId, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_VACANCY, httpServletRequest, httpServletResponse);

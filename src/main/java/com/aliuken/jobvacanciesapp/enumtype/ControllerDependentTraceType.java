@@ -19,8 +19,8 @@ public enum ControllerDependentTraceType implements Serializable {
 	private final String traceOutsideController;
 
 	private ControllerDependentTraceType(@NotNull final String initialTrace) {
-		traceInsideController = StringUtils.getStringJoined("  ", initialTrace);
-		traceOutsideController = StringUtils.getStringJoined(initialTrace, "  ");
+		this.traceInsideController = StringUtils.getStringJoined("  ", initialTrace);
+		this.traceOutsideController = StringUtils.getStringJoined(initialTrace, "  ");
 	}
 
 	public String getTraceInsideController() {

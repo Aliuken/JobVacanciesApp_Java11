@@ -12,7 +12,7 @@
         <h4 class="card-header"><strong th:text="#{authUserEntityQueries.main.title}"></strong></h4>
         <div class="card-body">
 
-          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, 'authUser', true)}"></div>
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, 'AuthUser', true)}"></div>
           <br/>
 
           <table id="mainTable" class="table table-bordered table-striped table-hover">
@@ -39,7 +39,7 @@
                 </th>
                 <td th:text="#{${authUserEntityQuery.finalPdfDocumentPageFormat.messageName}}"></td>
                 <td th:text="#{${authUserEntityQuery.language.messageName}}"></td>
-                <td th:text="${authUserEntityQuery.predefinedFilterName} + ': ' + ${authUserEntityQuery.predefinedFilterValue}"></td>
+                <td th:text="${authUserEntityQuery.predefinedFilterEntityName} + ': ' + ${authUserEntityQuery.predefinedFilterValue}"></td>
                 <td th:text="${authUserEntityQuery.filterName} + ': ' + ${authUserEntityQuery.filterValue}"></td>
                 <td th:text="#{${authUserEntityQuery.tableSorting.messageName}}"></td>
                 <td th:text="#{${authUserEntityQuery.tablePageSize.messageName}}"></td>

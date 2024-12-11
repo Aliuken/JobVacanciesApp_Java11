@@ -46,10 +46,5 @@ public class Constants {
 	public static final String HOME_PATH = "/";
 	public static final String LOGIN_PATH = "/login";
 
-	public static final String AUTH_USER_PREDEFINED_FILTER_NAME = "authUser";
-	public static final String JOB_CATEGORY_PREDEFINED_FILTER_NAME = "jobCategory";
-	public static final String JOB_COMPANY_PREDEFINED_FILTER_NAME = "jobCompany";
-	public static final String JOB_VACANCY_PREDEFINED_FILTER_NAME = "jobVacancy";
-
 	public static final String INSTANTIATION_NOT_ALLOWED = "Cannot instantiate class ";
 }

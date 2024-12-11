@@ -230,7 +230,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(PdfDocumentPageFormat.A3_HORIZONTAL, authUserEntityQuery.getInitialPdfDocumentPageFormat());
 		Assertions.assertEquals(finalPdfDocumentPageFormat, authUserEntityQuery.getFinalPdfDocumentPageFormat());
 		Assertions.assertEquals(Language.SPANISH, authUserEntityQuery.getLanguage());
-		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterName());
+		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterEntity());
 		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterValue());
 		Assertions.assertEquals(Constants.EMPTY_STRING, authUserEntityQuery.getFilterName());
 		Assertions.assertEquals(Constants.EMPTY_STRING, authUserEntityQuery.getFilterValue());

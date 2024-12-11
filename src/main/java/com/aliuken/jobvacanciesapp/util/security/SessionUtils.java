@@ -33,6 +33,14 @@ public class SessionUtils {
 		return sessionAuthUser;
 	}
 
+	public static String getSessionAuthUserIdStringFromSecurityContext(final SecurityContext securityContext) {
+		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContext(securityContext);
+		final Long sessionAuthUserId = sessionAuthUser.getId();
+
+		final String sessionAuthUserIdString = String.valueOf(sessionAuthUserId);
+		return sessionAuthUserIdString;
+	}
+
 	public static AuthUser getSessionAuthUserFromSecurityContext(final SecurityContext securityContext) {
 		final Authentication authentication = securityContext.getAuthentication();
 
@@ -59,6 +67,14 @@ public class SessionUtils {
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 		return sessionAuthUser;
+	}
+
+	public static String getSessionAuthUserIdStringFromHttpServletRequest(final HttpServletRequest httpServletRequest) {
+		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
+		final Long sessionAuthUserId = sessionAuthUser.getId();
+
+		final String sessionAuthUserIdString = String.valueOf(sessionAuthUserId);
+		return sessionAuthUserIdString;
 	}
 
 	public static AuthUser getSessionAuthUserFromHttpServletRequest(final HttpServletRequest httpServletRequest) {
