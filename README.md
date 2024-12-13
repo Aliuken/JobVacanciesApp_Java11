@@ -499,7 +499,7 @@ The properties read in [ConfigPropertiesBean](https://github.com/Aliuken/JobVaca
 
 > [!NOTE]
 > To deal with ad-hoc overwritable and overwriting properties, two classes were created:
-> * [ConfigurableEnum](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/superinterface/ConfigurableEnum.java): To store the configurable property values as Java enums.
+> * [ConfigurableEnum](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/superinterface/ConfigurableEnum.java): To store the configurable property values as Java enums. Each ConfigurableEnum implementation must be an enum with at least the value **BY_DEFAULT** (which is used as default value).
 > * [ConfigurableEnumUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java): To manage ConfigurableEnum elements.
 >
 > The DTO [ApplicationDefaultConfigDTO](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/ApplicationDefaultConfigDTO.java) was created to show the current default property values in the page [applicationConfigForm.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/app/applicationConfigForm.html), which is used in the **application restart**.
