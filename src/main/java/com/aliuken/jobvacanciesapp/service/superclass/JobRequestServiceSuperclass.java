@@ -42,7 +42,7 @@ public abstract class JobRequestServiceSuperclass extends AbstractEntityWithAuth
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final TableField tableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 

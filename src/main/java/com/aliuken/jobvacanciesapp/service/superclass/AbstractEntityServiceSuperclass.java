@@ -176,7 +176,7 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final TableField tableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 

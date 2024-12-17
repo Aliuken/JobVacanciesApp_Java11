@@ -50,7 +50,7 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final TableField tableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
@@ -156,7 +156,7 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final TableField tableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
