@@ -109,20 +109,20 @@
           //alert("isPageWithTable: " + isPageWithTable);
 
           if(isPageWithTable) {
-            let tableFieldCodeModelAttribute;
-            let tableFieldValueModelAttribute;
+            let filterNameModelAttribute;
+            let filterValueModelAttribute;
             let tableSortingCodeModelAttribute;
             let pageSizeModelAttribute;
             let pageNumberModelAttribute;
             /*<![CDATA[*/
-              tableFieldCodeModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableFieldCode : null}]]*/ null;
-              tableFieldValueModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableFieldValue : null}]]*/ null;
+              filterNameModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterName : null}]]*/ null;
+              filterValueModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterValue : null}]]*/ null;
               tableSortingCodeModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.tableSortingCode : null}]]*/ null;
               pageSizeModelAttribute = /*[[${configPropertiesBean.getInitialTablePageSizeValue(param.pageSize)}]]*/ null;
               pageNumberModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.pageNumber : null}]]*/ null;
             /*]]>*/
 
-            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
+            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
           } else {
             treatLanguageComboAndUrlParameter(languageSessionAttribute, languageModelAttribute, defaultLanguage);
           }

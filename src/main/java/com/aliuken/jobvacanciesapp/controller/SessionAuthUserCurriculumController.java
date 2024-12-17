@@ -159,8 +159,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	public byte[] exportCurriculumsToPdf(Model model, Pageable pageable, @Validated TableSearchDTO tableSearchDTO,
 			BindingResult bindingResult, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name = "languageParam", required = false) String languageCode,
-			@RequestParam(name = "tableFieldCode", required = false) String tableFieldCode,
-			@RequestParam(name = "tableFieldValue", required = false) String tableFieldValue,
+			@RequestParam(name = "filterName", required = false) String filterName,
+			@RequestParam(name = "filterValue", required = false) String filterValue,
 			@RequestParam(name = "tableSortingCode", required = false) String tableSortingCode,
 			@RequestParam(name = "pageSize", required = false) Integer pageSize,
 			@RequestParam(name = "pageNumber", required = false) Integer pageNumber) {
@@ -168,7 +168,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		final String predefinedFilterEntityName = PredefinedFilterEntity.AUTH_USER.getUpperCasedEntityName();
 		final String sessionAuthUserIdString = SessionUtils.getSessionAuthUserIdStringFromHttpServletRequest(httpServletRequest);
 
-		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, sessionAuthUserIdString, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, sessionAuthUserIdString, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 
 		this.getAuthUserCurriculums(httpServletRequest, model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.AUTH_USER_CURRICULUM, httpServletRequest, httpServletResponse);
@@ -299,8 +299,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	public String delete(RedirectAttributes redirectAttributes, Authentication authentication,
 			@PathVariable("authUserCurriculumId") long authUserCurriculumId,
 			@RequestParam(name = "languageParam", required = false) String languageCode,
-			@RequestParam(name = "tableFieldCode", required = false) String tableFieldCode,
-			@RequestParam(name = "tableFieldValue", required = false) String tableFieldValue,
+			@RequestParam(name = "filterName", required = false) String filterName,
+			@RequestParam(name = "filterValue", required = false) String filterValue,
 			@RequestParam(name = "tableSortingCode", required = false) String tableSortingCode,
 			@RequestParam(name = "pageSize", required = false) String pageSize,
 			@RequestParam(name = "pageNumber", required = false) String pageNumber) {
@@ -310,7 +310,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserCurriculum.curriculumDoesNotExist", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final String sessionAuthUserEmail = authentication.getName();
@@ -318,7 +318,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserCurriculum.curriculumDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final AuthUser authUser = authUserCurriculum.getAuthUser();
@@ -326,7 +326,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserCurriculum.curriculumDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final String curriculumFileName = authUserCurriculum.getFileName();
@@ -347,7 +347,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserCurriculum.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-curriculums", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	@Override

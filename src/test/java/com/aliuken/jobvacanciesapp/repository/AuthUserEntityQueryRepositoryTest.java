@@ -146,7 +146,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		authUserEntityQuery.setTableSorting(TableSorting.EMAIL_DESC);
 		authUserEntityQuery.setTablePageSize(TablePageSize.SIZE_100);
 		authUserEntityQuery.setPageNumber(4);
-		authUserEntityQuery.setQueryUrl("http://localhost:8080/auth-users/index?languageParam=en&tableFieldCode=&tableFieldValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4");
+		authUserEntityQuery.setQueryUrl("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4");
 
 		authUserEntityQuery = authUserEntityQueryRepository.saveAndFlush(authUserEntityQuery);
 
@@ -160,7 +160,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(TableSorting.EMAIL_DESC, authUserEntityQuery.getTableSorting());
 		Assertions.assertEquals(TablePageSize.SIZE_100, authUserEntityQuery.getTablePageSize());
 		Assertions.assertEquals(4, authUserEntityQuery.getPageNumber());
-		Assertions.assertEquals("http://localhost:8080/auth-users/index?languageParam=en&tableFieldCode=&tableFieldValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4", authUserEntityQuery.getQueryUrl());
+		Assertions.assertEquals("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4", authUserEntityQuery.getQueryUrl());
 		Assertions.assertNotNull(authUserEntityQuery.getFirstRegistrationDateTime());
 
 		final AuthUser firstRegistrationAuthUser = authUserEntityQuery.getFirstRegistrationAuthUser();
@@ -237,7 +237,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(TableSorting.ID_ASC, authUserEntityQuery.getTableSorting());
 		Assertions.assertEquals(TablePageSize.SIZE_5, authUserEntityQuery.getTablePageSize());
 		Assertions.assertEquals(0, authUserEntityQuery.getPageNumber());
-		Assertions.assertEquals("http://localhost:8080/job-categories/index?languageParam=es&tableFieldCode=&tableFieldValue=&tableSortingCode=idAsc&pageSize=5&pageNumber=0", authUserEntityQuery.getQueryUrl());
+		Assertions.assertEquals("http://localhost:8080/job-categories/index?languageParam=es&filterName=&filterValue=&tableSortingCode=idAsc&pageSize=5&pageNumber=0", authUserEntityQuery.getQueryUrl());
 		Assertions.assertEquals("jobCategories-1-LWQ8ABGX9RVY.pdf", authUserEntityQuery.getFinalResultFileName());
 		Assertions.assertNotNull(authUserEntityQuery.getFirstRegistrationDateTime());
 

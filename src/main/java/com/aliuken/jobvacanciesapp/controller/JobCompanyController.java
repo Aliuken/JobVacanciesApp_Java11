@@ -163,13 +163,13 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
-			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
-			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="filterName", required=false) String filterName,
+			@RequestParam(name="filterValue", required=false) String filterValue,
 			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
-		tableSearchDTO = new TableSearchDTO(languageCode, null, null, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, null, null, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_COMPANY, httpServletRequest, httpServletResponse);
@@ -440,8 +440,8 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	@GetMapping("/job-companies/delete/{jobCompanyId}")
 	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCompanyId") long jobCompanyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
-			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
-			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="filterName", required=false) String filterName,
+			@RequestParam(name="filterValue", required=false) String filterValue,
 			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
@@ -472,7 +472,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobCompany.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-companies/index", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-companies/index", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	private static JobCompanyDTO setSelectedJobCompanyLogoForJobCompanyForm(JobCompanyDTO jobCompanyDTO, final String jobCompanyLogoUrlParam, final boolean forceNoLogoIfBlankUrlParam) {

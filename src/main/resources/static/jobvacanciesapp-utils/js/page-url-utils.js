@@ -91,8 +91,8 @@ function treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModel
   }
 }
 
-function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, tableFieldCodeModelAttribute, tableFieldValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
-  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + tableFieldCodeModelAttribute + ", " + tableFieldValueModelAttribute + ", " + tableSortingCodeModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
+function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
+  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + tableSortingCodeModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
 
   let urlSearchParams = new URLSearchParams(window.location.search);
 
@@ -114,25 +114,25 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     addOrReplaceNeeded = true;
   }
 
-  //Set tableFieldCode URL param if it doesn't exist to the tableFieldCode model attribute (or "" if it's null)
-  let tableFieldCode = getParameterFromUrlSearchParams(urlSearchParams, "tableFieldCode");
-  if(tableFieldCode == null) {
-    if(tableFieldCodeModelAttribute != null) {
-      tableFieldCode = tableFieldCodeModelAttribute;
+  //Set filterName URL param if it doesn't exist to the filterName model attribute (or "" if it's null)
+  let filterName = getParameterFromUrlSearchParams(urlSearchParams, "filterName");
+  if(filterName == null) {
+    if(filterNameModelAttribute != null) {
+      filterName = filterNameModelAttribute;
     } else {
-      tableFieldCode = "";
+      filterName = "";
     }
 
     addOrReplaceNeeded = true;
   }
 
-  //Set tableFieldValue URL param if it doesn't exist to the tableFieldValue model attribute (or "" if it's null)
-  let tableFieldValue = getParameterFromUrlSearchParams(urlSearchParams, "tableFieldValue");
-  if(tableFieldValue == null) {
-    if(tableFieldValueModelAttribute != null) {
-      tableFieldValue = tableFieldValueModelAttribute;
+  //Set filterValue URL param if it doesn't exist to the filterValue model attribute (or "" if it's null)
+  let filterValue = getParameterFromUrlSearchParams(urlSearchParams, "filterValue");
+  if(filterValue == null) {
+    if(filterValueModelAttribute != null) {
+      filterValue = filterValueModelAttribute;
     } else {
-      tableFieldValue = "";
+      filterValue = "";
     }
 
     addOrReplaceNeeded = true;
@@ -175,7 +175,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
   }
 
   if(addOrReplaceNeeded) {
-    addOrReplacePaginationParametersInUrl(languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+    addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
   }
 
   //Set the languageCombo to the value of the language URL param (if the languageCombo exists)
@@ -184,7 +184,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the languageCombo element change, set the value of the language URL param to the new selected value
     languageCombo.change(function () {
       let selectedOption = languageCombo.val();
-      addOrReplacePaginationParametersInUrl(selectedOption, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, "0");
+      addOrReplacePaginationParametersInUrl(selectedOption, filterName, filterValue, tableSortingCode, pageSize, "0");
     });
 
     languageCombo.val(languageCode);
@@ -196,10 +196,10 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the tableFieldCombo element change, set the value of the tableField URL param to the new selected value
     tableFieldCombo.change(function () {
       let selectedOption = tableFieldCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, selectedOption, tableFieldValue, tableSortingCode, pageSize, "0");
+      addOrReplacePaginationParametersInUrl(languageCode, selectedOption, filterValue, tableSortingCode, pageSize, "0");
     });
 
-    tableFieldCombo.val(tableFieldCode);
+    tableFieldCombo.val(filterName);
   }
 
   //Set the tableSortingCombo to the value of the tableSorting URL param (if the tableSortingCombo exists)
@@ -208,7 +208,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the tableSortingCombo element change, set the value of the tableSorting URL param to the new selected value
     tableSortingCombo.change(function () {
       let selectedOption = tableSortingCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, tableFieldCode, tableFieldValue, selectedOption, pageSize, "0");
+      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, selectedOption, pageSize, "0");
     });
 
     tableSortingCombo.val(tableSortingCode);
@@ -220,7 +220,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the pageSizeCombo element change, set the value of the size URL param to the new selected value
     pageSizeCombo.change(function () {
       let selectedOption = pageSizeCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, tableFieldCode, tableFieldValue, tableSortingCode, selectedOption, "0");
+      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, selectedOption, "0");
     });
 
     pageSizeCombo.val(pageSize);
@@ -314,11 +314,11 @@ function addOrReplaceHomeParametersInUrl(languageCode, description, jobCategoryI
   window.location = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + urlSearchParams.toString();
 }
 
-function addOrReplacePaginationParametersInUrl(languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber) {
+function addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber) {
   let urlSearchParams = new URLSearchParams(window.location.search);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "languageParam", languageCode);
-  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "tableFieldCode", tableFieldCode);
-  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "tableFieldValue", tableFieldValue);
+  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "filterName", filterName);
+  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "filterValue", filterValue);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "tableSortingCode", tableSortingCode);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "pageSize", pageSize);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "pageNumber", pageNumber);
@@ -338,8 +338,8 @@ function addOrReplaceParameterInUrlSearchParams(urlSearchParams, paramName, para
 function getHasAllPaginationParametersInUrl() {
   let urlSearchParams = new URLSearchParams(window.location.search);
   let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
-  let tableFieldCode = getParameterFromUrlSearchParams(urlSearchParams, "tableFieldCode");
-  let tableFieldValue = getParameterFromUrlSearchParams(urlSearchParams, "tableFieldValue");
+  let filterName = getParameterFromUrlSearchParams(urlSearchParams, "filterName");
+  let filterValue = getParameterFromUrlSearchParams(urlSearchParams, "filterValue");
   let tableSortingCode = getParameterFromUrlSearchParams(urlSearchParams, "tableSortingCode");
   let pageSize = getParameterFromUrlSearchParams(urlSearchParams, "pageSize");
   let pageNumber = getParameterFromUrlSearchParams(urlSearchParams, "pageNumber");
@@ -348,11 +348,11 @@ function getHasAllPaginationParametersInUrl() {
     return false;
   }
 
-  if(tableFieldCode == null) {
+  if(filterName == null) {
     return false;
   }
 
-  if(tableFieldValue == null) {
+  if(filterValue == null) {
     return false;
   }
 

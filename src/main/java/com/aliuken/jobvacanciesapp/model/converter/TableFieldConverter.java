@@ -14,13 +14,13 @@ public class TableFieldConverter implements AttributeConverter<TableField, Strin
 			return null;
 		}
 
-		final String tableFieldCode = tableField.getCode();
-		return tableFieldCode;
+		final String filterName = tableField.getCode();
+		return filterName;
 	}
 
 	@Override
-	public TableField convertToEntityAttribute(final String tableFieldCode) {
-		final TableField tableField = TableField.findByCode(tableFieldCode);
+	public TableField convertToEntityAttribute(final String filterName) {
+		final TableField tableField = TableField.findByCode(filterName);
 		return tableField;
 	}
 }

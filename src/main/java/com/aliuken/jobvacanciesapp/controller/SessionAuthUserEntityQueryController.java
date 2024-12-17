@@ -144,8 +144,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	public byte[] exportToPdf(Model model, Pageable pageable, @Validated TableSearchDTO tableSearchDTO,
 			BindingResult bindingResult, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name = "languageParam", required = false) String languageCode,
-			@RequestParam(name = "tableFieldCode", required = false) String tableFieldCode,
-			@RequestParam(name = "tableFieldValue", required = false) String tableFieldValue,
+			@RequestParam(name = "filterName", required = false) String filterName,
+			@RequestParam(name = "filterValue", required = false) String filterValue,
 			@RequestParam(name = "tableSortingCode", required = false) String tableSortingCode,
 			@RequestParam(name = "pageSize", required = false) Integer pageSize,
 			@RequestParam(name = "pageNumber", required = false) Integer pageNumber) {
@@ -175,8 +175,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	public String delete(RedirectAttributes redirectAttributes, Authentication authentication,
 			@PathVariable("authUserEntityQueryId") long authUserEntityQueryId,
 			@RequestParam(name = "languageParam", required = false) String languageCode,
-			@RequestParam(name = "tableFieldCode", required = false) String tableFieldCode,
-			@RequestParam(name = "tableFieldValue", required = false) String tableFieldValue,
+			@RequestParam(name = "filterName", required = false) String filterName,
+			@RequestParam(name = "filterValue", required = false) String filterValue,
 			@RequestParam(name = "tableSortingCode", required = false) String tableSortingCode,
 			@RequestParam(name = "pageSize", required = false) String pageSize,
 			@RequestParam(name = "pageNumber", required = false) String pageNumber) {
@@ -186,7 +186,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserEntityQuery.entityQueryDoesNotExist", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final String sessionAuthUserEmail = authentication.getName();
@@ -194,7 +194,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserEntityQuery.entityQueryDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final AuthUser authUser = authUserEntityQuery.getAuthUser();
@@ -202,7 +202,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserEntityQuery.entityQueryDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 		}
 
 		final String entityQueryFileName = authUserEntityQuery.getFinalResultFileName();
@@ -217,7 +217,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserEntityQuery.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/my-user/auth-user-entity-queries", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	@Override

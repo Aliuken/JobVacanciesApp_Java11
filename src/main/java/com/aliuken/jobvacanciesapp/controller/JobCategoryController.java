@@ -132,13 +132,13 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
-			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
-			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="filterName", required=false) String filterName,
+			@RequestParam(name="filterValue", required=false) String filterValue,
 			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
-		tableSearchDTO = new TableSearchDTO(languageCode, null, null, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, null, null, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_CATEGORY, httpServletRequest, httpServletResponse);
@@ -282,8 +282,8 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	@GetMapping("/job-categories/delete/{jobCategoryId}")
 	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
-			@RequestParam(name="tableFieldCode", required=false) String tableFieldCode,
-			@RequestParam(name="tableFieldValue", required=false) String tableFieldValue,
+			@RequestParam(name="filterName", required=false) String filterName,
+			@RequestParam(name="filterValue", required=false) String filterValue,
 			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
@@ -307,7 +307,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobCategory.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-categories/index", languageCode, tableFieldCode, tableFieldValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-categories/index", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
 	}
 
 	@Override

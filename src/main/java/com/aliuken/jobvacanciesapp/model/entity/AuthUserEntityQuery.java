@@ -98,8 +98,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		this.language = Language.findByCode(tableSearchDTO.getLanguageParam());
 		this.predefinedFilterEntity = tableSearchDTO.getPredefinedFilterEntity();
 		this.predefinedFilterValue = tableSearchDTO.getPredefinedFilterValue();
-		this.filterName = tableSearchDTO.getTableFieldCode();
-		this.filterValue = tableSearchDTO.getTableFieldValue();
+		this.filterName = tableSearchDTO.getFilterName();
+		this.filterValue = tableSearchDTO.getFilterValue();
 		this.tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 		this.tablePageSize = TablePageSize.findByValue(tableSearchDTO.getPageSize());
 		this.pageNumber = tableSearchDTO.getPageNumber();

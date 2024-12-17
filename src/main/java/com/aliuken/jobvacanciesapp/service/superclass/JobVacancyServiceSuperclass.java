@@ -48,11 +48,11 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getTableFieldCode());
-				final String tableFieldValue = tableSearchDTO.getTableFieldValue();
+				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
-				page = this.getJobCategoryJobVacanciesPage(jobCategoryId, tableField, tableFieldValue, tableSorting, pageable);
+				page = this.getJobCategoryJobVacanciesPage(jobCategoryId, tableField, filterValue, tableSorting, pageable);
 			} else {
 				final Example<JobVacancy> example = this.getJobCategoryIdExample(jobCategoryId);
 				page = this.findAll(example, pageable);
@@ -71,9 +71,9 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 		return pageWithExceptionDTO;
 	}
 
-	private Page<JobVacancy> getJobCategoryJobVacanciesPage(final long jobCategoryId, final TableField tableField, final String tableFieldValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<JobVacancy> getJobCategoryJobVacanciesPage(final long jobCategoryId, final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
 		final Page<JobVacancy> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(tableFieldValue)) {
+		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(tableField) {
 				case ID: {
 					final JobCategory jobCategory = new JobCategory();
@@ -81,13 +81,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 
 					final Long entityId;
 					try {
-						entityId = Long.valueOf(tableFieldValue);
+						entityId = Long.valueOf(filterValue);
 					} catch(final NumberFormatException exception) {
 						if(log.isErrorEnabled()) {
 							final String stackTrace = ThrowableUtils.getStackTrace(exception);
 							log.error(StringUtils.getStringJoined("An exception happened when trying to get an entity page. Exception: ", stackTrace));
 						}
-						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", tableFieldValue, "' is not a number"));
+						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", filterValue, "' is not a number"));
 					}
 
 					final JobVacancy jobVacancySearch = new JobVacancy();
@@ -99,13 +99,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
-					final Specification<JobVacancy> specification = this.equalsJobCategoryIdAndFirstRegistrationDateTime(jobCategoryId, tableFieldValue);
+					final Specification<JobVacancy> specification = this.equalsJobCategoryIdAndFirstRegistrationDateTime(jobCategoryId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser firstRegistrationAuthUser = new AuthUser();
-					firstRegistrationAuthUser.setEmail(tableFieldValue);
+					firstRegistrationAuthUser.setEmail(filterValue);
 
 					final JobCategory jobCategory = new JobCategory();
 					jobCategory.setId(jobCategoryId);
@@ -119,13 +119,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
-					final Specification<JobVacancy> specification = this.equalsJobCategoryIdAndLastModificationDateTime(jobCategoryId, tableFieldValue);
+					final Specification<JobVacancy> specification = this.equalsJobCategoryIdAndLastModificationDateTime(jobCategoryId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser lastModificationAuthUser = new AuthUser();
-					lastModificationAuthUser.setEmail(tableFieldValue);
+					lastModificationAuthUser.setEmail(filterValue);
 
 					final JobCategory jobCategory = new JobCategory();
 					jobCategory.setId(jobCategoryId);
@@ -156,11 +156,11 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getTableFieldCode());
-				final String tableFieldValue = tableSearchDTO.getTableFieldValue();
+				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
-				page = this.getJobCompanyJobVacanciesPage(jobCompanyId, tableField, tableFieldValue, tableSorting, pageable);
+				page = this.getJobCompanyJobVacanciesPage(jobCompanyId, tableField, filterValue, tableSorting, pageable);
 			} else {
 				final Example<JobVacancy> example = this.getJobCompanyIdExample(jobCompanyId);
 				page = this.findAll(example, pageable);
@@ -179,9 +179,9 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 		return pageWithExceptionDTO;
 	}
 
-	private Page<JobVacancy> getJobCompanyJobVacanciesPage(final long jobCompanyId, final TableField tableField, final String tableFieldValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<JobVacancy> getJobCompanyJobVacanciesPage(final long jobCompanyId, final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
 		final Page<JobVacancy> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(tableFieldValue)) {
+		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(tableField) {
 				case ID: {
 					final JobCompany jobCompany = new JobCompany();
@@ -189,13 +189,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 
 					final Long entityId;
 					try {
-						entityId = Long.valueOf(tableFieldValue);
+						entityId = Long.valueOf(filterValue);
 					} catch(final NumberFormatException exception) {
 						if(log.isErrorEnabled()) {
 							final String stackTrace = ThrowableUtils.getStackTrace(exception);
 							log.error(StringUtils.getStringJoined("An exception happened when trying to get an entity page. Exception: ", stackTrace));
 						}
-						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", tableFieldValue, "' is not a number"));
+						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", filterValue, "' is not a number"));
 					}
 
 					final JobVacancy jobVacancySearch = new JobVacancy();
@@ -207,13 +207,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
-					final Specification<JobVacancy> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, tableFieldValue);
+					final Specification<JobVacancy> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser firstRegistrationAuthUser = new AuthUser();
-					firstRegistrationAuthUser.setEmail(tableFieldValue);
+					firstRegistrationAuthUser.setEmail(filterValue);
 
 					final JobCompany jobCompany = new JobCompany();
 					jobCompany.setId(jobCompanyId);
@@ -227,13 +227,13 @@ public abstract class JobVacancyServiceSuperclass extends AbstractEntityServiceS
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
-					final Specification<JobVacancy> specification = this.equalsJobCompanyIdAndLastModificationDateTime(jobCompanyId, tableFieldValue);
+					final Specification<JobVacancy> specification = this.equalsJobCompanyIdAndLastModificationDateTime(jobCompanyId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser lastModificationAuthUser = new AuthUser();
-					lastModificationAuthUser.setEmail(tableFieldValue);
+					lastModificationAuthUser.setEmail(filterValue);
 
 					final JobCompany jobCompany = new JobCompany();
 					jobCompany.setId(jobCompanyId);

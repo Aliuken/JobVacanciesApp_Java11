@@ -30,24 +30,24 @@ public class AuthUserServiceImpl extends AuthUserService {
 	}
 
 	@Override
-	protected Example<AuthUser> getDefaultEntityPageExample(final TableField tableField, final String tableFieldValue) {
+	protected Example<AuthUser> getDefaultEntityPageExample(final TableField tableField, final String filterValue) {
 		final Example<AuthUser> example;
 		switch(tableField) {
 			case EMAIL: {
 				final AuthUser authUserSearch = new AuthUser();
-				authUserSearch.setEmail(tableFieldValue);
+				authUserSearch.setEmail(filterValue);
 				example = Example.of(authUserSearch, EMAIL_EXAMPLE_MATCHER);
 				break;
 			}
 			case NAME: {
 				final AuthUser authUserSearch = new AuthUser();
-				authUserSearch.setName(tableFieldValue);
+				authUserSearch.setName(filterValue);
 				example = Example.of(authUserSearch, NAME_EXAMPLE_MATCHER);
 				break;
 			}
 			case SURNAMES: {
 				final AuthUser authUserSearch = new AuthUser();
-				authUserSearch.setSurnames(tableFieldValue);
+				authUserSearch.setSurnames(filterValue);
 				example = Example.of(authUserSearch, SURNAMES_EXAMPLE_MATCHER);
 				break;
 			}

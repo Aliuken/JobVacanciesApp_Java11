@@ -28,11 +28,11 @@ public class TableSearchDTO implements Serializable {
 
 	private final String predefinedFilterValue;
 
-	@NotNull(message="{tableFieldCode.notEmpty}")
-	private final String tableFieldCode;
+	@NotNull(message="{filterName.notEmpty}")
+	private final String filterName;
 
-	@NotNull(message="{tableFieldValue.notEmpty}")
-	private final String tableFieldValue;
+	@NotNull(message="{filterValue.notEmpty}")
+	private final String filterValue;
 
 	@NotEmpty(message="{tableSortingCode.notEmpty}")
 	private final String tableSortingCode;
@@ -43,7 +43,7 @@ public class TableSearchDTO implements Serializable {
 	@NotNull(message="{pageNumber.notEmpty}")
 	private final Integer pageNumber;
 
-	public TableSearchDTO(final String languageParam, final String predefinedFilterName, final String predefinedFilterValue, final String tableFieldCode, final String tableFieldValue, final String tableSortingCode, final Integer pageSize, final Integer pageNumber) {
+	public TableSearchDTO(final String languageParam, final String predefinedFilterName, final String predefinedFilterValue, final String filterName, final String filterValue, final String tableSortingCode, final Integer pageSize, final Integer pageNumber) {
 		if(languageParam != null) {
 			this.languageParam = languageParam;
 		} else {
@@ -52,8 +52,8 @@ public class TableSearchDTO implements Serializable {
 
 		this.predefinedFilterName = predefinedFilterName;
 		this.predefinedFilterValue = predefinedFilterValue;
-		this.tableFieldCode = tableFieldCode;
-		this.tableFieldValue = tableFieldValue;
+		this.filterName = filterName;
+		this.filterValue = filterValue;
 		this.tableSortingCode = tableSortingCode;
 		this.pageSize = pageSize;
 
@@ -75,7 +75,7 @@ public class TableSearchDTO implements Serializable {
 
 	//If not all pagination URL parameters -> empty table (in Java)
 	public boolean hasAllParameters() {
-		final boolean hasAllParameters = (LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam) && tableFieldCode != null && tableFieldValue != null && LogicalUtils.isNotNullNorEmptyString(tableSortingCode) && pageSize != null && pageNumber != null);
+		final boolean hasAllParameters = (LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam) && filterName != null && filterValue != null && LogicalUtils.isNotNullNorEmptyString(tableSortingCode) && pageSize != null && pageNumber != null);
 		return hasAllParameters;
 	}
 
@@ -85,7 +85,7 @@ public class TableSearchDTO implements Serializable {
 		final String predefinedFilterEntityName = Objects.toString(predefinedFilterEntity);
 		final String pageSizeString = Objects.toString(pageSize);
 		final String pageNumberString = Objects.toString(pageNumber);
-		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam, ", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue, ", tableFieldCode=", tableFieldCode, ", tableFieldValue=", tableFieldValue, ", tableSortingCode=", tableSortingCode, ", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
+		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam, ", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue, ", filterName=", filterName, ", filterValue=", filterValue, ", tableSortingCode=", tableSortingCode, ", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
 		return result;
 	}
 }

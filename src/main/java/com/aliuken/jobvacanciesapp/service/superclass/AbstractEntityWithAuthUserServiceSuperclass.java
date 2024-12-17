@@ -50,11 +50,11 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getTableFieldCode());
-				final String tableFieldValue = tableSearchDTO.getTableFieldValue();
+				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
-				page = this.getEntityPage(tableField, tableFieldValue, tableSorting, pageable);
+				page = this.getEntityPage(tableField, filterValue, tableSorting, pageable);
 			} else {
 				page = this.findAll(pageable);
 			}
@@ -72,20 +72,20 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		return pageWithExceptionDTO;
 	}
 
-	private Page<T> getEntityPage(final TableField tableField, final String tableFieldValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<T> getEntityPage(final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
 		final Page<T> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(tableFieldValue)) {
+		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(tableField) {
 				case ID: {
 					final Long entityId;
 					try {
-						entityId = Long.valueOf(tableFieldValue);
+						entityId = Long.valueOf(filterValue);
 					} catch(final NumberFormatException exception) {
 						if(log.isErrorEnabled()) {
 							final String stackTrace = ThrowableUtils.getStackTrace(exception);
 							log.error(StringUtils.getStringJoined("An exception happened when trying to get an entity page. Exception: ", stackTrace));
 						}
-						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", tableFieldValue, "' is not a number"));
+						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", filterValue, "' is not a number"));
 					}
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(entityId, null, null);
@@ -94,13 +94,13 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
-					final Specification<T> specification = this.equalsFirstRegistrationDateTime(tableFieldValue);
+					final Specification<T> specification = this.equalsFirstRegistrationDateTime(filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser authUserSearch = new AuthUser();
-					authUserSearch.setEmail(tableFieldValue);
+					authUserSearch.setEmail(filterValue);
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(null, authUserSearch, null);
 					final Example<T> example = Example.of(abstractEntitySearch, FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
@@ -108,13 +108,13 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
-					final Specification<T> specification = this.equalsLastModificationDateTime(tableFieldValue);
+					final Specification<T> specification = this.equalsLastModificationDateTime(filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser authUserSearch = new AuthUser();
-					authUserSearch.setEmail(tableFieldValue);
+					authUserSearch.setEmail(filterValue);
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(null, null, authUserSearch);
 					final Example<T> example = Example.of(abstractEntitySearch, LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
@@ -122,19 +122,19 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 					break;
 				}
 				case EMAIL: {
-					final T abstractEntitySearch = this.getNewEntityWithAuthUserEmail(tableFieldValue);
+					final T abstractEntitySearch = this.getNewEntityWithAuthUserEmail(filterValue);
 					final Example<T> example = Example.of(abstractEntitySearch, AUTH_USER_EMAIL_EXAMPLE_MATCHER);
 					page = this.findAll(example, pageable, tableSorting);
 					break;
 				}
 				case NAME: {
-					final T abstractEntitySearch = this.getNewEntityWithAuthUserName(tableFieldValue);
+					final T abstractEntitySearch = this.getNewEntityWithAuthUserName(filterValue);
 					final Example<T> example = Example.of(abstractEntitySearch, AUTH_USER_NAME_EXAMPLE_MATCHER);
 					page = this.findAll(example, pageable, tableSorting);
 					break;
 				}
 				case SURNAMES: {
-					final T abstractEntitySearch = this.getNewEntityWithAuthUserSurnames(tableFieldValue);
+					final T abstractEntitySearch = this.getNewEntityWithAuthUserSurnames(filterValue);
 					final Example<T> example = Example.of(abstractEntitySearch, AUTH_USER_SURNAMES_EXAMPLE_MATCHER);
 					page = this.findAll(example, pageable, tableSorting);
 					break;
@@ -156,11 +156,11 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getTableFieldCode());
-				final String tableFieldValue = tableSearchDTO.getTableFieldValue();
+				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
-				page = this.getAuthUserEntityPage(authUserId, tableField, tableFieldValue, tableSorting, pageable);
+				page = this.getAuthUserEntityPage(authUserId, tableField, filterValue, tableSorting, pageable);
 			} else {
 				final Example<T> example = this.getAuthUserIdExample(authUserId);
 				page = this.findAll(example, pageable);
@@ -179,9 +179,9 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 		return pageWithExceptionDTO;
 	}
 
-	private Page<T> getAuthUserEntityPage(final Long authUserId, final TableField tableField, final String tableFieldValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<T> getAuthUserEntityPage(final Long authUserId, final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
 		final Page<T> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(tableFieldValue)) {
+		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(tableField) {
 				case ID: {
 					final AuthUser authUser = new AuthUser();
@@ -189,13 +189,13 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 
 					final Long entityId;
 					try {
-						entityId = Long.valueOf(tableFieldValue);
+						entityId = Long.valueOf(filterValue);
 					} catch(final NumberFormatException exception) {
 						if(log.isErrorEnabled()) {
 							final String stackTrace = ThrowableUtils.getStackTrace(exception);
 							log.error(StringUtils.getStringJoined("An exception happened when trying to get an entity page. Exception: ", stackTrace));
 						}
-						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", tableFieldValue, "' is not a number"));
+						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", filterValue, "' is not a number"));
 					}
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(entityId, null, null);
@@ -206,13 +206,13 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
-					final Specification<T> specification = this.equalsAuthUserIdAndFirstRegistrationDateTime(authUserId, tableFieldValue);
+					final Specification<T> specification = this.equalsAuthUserIdAndFirstRegistrationDateTime(authUserId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser firstRegistrationAuthUser = new AuthUser();
-					firstRegistrationAuthUser.setEmail(tableFieldValue);
+					firstRegistrationAuthUser.setEmail(filterValue);
 
 					final AuthUser authUser = new AuthUser();
 					authUser.setId(authUserId);
@@ -225,13 +225,13 @@ public abstract class AbstractEntityWithAuthUserServiceSuperclass<T extends Abst
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
-					final Specification<T> specification = this.equalsAuthUserIdAndLastModificationDateTime(authUserId, tableFieldValue);
+					final Specification<T> specification = this.equalsAuthUserIdAndLastModificationDateTime(authUserId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
 					final AuthUser lastModificationAuthUser = new AuthUser();
-					lastModificationAuthUser.setEmail(tableFieldValue);
+					lastModificationAuthUser.setEmail(filterValue);
 
 					final AuthUser authUser = new AuthUser();
 					authUser.setId(authUserId);

@@ -47,14 +47,14 @@
       <br/>
       <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.searchFor} + ':'"></label>
       &nbsp;
-      <select id="tableFieldCombo" name="tableFieldCombo" th:field="*{tableFieldCode}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField).values(entityWithAuthUserFields, isUnmodifiableEntity)}">
+      <select id="tableFieldCombo" name="tableFieldCombo" th:field="*{filterName}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField).values(entityWithAuthUserFields, isUnmodifiableEntity)}">
         <option th:value="null" th:text="#{tableField.select}" selected></option>
         <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
       </select>
       &nbsp;&nbsp;&nbsp;
-      <label for="tableFieldValue" class="form-label mt-2 mb-1" th:text="#{table.searchForWithValue} + ':'"></label>
+      <label for="filterValue" class="form-label mt-2 mb-1" th:text="#{table.searchForWithValue} + ':'"></label>
       &nbsp;
-      <input type="text" id="tableFieldValue" name="tableFieldValue" th:field="*{tableFieldValue}"></input>
+      <input type="text" id="filterValue" name="filterValue" th:field="*{filterValue}"></input>
       &nbsp;
       <button type="submit" th:text="#{button.filter}"></button>
       <br/>

@@ -41,11 +41,11 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = TableField.findByCode(tableSearchDTO.getTableFieldCode());
-				final String tableFieldValue = tableSearchDTO.getTableFieldValue();
+				final TableField tableField = TableField.findByCode(tableSearchDTO.getFilterName());
+				final String filterValue = tableSearchDTO.getFilterValue();
 				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
 
-				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, tableField, tableFieldValue, tableSorting, pageable);
+				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, tableField, filterValue, tableSorting, pageable);
 			} else {
 				final Example<JobCompanyLogo> example = this.getJobCompanyIdExample(jobCompanyId);
 				page = this.findAll(example, pageable);
@@ -64,9 +64,9 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 		return pageWithExceptionDTO;
 	}
 
-	private Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField tableField, final String tableFieldValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
 		final Page<JobCompanyLogo> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(tableFieldValue)) {
+		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(tableField) {
 				case ID: {
 					final JobCompany jobCompany = new JobCompany();
@@ -74,13 +74,13 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 
 					final Long entityId;
 					try {
-						entityId = Long.valueOf(tableFieldValue);
+						entityId = Long.valueOf(filterValue);
 					} catch(final NumberFormatException exception) {
 						if(log.isErrorEnabled()) {
 							final String stackTrace = ThrowableUtils.getStackTrace(exception);
 							log.error(StringUtils.getStringJoined("An exception happened when trying to get an entity page. Exception: ", stackTrace));
 						}
-						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", tableFieldValue, "' is not a number"));
+						throw new IllegalArgumentException(StringUtils.getStringJoined("The id '", filterValue, "' is not a number"));
 					}
 
 					final JobCompanyLogo jobCompanyLogoSearch = new JobCompanyLogo();
@@ -92,13 +92,13 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
-					final Specification<JobCompanyLogo> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, tableFieldValue);
+					final Specification<JobCompanyLogo> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, filterValue);
 					page = this.findAll(pageable, tableSorting, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
 					final AuthUser firstRegistrationAuthUser = new AuthUser();
-					firstRegistrationAuthUser.setEmail(tableFieldValue);
+					firstRegistrationAuthUser.setEmail(filterValue);
 
 					final JobCompany jobCompany = new JobCompany();
 					jobCompany.setId(jobCompanyId);
