@@ -232,7 +232,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(Language.SPANISH, authUserEntityQuery.getLanguage());
 		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterEntity());
 		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterValue());
-		Assertions.assertEquals(Constants.EMPTY_STRING, authUserEntityQuery.getFilterName());
+		Assertions.assertNull(authUserEntityQuery.getFilterTableField());
 		Assertions.assertEquals(Constants.EMPTY_STRING, authUserEntityQuery.getFilterValue());
 		Assertions.assertEquals(TableSorting.ID_ASC, authUserEntityQuery.getTableSorting());
 		Assertions.assertEquals(TablePageSize.SIZE_5, authUserEntityQuery.getTablePageSize());

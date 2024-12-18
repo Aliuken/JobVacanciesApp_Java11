@@ -248,9 +248,9 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 				PdfDocument.addCellWithPhrase(userInfo, null, null);
 			}
 
-			final String filterName = authUserEntityQuery.getFilterName();
+			final String filterName = authUserEntityQuery.getFilterTableFieldName();
 			final String filterValue = authUserEntityQuery.getFilterValue();
-			if(filterName != null && !filterName.isEmpty() && filterValue != null) {
+			if(LogicalUtils.isNotNullNorEmptyString(filterName) && filterValue != null) {
 				PdfDocument.addCellWithPhrase(userInfo, null, null);
 			}
 		}
@@ -313,9 +313,9 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", predefinedFilterEntityName), predefinedFilterValue);
 		}
 
-		final String filterName = authUserEntityQuery.getFilterName();
+		final String filterName = authUserEntityQuery.getFilterTableFieldName();
 		final String filterValue = authUserEntityQuery.getFilterValue();
-		if(filterName != null && !filterName.isEmpty() && filterValue != null) {
+		if(LogicalUtils.isNotNullNorEmptyString(filterName) && filterValue != null) {
 			PdfDocument.addCellWithPhrase(queryInfo, StringUtils.getStringJoined(" - ", filterName), filterValue);
 		}
 
