@@ -39,8 +39,8 @@
                 </th>
                 <td th:text="#{${authUserEntityQuery.finalPdfDocumentPageFormat.messageName}}"></td>
                 <td th:text="#{${authUserEntityQuery.language.messageName}}"></td>
-                <td th:text="${authUserEntityQuery.predefinedFilterEntityName} + ': ' + ${authUserEntityQuery.predefinedFilterValue}"></td>
-                <td th:text="${authUserEntityQuery.filterTableFieldName} + ': ' + ${authUserEntityQuery.filterValue}"></td>
+                <td th:text="${authUserEntityQuery.getPredefinedFilterStringForWebPageField()}"></td>
+                <td th:text="${authUserEntityQuery.getFilterStringForWebPageField()}"></td>
                 <td th:text="#{${authUserEntityQuery.tableSorting.messageName}}"></td>
                 <td th:text="#{${authUserEntityQuery.tablePageSize.messageName}}"></td>
                 <td th:text="${authUserEntityQuery.pageNumber}"></td>

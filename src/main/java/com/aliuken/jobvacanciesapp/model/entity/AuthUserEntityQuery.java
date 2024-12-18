@@ -151,6 +151,17 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		return predefinedFilterEntityName;
 	}
 
+	public String getPredefinedFilterStringForWebPageField() {
+		final String predefinedFilterString;
+		if(predefinedFilterEntity != null) {
+			final String predefinedFilterEntityName = predefinedFilterEntity.getUpperCasedEntityName();
+			predefinedFilterString = StringUtils.getStringJoined(predefinedFilterEntityName, Constants.KEY_VALUE_SEPARATOR, predefinedFilterValue);
+		} else {
+			predefinedFilterString = Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD;
+		}
+		return predefinedFilterString;
+	}
+
 	public String getFilterTableFieldName() {
 		final String filterTableFieldName;
 		if(filterTableField != null) {
@@ -159,6 +170,17 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 			filterTableFieldName = null;
 		}
 		return filterTableFieldName;
+	}
+
+	public String getFilterStringForWebPageField() {
+		final String filterString;
+		if(filterTableField != null) {
+			final String filterTableFieldName = filterTableField.getCode();
+			filterString = StringUtils.getStringJoined(filterTableFieldName, Constants.KEY_VALUE_SEPARATOR, filterValue);
+		} else {
+			filterString = Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD;
+		}
+		return filterString;
 	}
 
 	public String getTableSortingName() {
