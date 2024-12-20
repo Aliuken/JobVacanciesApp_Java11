@@ -19,7 +19,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -41,11 +41,12 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = tableSearchDTO.getFilterTableField();
+				final TableField filterTableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
-				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
+				final TableField tableSortingField = tableSearchDTO.getTableSortingField();
+				final TableSortingDirection tableSortingDirection = tableSearchDTO.getTableSortingDirection();
 
-				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, tableField, filterValue, tableSorting, pageable);
+				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, filterTableField, filterValue, tableSortingField, tableSortingDirection, pageable);
 			} else {
 				final Example<JobCompanyLogo> example = this.getJobCompanyIdExample(jobCompanyId);
 				page = this.findAll(example, pageable);
@@ -64,10 +65,10 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 		return pageWithExceptionDTO;
 	}
 
-	private Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField filterTableField, final String filterValue, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Pageable pageable) {
 		final Page<JobCompanyLogo> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
-			switch(tableField) {
+		if(filterTableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
+			switch(filterTableField) {
 				case ID: {
 					final JobCompany jobCompany = new JobCompany();
 					jobCompany.setId(jobCompanyId);
@@ -88,12 +89,12 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 					jobCompanyLogoSearch.setJobCompany(jobCompany);
 
 					final Example<JobCompanyLogo> example = Example.of(jobCompanyLogoSearch, JOB_COMPANY_ID_AND_ID_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSorting);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
 					final Specification<JobCompanyLogo> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, filterValue);
-					page = this.findAll(pageable, tableSorting, specification);
+					page = this.findAll(pageable, tableSortingField, tableSortingDirection, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
@@ -108,16 +109,16 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityServ
 					jobCompanyLogoSearch.setJobCompany(jobCompany);
 
 					final Example<JobCompanyLogo> example = Example.of(jobCompanyLogoSearch, JOB_COMPANY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSorting);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 				default: {
-					throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", tableField.name(), "' not supported"));
+					throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", filterTableField.name(), "' not supported"));
 				}
 			}
 		} else {
 			final Example<JobCompanyLogo> example = this.getJobCompanyIdExample(jobCompanyId);
-			page = this.findAll(example, pageable, tableSorting);
+			page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 		}
 
 		return page;

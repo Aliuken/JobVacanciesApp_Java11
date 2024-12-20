@@ -126,7 +126,7 @@ public class ControllerNavigationUtils {
 		return nextRedirect;
 	}
 
-	public static String getNextRedirectWithTable(final String nextRedirectPath, String languageCode, String filterName, String filterValue, String tableSortingCode, String pageSize, String pageNumber) {
+	public static String getNextRedirectWithTable(final String nextRedirectPath, String languageCode, String filterName, String filterValue, String sortingField, String sortingDirection, String pageSize, String pageNumber) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}
@@ -139,8 +139,12 @@ public class ControllerNavigationUtils {
 			filterValue = Constants.EMPTY_STRING;
 		}
 
-		if(tableSortingCode == null) {
-			tableSortingCode = Constants.EMPTY_STRING;
+		if(sortingField == null) {
+			sortingField = Constants.EMPTY_STRING;
+		}
+
+		if(sortingDirection == null) {
+			sortingDirection = Constants.EMPTY_STRING;
 		}
 
 		if(pageSize == null) {
@@ -151,7 +155,7 @@ public class ControllerNavigationUtils {
 			pageNumber = Constants.EMPTY_STRING;
 		}
 
-		final String nextRedirect = StringUtils.getStringJoined("redirect:", nextRedirectPath, "?languageParam=", languageCode, "&filterName=", filterName, "&filterValue=", filterValue, "&tableSortingCode=", tableSortingCode, "&pageSize=", pageSize, "&pageNumber=", pageNumber);
+		final String nextRedirect = StringUtils.getStringJoined("redirect:", nextRedirectPath, "?languageParam=", languageCode, "&filterName=", filterName, "&filterValue=", filterValue, "&sortingField=", sortingField, "&sortingDirection=", sortingDirection, "&pageSize=", pageSize, "&pageNumber=", pageNumber);
 
 		if(log.isDebugEnabled()) {
 			log.debug(StringUtils.getStringJoined("Redirecting to the path '", nextRedirect));

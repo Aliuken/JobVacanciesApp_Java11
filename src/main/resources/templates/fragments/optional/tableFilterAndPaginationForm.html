@@ -1,6 +1,6 @@
 <div th:fragment="tableFilterAndPaginationForm(endpoint, showFilterForm, isAuthUserEntity, containsDifferentAuthUsers, predefinedFilterName, isUnmodifiableEntity)" class="container-fluid mx-1 px-1 my-2 py-1" id="filterFormContainer" name="filterFormContainer">
 
-  <form id="tableFilterAndPaginationForm" th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="entityWithAuthUserFields=${isAuthUserEntity == true or containsDifferentAuthUsers == true}, lowerCasedPredefinedFilterEntityName=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity).getLowerCasedEntityNameByEntityName(predefinedFilterName)}">
+  <form id="tableFilterAndPaginationForm" th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="entityWithAuthUserFields=${isAuthUserEntity == true or containsDifferentAuthUsers == true}, lowerCasedPredefinedFilterEntityName=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity).getLowerCasedEntityNameByEntityName(predefinedFilterName)}, tableFields=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField).values(entityWithAuthUserFields, isUnmodifiableEntity)}">
 
     <div th:if="${showBindingResultErrors == true} and ${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
       <span th:text="#{error.correctFields} + ':'"></span>
@@ -45,14 +45,14 @@
     <div th:if="${showFilterForm} == true" class="mx-0 px-0 my-0 py-0">
       <label th:text="#{filterContainer.label} + ':'"></label>
       <br/>
-      <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.searchFor} + ':'"></label>
+      <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.filterText1} + ':'"></label>
       &nbsp;
-      <select id="tableFieldCombo" name="tableFieldCombo" th:field="*{filterName}" th:with="tableFields=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField).values(entityWithAuthUserFields, isUnmodifiableEntity)}">
+      <select id="tableFieldCombo" name="tableFieldCombo" th:field="*{filterName}">
         <option th:value="null" th:text="#{tableField.select}" selected></option>
-        <option th:each="tableField : ${tableFields}" th:value="${tableField.code}" th:text="#{${tableField.messageName}}"></option>
+        <option th:each="filterTableField : ${tableFields}" th:value="${filterTableField.code}" th:text="#{${filterTableField.messageName}}"></option>
       </select>
-      &nbsp;&nbsp;&nbsp;
-      <label for="filterValue" class="form-label mt-2 mb-1" th:text="#{table.searchForWithValue} + ':'"></label>
+      &nbsp;&nbsp;
+      <label for="filterValue" class="form-label mt-2 mb-1" th:text="#{table.filterText2} + ':'"></label>
       &nbsp;
       <input type="text" id="filterValue" name="filterValue" th:field="*{filterValue}"></input>
       &nbsp;
@@ -63,12 +63,18 @@
 
     <label th:text="#{paginationContainer.label} + ':'"></label>
     <br/>
-    <label for="tableSortingCombo" class="form-label mt-2 mb-1" th:text="#{table.sortBy} + ':'"></label>
+    <label for="sortingFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText1} + ':'"></label>
     &nbsp;
-    <select id="tableSortingCombo" name="tableSortingCombo" th:field="*{tableSortingCode}" th:with="tableSortings=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting).values(entityWithAuthUserFields, isUnmodifiableEntity)}">
-      <option th:each="tableSorting : ${tableSortings}" th:value="${tableSorting.code}" th:text="#{${tableSorting.messageName}}"></option>
+    <select id="sortingFieldCombo" name="sortingFieldCombo" th:field="*{sortingField}">
+      <option th:each="sortingTableField : ${tableFields}" th:value="${sortingTableField.code}" th:text="#{${sortingTableField.messageName}}"></option>
     </select>
-    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;
+    <label for="sortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText2} + ':'"></label>
+    &nbsp;
+    <select id="sortingDirectionCombo" name="sortingDirectionCombo" th:field="*{sortingDirection}" th:with="sortingDirections=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}">
+      <option th:each="sortingDirectionElem : ${sortingDirections}" th:value="${sortingDirectionElem.code}" th:text="#{${sortingDirectionElem.messageName}}"></option>
+    </select>
+    &nbsp;&nbsp;-&nbsp;&nbsp;
     <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>
     &nbsp;
     <select id="pageSizeCombo" name="pageSizeCombo" th:field="*{pageSize}" required>

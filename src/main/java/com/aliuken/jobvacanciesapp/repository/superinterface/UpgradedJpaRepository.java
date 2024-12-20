@@ -40,7 +40,7 @@ import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
@@ -182,14 +182,14 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Pageable pageable, final TableSorting tableSorting) {
+	public default Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
 		if(jpaRepository == null) {
 			return null;
 		}
 
 		final Class<T> entityClass = this.getEntityClass();
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSorting, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
 		final Page<T> page = jpaRepository.findAll(finalPageable);
 
 		return page;
@@ -197,13 +197,13 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Pageable pageable, final TableSorting tableSorting, final Specification<T> specification) {
+	public default Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Specification<T> specification) {
 		if(specification == null) {
 			throw new IllegalArgumentException("specification cannot be null");
 		}
 
 		final Class<T> entityClass = this.getEntityClass();
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSorting, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
 		final Page<T> page = this.findAll(specification, finalPageable);
 
 		return page;
@@ -250,36 +250,42 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 
 	@Override
 	@RepositoryMethod
-	public default <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable, final TableSorting tableSorting) {
+	public default <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
 		if(example == null) {
 			throw new IllegalArgumentException("example cannot be null");
 		}
 
 		final Class<S> entityClass = example.getProbeType();
 		final JpaRepository<S, Long> jpaRepository = UpgradedJpaRepository.getJpaRepository(entityClass);
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSorting, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
 		final Page<S> page = jpaRepository.findAll(example, finalPageable);
 
 		return page;
 	}
 
-	private <S extends T> Pageable getFinalPageable(final Pageable pageable, final TableSorting tableSorting, final Class<S> entityClass) {
+	private <S extends T> Pageable getFinalPageable(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Class<S> entityClass) {
 		if(pageable == null) {
 			throw new IllegalArgumentException("pageable cannot be null");
 		}
 
 		final Pageable finalPageable;
-		if(tableSorting == null) {
+		if(tableSortingField == null) {
 			finalPageable = pageable;
 		} else {
-			final TableField tableField = tableSorting.getTableField();
-			final String tableFieldPath = tableField.getFieldPath();
-			final Sort.Direction sortDirection = tableSorting.getSortDirection();
-			if(tableField.isAuthUserField()) {
+			final String tableFieldPath = tableSortingField.getFieldPath();
+
+			final Sort.Direction sortDirection;
+			if(tableSortingDirection != null) {
+				sortDirection = tableSortingDirection.getSortDirection();
+			} else {
+				sortDirection = Sort.Direction.ASC;
+			}
+
+			if(tableSortingField.isAuthUserField()) {
 				if(AuthUser.class.equals(entityClass)) {
 					finalPageable = UpgradedJpaRepository.getFinalPageable(pageable, tableFieldPath, sortDirection);
 				} else {
-					final String authUserFieldPath = tableField.getAuthUserFieldPath();
+					final String authUserFieldPath = tableSortingField.getAuthUserFieldPath();
 					finalPageable = UpgradedJpaRepository.getFinalPageable(pageable, authUserFieldPath, sortDirection);
 				}
 			} else {

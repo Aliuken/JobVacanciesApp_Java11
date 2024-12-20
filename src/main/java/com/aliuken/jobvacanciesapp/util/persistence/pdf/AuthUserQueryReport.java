@@ -15,8 +15,9 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
@@ -269,11 +270,12 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		final List<PdfPCell> queryInfo;
 		if(authUserEntityQuery != null) {
 			final Language queryLanguage = authUserEntityQuery.getLanguage();
-			final TableSorting tableSorting = authUserEntityQuery.getTableSorting();
+			final TableField tableSortingField = authUserEntityQuery.getTableSortingField();
+			final TableSortingDirection tableSortingDirection = authUserEntityQuery.getTableSortingDirection();
 			final TablePageSize tablePageSize = authUserEntityQuery.getTablePageSize();
 
 			queryTitle = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query", null);
-			queryInfo = this.getQueryInfo(queryLanguage, tableSorting, tablePageSize);
+			queryInfo = this.getQueryInfo(queryLanguage, tableSortingField, tableSortingDirection, tablePageSize);
 		} else {
 			queryTitle = I18nUtils.getInternationalizedMessage("en", "queryReport.query", null);
 			queryInfo = new ArrayList<>();
@@ -283,24 +285,27 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		return queryTable;
 	}
 
-	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableSorting tableSorting, final TablePageSize tablePageSize) {
+	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final TablePageSize tablePageSize) {
 		final List<PdfPCell> queryInfo = new ArrayList<>();
 
 		final String idField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.id", null);
 		final String dateField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.date", null);
-		final String orderField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.order", null);
+		final String sortingFieldField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.sortingField", null);
+		final String sortingDirectionField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.sortingDirection", null);
 		final String pageSizeField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageSize", null);
 		final String languageField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.language", null);
 		final String pageNumberField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageNumber", null);
 		final String filterFields = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.filters", null);
 
-		final String tableSortingMessage = tableSorting.getMessage(queryLanguage);
+		final String tableSortingFieldMessage = tableSortingField.getMessage(queryLanguage);
+		final String tableDirectionFieldMessage = tableSortingDirection.getMessage(queryLanguage);
 		final String tablePageSizeMessage = tablePageSize.getMessage(queryLanguage);
 		final String queryLanguageMessage = queryLanguage.getMessage(queryLanguage);
 
 		PdfDocument.addCellWithPhrase(queryInfo, idField, authUserEntityQuery.getIdString());
 		PdfDocument.addCellWithPhrase(queryInfo, dateField, authUserEntityQuery.getFirstRegistrationDateTimeString());
-		PdfDocument.addCellWithPhrase(queryInfo, orderField, tableSortingMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, sortingFieldField, tableSortingFieldMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, sortingDirectionField, tableDirectionFieldMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, pageSizeField, tablePageSizeMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, languageField, queryLanguageMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, pageNumberField, authUserEntityQuery.getRealPageNumberString());

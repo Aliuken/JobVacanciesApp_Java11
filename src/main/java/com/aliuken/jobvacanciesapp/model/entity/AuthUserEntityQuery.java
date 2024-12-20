@@ -18,7 +18,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
@@ -66,11 +66,15 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 	private String filterValue;
 
 	@NotNull
-	@Column(name = "table_sorting", nullable = false)
-	private TableSorting tableSorting;
+	@Column(name = "sorting_field", nullable = false)
+	private TableField tableSortingField;
 
 	@NotNull
-	@Column(name = "table_page_size", nullable = false)
+	@Column(name = "sorting_direction", nullable = false)
+	private TableSortingDirection tableSortingDirection;
+
+	@NotNull
+	@Column(name = "page_size", nullable = false)
 	private TablePageSize tablePageSize;
 
 	@NotNull
@@ -100,7 +104,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		this.predefinedFilterValue = tableSearchDTO.getPredefinedFilterValue();
 		this.filterTableField = tableSearchDTO.getFilterTableField();
 		this.filterValue = tableSearchDTO.getFilterValue();
-		this.tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
+		this.tableSortingField = tableSearchDTO.getTableSortingField();
+		this.tableSortingDirection = tableSearchDTO.getTableSortingDirection();
 		this.tablePageSize = TablePageSize.findByValue(tableSearchDTO.getPageSize());
 		this.pageNumber = tableSearchDTO.getPageNumber();
 		this.queryUrl= queryUrl;
@@ -183,9 +188,14 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		return filterString;
 	}
 
-	public String getTableSortingName() {
-		final String tableSortingName = Objects.toString(tableSorting);
-		return tableSortingName;
+	public String getTableSortingFieldName() {
+		final String tableSortingFieldName = Objects.toString(tableSortingField);
+		return tableSortingFieldName;
+	}
+
+	public String getTableSortingDirectionName() {
+		final String tableSortingDirectionName = Objects.toString(tableSortingDirection);
+		return tableSortingDirectionName;
 	}
 
 	public String getTablePageSizeName() {
@@ -235,7 +245,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final String languageName = this.getLanguageName();
 		final String predefinedFilterEntityName = this.getPredefinedFilterEntityName();
 		final String filterTableFieldName = this.getFilterTableFieldName();
-		final String tableSortingName = this.getTableSortingName();
+		final String tableSortingFieldName = this.getTableSortingFieldName();
+		final String tableSortingDirectionName = this.getTableSortingDirectionName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
 
@@ -247,7 +258,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 			StyleApplier.getBoldString("predefinedFilterValue: "), predefinedFilterValue, "\n",
 			StyleApplier.getBoldString("filterTableField: "), filterTableFieldName, "\n",
 			StyleApplier.getBoldString("filterValue: "), filterValue, "\n",
-			StyleApplier.getBoldString("tableSorting: "), tableSortingName, "\n",
+			StyleApplier.getBoldString("tableSortingField: "), tableSortingFieldName, "\n",
+			StyleApplier.getBoldString("tableSortingDirection: "), tableSortingDirectionName, "\n",
 			StyleApplier.getBoldString("tablePageSize: "), tablePageSizeName, "\n",
 			StyleApplier.getBoldString("pageNumber: "), pageNumberString, "\n",
 			StyleApplier.getBoldString("queryUrl: "), queryUrl, "\n",
@@ -264,7 +276,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final String languageName = this.getLanguageName();
 		final String predefinedFilterEntityName = this.getPredefinedFilterEntityName();
 		final String filterTableFieldName = this.getFilterTableFieldName();
-		final String tableSortingName = this.getTableSortingName();
+		final String tableSortingFieldName = this.getTableSortingFieldName();
+		final String tableSortingDirectionName = this.getTableSortingDirectionName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();
@@ -276,7 +289,8 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 				", initialPdfDocumentPageFormat=", initialPdfDocumentPageFormatName, ", finalPdfDocumentPageFormat=", finalPdfDocumentPageFormatName, ", language=", languageName,
 				", predefinedFilterEntity=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue,
 				", filterTableField=", filterTableFieldName, ", filterValue=", filterValue,
-				", tableSorting=", tableSortingName, ", tablePageSize=", tablePageSizeName, ", pageNumber=", pageNumberString,
+				", tableSortingField=", tableSortingFieldName, ", tableSortingDirection=", tableSortingDirectionName,
+				", tablePageSize=", tablePageSizeName, ", pageNumber=", pageNumberString,
 				", queryUrl=", queryUrl, ", finalResultFileName=", finalResultFileName,
 				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail,
 				", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
@@ -289,7 +303,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ Objects.hash(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, language, predefinedFilterEntity, predefinedFilterValue, filterTableField, filterValue, tableSorting, tablePageSize, pageNumber, queryUrl, finalResultFileName);
+				+ Objects.hash(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, language, predefinedFilterEntity, predefinedFilterValue, filterTableField, filterValue, tableSortingField, tableSortingDirection, tablePageSize, pageNumber, queryUrl, finalResultFileName);
 
 		return result;
 	}
@@ -301,9 +315,10 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 		}
 		AuthUserEntityQuery other = (AuthUserEntityQuery) obj;
 		return Objects.equals(initialPdfDocumentPageFormat, other.initialPdfDocumentPageFormat) && Objects.equals(finalPdfDocumentPageFormat, other.finalPdfDocumentPageFormat) && Objects.equals(language, other.language)
-				&& Objects.equals(predefinedFilterEntity, other.predefinedFilterEntity) && Objects.equals(predefinedFilterValue, other.predefinedFilterValue)
-				&& Objects.equals(filterTableField, other.filterTableField) && Objects.equals(filterValue, other.filterValue)
-				&& Objects.equals(tableSorting, other.tableSorting) && Objects.equals(tablePageSize, other.tablePageSize) && Objects.equals(pageNumber, other.pageNumber)
-				&& Objects.equals(queryUrl, other.queryUrl) && Objects.equals(finalResultFileName, other.finalResultFileName);
+			&& Objects.equals(predefinedFilterEntity, other.predefinedFilterEntity) && Objects.equals(predefinedFilterValue, other.predefinedFilterValue)
+			&& Objects.equals(filterTableField, other.filterTableField) && Objects.equals(filterValue, other.filterValue)
+			&& Objects.equals(tableSortingField, other.tableSortingField) && Objects.equals(tableSortingDirection, other.tableSortingDirection)
+			&& Objects.equals(tablePageSize, other.tablePageSize) && Objects.equals(pageNumber, other.pageNumber)
+			&& Objects.equals(queryUrl, other.queryUrl) && Objects.equals(finalResultFileName, other.finalResultFileName);
 	}
 }

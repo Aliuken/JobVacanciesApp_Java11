@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
@@ -19,7 +20,7 @@ import lombok.Data;
 public class TableSearchDTO implements Serializable {
 	private static final long serialVersionUID = -4084683709653433040L;
 
-	private static final TableSearchDTO NO_ARGS_INSTANCE = new TableSearchDTO(null, null, null, null, null, null, null, null);
+	private static final TableSearchDTO NO_ARGS_INSTANCE = new TableSearchDTO(null, null, null, null, null, null, null, null, null);
 
 	@NotEmpty(message="{language.notEmpty}")
 	@Size(min=2, max=2, message="{language.minAndMaxSize}")
@@ -35,8 +36,11 @@ public class TableSearchDTO implements Serializable {
 	@NotNull(message="{filterValue.notEmpty}")
 	private final String filterValue;
 
-	@NotEmpty(message="{tableSortingCode.notEmpty}")
-	private final String tableSortingCode;
+	@NotEmpty(message="{sortingField.notEmpty}")
+	private final String sortingField;
+
+	@NotEmpty(message="{sortingDirection.notEmpty}")
+	private final String sortingDirection;
 
 	@NotNull(message="{pageSize.notEmpty}")
 	private final Integer pageSize;
@@ -44,7 +48,7 @@ public class TableSearchDTO implements Serializable {
 	@NotNull(message="{pageNumber.notEmpty}")
 	private final Integer pageNumber;
 
-	public TableSearchDTO(final String languageParam, final String predefinedFilterName, final String predefinedFilterValue, final String filterName, final String filterValue, final String tableSortingCode, final Integer pageSize, final Integer pageNumber) {
+	public TableSearchDTO(final String languageParam, final String predefinedFilterName, final String predefinedFilterValue, final String filterName, final String filterValue, final String sortingField, final String sortingDirection, final Integer pageSize, final Integer pageNumber) {
 		if(languageParam != null) {
 			this.languageParam = languageParam;
 		} else {
@@ -55,7 +59,8 @@ public class TableSearchDTO implements Serializable {
 		this.predefinedFilterValue = predefinedFilterValue;
 		this.filterName = filterName;
 		this.filterValue = filterValue;
-		this.tableSortingCode = tableSortingCode;
+		this.sortingField = sortingField;
+		this.sortingDirection = sortingDirection;
 		this.pageSize = pageSize;
 
 		if(pageNumber != null) {
@@ -79,9 +84,23 @@ public class TableSearchDTO implements Serializable {
 		return filterTableField;
 	}
 
+	public TableField getTableSortingField() {
+		final TableField tableSortingField = TableField.findByCode(sortingField);
+		return tableSortingField;
+	}
+
+	public TableSortingDirection getTableSortingDirection() {
+		final TableSortingDirection tableSortingDirection = TableSortingDirection.findByCode(sortingDirection);
+		return tableSortingDirection;
+	}
+
 	//If not all pagination URL parameters -> empty table (in Java)
 	public boolean hasAllParameters() {
-		final boolean hasAllParameters = (LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam) && filterName != null && filterValue != null && LogicalUtils.isNotNullNorEmptyString(tableSortingCode) && pageSize != null && pageNumber != null);
+		final boolean hasAllParameters = (
+			LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam)
+			&& filterName != null && filterValue != null
+			&& LogicalUtils.isNotNullNorEmptyString(sortingField) && LogicalUtils.isNotNullNorEmptyString(sortingDirection)
+			&& pageSize != null && pageNumber != null);
 		return hasAllParameters;
 	}
 
@@ -89,9 +108,18 @@ public class TableSearchDTO implements Serializable {
 	public String toString() {
 		final PredefinedFilterEntity predefinedFilterEntity = this.getPredefinedFilterEntity();
 		final String predefinedFilterEntityName = Objects.toString(predefinedFilterEntity);
+		final TableField filterTableField = this.getFilterTableField();
+		final String filterTableFieldName = Objects.toString(filterTableField);
+		final TableField tableSortingField = this.getTableSortingField();
+		final String tableSortingFieldName = Objects.toString(tableSortingField);
 		final String pageSizeString = Objects.toString(pageSize);
 		final String pageNumberString = Objects.toString(pageNumber);
-		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam, ", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue, ", filterName=", filterName, ", filterValue=", filterValue, ", tableSortingCode=", tableSortingCode, ", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
+
+		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam,
+			", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue,
+			", filterName=", filterName, ", filterTableFieldName=", filterTableFieldName, ", filterValue=", filterValue,
+			", sortingField=", sortingField, ", tableSortingFieldName=", tableSortingFieldName, ", sortingDirection=", sortingDirection,
+			", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
 		return result;
 	}
 }

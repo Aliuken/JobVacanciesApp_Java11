@@ -135,13 +135,14 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
-			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
+			@RequestParam(name="sortingField", required=false) String sortingField,
+			@RequestParam(name="sortingDirection", required=false) String sortingDirection,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final String predefinedFilterEntityName = PredefinedFilterEntity.JOB_VACANCY.getUpperCasedEntityName();
 		final String jobVacancyIdString = String.valueOf(jobVacancyId);
-		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, jobVacancyIdString, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, predefinedFilterEntityName, jobVacancyIdString, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 
 		this.getJobRequests(model, pageable, jobVacancyId, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_REQUEST, httpServletRequest, httpServletResponse);
@@ -156,7 +157,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
-			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
+			@RequestParam(name="sortingField", required=false) String sortingField,
+			@RequestParam(name="sortingDirection", required=false) String sortingDirection,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -165,7 +167,7 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobRequest.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/job-requests/" + jobVacancyId, languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/job-requests/" + jobVacancyId, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 	}
 
 	@Override

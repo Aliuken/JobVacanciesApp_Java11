@@ -169,11 +169,12 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
-			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
+			@RequestParam(name="sortingField", required=false) String sortingField,
+			@RequestParam(name="sortingDirection", required=false) String sortingDirection,
 			@RequestParam(name="pageSize", required=false) Integer pageSize,
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
-		tableSearchDTO = new TableSearchDTO(languageCode, null, null, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+		tableSearchDTO = new TableSearchDTO(languageCode, null, null, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
 		final byte[] pdfByteArray = this.storeAndDownloadPdf(tableSearchDTO, model, PageEntityEnum.JOB_VACANCY, httpServletRequest, httpServletResponse);
@@ -389,7 +390,8 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
-			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
+			@RequestParam(name="sortingField", required=false) String sortingField,
+			@RequestParam(name="sortingDirection", required=false) String sortingDirection,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -405,7 +407,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteJobVacancy.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 	}
 
 	/**
@@ -416,7 +418,8 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
-			@RequestParam(name="tableSortingCode", required=false) String tableSortingCode,
+			@RequestParam(name="sortingField", required=false) String sortingField,
+			@RequestParam(name="sortingDirection", required=false) String sortingDirection,
 			@RequestParam(name="pageSize", required=false) String pageSize,
 			@RequestParam(name="pageNumber", required=false) String pageNumber) {
 
@@ -425,7 +428,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "verifyJobVacancy.notVerifiable", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 
-			return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+			return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		}
 
 		jobVacancy.setStatus(JobVacancyStatus.APPROVED);
@@ -435,7 +438,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 		final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "verifyJobVacancy.successMsg", null);
 		redirectAttributes.addFlashAttribute("successMsg", successMsg);
 
-		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+		return ControllerNavigationUtils.getNextRedirectWithTable("/job-vacancies/index", languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 	}
 
 	/**

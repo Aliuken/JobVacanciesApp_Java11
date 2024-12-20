@@ -30,9 +30,9 @@ public class AuthUserServiceImpl extends AuthUserService {
 	}
 
 	@Override
-	protected Example<AuthUser> getDefaultEntityPageExample(final TableField tableField, final String filterValue) {
+	protected Example<AuthUser> getDefaultEntityPageExample(final TableField filterTableField, final String filterValue) {
 		final Example<AuthUser> example;
-		switch(tableField) {
+		switch(filterTableField) {
 			case EMAIL: {
 				final AuthUser authUserSearch = new AuthUser();
 				authUserSearch.setEmail(filterValue);
@@ -52,7 +52,7 @@ public class AuthUserServiceImpl extends AuthUserService {
 				break;
 			}
 			default: {
-				throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", tableField.name(), "' not supported"));
+				throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", filterTableField.name(), "' not supported"));
 			}
 		}
 

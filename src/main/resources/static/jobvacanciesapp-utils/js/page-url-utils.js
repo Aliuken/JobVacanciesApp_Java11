@@ -91,8 +91,8 @@ function treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModel
   }
 }
 
-function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, tableSortingCodeModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
-  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + tableSortingCodeModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
+function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
+  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + sortingFieldModelAttribute + ", " + sortingDirectionModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
 
   let urlSearchParams = new URLSearchParams(window.location.search);
 
@@ -138,13 +138,25 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     addOrReplaceNeeded = true;
   }
 
-  //Set tableSortingCode URL param if it doesn't exist to the tableSortingCode model attribute (or "idAsc" if it's null)
-  let tableSortingCode = getParameterFromUrlSearchParams(urlSearchParams, "tableSortingCode");
-  if(tableSortingCode == null || tableSortingCode == '') {
-    if(tableSortingCodeModelAttribute != null && tableSortingCodeModelAttribute != '') {
-      tableSortingCode = tableSortingCodeModelAttribute;
+  //Set sortingField URL param if it doesn't exist to the sortingField model attribute (or "id" if it's null)
+  let sortingField = getParameterFromUrlSearchParams(urlSearchParams, "sortingField");
+  if(sortingField == null || sortingField == '') {
+    if(sortingFieldModelAttribute != null && sortingFieldModelAttribute != '') {
+      sortingField = sortingFieldModelAttribute;
     } else {
-      tableSortingCode = "idAsc";
+      sortingField = "id";
+    }
+
+    addOrReplaceNeeded = true;
+  }
+
+  //Set sortingDirection URL param if it doesn't exist to the sortingDirection model attribute (or "asc" if it's null)
+  let sortingDirection = getParameterFromUrlSearchParams(urlSearchParams, "sortingDirection");
+  if(sortingDirection == null || sortingDirection == '') {
+    if(sortingDirectionModelAttribute != null && sortingDirectionModelAttribute != '') {
+      sortingDirection = sortingDirectionModelAttribute;
+    } else {
+      sortingDirection = "asc";
     }
 
     addOrReplaceNeeded = true;
@@ -175,7 +187,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
   }
 
   if(addOrReplaceNeeded) {
-    addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber);
+    addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
   }
 
   //Set the languageCombo to the value of the language URL param (if the languageCombo exists)
@@ -184,7 +196,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the languageCombo element change, set the value of the language URL param to the new selected value
     languageCombo.change(function () {
       let selectedOption = languageCombo.val();
-      addOrReplacePaginationParametersInUrl(selectedOption, filterName, filterValue, tableSortingCode, pageSize, "0");
+      addOrReplacePaginationParametersInUrl(selectedOption, filterName, filterValue, sortingField, sortingDirection, pageSize, "0");
     });
 
     languageCombo.val(languageCode);
@@ -196,22 +208,34 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the tableFieldCombo element change, set the value of the tableField URL param to the new selected value
     tableFieldCombo.change(function () {
       let selectedOption = tableFieldCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, selectedOption, filterValue, tableSortingCode, pageSize, "0");
+      addOrReplacePaginationParametersInUrl(languageCode, selectedOption, filterValue, sortingField, sortingDirection, pageSize, "0");
     });
 
     tableFieldCombo.val(filterName);
   }
 
-  //Set the tableSortingCombo to the value of the tableSorting URL param (if the tableSortingCombo exists)
-  let tableSortingCombo = getComboElementIfExists("tableSortingCombo");
-  if(tableSortingCombo != null) {
-    //When the tableSortingCombo element change, set the value of the tableSorting URL param to the new selected value
-    tableSortingCombo.change(function () {
-      let selectedOption = tableSortingCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, selectedOption, pageSize, "0");
+  //Set the sortingFieldCombo to the value of the sortingField URL param (if the sortingFieldCombo exists)
+  let sortingFieldCombo = getComboElementIfExists("sortingFieldCombo");
+  if(sortingFieldCombo != null) {
+    //When the sortingFieldCombo element change, set the value of the sortingField URL param to the new selected value
+    sortingFieldCombo.change(function () {
+      let selectedOption = sortingFieldCombo.val();
+      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, selectedOption, sortingDirection, pageSize, "0");
     });
 
-    tableSortingCombo.val(tableSortingCode);
+    sortingFieldCombo.val(sortingField);
+  }
+
+  //Set the sortingDirectionCombo to the value of the sortingDirection URL param (if the sortingDirectionCombo exists)
+  let sortingDirectionCombo = getComboElementIfExists("sortingDirectionCombo");
+  if(sortingDirectionCombo != null) {
+    //When the sortingDirectionCombo element change, set the value of the sortingDirection URL param to the new selected value
+    sortingDirectionCombo.change(function () {
+      let selectedOption = sortingDirectionCombo.val();
+      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, sortingField, selectedOption, pageSize, "0");
+    });
+
+    sortingDirectionCombo.val(sortingDirection);
   }
 
   //Set the pageSizeCombo to the value of the size URL param (if the pageSizeCombo exists)
@@ -220,7 +244,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
     //When the pageSizeCombo element change, set the value of the size URL param to the new selected value
     pageSizeCombo.change(function () {
       let selectedOption = pageSizeCombo.val();
-      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, selectedOption, "0");
+      addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, sortingField, sortingDirection, selectedOption, "0");
     });
 
     pageSizeCombo.val(pageSize);
@@ -314,12 +338,13 @@ function addOrReplaceHomeParametersInUrl(languageCode, description, jobCategoryI
   window.location = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + urlSearchParams.toString();
 }
 
-function addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, tableSortingCode, pageSize, pageNumber) {
+function addOrReplacePaginationParametersInUrl(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber) {
   let urlSearchParams = new URLSearchParams(window.location.search);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "languageParam", languageCode);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "filterName", filterName);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "filterValue", filterValue);
-  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "tableSortingCode", tableSortingCode);
+  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "sortingField", sortingField);
+  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "sortingDirection", sortingDirection);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "pageSize", pageSize);
   addOrReplaceParameterInUrlSearchParams(urlSearchParams, "pageNumber", pageNumber);
   window.location = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + urlSearchParams.toString();
@@ -337,33 +362,38 @@ function addOrReplaceParameterInUrlSearchParams(urlSearchParams, paramName, para
 //If not all pagination URL parameters -> empty table (in JavaScript)
 function getHasAllPaginationParametersInUrl() {
   let urlSearchParams = new URLSearchParams(window.location.search);
-  let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
-  let filterName = getParameterFromUrlSearchParams(urlSearchParams, "filterName");
-  let filterValue = getParameterFromUrlSearchParams(urlSearchParams, "filterValue");
-  let tableSortingCode = getParameterFromUrlSearchParams(urlSearchParams, "tableSortingCode");
-  let pageSize = getParameterFromUrlSearchParams(urlSearchParams, "pageSize");
-  let pageNumber = getParameterFromUrlSearchParams(urlSearchParams, "pageNumber");
 
+  let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
   if(languageCode == null || languageCode == '' || languageCode == '--') {
     return false;
   }
 
+  let filterName = getParameterFromUrlSearchParams(urlSearchParams, "filterName");
   if(filterName == null) {
     return false;
   }
 
+  let filterValue = getParameterFromUrlSearchParams(urlSearchParams, "filterValue");
   if(filterValue == null) {
     return false;
   }
 
-  if(tableSortingCode == null || tableSortingCode == '') {
+  let sortingField = getParameterFromUrlSearchParams(urlSearchParams, "sortingField");
+  if(sortingField == null || sortingField == '') {
     return false;
   }
 
+  let sortingDirection = getParameterFromUrlSearchParams(urlSearchParams, "sortingDirection");
+  if(sortingDirection == null || sortingDirection == '') {
+    return false;
+  }
+
+  let pageSize = getParameterFromUrlSearchParams(urlSearchParams, "pageSize");
   if(pageSize == null || pageSize == '') {
     return false;
   }
 
+  let pageNumber = getParameterFromUrlSearchParams(urlSearchParams, "pageNumber");
   if(pageNumber == null || pageNumber == '') {
     return false;
   }

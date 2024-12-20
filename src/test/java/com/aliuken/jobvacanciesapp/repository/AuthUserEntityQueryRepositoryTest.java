@@ -22,8 +22,9 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 
@@ -119,7 +120,8 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 				Assertions.assertNotNull(authUserEntityQuery.getInitialPdfDocumentPageFormat());
 				Assertions.assertNotNull(authUserEntityQuery.getFinalPdfDocumentPageFormat());
 				Assertions.assertNotNull(authUserEntityQuery.getLanguage());
-				Assertions.assertNotNull(authUserEntityQuery.getTableSorting());
+				Assertions.assertNotNull(authUserEntityQuery.getTableSortingField());
+				Assertions.assertNotNull(authUserEntityQuery.getTableSortingDirection());
 				Assertions.assertNotNull(authUserEntityQuery.getTablePageSize());
 				Assertions.assertNotNull(authUserEntityQuery.getPageNumber());
 				Assertions.assertNotNull(authUserEntityQuery.getQueryUrl());
@@ -143,10 +145,11 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		authUserEntityQuery.setInitialPdfDocumentPageFormat(PdfDocumentPageFormat.A4_VERTICAL);
 		authUserEntityQuery.setFinalPdfDocumentPageFormat(PdfDocumentPageFormat.A3_HORIZONTAL);
 		authUserEntityQuery.setLanguage(Language.ENGLISH);
-		authUserEntityQuery.setTableSorting(TableSorting.EMAIL_DESC);
+		authUserEntityQuery.setTableSortingField(TableField.EMAIL);
+		authUserEntityQuery.setTableSortingDirection(TableSortingDirection.DESC);
 		authUserEntityQuery.setTablePageSize(TablePageSize.SIZE_100);
 		authUserEntityQuery.setPageNumber(4);
-		authUserEntityQuery.setQueryUrl("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4");
+		authUserEntityQuery.setQueryUrl("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&sortingField=email&sortingDirection=desc&pageSize=100&pageNumber=4");
 
 		authUserEntityQuery = authUserEntityQueryRepository.saveAndFlush(authUserEntityQuery);
 
@@ -157,10 +160,11 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(PdfDocumentPageFormat.A4_VERTICAL, authUserEntityQuery.getInitialPdfDocumentPageFormat());
 		Assertions.assertEquals(PdfDocumentPageFormat.A3_HORIZONTAL, authUserEntityQuery.getFinalPdfDocumentPageFormat());
 		Assertions.assertEquals(Language.ENGLISH, authUserEntityQuery.getLanguage());
-		Assertions.assertEquals(TableSorting.EMAIL_DESC, authUserEntityQuery.getTableSorting());
+		Assertions.assertEquals(TableField.EMAIL, authUserEntityQuery.getTableSortingField());
+		Assertions.assertEquals(TableSortingDirection.DESC, authUserEntityQuery.getTableSortingDirection());
 		Assertions.assertEquals(TablePageSize.SIZE_100, authUserEntityQuery.getTablePageSize());
 		Assertions.assertEquals(4, authUserEntityQuery.getPageNumber());
-		Assertions.assertEquals("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&tableSortingCode=emailDesc&pageSize=100&pageNumber=4", authUserEntityQuery.getQueryUrl());
+		Assertions.assertEquals("http://localhost:8080/auth-users/index?languageParam=en&filterName=&filterValue=&sortingField=email&sortingDirection=desc&pageSize=100&pageNumber=4", authUserEntityQuery.getQueryUrl());
 		Assertions.assertNotNull(authUserEntityQuery.getFirstRegistrationDateTime());
 
 		final AuthUser firstRegistrationAuthUser = authUserEntityQuery.getFirstRegistrationAuthUser();
@@ -234,10 +238,11 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertNull(authUserEntityQuery.getPredefinedFilterValue());
 		Assertions.assertNull(authUserEntityQuery.getFilterTableField());
 		Assertions.assertEquals(Constants.EMPTY_STRING, authUserEntityQuery.getFilterValue());
-		Assertions.assertEquals(TableSorting.ID_ASC, authUserEntityQuery.getTableSorting());
+		Assertions.assertEquals(TableField.ID, authUserEntityQuery.getTableSortingField());
+		Assertions.assertEquals(TableSortingDirection.ASC, authUserEntityQuery.getTableSortingDirection());
 		Assertions.assertEquals(TablePageSize.SIZE_5, authUserEntityQuery.getTablePageSize());
 		Assertions.assertEquals(0, authUserEntityQuery.getPageNumber());
-		Assertions.assertEquals("http://localhost:8080/job-categories/index?languageParam=es&filterName=&filterValue=&tableSortingCode=idAsc&pageSize=5&pageNumber=0", authUserEntityQuery.getQueryUrl());
+		Assertions.assertEquals("http://localhost:8080/job-categories/index?languageParam=es&filterName=&filterValue=&sortingField=id&sortingDirection=asc&pageSize=5&pageNumber=0", authUserEntityQuery.getQueryUrl());
 		Assertions.assertEquals("jobCategories-1-LWQ8ABGX9RVY.pdf", authUserEntityQuery.getFinalResultFileName());
 		Assertions.assertNotNull(authUserEntityQuery.getFirstRegistrationDateTime());
 

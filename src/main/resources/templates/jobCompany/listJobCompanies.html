@@ -62,7 +62,7 @@
                   <a th:href="@{/job-companies/job-company-logos/{id} (id=${jobCompany.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobCompanyLogos}">
                     <i class="fas fa-lg fa-image" aria-hidden="true"></i>
                   </a>
-                  <a th:href="@{/job-companies/delete/{id} (id=${jobCompany.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, tableSortingCode=${param.tableSortingCode}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCompany.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCompany}">
+                  <a th:href="@{/job-companies/delete/{id} (id=${jobCompany.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCompany.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCompany}">
                     <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
                   </a>
                 </td>

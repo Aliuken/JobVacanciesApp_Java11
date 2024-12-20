@@ -20,7 +20,7 @@ import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSorting;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepositoryInterface;
@@ -92,17 +92,17 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 
 	@Override
 	@ServiceMethod
-	public Page<T> findAll(final Pageable pageable, final TableSorting tableSorting) {
+	public Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
 		final UpgradedJpaRepository<T> upgradedJpaRepository = this.getEntityRepository();
-		final Page<T> page = upgradedJpaRepository.findAll(pageable, tableSorting);
+		final Page<T> page = upgradedJpaRepository.findAll(pageable, tableSortingField, tableSortingDirection);
 		return page;
 	}
 
 	@Override
 	@ServiceMethod
-	public Page<T> findAll(final Pageable pageable, final TableSorting tableSorting, final Specification<T> specification) {
+	public Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Specification<T> specification) {
 		final UpgradedJpaRepository<T> upgradedJpaRepository = this.getEntityRepository();
-		final Page<T> page = upgradedJpaRepository.findAll(pageable, tableSorting, specification);
+		final Page<T> page = upgradedJpaRepository.findAll(pageable, tableSortingField, tableSortingDirection, specification);
 		return page;
 	}
 
@@ -132,9 +132,9 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 
 	@Override
 	@ServiceMethod
-	public <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable, final TableSorting tableSorting) {
+	public <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
 		final UpgradedJpaRepository<T> upgradedJpaRepository = this.getEntityRepository();
-		final Page<S> page = upgradedJpaRepository.findAll(example, pageable, tableSorting);
+		final Page<S> page = upgradedJpaRepository.findAll(example, pageable, tableSortingField, tableSortingDirection);
 		return page;
 	}
 
@@ -176,11 +176,11 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
-				final TableField tableField = tableSearchDTO.getFilterTableField();
+				final TableField filterTableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
-				final TableSorting tableSorting = TableSorting.findByCode(tableSearchDTO.getTableSortingCode());
-
-				page = this.getEntityPage(tableField, filterValue, tableSorting, pageable);
+				final TableField tableSortingField = tableSearchDTO.getTableSortingField();
+				final TableSortingDirection tableSortingDirection = tableSearchDTO.getTableSortingDirection();
+				page = this.getEntityPage(filterTableField, filterValue, tableSortingField, tableSortingDirection, pageable);
 			} else {
 				page = this.findAll(pageable);
 			}
@@ -198,10 +198,10 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 		return pageWithExceptionDTO;
 	}
 
-	private Page<T> getEntityPage(final TableField tableField, final String filterValue, final TableSorting tableSorting, final Pageable pageable) {
+	private Page<T> getEntityPage(final TableField filterTableField, final String filterValue, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Pageable pageable) {
 		final Page<T> page;
-		if(tableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
-			switch(tableField) {
+		if(filterTableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
+			switch(filterTableField) {
 				case ID: {
 					final Long entityId;
 					try {
@@ -216,12 +216,12 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(entityId, null, null);
 					final Example<T> example = Example.of(abstractEntitySearch, ID_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSorting);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
 					final Specification<T> specification = this.equalsFirstRegistrationDateTime(filterValue);
-					page = this.findAll(pageable, tableSorting, specification);
+					page = this.findAll(pageable, tableSortingField, tableSortingDirection, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
@@ -230,12 +230,12 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(null, authUserSearch, null);
 					final Example<T> example = Example.of(abstractEntitySearch, FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSorting);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 				case LAST_MODIFICATION_DATE_TIME: {
 					final Specification<T> specification = this.equalsLastModificationDateTime(filterValue);
-					page = this.findAll(pageable, tableSorting, specification);
+					page = this.findAll(pageable, tableSortingField, tableSortingDirection, specification);
 					break;
 				}
 				case LAST_MODIFICATION_AUTH_USER_EMAIL: {
@@ -244,17 +244,17 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 
 					final T abstractEntitySearch = this.getNewEntityForSearchByExample(null, null, authUserSearch);
 					final Example<T> example = Example.of(abstractEntitySearch, LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSorting);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 				default: {
-					final Example<T> example = this.getDefaultEntityPageExample(tableField, filterValue);
-					page = this.findAll(example, pageable, tableSorting);
+					final Example<T> example = this.getDefaultEntityPageExample(filterTableField, filterValue);
+					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
 					break;
 				}
 			}
 		} else {
-			page = this.findAll(pageable, tableSorting);
+			page = this.findAll(pageable, tableSortingField, tableSortingDirection);
 		}
 
 		return page;
@@ -263,8 +263,8 @@ public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> 
 	/**
 	 * This method is overridden in AuthUserServiceImpl
 	 */
-	protected Example<T> getDefaultEntityPageExample(final TableField tableField, final String filterValue) {
-		throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", tableField.name(), "' not supported"));
+	protected Example<T> getDefaultEntityPageExample(final TableField filterTableField, final String filterValue) {
+		throw new IllegalArgumentException(StringUtils.getStringJoined("TableField '", filterTableField.name(), "' not supported"));
 	}
 
 	protected Specification<T> equalsFirstRegistrationDateTime(final String dateTimeString) {
