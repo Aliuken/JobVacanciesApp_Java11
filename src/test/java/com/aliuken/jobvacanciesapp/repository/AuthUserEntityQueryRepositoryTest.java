@@ -243,7 +243,7 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 		Assertions.assertEquals(TablePageSize.SIZE_5, authUserEntityQuery.getTablePageSize());
 		Assertions.assertEquals(0, authUserEntityQuery.getPageNumber());
 		Assertions.assertEquals("http://localhost:8080/job-categories/index?languageParam=es&filterName=&filterValue=&sortingField=id&sortingDirection=asc&pageSize=5&pageNumber=0", authUserEntityQuery.getQueryUrl());
-		Assertions.assertEquals("jobCategories-1-LWQ8ABGX9RVY.pdf", authUserEntityQuery.getFinalResultFileName());
+		Assertions.assertEquals("jobCategories-1-E6HN9ZSNAS8A.pdf", authUserEntityQuery.getFinalResultFileName());
 		Assertions.assertNotNull(authUserEntityQuery.getFirstRegistrationDateTime());
 
 		final AuthUser firstRegistrationAuthUser = authUserEntityQuery.getFirstRegistrationAuthUser();
