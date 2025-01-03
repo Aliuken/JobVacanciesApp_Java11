@@ -253,7 +253,7 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 
 			final String filterName = authUserEntityQuery.getFilterTableFieldName();
 			final String filterValue = authUserEntityQuery.getFilterValue();
-			if(LogicalUtils.isNotNullNorEmptyString(filterName) && filterValue != null) {
+			if(LogicalUtils.isNotNullNorEmptyString(filterName) && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 				PdfDocument.addCellWithPhrase(userInfo, null, null);
 			}
 		}

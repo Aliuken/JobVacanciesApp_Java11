@@ -27,6 +27,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
@@ -198,7 +199,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 
 	public String getFilterStringForWebPageField() {
 		final String filterString;
-		if(filterTableField != null) {
+		if(filterTableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			final String filterTableFieldName = filterTableField.getCode();
 			filterString = StringUtils.getStringJoined(filterTableFieldName, Constants.KEY_VALUE_SEPARATOR, filterValue);
 		} else {
