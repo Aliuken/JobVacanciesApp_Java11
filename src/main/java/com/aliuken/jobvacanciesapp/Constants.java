@@ -17,6 +17,8 @@ public class Constants {
 	public static final String SPACE = " ";
 	public static final String HYPHEN = "-";
 	public static final String DOT = ".";
+	public static final String QUESTION_MARK = "?";
+	public static final String NEWLINE = "\n";
 	public static final String FIELD_NAME_VALUE_SEPARATOR = ": ";
 	public static final String MAP_ENTRY_PREFIX = "\n- ";
 	public static final String KEY_VALUE_SEPARATOR = " -> ";

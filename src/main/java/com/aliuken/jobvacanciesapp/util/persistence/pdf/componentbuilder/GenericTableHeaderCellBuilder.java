@@ -22,7 +22,6 @@ public class GenericTableHeaderCellBuilder implements PdfPCellEvent {
 	private static final BaseColor DARKER_GRAY = new BaseColor(160, 160, 160);
 	private static final float LINE_WIDTH = 1f;
 	private static final float FULL_WIDTH = -1f;
-	private static final float HEIGHT = 15;
 	private static final float TEXT_PADDING = 5f;
 	private static final int ARC_CORNER_RADIUS = 7;
 	private static final String URL_FIELD_NAME = "URL";
@@ -30,18 +29,23 @@ public class GenericTableHeaderCellBuilder implements PdfPCellEvent {
 	private final Paragraph paragraph;
 	private final BaseColor backgroundColor;
 	private final float width;
+	private final float height;
 	private final PdfPCell defaultCell;
 
-	public GenericTableHeaderCellBuilder(String paragraphBoldText, final String paragraphNormalText, final boolean isHeaderWithContent, final PdfPCell defaultCell) {
-		this.paragraph = GenericTableHeaderCellBuilder.getParagraph(paragraphBoldText, paragraphNormalText, isHeaderWithContent);
+	public GenericTableHeaderCellBuilder(final String paragraphBoldText, final String paragraphNormalText, final boolean isHeaderWithContent, final PdfPCell defaultCell) {
 		if(isHeaderWithContent) {
+			this.paragraph = GenericTableHeaderCellBuilder.getParagraph(paragraphBoldText, paragraphNormalText, isHeaderWithContent);
 			this.paragraph.setAlignment(Element.ALIGN_CENTER);
 			this.backgroundColor = LIGHTER_GRAY;
 			this.width = GenericTableHeaderCellBuilder.getWidth(paragraph);
+			this.height = 15;
 		} else {
+			final String urlWithSeparatedParams = StringUtils.separateUrlParametersInAnotherLine(paragraphNormalText);
+			this.paragraph = GenericTableHeaderCellBuilder.getParagraph(paragraphBoldText, urlWithSeparatedParams, isHeaderWithContent);
 			this.paragraph.setAlignment(Element.ALIGN_LEFT);
 			this.backgroundColor = DARKER_GRAY;
 			this.width = FULL_WIDTH;
+			this.height = 30;
 		}
 		this.defaultCell = defaultCell;
 	}
@@ -100,8 +104,8 @@ public class GenericTableHeaderCellBuilder implements PdfPCellEvent {
 			width = position.getRight() - position.getLeft();
 		}
 
-		final float y = position.getTop() - HEIGHT - TEXT_PADDING + LINE_WIDTH;
-		canvas.roundRectangle(x, y, width, HEIGHT, ARC_CORNER_RADIUS);
+		final float y = position.getTop() - height - TEXT_PADDING + LINE_WIDTH;
+		canvas.roundRectangle(x, y, width, height, ARC_CORNER_RADIUS);
 
 		canvas.fillStroke();
 		canvas.restoreState();
@@ -111,7 +115,7 @@ public class GenericTableHeaderCellBuilder implements PdfPCellEvent {
 		final PdfPCell cell = new PdfPCell(defaultCell);
 		cell.addElement(paragraph);
 		cell.setCellEvent(this);
-		cell.setFixedHeight(HEIGHT + TEXT_PADDING);
+		cell.setFixedHeight(height + TEXT_PADDING);
 		cell.setPaddingTop(TEXT_PADDING / 2);
 		cell.setBorder(0);
 		return cell;

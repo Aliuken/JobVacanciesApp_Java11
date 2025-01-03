@@ -113,7 +113,7 @@ public class StringUtils {
 		return result;
 	}
 
-	public static String getUrlWithoutParametersAndFragment(String url) throws URISyntaxException {
+	public static String getUrlWithoutParametersAndFragment(final String url) throws URISyntaxException {
 		final URI initialURI = new URI(url);
 		final URI finalURI = new URI(initialURI.getScheme(), initialURI.getAuthority(), initialURI.getPath(), null, null);
 
@@ -121,11 +121,29 @@ public class StringUtils {
 		return result;
 	}
 
-	public static String getUrlPath(String url) throws URISyntaxException {
+	public static String getUrlPath(final String url) throws URISyntaxException {
 		final URI initialURI = new URI(url);
 		final URI finalURI = new URI(null, null, initialURI.getPath(), null, null);
 
 		final String result = finalURI.toString();
 		return result;
+	}
+
+	public static String separateUrlParametersInAnotherLine(final String url) {
+		final String resultUrl;
+		if(url != null) {
+			final int parameterStartIndex = url.indexOf(Constants.QUESTION_MARK);
+			if(parameterStartIndex >= 0) {
+				resultUrl = StringUtils.getStringJoined(
+						url.substring(0, parameterStartIndex + 1),
+						Constants.NEWLINE,
+						url.substring(parameterStartIndex + 1, url.length()));
+			} else {
+				resultUrl = url;
+			}
+		} else {
+			resultUrl = null;
+		}
+		return resultUrl;
 	}
 }
