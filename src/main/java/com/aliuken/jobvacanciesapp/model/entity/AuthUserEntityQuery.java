@@ -178,7 +178,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 
 	public String getPredefinedFilterStringForWebPageField() {
 		final String predefinedFilterString;
-		if(predefinedFilterEntity != null) {
+		if(predefinedFilterEntity != null && LogicalUtils.isNotNullNorEmptyString(predefinedFilterValue)) {
 			final String predefinedFilterEntityName = predefinedFilterEntity.getUpperCasedEntityName();
 			predefinedFilterString = StringUtils.getStringJoined(predefinedFilterEntityName, Constants.KEY_VALUE_SEPARATOR, predefinedFilterValue);
 		} else {
