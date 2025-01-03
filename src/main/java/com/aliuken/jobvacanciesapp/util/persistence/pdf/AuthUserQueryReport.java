@@ -323,7 +323,7 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		final boolean mustAddFilter = (LogicalUtils.isNotNullNorEmptyString(filterName) && LogicalUtils.isNotNullNorEmptyString(filterValue));
 
 		if(!mustAddPredefinedFilter && !mustAddFilter) {
-			final String none = I18nUtils.getInternationalizedMessage(queryLanguage, "none.masculine", null);
+			final String none = I18nUtils.getInternationalizedMessage(queryLanguage, "filters.none", null);
 			PdfDocument.addCellWithPhrase(queryInfo, filterFields, none);
 		} else {
 			PdfDocument.addCellWithPhrase(queryInfo, filterFields, null);
