@@ -1,0 +1,75 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${jobCategoryDTO.id} == null) ? #{jobCategoryCreation.head.title} : #{jobCategoryEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobCategoryDTO.id} == null) ? #{jobCategoryCreation.main.title} : #{jobCategoryEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/job-categories/save (languageParam=${param.languageParam})}" th:object="${jobCategoryDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <input type="hidden" th:field="*{jobVacancyIds}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{jobCategory.name} + ': '"></label>
+                <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required></input>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="description" class="form-label mt-2 mb-1" th:text="#{jobCategory.description} + ': '"></label>
+                <textarea id="description" name="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
+              </div>
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
+            <br/>
+            <br/>
+
+            <div class="row" th:if="${jobCategoryDTO.id} != null">
+              <hr/>
+              <h5 th:text="#{option.otherOperations}"></h5>
+              <div class="col-md-2 form-group">
+                <label for="getJobVacancies" class="form-label mt-2 mb-1" th:text="#{jobCategory.jobVacancies}"></label>
+                <br/>
+                <a class="btn btn-primary" id="getJobVacancies" name="getJobVacancies" th:href="@{/job-categories/job-vacancies/{id} (id=${jobCategoryDTO.id}, languageParam=${param.languageParam})}" th:text="#{jobCategory.getJobVacancies}"></a>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

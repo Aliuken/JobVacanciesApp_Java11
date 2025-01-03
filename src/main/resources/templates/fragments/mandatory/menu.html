@@ -1,0 +1,82 @@
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
+  <div class="container-fluid" th:with="maxPriorityAuthorityName=${springSecurityUtils.getMaxPriorityAuthorityName()}">
+
+    <a id="appBrand" class="navbar-brand mx-0 ps-0 pe-3 my-0 py-0" th:href="@{/ (languageParam=${param.languageParam})}">
+      <img th:src="@{/images/logo.png}" class="rounded mx-0 ps-0 pe-2 my-0 py-0" height="48"></img>
+      JobVacanciesApp
+    </a>
+
+    <button class="navbar-toggler p-0 border-0" type="button" data-toggle="collapse" data-target="#menuNavBar" id="navbarSideCollapse" aria-controls="menuNavBar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="menuNavBar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:with="hasAuthoritySupervisorOrAdministrator=${springSecurityUtils.isAuthenticatedAndHasAnyAuthority('SUPERVISOR','ADMINISTRATOR')}">
+        <li class="nav-item" th:if="${hasAuthoritySupervisorOrAdministrator}">
+          <a class="nav-link" th:href="@{/job-categories/index (languageParam=${param.languageParam})}" th:text="#{menu.jobCategories}"></a>
+        </li>
+        <li class="nav-item" th:if="${hasAuthoritySupervisorOrAdministrator}">
+          <a class="nav-link" th:href="@{/job-companies/index (languageParam=${param.languageParam})}" th:text="#{menu.jobCompanies}"></a>
+        </li>
+        <li class="nav-item" th:if="${hasAuthoritySupervisorOrAdministrator}">
+          <a class="nav-link" th:href="@{/job-vacancies/index (languageParam=${param.languageParam})}" th:text="#{menu.jobVacancies}"></a>
+        </li>
+        <li class="nav-item" th:if="${hasAuthoritySupervisorOrAdministrator}">
+          <a class="nav-link" th:href="@{/job-requests/index (languageParam=${param.languageParam})}" th:text="#{menu.jobRequests}"></a>
+        </li>
+        <li class="nav-item" th:if="${springSecurityUtils.isAuthenticatedAndHasAnyAuthority('ADMINISTRATOR')}">
+          <a class="nav-link" th:href="@{/auth-users/index (languageParam=${param.languageParam})}" th:text="#{menu.authUsers}"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/about (languageParam=${param.languageParam})}" th:text="#{menu.about}"></a>
+        </li>
+      </ul>
+    </div>
+
+    <div th:if="${maxPriorityAuthorityName == null}">
+      <span class="text-light align-middle" th:text="#{language.field} + ':'" th:if="${requestURI} != '/signup'"></span>
+      &nbsp;&nbsp;
+      <select id="languageCombo" name="languageCombo" class="align-middle" th:if="${requestURI} != '/signup'">
+        <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).valuesWithoutByDefault()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+      </select>
+      &nbsp;&nbsp;
+      <a class="btn btn-primary align-middle" th:href="@{/login (languageParam=${param.languageParam})}" th:text="#{button.login}"></a>
+      &nbsp;&nbsp;
+      <a class="btn btn-primary align-middle" th:href="@{/signup (languageParam=${param.languageParam})}" th:text="#{button.signup}"></a>
+    </div>
+
+    <div th:if="${maxPriorityAuthorityName != null}" th:with="usernameOrEmail=${springSecurityUtils.getUsername()}">
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${maxPriorityAuthorityName == 'ADMINISTRATOR'}">
+        <a id="appUser" th:href="@{/my-user (languageParam=${param.languageParam})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${usernameOrEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.administrator} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary align-middle" th:href="@{/logout (languageParam=${param.languageParam})}" th:text="#{button.logout}"></a>
+      </div>
+
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${maxPriorityAuthorityName == 'SUPERVISOR'}">
+        <a id="appUser" th:href="@{/my-user (languageParam=${param.languageParam})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${usernameOrEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.supervisor} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary align-middle" th:href="@{/logout (languageParam=${param.languageParam})}" th:text="#{button.logout}"></a>
+      </div>
+
+      <div class="container mx-1 px-0 my-0 py-0" style="float:left; display:flex; line-height:20px;" th:if="${maxPriorityAuthorityName == 'USER'}">
+        <a id="appUser" th:href="@{/my-user (languageParam=${param.languageParam})}">
+          <span class="text-light" th:text="#{menu.user} + ': ' + ${usernameOrEmail}"></span>
+          <br/>
+          <span class="text-light small" th:text="'(' + #{menu.role} + ': ' + #{authRoleValue.user} + ')'"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary align-middle" th:href="@{/logout (languageParam=${param.languageParam})}" th:text="#{button.logout}"></a>
+      </div>
+
+    </div>
+
+  </div>
+</nav>
