@@ -1,0 +1,69 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{jobCompanyJobCompanyLogos.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{jobCompanyJobCompanyLogos.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <a class="btn btn-primary" th:href="@{/job-companies/edit/{id} (id=${jobCompanyId}, languageParam=${param.languageParam})}" role="button">
+            <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+            &nbsp;
+            <span th:text="#{button.newJobCompanyLogo}"></span>
+          </a>
+          <hr/>
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, 'JobCompany', true)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{jobCompanyLogo.fileName}"></th>
+                <th scope="col" th:text="#{jobCompanyLogo.selected}"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="jobCompanyLogo : ${jobCompanyLogos.content}">
+                <th scope="row" th:text="${jobCompanyLogo.id}"></th>
+                <td th:text="${jobCompanyLogo.fileName}"></td>
+                <td th:switch="${jobCompanyLogo.jobCompany.selectedLogoFileName == jobCompanyLogo.fileName}">
+                  <span th:case="true" class="badge bg-success" th:text="#{boolean.true}"></span>
+                  <span th:case="false" class="badge bg-danger" th:text="#{boolean.false}"></span>
+                </td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCompanyLogo.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${jobCompanyLogo.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompanyLogo.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/job-companies/job-company-logos/delete/{jobCompanyId}/{jobCompanyLogoId} (jobCompanyId=${jobCompanyLogo.jobCompany.id}, jobCompanyLogoId=${jobCompanyLogo.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCompanyLogo.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCompanyLogo}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-company-logos/{logoFilePath} (logoFilePath=${jobCompanyLogo.filePath}, languageParam=${param.languageParam})}" target="_blank" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.downloadLogo}">
+                    <i class="fas fa-lg fa-file-arrow-down" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${jobCompanyLogos.totalPages}, ${jobCompanyLogos.number})}"></div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

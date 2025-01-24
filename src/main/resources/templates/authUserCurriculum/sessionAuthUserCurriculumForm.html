@@ -1,0 +1,73 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${authUserCurriculumDTO.id} == null) ? #{authUserCurriculumCreation.head.title} : #{authUserCurriculumEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${authUserCurriculumDTO.id} == null) ? #{authUserCurriculumCreation.main.title} : #{authUserCurriculumEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/my-user/auth-user-curriculums/save (languageParam=${param.languageParam})}" th:object="${authUserCurriculumDTO}" method="post" enctype="multipart/form-data">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="hidden" th:field="*{id}"></input>
+                  <label for="description" class="form-label mt-2 mb-1" th:text="#{authUserCurriculum.description} + ': '"></label>
+                  <textarea class="form-control" name="description" th:field="*{description}" id="description" rows="3" required></textarea>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="curriculumFile" class="form-label mt-2 mb-1" th:text="#{authUserCurriculum.fileName} + ': '"></label>
+                  <input type="file" class="form-control" name="curriculumFile" id="curriculumFile" required="true"></input>
+                  <p class="help-block" th:text="#{uploadFile.allowedFileExtensions} + ': ' + ${T(com.aliuken.jobvacanciesapp.enumtype.FileType).CURRICULUM.allowedLowerCaseFileExtensionsString} + ' ' + #{uploadFile.allowedFileExtensions2}"></p>
+                </div>
+              </div>
+
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.send}"></button>
+            <br/>
+            <br/>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
