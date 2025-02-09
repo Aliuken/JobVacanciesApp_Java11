@@ -11,9 +11,9 @@
 > | ELK          | Elastic Stack               |
 > | i18n         | internationalization        |
 > | info         | information                 |
+> | JS           | JavaScript                  |
 > | L10n         | localization                |
 > | LLM          | Large Language Model        |
-> | JS           | JavaScript                  |
 > | OS           | operating system            |
 > | PC           | personal computer           |
 > | pkg          | Java package                |
