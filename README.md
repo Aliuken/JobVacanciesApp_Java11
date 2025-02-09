@@ -14,6 +14,7 @@
 > | JS           | JavaScript                  |
 > | L10n         | localization                |
 > | LLM          | Large Language Model        |
+> | ORM          | object–relational mapping   |
 > | OS           | operating system            |
 > | PC           | personal computer           |
 > | pkg          | Java package                |
