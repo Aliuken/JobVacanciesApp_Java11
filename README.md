@@ -3,7 +3,7 @@
 > ```txt
 > | Abbreviation | Term                        |
 > |--------------------------------------------|
-> | AI           | Artificial Intelligence     |
+> | AI           | artificial intelligence     |
 > | app          | application                 |
 > | config       | configuration               |
 > | CV           | Curriculum Vitae            |
@@ -13,7 +13,7 @@
 > | info         | information                 |
 > | JS           | JavaScript                  |
 > | L10n         | localization                |
-> | LLM          | Large Language Model        |
+> | LLM          | large language model        |
 > | ORM          | object–relational mapping   |
 > | OS           | operating system            |
 > | PC           | personal computer           |
