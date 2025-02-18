@@ -2,7 +2,7 @@
 
 ## 1. Commands to create branch
 
-```cmd
+```shell
 cd /path/to/project
 git checkout -b feature/aliuken
 git push -u origin feature/aliuken
@@ -10,7 +10,7 @@ git push -u origin feature/aliuken
 
 ## 2. Commands to upload code
 
-```cmd
+```shell
 git checkout feature/aliuken
 git add .
 git commit -m "upload description"
@@ -36,7 +36,7 @@ git checkout feature/aliuken
 
 ## 3. Commands to download code
 
-```cmd
+```shell
 git checkout main
 git pull
 ------------------------------------------------------
@@ -58,7 +58,7 @@ git push
 
 ## 4. Upload code in one step
 
-```cmd
+```shell
 git checkout feature/aliuken && git add . && git commit -m "upload description" && git push
 ------------------------------------------------------
 git checkout prerelease && git pull && git merge feature/aliuken && git push
