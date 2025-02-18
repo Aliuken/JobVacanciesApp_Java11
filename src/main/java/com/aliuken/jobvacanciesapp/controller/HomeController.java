@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -230,7 +230,7 @@ public class HomeController {
 
 			authUserCredentials = authUserCredentialsService.saveAndFlush(authUserCredentials);
 
-			final String uuid = UUID.randomUUID().toString();
+			final String uuid = RandomUtils.UUID_GENERATOR.get();
 
 			AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationService.findByEmail(email);
 			if(authUserSignUpConfirmation == null) {
@@ -354,7 +354,7 @@ public class HomeController {
 				return ControllerNavigationUtils.getNextRedirect("/forgotten-password", languageCode);
 			}
 
-			final String uuid = UUID.randomUUID().toString();
+			final String uuid = RandomUtils.UUID_GENERATOR.get();
 
 			AuthUserResetPassword authUserResetPassword = authUserResetPasswordService.findByEmail(email);
 			if(authUserResetPassword == null) {

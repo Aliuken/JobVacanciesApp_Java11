@@ -3,10 +3,10 @@ package com.aliuken.jobvacanciesapp.repository;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
 
 import javax.validation.ConstraintViolationException;
 
+import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -222,7 +222,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
 		authUserCredentials = authUserCredentialsRepository.saveAndFlush(authUserCredentials);
 
-		final String uuid = UUID.randomUUID().toString();
+		final String uuid = RandomUtils.UUID_GENERATOR.get();
 
 		AuthUserSignUpConfirmation authUserSignUpConfirmation = new AuthUserSignUpConfirmation();
 		authUserSignUpConfirmation.setEmail("new.user@aliuken.com");

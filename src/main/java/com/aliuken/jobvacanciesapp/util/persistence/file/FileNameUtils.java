@@ -8,6 +8,7 @@ import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
 
 public class FileNameUtils {
 	private static final String EXTENSION_PATTERN = "^(.+)\\.([^.]+$)";
@@ -21,7 +22,7 @@ public class FileNameUtils {
 	 * Method to get the final name of a given folder name
 	 */
 	public static String getFinalFolderName(String folderName) {
-		final String randomAlphanumeric = StringUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
+		final String randomAlphanumeric = RandomUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
 
 		folderName = folderName.replace(Constants.SPACE, Constants.HYPHEN);
 		while(folderName.contains("--")) {
@@ -39,7 +40,7 @@ public class FileNameUtils {
 	public static String getFinalFileName(String fileName, final FileType fileType) {
 		final String lowerCaseFileExtension = FileNameUtils.getLowerCaseFileExtension(fileName);
 		fileType.checkAllowedFileExtension(lowerCaseFileExtension);
-		final String randomAlphanumeric = StringUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
+		final String randomAlphanumeric = RandomUtils.getRandomString(RandomCharactersEnum.ALPHANUMERIC_CHARACTERS, 12);
 
 		fileName = fileName.substring(0, fileName.length() - (lowerCaseFileExtension.length() + 1));
 		fileName = fileName.replace(Constants.SPACE, Constants.HYPHEN);
