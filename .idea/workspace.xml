@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/build-context-app/docker-compose-start.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build-context-app/docker-compose-stop.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build-context-elk/docker-compose-start.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build-context-elk/docker-compose-stop.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-windows/docker-compose-app-start.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-windows/docker-compose-elk-start.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-windows/docker-stop.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-app-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-app-start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-elk-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-elk-start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-stop.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
