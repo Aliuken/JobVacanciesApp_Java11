@@ -15,7 +15,7 @@ EXPOSE 8080
 # Layers that might be altered (ordered from heaviest to lightest)
 # ----------------------------------------------------------------
 
-ARG JAR_FILE=.\lib\*.jar
+ARG JAR_FILE=./lib/*.jar
 COPY ${JAR_FILE} /opt/apps/jobVacanciesApp/jobVacanciesApp.jar
 
 ARG PRINT_ARG=default_value
