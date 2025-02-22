@@ -51,7 +51,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        JAR_FILE: lib\*.jar
+        JAR_FILE: lib/*.jar
         PRINT_ARG: new_value
     env_file:
       - .env
