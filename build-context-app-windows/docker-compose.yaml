@@ -46,7 +46,7 @@ services:
       - MYSQL_PASSWORD=${DB_ROOT_PASSWORD:-root}
     restart: on-failure
     volumes:
-      - "C:/AppData_Java11/JobVacanciesApp:/AppData_Java11/JobVacanciesApp"
+      - /c/AppData_Java11/JobVacanciesApp:/AppData_Java11/JobVacanciesApp
     build:
       context: .
       dockerfile: Dockerfile
