@@ -1,5 +1,6 @@
 /target/
-/build-context-app/lib/*.jar
+/build-context-app-linux/lib/*.jar
+/build-context-app-windows/lib/*.jar
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

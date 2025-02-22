@@ -259,7 +259,15 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>${project.packaging}</type>
-									<outputDirectory>build-context-app/lib</outputDirectory>
+									<outputDirectory>build-context-app-linux/lib</outputDirectory>
+									<destFileName>job-vacancies-app.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>${project.packaging}</type>
+									<outputDirectory>build-context-app-windows/lib</outputDirectory>
 									<destFileName>job-vacancies-app.jar</destFileName>
 								</artifactItem>
 							</artifactItems>

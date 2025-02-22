@@ -5,7 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/Dockerfile-start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/docker-compose-stop.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/Dockerfile-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/Dockerfile-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/docker-compose-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-windows/docker-compose-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/docker-compose-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/docker-compose-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/docker-compose-stop.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/docker-compose-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/docker-compose-stop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/docker-compose-app-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-app-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/docker-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-stop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/docker-compose-app-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-compose-app-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/docker-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-stop.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +73,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11/build-context-elk&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -61,6 +82,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Programacion\git\JobVacanciesApp_Java11" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-app" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-windows" />
