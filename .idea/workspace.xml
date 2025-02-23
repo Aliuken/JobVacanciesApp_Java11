@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/build-context-elk-linux/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build-context-elk-windows/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build-context-elk-windows/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-elk/docker-compose-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-elk-windows/docker-compose-start.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-elk/docker-compose-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-elk-linux/docker-compose-start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-elk/docker-compose-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-elk-windows/docker-compose-stop.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-elk/docker-compose-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-elk-linux/docker-compose-stop.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-elk/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-elk-linux/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-linux/docker-compose-elk-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-elk-start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-linux/docker-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-stop.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-windows/docker-compose-elk-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-compose-elk-start.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-windows/docker-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-stop.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,31 +37,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.App11.executor": "Run",
-    "Application.Run App J11.executor": "Run",
-    "JUnit.All in jobvacanciesapp (1).executor": "Run",
-    "JUnit.All in jobvacanciesapp.executor": "Run",
-    "JUnit.Run Tests J11.executor": "Run",
-    "Maven.Maven [clean,install] J11.executor": "Run",
-    "Maven.Maven [clean,install].executor": "Run",
-    "Maven.jobvacanciesapp [clean,install].executor": "Run",
-    "Maven.jobvacanciesapp [clean].executor": "Run",
-    "Maven.jobvacanciesapp [install].executor": "Run",
-    "Remote JVM Debug.Debug App J11.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Programacion/git/JobVacanciesApp_Java11/build-context-elk-windows",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App11.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run App J11.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in jobvacanciesapp (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in jobvacanciesapp.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Run Tests J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,install] J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [install].executor&quot;: &quot;Run&quot;,
+    &quot;Remote JVM Debug.Debug App J11.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11/build-context-elk-windows&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-windows" />
@@ -84,7 +74,7 @@
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-linux" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Maven [clean,install] J11">
+  <component name="RunManager" selected="Application.Run App J11">
     <configuration name="Run App J11" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />

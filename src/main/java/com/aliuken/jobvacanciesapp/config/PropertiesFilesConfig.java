@@ -11,13 +11,13 @@ public class PropertiesFilesConfig {
     @Bean
     public PropertySourcesPlaceholderConfigurer properties() {
         final Resource[] resourceWindowsArray = new Resource[] {
-            new ClassPathResource("applicationWindows.properties"),
-            new ClassPathResource("application.properties")
+            new ClassPathResource("application.properties"),
+            new ClassPathResource("applicationWindows.properties")
         };
 
 //        final Resource[] resourceLinuxArray = new Resource[] {
-//                new ClassPathResource("applicationLinux.properties"),
-//                new ClassPathResource("application.properties")
+//                new ClassPathResource("application.properties"),
+//                new ClassPathResource("applicationLinux.properties")
 //        };
 
         final PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
