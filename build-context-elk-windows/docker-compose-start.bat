@@ -1,4 +1,4 @@
-cd C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk
+cd C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-windows
 
 docker volume prune -f
 docker network create "external-net-elk"

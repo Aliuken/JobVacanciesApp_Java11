@@ -1,0 +1,4 @@
+.dockerignore
+docker-compose.yaml
+docker-compose-start.bat
+docker-compose-stop.bat

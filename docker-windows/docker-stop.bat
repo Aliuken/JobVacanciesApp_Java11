@@ -1,7 +1,7 @@
 clear
 
 runas /user:Usuario "C:\Programacion\git\JobVacanciesApp_Java11\build-context-app-windows\docker-compose-stop.bat"
-runas /user:Usuario "C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk\docker-compose-stop.bat"
+runas /user:Usuario "C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-windows\docker-compose-stop.bat"
 
 docker image prune -a -f
 docker volume prune -a -f
