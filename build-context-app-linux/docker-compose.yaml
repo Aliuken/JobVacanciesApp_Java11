@@ -44,6 +44,7 @@ services:
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASSWORD=${DB_ROOT_PASSWORD:-root}
+      - EXTERNAL_FILES_PATH=/AppData_Java11/JobVacanciesApp
     restart: on-failure
     volumes:
       - /AppData_Java11/JobVacanciesApp:/AppData_Java11/JobVacanciesApp

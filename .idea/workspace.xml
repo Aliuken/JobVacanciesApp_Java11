@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationLinux.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
