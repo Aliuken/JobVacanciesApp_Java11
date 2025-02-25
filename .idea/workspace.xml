@@ -5,14 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/PropertiesFilesConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationLinux.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationWindows.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/.env" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/Dockerfile-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/Dockerfile-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/docker-compose-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/docker-compose-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/docker-compose-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/docker-compose-stop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-linux/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/.env" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/Dockerfile-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/Dockerfile-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/docker-compose-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/docker-compose-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/docker-compose-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/docker-compose-stop.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-app-windows/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-linux/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-elk/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-linux/docker-compose-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-elk/docker-compose-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-linux/docker-compose-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-elk/docker-compose-stop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-linux/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-elk/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-windows/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-elk/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-windows/docker-compose-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-elk/docker-compose-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-windows/docker-compose-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-elk/docker-compose-stop.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-context-elk-windows/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-elk/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/docker-compose-app-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-app-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/docker-compose-elk-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-compose-elk-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/docker-stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/docker-stop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/docker-compose-app-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-compose-app-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/docker-compose-elk-start.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-compose-elk-start.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/docker-stop.bat" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/docker-stop.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +100,7 @@
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-windows" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-linux" />
     </key>
   </component>

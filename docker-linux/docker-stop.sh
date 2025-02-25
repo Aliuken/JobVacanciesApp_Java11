@@ -1,9 +1,9 @@
 clear
 
-cd ../build-context-app-linux
+cd ./build-context-app
 sudo ./docker-compose-stop.sh
 
-cd ../build-context-elk-linux
+cd ../build-context-elk
 sudo ./docker-compose-stop.sh
 
 sudo docker volume rm $(sudo docker volume ls -q)

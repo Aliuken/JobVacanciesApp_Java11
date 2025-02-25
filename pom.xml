@@ -259,7 +259,7 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>${project.packaging}</type>
-									<outputDirectory>build-context-app-linux/lib</outputDirectory>
+									<outputDirectory>docker-linux/build-context-app/lib</outputDirectory>
 									<destFileName>job-vacancies-app.jar</destFileName>
 								</artifactItem>
 								<artifactItem>
@@ -267,7 +267,7 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>${project.packaging}</type>
-									<outputDirectory>build-context-app-windows/lib</outputDirectory>
+									<outputDirectory>docker-windows/build-context-app/lib</outputDirectory>
 									<destFileName>job-vacancies-app.jar</destFileName>
 								</artifactItem>
 							</artifactItems>
