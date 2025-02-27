@@ -317,6 +317,10 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 
 ### 3.9. Docker technologies
 
+This app can also be run in a **Docker** container through Docker Compose.
+
+In Windows, to run the Docker containers, **Docker Desktop** and **WSL 2** are necessary.
+
 #### 3.9.1. Docker technologies for GNU/Linux
 
 The following Docker technologies (contained in [docker-linux](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux) are used for GNU/Linux:
