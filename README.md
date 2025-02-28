@@ -464,7 +464,7 @@ In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/J
 * **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **CVs**, **query PDFs**, **company logos** and **log files** used in the app.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), that reads the jar files inside **build-context-app/lib**. The OS of the image is Alpine Linux, which reduces the size of the image.
+* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the jar files inside **build-context-app/lib**.
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
@@ -503,7 +503,7 @@ In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/J
 * **//c/Programacion/git/JobVacanciesApp_Java11/src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **//c/AppData_Java11/JobVacanciesApp** is the folder that has the **CVs**, **query PDFs**, **company logos** and **log files** used in the app.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), that reads the jar files inside **build-context-app/lib**. The OS of the image is Alpine Linux, which reduces the size of the image.
+* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the jar files inside **build-context-app/lib**.
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
