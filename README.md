@@ -390,6 +390,7 @@ Steps:
    ```
 
 2. The following step depends on whether you want to run the app or the ELK:
+
    a) To run the app with Docker Compose:
       * Execute this command in your terminal:
         ```shell
