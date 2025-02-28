@@ -184,7 +184,7 @@ The web technologies currently used are:
 * **Font Awesome Free For The Web 6.7.2**: For the application icons.
 * **jQuery 3.7.1**: To make an easier use of **JavaScript**.
 * **jQuery UI 1.14.1** and **jQuery Timepicker Addon 1.6.3**: For the calendar UI-input element.
-* **TinyMCE Community 7.6.1**: For the rich text editor.
+* **TinyMCE Community 7.7.0**: For the rich text editor.
 * The **static resources** (like image/TS/JS/CSS files) are located in [src/main/resources/static](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static). The following **ad-hoc static files** (created by ourselves) are located in [src/main/resources/static/jobvacanciesapp-utils](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static/jobvacanciesapp-utils):
     * **calendar-ui-input.css** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/css/calendar-ui-input.css) and **calendar-ui-input.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/calendar-ui-input.js): For the calendar UI-input element.
     * **rich-text-editor.css** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/css/rich-text-editor.css) and **rich-text-editor.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/rich-text-editor.js): For the rich text editor. The TinyMCE "[Full featured demo: Non-Premium Plugins only](https://www.tiny.cloud/docs/tinymce/latest/full-featured-open-source-demo)" CSS and JS code was copied in those files.

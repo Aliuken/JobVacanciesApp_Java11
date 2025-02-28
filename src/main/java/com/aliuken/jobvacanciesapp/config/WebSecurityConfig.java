@@ -170,7 +170,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			"/jquery-timepicker-addon-1.6.3-dist/**",
 			"/jquery-ui-1.14.1/**",
 			"/MDB5-STANDARD-UI-KIT-Free-8.2.0/**",
-			"/tinymce-7.6.1/**"
+			"/tinymce-7.7.0/**"
 		};
 	}
 }
