@@ -1,0 +1,78 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{listJobCategories.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+
+        <h4 class="card-header"><strong th:text="#{listJobCategories.main.title}"></strong></h4>
+
+        <div class="card-body">
+          <a class="btn btn-primary" th:href="@{/job-categories/create (languageParam=${param.languageParam})}" role="button">
+            <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+            &nbsp;
+            <span th:text="#{button.newJobCategory}"></span>
+          </a>
+          <hr/>
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, null, false)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{jobCategory.name}"></th>
+                <th scope="col" th:text="#{jobCategory.description}" style="width:35%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="jobCategory : ${jobCategories.content}">
+                <th scope="row" th:text="${jobCategory.id}"></th>
+                <td>
+                  <a th:href="@{/job-categories/view/{id} (id=${jobCategory.id}, languageParam=${param.languageParam})}" th:text="${jobCategory.name}" th:title="#{jobCategoryDetail.main.title}"></a>
+                </td>
+                <td th:text="${jobCategory.description}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCategory.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${jobCategory.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCategory.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCategory.lastModificationDateTime)}"></td>
+                <td th:with="lastModificationAuthUserId=${jobCategory.getLastModificationAuthUserId()}">
+                  <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCategory.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                  <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/job-categories/edit/{id} (id=${jobCategory.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.editJobCategory}">
+                    <i class="fas fa-lg fa-pen-to-square" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-categories/job-vacancies/{id} (id=${jobCategory.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobVacancies}">
+                    <i class="fas fa-lg fa-table" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-categories/delete/{id} (id=${jobCategory.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCategory.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCategory}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${jobCategories.totalPages}, ${jobCategories.number})}"></div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{signupPage.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{signupPage.main.title}"></strong></h4>
+        <div class="card-body">
+          <form th:action="@{/signup (languageParam=${param.languageParam})}" th:object="${authUserForSignupDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-12 form-group">
+                <label for="languageCombo" class="form-label mt-2 mb-1" th:text="#{authUser.language} + ':'"></label>
+                <br/>
+                <select id="languageCombo" name="languageCombo" th:field="*{languageCode}" required>
+                  <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).valuesWithoutByDefault()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{authUser.name} + ':'"></label>
+                <input type="text" class="form-control" th:field="*{name}" id="name" name="name" required></input>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <label for="surnames" class="form-label mt-2 mb-1" th:text="#{authUser.surnames} + ':'"></label>
+                <input type="text" class="form-control" th:field="*{surnames}" id="surnames" name="surnames" required></input>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label for="email" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.email} + ':'"></label>
+                <input type="email" class="form-control" th:field="*{email}" id="email" name="email" required></input>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="password1" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password1} + ':'"></label>
+                <input type="password" class="form-control" th:field="*{password1}" id="password1" name="password1" required></input>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="password2" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password2} + ':'"></label>
+                <input type="password" class="form-control" th:field="*{password2}" id="password2" name="password2" required></input>
+              </div>
+
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.signup}"></button>
+            <br/>
+            <br/>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
