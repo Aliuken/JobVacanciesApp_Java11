@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.function.Function;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,8 @@ import javax.validation.constraints.Size;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.util.javase.NumericUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 import lombok.Data;
@@ -19,7 +22,7 @@ import lombok.Data;
 public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -3670738813828834458L;
 
-	private static final JobVacancyDTO NO_ARGS_INSTANCE = new JobVacancyDTO(null, null, null, null, null, null, null, null, null, null, null, null);
+	private static final JobVacancyDTO NO_ARGS_INSTANCE = new JobVacancyDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 	private final Long id;
 
@@ -50,7 +53,9 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	@NotNull(message="{publicationDateTime.notNull}")
 	private final LocalDateTime publicationDateTime;
 
-	private final BigDecimal salary;
+	private final String salaryString;
+
+	private final BigDecimalFromStringConversionResult salaryConversionResult;
 
 	@NotNull(message="{highlighted.notNull}")
 	private final Boolean highlighted;
@@ -59,7 +64,7 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	@Size(max=10000, message="{details.maxSize}")
 	private final String details;
 
-	public JobVacancyDTO(final Long id, final String name, final String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final String status, final LocalDateTime publicationDateTime, final BigDecimal salary, final Boolean highlighted, final String details) {
+	public JobVacancyDTO(final Long id, final String name, final String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final String status, final LocalDateTime publicationDateTime, final String salaryString, final BigDecimalFromStringConversionResult salaryConversionResult, final Boolean highlighted, final String details) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -89,7 +94,8 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 
 		this.status = status;
 		this.publicationDateTime = publicationDateTime;
-		this.salary = salary;
+		this.salaryString = salaryString;
+		this.salaryConversionResult = NumericUtils.getBigDecimalFromStringConversionResult("jobVacancy.salary", salaryString, 10, 2);
 		this.highlighted = highlighted;
 		this.details = details;
 	}
@@ -99,7 +105,7 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	}
 
 	public static JobVacancyDTO getNewInstance(final Long jobVacancyId) {
-		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(jobVacancyId, null, null, null, null, null, null, null, null, null, null, null);
+		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(jobVacancyId, null, null, null, null, null, null, null, null, null, null, null, null);
 		return jobVacancyDTO;
 	}
 
@@ -115,7 +121,8 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
 				jobVacancyDTO.getStatus(),
 				jobVacancyDTO.getPublicationDateTime(),
-				jobVacancyDTO.getSalary(),
+				jobVacancyDTO.getSalaryString(),
+				jobVacancyDTO.getSalaryConversionResult(),
 				jobVacancyDTO.getHighlighted(),
 				jobVacancyDTO.getDetails()
 			);
@@ -132,10 +139,31 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 				null,
 				null,
 				null,
+				null,
 				null
 			);
 		}
 		return jobVacancyDTO;
+	}
+
+	public Function<Language, String> getConversionErrorFunction() {
+		final Function<Language, String> conversionErrorFunction;
+		if(salaryConversionResult != null) {
+			conversionErrorFunction = salaryConversionResult.getConversionErrorFunction();
+		} else {
+			conversionErrorFunction = null;
+		}
+		return conversionErrorFunction;
+	}
+
+	public BigDecimal getSalary() {
+		final BigDecimal salary;
+		if(salaryConversionResult != null) {
+			salary = salaryConversionResult.getConversionResult();
+		} else {
+			salary = null;
+		}
+		return salary;
 	}
 
 	@Override
@@ -144,11 +172,10 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 		final String jobCategoryIdString = (jobCategory != null) ? Objects.toString(jobCategory.getId()) : null;
 		final String jobCompanyIdString = (jobCompany != null) ? Objects.toString(jobCompany.getId()) : null;
 		final String publicationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(publicationDateTime);
-		final String salaryString = Objects.toString(salary);
+		final String salaryConversionResultString  = Objects.toString(salaryConversionResult);
 		final String highlightedString = highlighted.toString();
 
 		final String result = StringUtils.getStringJoined("JobVacancyDTO [id=", idString, ", name=", name, ", description=", description,
-			", jobCategory=", jobCategoryIdString, ", jobCompany=", jobCompanyIdString, ", status=", status, ", publicationDateTime=", publicationDateTimeString, ", salary=", salaryString, ", highlighted=", highlightedString, ", details=", details, "]");
-		return result;
+			", jobCategory=", jobCategoryIdString, ", jobCompany=", jobCompanyIdString, ", status=", status, ", publicationDateTime=", publicationDateTimeString, ", salary=", salaryString, ", salaryConversionResult=", salaryConversionResultString, ", highlighted=", highlightedString, ", details=", details, "]");		return result;
 	}
 }

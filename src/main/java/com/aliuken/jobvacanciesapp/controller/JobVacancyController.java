@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -263,6 +265,16 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 
 		jobVacancyDTO = JobVacancyDTO.getNewInstance(jobVacancyDTO, jobCompanyDTO);
 
+		final Function<Language, String> conversionErrorFunction = jobVacancyDTO.getConversionErrorFunction();
+		if(conversionErrorFunction != null) {
+			final Language language = Language.findByCode(languageCode);
+			final String conversionError = conversionErrorFunction.apply(language);
+			model.addAttribute("jobVacancyDTO", jobVacancyDTO);
+			model.addAttribute("jobCompanyLogo", jobVacancyDTO.jobCompany().selectedLogoId());
+			model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
+			model.addAttribute("errorMsg", conversionError);
+		}
+
 		model.addAttribute("jobVacancyDTO", jobVacancyDTO);
 		model.addAttribute("jobCompanyLogo", jobVacancyDTO.getJobCompany().getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
@@ -310,6 +322,22 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 				redirectAttributes.addFlashAttribute("jobVacancyDTO", jobVacancyDTO);
 				//redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.jobVacancyDTO", bindingResult);
 				redirectAttributes.addFlashAttribute("errorMsg", firstBindingErrorString);
+
+				if(id == null) {
+					return ControllerNavigationUtils.getNextRedirect("/job-vacancies/create", languageCode);
+				} else {
+					return ControllerNavigationUtils.getNextRedirect("/job-vacancies/edit/" + id, languageCode);
+				}
+			}
+
+			final Function<Language, String> conversionErrorFunction = jobVacancyDTO.getConversionErrorFunction();
+			if(conversionErrorFunction != null) {
+				final Language language = Language.findByCode(languageCode);
+				final String conversionError = conversionErrorFunction.apply(language);
+				redirectAttributes.addFlashAttribute("jobCompanyLogo", jobCompanyLogoId);
+				redirectAttributes.addFlashAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
+				redirectAttributes.addFlashAttribute("jobVacancyDTO", jobVacancyDTO);
+				redirectAttributes.addFlashAttribute("errorMsg", conversionError);
 
 				if(id == null) {
 					return ControllerNavigationUtils.getNextRedirect("/job-vacancies/create", languageCode);

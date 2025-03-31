@@ -3,7 +3,7 @@ function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompany
 
   const jobCompanyLogoCombo = getComboElementIfExists("jobCompanyLogoCombo");
   if (jobCompanyLogoCombo !== null) {
-    jobCompanyLogoCombo.value = jobCompanyLogoModelAttribute ?? EMPTY_STRING_;
+    jobCompanyLogoCombo.value = jobCompanyLogoModelAttribute ?? EMPTY_STRING;
     if (isValidStringField(refreshUrlModelAttribute)) {
       let jobCompanyLogoFragment = getElementIfExists("jobCompanyLogoFragment");
       if (jobCompanyLogoFragment !== null) {
@@ -12,7 +12,7 @@ function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompany
           const selectedOption = jobCompanyLogoCombo.value;
 
           const urlSearchParams = new URLSearchParams();
-          urlSearchParams.append("jobCompanyId", jobCompanyIdModelAttribute?.toString() ?? EMPTY_STRING_);
+          urlSearchParams.append("jobCompanyId", jobCompanyIdModelAttribute?.toString() ?? EMPTY_STRING);
           urlSearchParams.append("jobCompanyLogo", selectedOption);
 
           const url = new URL(refreshUrlModelAttribute, window.location.href);

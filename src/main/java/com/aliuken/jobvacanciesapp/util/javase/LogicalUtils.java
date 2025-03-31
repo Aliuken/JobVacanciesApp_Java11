@@ -26,6 +26,28 @@ public class LogicalUtils {
 		return result;
 	}
 
+	public static boolean isNullOrBlank(String string) {
+		if(string == null) {
+			return true;
+		}
+		string = string.strip();
+		if(string.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isNotNullNorBlank(String string) {
+		if(string == null) {
+			return false;
+		}
+		string = string.strip();
+		if(string.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean contains(final String string, final String searchedString) {
 		final boolean result = (string != null && searchedString != null && string.contains(searchedString));
 		return result;

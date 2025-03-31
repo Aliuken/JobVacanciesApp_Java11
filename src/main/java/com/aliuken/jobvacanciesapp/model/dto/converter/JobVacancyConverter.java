@@ -1,10 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.dto.converter;
 
+import com.aliuken.jobvacanciesapp.model.dto.BigDecimalFromStringConversionResult;
 import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
+
+import java.util.Objects;
 
 public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVacancyDTO> {
 
@@ -23,6 +26,8 @@ public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVac
 		if(jobVacancy != null) {
 			final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobVacancy.getJobCategory());
 			final JobCompanyDTO jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobVacancy.getJobCompany());
+			final String salaryString = Objects.toString(jobVacancy.getSalary());
+			final BigDecimalFromStringConversionResult salaryConversionResult = null;
 
 			jobVacancyDTO = new JobVacancyDTO(
 				jobVacancy.getId(),
@@ -34,7 +39,8 @@ public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVac
 				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
 				(jobVacancy.getStatus() != null) ? jobVacancy.getStatus().name() : null,
 				jobVacancy.getPublicationDateTime(),
-				jobVacancy.getSalary(),
+				salaryString,
+				salaryConversionResult,
 				jobVacancy.getHighlighted(),
 				jobVacancy.getDetails()
 			);
