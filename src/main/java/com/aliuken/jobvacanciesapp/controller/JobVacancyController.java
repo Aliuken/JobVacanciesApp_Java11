@@ -269,9 +269,6 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 		if(conversionErrorFunction != null) {
 			final Language language = Language.findByCode(languageCode);
 			final String conversionError = conversionErrorFunction.apply(language);
-			model.addAttribute("jobVacancyDTO", jobVacancyDTO);
-			model.addAttribute("jobCompanyLogo", jobVacancyDTO.jobCompany().selectedLogoId());
-			model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 			model.addAttribute("errorMsg", conversionError);
 		}
 
