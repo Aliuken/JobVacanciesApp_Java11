@@ -1,0 +1,80 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{listAuthUsers.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{listAuthUsers.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, true, false, null, false)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{authUser.email}"></th>
+                <th scope="col" th:text="#{authUser.name}"></th>
+                <th scope="col" th:text="#{authUser.surnames}"></th>
+                <th scope="col" th:text="#{authUser.status}"></th>
+                <th scope="col" th:text="#{authUser.maxPriorityAuthRole}"></th>
+                <th scope="col" th:text="#{authUser.authRoles}"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="authUser : ${authUsers}">
+                <th scope="row" th:text="${authUser.id}"></th>
+                <td>
+                  <a th:href="@{/auth-users/view/{id} (id=${authUser.id}, languageParam=${param.languageParam})}" th:text="${authUser.email}" th:title="#{authUserDetail.main.title}"></a>
+                </td>
+                <td th:text="${authUser.name}"></td>
+                <td th:text="${authUser.surnames}"></td>
+                <td th:text="#{${authUser.enabled} ? 'authUserStatus.enabled' : 'authUserStatus.disabled'}"></td>
+                <td th:text="${authUser.maxPriorityAuthRoleName}"></td>
+                <td th:text="${authUser.authRoleNames}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${authUser.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.lastModificationDateTime)}"></td>
+                <td th:with="lastModificationAuthUserId=${authUser.getLastModificationAuthUserId()}">
+                  <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                  <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/auth-users/job-requests/{id} (id=${authUser.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobRequests}">
+                    <i class="fas fa-lg fa-table" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/auth-users/delete/{id} (id=${authUser.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUser.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUser}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                  <a th:if="${authUser.enabled} == true" th:href="@{/auth-users/lock/{id} (id=${authUser.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.lockAuthUser.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.lockAuthUser}">
+                    <i class="fas fa-lg fa-lock" aria-hidden="true"></i>
+                  </a>
+                  <a th:if="${authUser.enabled} == false" th:href="@{/auth-users/unlock/{id} (id=${authUser.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.unlockAuthUser.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.unlockAuthUser}">
+                    <i class="fas fa-lg fa-unlock" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${authUsers.totalPages}, ${authUsers.number})}"></div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
