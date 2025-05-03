@@ -560,6 +560,8 @@ where:
 > The user **pai.mei@aliuken.com** cannot be used until it is confirmed via email (by accessing, with a web browser, the link <http://localhost:8080/signup-confirmed?email=pai.mei@aliuken.com&uuid=a0396f47-50e8-470d-94ba-16f981cdfad8&languageParam=en>).
 >
 > Those links aren't accessible 24 hours after the DB was created (using **mysql-dump.sql** or **h2-dump.sql**).
+> 
+> As you can see in the previous links, a UUID is used to "reset a password" and to "confirm the signup".
 
 ### 6.2. New credentials to access the application
 
