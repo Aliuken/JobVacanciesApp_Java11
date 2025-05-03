@@ -561,7 +561,7 @@ where:
 >
 > Those links aren't accessible 24 hours after the DB was created (using **mysql-dump.sql** or **h2-dump.sql**).
 >
-> As you can see in the previous links, a UUID is used to "reset a password" and to "confirm the signup".
+> As you can see in the previous links, a UUID is used to "reset the password" and to "confirm the signup".
 
 ### 6.2. New credentials to access the application
 
