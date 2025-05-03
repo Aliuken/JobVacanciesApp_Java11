@@ -25,6 +25,7 @@
 > | prop         | property                           |
 > | regex        | regular expression                 |
 > | TS           | TypeScript                         |
+> | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
 > ```
 >
