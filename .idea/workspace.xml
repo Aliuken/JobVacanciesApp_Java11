@@ -5,7 +5,236 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.bundle.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.esm.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.esm.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.esm.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/icons/default/icons.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/models/dom/model.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/accordion/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/autolink/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/charmap/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/codesample/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/directionality/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/emoticons/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/fullscreen/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/image/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/importcss/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/link/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/lists/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/media/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/preview/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/quickbars/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/searchreplace/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/table/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/visualchars/plugin.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/content.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/skin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/themes/silver/theme.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/tinymce.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/build-context-app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-app/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-linux/build-context-elk/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-linux/build-context-elk/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/build-context-app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-app/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-windows/build-context-elk/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-windows/build-context-elk/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db_dumps/mysql-dump.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db_dumps/mysql-dump.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-grid.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-grid.rtl.min.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-reboot.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-reboot.rtl.min.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap-utilities.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.rtl.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap-utilities.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.rtl.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/css/bootstrap.rtl.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/css/bootstrap.rtl.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.bundle.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.esm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.esm.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.esm.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.esm.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.6-dist/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/bootstrap-5.3.5-dist/js/bootstrap.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/icons/default/icons.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/langs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/langs/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/license.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/license.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/models/dom/model.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/accordion/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/advlist/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/advlist/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/anchor/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/anchor/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/autolink/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/autoresize/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/autoresize/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/autosave/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/autosave/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/charmap/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/code/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/code/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/codesample/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/directionality/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/emoticons/js/emojiimages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/emoticons/js/emojiimages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/emoticons/js/emojiimages.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/emoticons/js/emojiimages.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/emoticons/js/emojis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/emoticons/js/emojis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/emoticons/js/emojis.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/emoticons/js/emojis.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/emoticons/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/fullscreen/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/bg_BG.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/bg_BG.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ca.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ca.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/cs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/cs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/da.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/da.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/de.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/de.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/el.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/el.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/en.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/en.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/es.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/es.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/eu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/eu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/fa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/fi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/fi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/fr_FR.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/fr_FR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/he_IL.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/he_IL.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/hi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/hi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/hr.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/hr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/hu_HU.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/hu_HU.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/id.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/id.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/it.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/it.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ja.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ja.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/kk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/kk.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ko_KR.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ko_KR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ms.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ms.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/nb_NO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/nb_NO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/nl.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/nl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/pl.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/pl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/pt_BR.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/pt_BR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/pt_PT.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/pt_PT.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ro.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/ru.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/ru.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/sk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/sk.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/sl_SI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/sl_SI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/sv_SE.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/sv_SE.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/th_TH.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/th_TH.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/tr.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/tr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/uk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/uk.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/vi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/vi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/zh_CN.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/zh_CN.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/js/i18n/keynav/zh_TW.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/help/js/i18n/keynav/zh_TW.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/help/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/image/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/importcss/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/insertdatetime/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/insertdatetime/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/link/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/lists/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/media/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/nonbreaking/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/nonbreaking/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/pagebreak/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/pagebreak/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/preview/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/quickbars/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/save/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/save/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/searchreplace/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/table/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/visualblocks/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/visualblocks/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/visualchars/plugin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/plugins/wordcount/plugin.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/plugins/wordcount/plugin.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/dark/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/dark/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/dark/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/default/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/default/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/default/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/default/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/document/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/document/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/document/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/document/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/tinymce-5-dark/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/tinymce-5-dark/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/tinymce-5-dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/tinymce-5-dark/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/tinymce-5/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/tinymce-5/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/tinymce-5/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/tinymce-5/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/writer/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/writer/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/content/writer/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/content/writer/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/content.inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/content.inline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/content.inline.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/skin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/skin.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/skin.shadowdom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/skin.shadowdom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/content.inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/content.inline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide-dark/content.inline.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/content.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/skin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/skin.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/skin.shadowdom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/skin.shadowdom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/oxide/skin.shadowdom.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/skin.shadowdom.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/content.inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/content.inline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/content.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/skin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/skin.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/content.inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/content.inline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/oxide/content.inline.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/content.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/content.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/skin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/skin.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/skin.shadowdom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/skin.shadowdom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/themes/silver/theme.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/tinymce.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.9.0/js/tinymce/tinymce.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tinymce-7.8.0/js/tinymce/tinymce.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/aliuken/jobvacanciesapp/repository/AuthUserSignUpConfirmationRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/aliuken/jobvacanciesapp/repository/AuthUserSignUpConfirmationRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/db_dumps/h2-dump.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/db_dumps/h2-dump.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +290,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_DDD_GitHub&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11/src/main/resources/static&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -85,7 +314,7 @@
       <recent name="com.aliuken.jobvacanciesapp.model.entity.enumtype" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Run App J11">
+  <component name="RunManager" selected="Maven.Maven [clean,install] J11">
     <configuration name="Run App J11" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />

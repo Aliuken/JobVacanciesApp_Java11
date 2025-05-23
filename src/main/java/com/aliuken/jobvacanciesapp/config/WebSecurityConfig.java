@@ -162,7 +162,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			"/auth-user-curriculum-files/**",
 			"/auth-user-entity-query-files/**",
 			"/job-company-logos/**",
-			"/bootstrap-5.3.5-dist/**",
+			"/bootstrap-5.3.6-dist/**",
 			"/fontawesome-free-6.7.2-web/**",
 			"/images/**",
 			"/jobvacanciesapp-utils/**",
@@ -170,7 +170,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			"/jquery-timepicker-addon-1.6.3-dist/**",
 			"/jquery-ui-1.14.1/**",
 			"/MDB5-STANDARD-UI-KIT-Free-9.0.0/**",
-			"/tinymce-7.8.0/**"
+			"/tinymce-7.9.0/**"
 		};
 	}
 }

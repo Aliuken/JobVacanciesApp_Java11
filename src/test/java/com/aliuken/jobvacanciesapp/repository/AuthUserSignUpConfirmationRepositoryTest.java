@@ -54,14 +54,14 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 
 	@Test
 	public void testFindByEmailAndUuid_Ok() {
-		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid("antonio@aliuken.com", "cd939918-565d-41f1-a100-992594729dc4");
+		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid("antonio@aliuken.com", "21d27fe6-4b57-413b-8361-2757c45294e3");
 
 		this.commonTestsAuthUserSignUpConfirmation1(authUserSignUpConfirmation);
 	}
 
 	@Test
 	public void testFindByEmailAndUuid_NullEmail() {
-		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid(null, "cd939918-565d-41f1-a100-992594729dc4");
+		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid(null, "21d27fe6-4b57-413b-8361-2757c45294e3");
 
 		Assertions.assertNull(authUserSignUpConfirmation);
 	}
@@ -75,7 +75,7 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 
 	@Test
 	public void testFindByEmailAndUuid_NotExistsEmail() {
-		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid("NOT_EXISTING_VALUE", "cd939918-565d-41f1-a100-992594729dc4");
+		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByEmailAndUuid("NOT_EXISTING_VALUE", "21d27fe6-4b57-413b-8361-2757c45294e3");
 
 		Assertions.assertNull(authUserSignUpConfirmation);
 	}
@@ -178,14 +178,14 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 	public void testSave_InsertOk() {
 		AuthUserSignUpConfirmation authUserSignUpConfirmation = new AuthUserSignUpConfirmation();
 		authUserSignUpConfirmation.setEmail("new.user@aliuken.com");
-		authUserSignUpConfirmation.setUuid("cd939918-565d-41f1-a100-992594729dc4");
+		authUserSignUpConfirmation.setUuid("21d27fe6-4b57-413b-8361-2757c45294e3");
 
 		authUserSignUpConfirmation = authUserSignUpConfirmationRepository.saveAndFlush(authUserSignUpConfirmation);
 
 		Assertions.assertNotNull(authUserSignUpConfirmation);
 		Assertions.assertNotNull(authUserSignUpConfirmation.getId());
 		Assertions.assertEquals("new.user@aliuken.com", authUserSignUpConfirmation.getEmail());
-		Assertions.assertEquals("cd939918-565d-41f1-a100-992594729dc4", authUserSignUpConfirmation.getUuid());
+		Assertions.assertEquals("21d27fe6-4b57-413b-8361-2757c45294e3", authUserSignUpConfirmation.getUuid());
 		Assertions.assertNotNull(authUserSignUpConfirmation.getFirstRegistrationDateTime());
 
 		final AuthUser firstRegistrationAuthUser = authUserSignUpConfirmation.getFirstRegistrationAuthUser();
@@ -283,7 +283,7 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 		Assertions.assertNotNull(authUserSignUpConfirmation);
 		Assertions.assertEquals(1L, authUserSignUpConfirmation.getId());
 		Assertions.assertEquals(email, authUserSignUpConfirmation.getEmail());
-		Assertions.assertEquals("cd939918-565d-41f1-a100-992594729dc4", authUserSignUpConfirmation.getUuid());
+		Assertions.assertEquals("21d27fe6-4b57-413b-8361-2757c45294e3", authUserSignUpConfirmation.getUuid());
 		Assertions.assertNotNull(authUserSignUpConfirmation.getFirstRegistrationDateTime());
 
 		final AuthUser firstRegistrationAuthUser = authUserSignUpConfirmation.getFirstRegistrationAuthUser();

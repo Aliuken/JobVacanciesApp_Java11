@@ -416,7 +416,7 @@ CREATE TABLE `auth_user_reset_password` (
 
 LOCK TABLES `auth_user_reset_password` WRITE;
 INSERT INTO `auth_user_reset_password` VALUES (1,'guti@aliuken.com','a0396f47-50e8-470d-94ba-16f981cdfad6',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO `auth_user_reset_password` VALUES (2,'raul@aliuken.com','a0396f47-50e8-470d-94ba-16f981cdfad7',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user_reset_password` VALUES (2,'raul@aliuken.com','9088793d-3e0e-4e5e-94a3-9c0267dc2dc5',CURRENT_TIMESTAMP,1,null,null);
 UNLOCK TABLES;
 
 -- ---------------------------------------------------------------------
@@ -440,7 +440,7 @@ CREATE TABLE `auth_user_signup_confirmation` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `auth_user_signup_confirmation` WRITE;
-INSERT INTO `auth_user_signup_confirmation` VALUES (1,'antonio@aliuken.com','cd939918-565d-41f1-a100-992594729dc4',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user_signup_confirmation` VALUES (1,'antonio@aliuken.com','21d27fe6-4b57-413b-8361-2757c45294e3',CURRENT_TIMESTAMP,1,null,null);
 INSERT INTO `auth_user_signup_confirmation` VALUES (2,'pai.mei@aliuken.com','a0396f47-50e8-470d-94ba-16f981cdfad8',CURRENT_TIMESTAMP,1,null,null);
 UNLOCK TABLES;
 
