@@ -1,0 +1,50 @@
+<div th:fragment="jumbotron(descriptionParam, jobCategoryIdParam, languageParam)" class="container-fluid py-5">
+
+  <div class="row">
+    <div class="col-md-1 mx-1 px-1 my-0 py-1">
+      <img th:src="@{/images/logo.png}" class="rounded mx-1 ps-2 pe-1 my-0 py-0" height="92"></img>
+    </div>
+    <div class="col-md-10 mx-0 px-5 my-0 py-3">
+      <h3 th:text="#{jumbotron.title}"></h3>
+      <span th:text="#{jumbotron.description}"></span>
+    </div>
+  </div>
+
+  <form th:action="@{/search (description=${descriptionParam}, jobCategoryId=${jobCategoryIdParam}, languageParam=${languageParam})}" method="get" class="form-inline">
+
+    <div class="mb-1" th:if="${errorMsg != null}">
+      <br/>
+      <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <div class="mb-1" th:if="${successMsg != null}">
+      <br/>
+      <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-5 mx-0 px-1">
+        <input type="text" name="description" th:value="${descriptionParam}" class="form-control mb-3" th:placeholder="#{jumbotron.searchField}" style="height:40px"></input>
+      </div>
+
+      <div class="col-md-5 mx-0 px-1">
+        <select id="jobCategoryIdCombo" name="jobCategoryId" th:value="${jobCategoryIdParam}" class="form-select mb-3" style="height:40px">
+          <option th:value="null" th:text="#{jumbotron.selectCategoryField}"</option>
+          <option th:each="jobCategory : ${jobCategories}" th:text="${jobCategory.name}" th:value="${jobCategory.id}"></option>
+        </select>
+        <input type="hidden" name="languageParam" th:value="${languageParam}" />
+      </div>
+
+      <div class="col-md-2 mx-0 px-1">
+        <button type="submit" class="btn btn-primary mb-3" th:text="#{button.search}" style="height:40px"></button>
+      </div>
+
+    </div>
+  </form>
+
+</div>

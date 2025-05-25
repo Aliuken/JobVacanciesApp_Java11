@@ -1,0 +1,78 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{authUserEntityQueries.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{authUserEntityQueries.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, 'AuthUser', true)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.finalPdfDocumentPageFormat}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.language}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.predefinedFilter}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.filter}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.tableSortingField}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.tableSortingDirection}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.tablePageSize}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.pageNumber}"></th>
+                <th scope="col" th:text="#{authUserEntityQuery.finalResultFileName}"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="authUserEntityQuery : ${authUserEntityQueries.content}">
+                <th scope="row">
+                  <a th:href="@{/my-user/auth-user-entity-queries/view/{id} (id=${authUserEntityQuery.id}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.id}" th:title="#{authUserEntityQueryDetail.main.title}"></a>
+                </th>
+                <td th:text="#{${authUserEntityQuery.finalPdfDocumentPageFormat.messageName}}"></td>
+                <td th:text="#{${authUserEntityQuery.language.messageName}}"></td>
+                <td th:text="${authUserEntityQuery.getPredefinedFilterStringForWebPageField()}"></td>
+                <td th:text="${authUserEntityQuery.getFilterStringForWebPageField()}"></td>
+                <td th:text="#{${authUserEntityQuery.tableSortingField.messageName}}"></td>
+                <td th:text="#{${authUserEntityQuery.tableSortingDirection.messageName}}"></td>
+                <td th:text="#{${authUserEntityQuery.tablePageSize.messageName}}"></td>
+                <td th:text="${authUserEntityQuery.pageNumber}"></td>
+                <td th:text="${authUserEntityQuery.finalResultFileName}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUserEntityQuery.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${authUserEntityQuery.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/my-user/auth-user-entity-queries/delete/{id} (id=${authUserEntityQuery.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUserEntityQuery.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUserEntityQuery}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/auth-user-entity-query-files/{entityQueryFilePath} (entityQueryFilePath=${authUserEntityQuery.filePath}, languageParam=${param.languageParam})}" target="_blank" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.downloadEntityQuery}">
+                    <i class="fas fa-lg fa-file-arrow-down" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="${authUserEntityQuery.queryUrl}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.repeatEntityQuery}">
+                    <i class="fas fa-lg fa-arrow-rotate-right" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${authUserEntityQueries.totalPages}, ${authUserEntityQueries.number})}"></div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

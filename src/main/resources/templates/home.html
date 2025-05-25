@@ -1,0 +1,72 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{home.head.title}"></title>
+  </head>
+
+  <body>
+    <div layout:fragment="mainContent">
+
+      <div class="mb-1" th:if="${deleteAccountSuccessMsg != null}">
+        <br/>
+        <strong class='alert alert-success' th:text="${deleteAccountSuccessMsg}" role='alert'></strong>
+        <br/>
+        <br/>
+      </div>
+
+      <!-- Main jumbotron -->
+      <div class="p-5 mb-4 rounded-3" style="background:#E9ECEF">
+        <div class="row">
+
+          <div class="col-md-3"></div>
+
+          <div class="col-md-6">
+            <div th:replace="~{fragments/optional/jumbotron :: jumbotron(${description}, ${jobCategoryId}, ${language})}"></div>
+          </div>
+
+          <div class="col-md-3"></div>
+
+        </div>
+      </div>
+
+      <!-- List of highlighted job vacancies -->
+      <div class="container">
+
+        <h2 class="font-weight-bold text-center text-capitalize" th:text="#{home.highlightedJobVacancies}"></h2>
+        <hr/>
+
+        <div class="row" th:each="jobVacancy : ${approvedJobVacancyDTOs}">
+
+          <div class="col-md-3">
+            <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobVacancy.jobCompany.selectedLogoFilePath})}" style="max-width:160px; max-height:160px;"></img>
+          </div>
+
+          <div class="col-md-9">
+            <h3 th:text="${jobVacancy.name}"></h3>
+            <h6 class="card-title">
+              <strong th:text="#{jobVacancy.jobCategory} + ': '"></strong>
+              <span th:text="${jobVacancy.jobCategory.name}"></span>
+            </h6>
+            <h6 class="card-title">
+              <strong th:text="#{jobVacancy.jobCompany} + ': '"></strong>
+              <span th:text="${jobVacancy.jobCompany.name}"></span>
+            </h6>
+            <h6 class="card-title">
+              <strong th:text="#{jobVacancy.publicationDateTime} + ': '"></strong>
+              <span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.publicationDateTime)}"></span>
+            </h6>
+            <p th:text="${jobVacancy.description}"></p>
+            <p>
+              <a class="btn btn-secondary" th:href="@{/job-vacancies/view/{id} (id=${jobVacancy.id}, languageParam=${param.languageParam})}" role="button" th:text="#{button.viewDetails} + ' &raquo;'"></a>
+            </p>
+          </div>
+
+        </div>
+        <hr/>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

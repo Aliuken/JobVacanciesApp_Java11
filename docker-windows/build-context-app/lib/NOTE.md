@@ -1,0 +1,1 @@
+In this folder, the "job-vacancies-app.jar" file will be created when the project is compiled.

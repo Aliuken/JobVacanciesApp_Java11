@@ -1,0 +1,63 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{authUserEntityQueryDetail.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{authUserEntityQueryDetail.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div class="mb-1" th:if="${errorMsg != null}">
+            <br/>
+            <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mb-1" th:if="${successMsg != null}">
+            <br/>
+            <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <h5 class="card-title"><strong th:text="#{authUserEntityQuery.finalResultFileName} + ': '"></strong> <span th:text="${authUserEntityQuery.finalResultFileName}"></span></h5>
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.finalPdfDocumentPageFormat} + ': '"></strong> <span th:text="#{${authUserEntityQuery.finalPdfDocumentPageFormat.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.language} + ': '"></strong> <span th:text="#{${authUserEntityQuery.language.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.predefinedFilter} + ': '"></strong> <span th:text="${authUserEntityQuery.getPredefinedFilterStringForWebPageField()}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.filter} + ': '"></strong> <span th:text="${authUserEntityQuery.getFilterStringForWebPageField()}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.tableSortingField} + ': '"></strong> <span th:text="#{${authUserEntityQuery.tableSortingField.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.tableSortingDirection} + ': '"></strong> <span th:text="#{${authUserEntityQuery.tableSortingDirection.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.tablePageSize} + ': '"></strong> <span th:text="#{${authUserEntityQuery.tablePageSize.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUserEntityQuery.pageNumber} + ': '"></strong> <span th:text="${authUserEntityQuery.pageNumber}"></span></h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUserEntityQuery.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="firstRegistrationAuthUserId=${authUserEntityQuery.getFirstRegistrationAuthUserId()}">
+                <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUserEntityQuery.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="lastModificationAuthUserId=${authUserEntityQuery.getLastModificationAuthUserId()}">
+                <strong th:text="#{abstractEntity.lastModificationAuthUserEmail} + ': '"></strong>
+                <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

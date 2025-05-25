@@ -1,0 +1,8 @@
+.dockerignore
+.env
+docker-compose.yaml
+docker-compose-start.bat
+docker-compose-stop.bat
+Dockerfile
+Dockerfile-start.bat
+lib/NOTE.md

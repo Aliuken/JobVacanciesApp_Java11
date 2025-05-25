@@ -1,0 +1,99 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{jobVacancyDetail.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{jobVacancyDetail.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div class="mb-1" th:if="${errorMsg != null}">
+            <br/>
+            <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mb-1" th:if="${successMsg != null}">
+            <br/>
+            <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="alert alert-danger" role="alert" th:if="${springSecurityUtils.isAnonymous()}">
+            <span th:text="#{anonymous.applyJobVacancy.text1} + ' '"></span> <strong><a th:href="@{/signup (languageParam=${param.languageParam})}" th:text="#{anonymous.applyJobVacancy.text2}"></a></strong><span th:text="' ' + #{anonymous.applyJobVacancy.text3}"></span>
+          </div>
+
+          <h5 class="card-title"><strong th:text="#{jobVacancy.name} + ': '"></strong> <span th:text="${jobVacancy.name}"></span></h5>
+          <div class="row">
+            <div class="col-md-3">
+              <h6 class="card-title">
+                <strong th:text="#{jobVacancy.jobCategory} + ': '"></strong>
+                <a th:href="@{/job-categories/view/{id} (id=${jobVacancy.jobCategory.id}, languageParam=${param.languageParam})}" th:text="${jobVacancy.jobCategory.name}" th:title="#{jobCategoryDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title">
+                <strong th:text="#{jobVacancy.jobCompany} + ': '"></strong>
+                <a th:href="@{/job-companies/view/{id} (id=${jobVacancy.jobCompany.id}, languageParam=${param.languageParam})}" th:text="${jobVacancy.jobCompany.name}" th:title="#{jobCompanyDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title"><strong th:text="#{jobVacancy.publicationDateTime} + ': '"></strong> <span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.publicationDateTime)}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobVacancy.salary} + ': '"></strong><span th:text="${jobVacancy.salary} + ' ' + ${jobVacancy.currencySymbol}"></span></h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="firstRegistrationAuthUserId=${jobVacancy.getFirstRegistrationAuthUserId()}">
+                <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobVacancy.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobVacancy.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="lastModificationAuthUserId=${jobVacancy.getLastModificationAuthUserId()}">
+                <strong th:text="#{abstractEntity.lastModificationAuthUserEmail} + ': '"></strong>
+                <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobVacancy.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+            </div>
+            <div class="col-md-2">
+              <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobVacancy.jobCompany.selectedJobCompanyLogoFilePath})}" style="max-width:160px; max-height:160px;"></img>
+            </div>
+          </div>
+          <p class="card-text" th:text="${jobVacancy.description}"></p>
+
+          <div class="card bg-light mb-3" >
+            <div class="card-body">
+              <h5 class="card-title" th:text="#{jobVacancy.details}"></h5>
+              <p class="card-text" th:utext="${jobVacancy.details}"></p>
+            </div>
+          </div>
+
+          <div th:if="${springSecurityUtils.isAuthenticatedAndHasAnyAuthority('USER','SUPERVISOR','ADMINISTRATOR')}" th:with="applyDisabled=${#sets.contains(authUserJobVacancyIds, jobVacancy.id)}">
+
+            <div th:if="${applyDisabled}">
+              <a class="btn btn-primary disabled" th:href="@{/job-requests/create/{id} (id=${jobVacancy.id}, languageParam=${param.languageParam})}" role="button" th:title="#{operationButton.applyJobVacancy}">
+                <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+                &nbsp;
+                <span th:text="#{button.apply}"></span>
+              </a>
+            </div>
+
+            <div th:if="${!applyDisabled}">
+              <a class="btn btn-primary" th:href="@{/job-requests/create/{id} (id=${jobVacancy.id}, languageParam=${param.languageParam})}" role="button" th:title="#{operationButton.applyJobVacancy}">
+                <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+                &nbsp;
+                <span th:text="#{button.apply}"></span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

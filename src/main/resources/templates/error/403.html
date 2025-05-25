@@ -1,0 +1,39 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{403.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{403.main.title}"></strong></h4>
+        <div class="card-body">
+          &nbsp;&nbsp;&nbsp;<img th:src="@{/images/error-403.png}" class="rounded " title="An error has occurred">
+          <div class="col-md-12 order-md-2 mb-4">
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <small class="text-muted" th:text="#{error.403Message}"></small>
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <small class="text-muted" th:text="#{error.resource} + ': ' + ${path}"></small>
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <small class="text-muted" th:text="#{error.date} + ': ' + ${dateTimeUtils.convertFromDateToString(timestamp)}"></small>
+                </div>
+              </li>
+            </ul>
+            <a class="btn btn-primary" role="button" th:href="@{/ (languageParam=${param.languageParam})}" th:text="#{operationButton.goHome}"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
