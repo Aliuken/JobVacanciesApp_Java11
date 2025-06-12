@@ -17,6 +17,8 @@ EXPOSE 8080
 
 ARG ORIG_JAR_FILE_PATH=./lib/*.jar
 ENV DEST_JAR_FILE_PATH=/opt/apps/jobVacanciesApp/jobVacanciesApp.jar
+
+# Copy the host jar file to the container jar file
 COPY ${ORIG_JAR_FILE_PATH} ${DEST_JAR_FILE_PATH}
 
 ARG PRINT_ARG=default_value
