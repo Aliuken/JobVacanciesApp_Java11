@@ -15,10 +15,12 @@ EXPOSE 8080
 # Layers that might be altered (ordered from heaviest to lightest)
 # ----------------------------------------------------------------
 
-ARG JAR_FILE=./lib/*.jar
-COPY ${JAR_FILE} /opt/apps/jobVacanciesApp/jobVacanciesApp.jar
+ARG ORIG_JAR_FILE_PATH=./lib/*.jar
+ENV DEST_JAR_FILE_PATH=/opt/apps/jobVacanciesApp/jobVacanciesApp.jar
+COPY ${ORIG_JAR_FILE_PATH} ${DEST_JAR_FILE_PATH}
 
 ARG PRINT_ARG=default_value
 RUN echo "PRINT_ARG: ${PRINT_ARG}"
 
-ENTRYPOINT ["java", "-jar", "/opt/apps/jobVacanciesApp/jobVacanciesApp.jar"]
+# To work the ENTRYPOINT, the DEST_JAR_FILE_PATH variable needs to be an ENV
+ENTRYPOINT ["/bin/sh", "-c", "java -jar ${DEST_JAR_FILE_PATH}"]
