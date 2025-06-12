@@ -22,5 +22,5 @@ COPY ${ORIG_JAR_FILE_PATH} ${DEST_JAR_FILE_PATH}
 ARG PRINT_ARG=default_value
 RUN echo "PRINT_ARG: ${PRINT_ARG}"
 
-# To work the ENTRYPOINT, the DEST_JAR_FILE_PATH variable needs to be an ENV
+# To work in the ENTRYPOINT, the DEST_JAR_FILE_PATH variable needs to be an ENV
 ENTRYPOINT ["/bin/sh", "-c", "java -jar ${DEST_JAR_FILE_PATH}"]
