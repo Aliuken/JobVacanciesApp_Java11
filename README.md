@@ -5,6 +5,7 @@
 > |---------------------------------------------------|
 > | 2FA          | Two-Factor Authentication          |
 > | AI           | Artificial Intelligence            |
+> | API          | Application Programming Interface  |
 > | app          | Application                        |
 > | CLI          | Command-Line Interface             |
 > | config       | Configuration                      |
