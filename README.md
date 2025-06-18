@@ -3,27 +3,30 @@
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
-> | 2FA          | two-factor authentication          |
-> | AI           | artificial intelligence            |
-> | app          | application                        |
-> | CLI          | command-line interface             |
-> | config       | configuration                      |
+> | 2FA          | Two-Factor Authentication          |
+> | AI           | Artificial Intelligence            |
+> | app          | Application                        |
+> | CLI          | Command-Line Interface             |
+> | config       | Configuration                      |
 > | CV           | Curriculum Vitae                   |
-> | DB           | database                           |
+> | DB           | Database                           |
 > | ELK          | Elastic Stack                      |
-> | GUI          | graphical user interface           |
-> | i18n         | internationalization               |
-> | IDE          | integrated development environment |
-> | info         | information                        |
+> | GUI          | Graphical User Interface           |
+> | HTML         | Hypertext Markup Language          |
+> | HTTP         | Hypertext Transfer Protocol        |
+> | i18n         | Internationalization               |
+> | IDE          | Integrated Development Environment |
+> | info         | Information                        |
 > | JS           | JavaScript                         |
-> | L10n         | localization                       |
-> | LLM          | large language model               |
-> | ORM          | object–relational mapping          |
-> | OS           | operating system                   |
-> | PC           | personal computer                  |
+> | L10n         | Localization                       |
+> | LLM          | Large Language Model               |
+> | ORM          | Object–Relational Mapping          |
+> | OS           | Operating System                   |
+> | PC           | Personal Computer                  |
 > | pkg          | Java package                       |
-> | prop         | property                           |
-> | regex        | regular expression                 |
+> | prop         | Property                           |
+> | regex        | Regular Expression                 |
+> | REST         | Representational State Transfer    |
 > | TS           | TypeScript                         |
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
@@ -313,7 +316,7 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * **@ServiceMethod**, **@RepositoryMethod** and **@LazyEntityRelationGetter**: Defined in the package [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation) specifically to be used as AOP pointcuts.
 >
 > Also, the following utility classes are used in the AOP aspects:
-> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/rest/ControllerAspectRestUtils.java): Used in **ControllerAspect** to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
+> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/rest/ControllerAspectRestUtils.java): It gets the mappings for typical REST HTTP methods (GET, POST, PUT and DELETE). Used in **ControllerAspect** to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
 > * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
 > * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 
