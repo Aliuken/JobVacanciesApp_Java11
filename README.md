@@ -317,7 +317,7 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * **@ServiceMethod**, **@RepositoryMethod** and **@LazyEntityRelationGetter**: Defined in the package [com.aliuken.jobvacanciesapp.annotation](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/annotation) specifically to be used as AOP pointcuts.
 >
 > Also, the following utility classes are used in the AOP aspects:
-> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/rest/ControllerAspectRestUtils.java): It gets the mappings for typical REST HTTP methods (GET, POST, PUT and DELETE). Used in **ControllerAspect** to get the RequestMapping, GetMapping or PostMapping from the JoinPoint.
+> * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/rest/ControllerAspectRestUtils.java): It gets mappings for typical HTTP methods used in REST APIs (GET, POST, PUT and DELETE). Used in **ControllerAspect** to get the GetMapping or PostMapping from a JoinPoint.
 > * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
 > * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 
