@@ -28,6 +28,7 @@
 > | regex        | Regular Expression                 |
 > | REST         | Representational State Transfer    |
 > | TS           | TypeScript                         |
+> | UI           | User Interface                     |
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
 > ```
