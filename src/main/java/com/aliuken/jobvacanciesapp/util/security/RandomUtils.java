@@ -5,7 +5,6 @@ import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntSupplier;
@@ -13,8 +12,8 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 
 public class RandomUtils {
-	public static IntUnaryOperator RANDOM_INT_GENERATOR = (boundInt) -> new Random().nextInt(boundInt);
-	public static IntSupplier RANDOM_INT_GENERATOR_0_99 = () -> new Random().nextInt(100);
+	public static IntUnaryOperator RANDOM_INT_GENERATOR = (boundInt) -> ThreadLocalRandom.current().nextInt(boundInt);
+	public static IntSupplier RANDOM_INT_GENERATOR_0_99 = () -> ThreadLocalRandom.current().nextInt(100);
 	public static Supplier<String> UUID_GENERATOR = () -> UUID.randomUUID().toString();
 
 	private RandomUtils() throws InstantiationException {
