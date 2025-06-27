@@ -60,9 +60,4 @@ public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFram
 	public ConfigurableEnum<UserInterfaceFramework> getFinalDefaultEnumElement() {
 		return UserInterfaceFramework.MATERIAL_DESIGN;
 	}
-
-	@Override
-	public ConfigurableEnum<UserInterfaceFramework>[] getEnumElements() {
-		return UserInterfaceFramework.values();
-	}
 }

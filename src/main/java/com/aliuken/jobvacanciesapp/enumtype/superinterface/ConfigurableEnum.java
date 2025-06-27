@@ -29,5 +29,9 @@ public interface ConfigurableEnum<T extends Enum<T>> extends Serializable, Inter
 	public abstract ConfigurableEnum<T> getOverwrittenEnumElement(final ConfigPropertiesBean configPropertiesBean);
 	public abstract ConfigurableEnum<T> getOverwritableEnumElement(final ConfigPropertiesBean configPropertiesBean);
 	public abstract ConfigurableEnum<T> getFinalDefaultEnumElement();
-	public abstract ConfigurableEnum<T>[] getEnumElements();
+
+	public default <U extends ConfigurableEnum<T>> ConfigurableEnum<T>[] getEnumElements(final Class<U> enumClass) {
+		final ConfigurableEnum<T>[] values = enumClass.getEnumConstants();
+		return values;
+	}
 }

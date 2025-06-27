@@ -83,9 +83,4 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	public ConfigurableEnum<ColorMode> getFinalDefaultEnumElement() {
 		return ColorMode.LIGHT;
 	}
-
-	@Override
-	public ConfigurableEnum<ColorMode>[] getEnumElements() {
-		return ColorMode.values();
-	}
 }

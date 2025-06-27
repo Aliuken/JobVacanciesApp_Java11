@@ -75,9 +75,4 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	public ConfigurableEnum<Currency> getFinalDefaultEnumElement() {
 		return Currency.US_DOLLAR;
 	}
-
-	@Override
-	public ConfigurableEnum<Currency>[] getEnumElements() {
-		return Currency.values();
-	}
 }

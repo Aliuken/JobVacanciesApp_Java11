@@ -82,9 +82,4 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	public ConfigurableEnum<TablePageSize> getFinalDefaultEnumElement() {
 		return TablePageSize.SIZE_5;
 	}
-
-	@Override
-	public ConfigurableEnum<TablePageSize>[] getEnumElements() {
-		return TablePageSize.values();
-	}
 }

@@ -182,7 +182,7 @@ public class ConfigurableEnumUtils {
 
 	public <T extends Enum<T>, U extends ConfigurableEnum<T>> List<ConfigurableEnum<T>> getSpecificConfigurableEnumElements(final Class<U> configurableEnumClass) {
 		final ConfigurableEnum<T> defaultConfigurableEnumElement = this.getDefaultConfigurableEnumElement(configurableEnumClass);
-		final ConfigurableEnum<T>[] configurableEnumElements = defaultConfigurableEnumElement.getEnumElements();
+		final ConfigurableEnum<T>[] configurableEnumElements = defaultConfigurableEnumElement.getEnumElements(configurableEnumClass);
 
 		final List<ConfigurableEnum<T>> configurableEnumList = new ArrayList<>();
 		for(ConfigurableEnum<T> configurableEnumElement : configurableEnumElements) {

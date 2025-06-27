@@ -61,9 +61,4 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 	public ConfigurableEnum<AnonymousAccessPermission> getFinalDefaultEnumElement() {
 		return AnonymousAccessPermission.ACCESS_NOT_ALLOWED;
 	}
-
-	@Override
-	public ConfigurableEnum<AnonymousAccessPermission>[] getEnumElements() {
-		return AnonymousAccessPermission.values();
-	}
 }

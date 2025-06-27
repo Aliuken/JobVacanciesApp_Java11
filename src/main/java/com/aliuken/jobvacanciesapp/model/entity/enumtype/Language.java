@@ -87,9 +87,4 @@ public enum Language implements ConfigurableEnum<Language> {
 	public ConfigurableEnum<Language> getFinalDefaultEnumElement() {
 		return Language.ENGLISH;
 	}
-
-	@Override
-	public ConfigurableEnum<Language>[] getEnumElements() {
-		return Language.values();
-	}
 }

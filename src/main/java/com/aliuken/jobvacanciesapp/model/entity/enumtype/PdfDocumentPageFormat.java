@@ -67,9 +67,4 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 	public ConfigurableEnum<PdfDocumentPageFormat> getFinalDefaultEnumElement() {
 		return PdfDocumentPageFormat.A4_VERTICAL;
 	}
-
-	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat>[] getEnumElements() {
-		return PdfDocumentPageFormat.values();
-	}
 }

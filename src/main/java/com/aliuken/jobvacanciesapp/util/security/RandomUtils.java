@@ -2,10 +2,12 @@ package com.aliuken.jobvacanciesapp.util.security;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
@@ -40,5 +42,21 @@ public class RandomUtils {
 			result = Constants.EMPTY_STRING;
 		}
 		return result;
+	}
+
+	public static <T extends Enum<T>> T getRandomValue(final Class<T> enumClass) {
+		final T[] possibleValues = enumClass.getEnumConstants();
+		final T randomValue = RandomUtils.getRandomValue(possibleValues);
+		return randomValue;
+	}
+
+	public static <T> T getRandomValue(final T... possibleValues) {
+		final T randomValue;
+		if(LogicalUtils.isNotNullNorEmpty(possibleValues)) {
+			randomValue = possibleValues[ThreadLocalRandom.current().nextInt(possibleValues.length)];
+		} else {
+			randomValue = null;
+		}
+		return randomValue;
 	}
 }
