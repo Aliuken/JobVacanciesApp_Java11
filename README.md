@@ -280,7 +280,7 @@ The security technologies currently used are:
 * **SessionUtils**: Utility class to get the sessionAuthUser object from the following origins:
     * From the Authentication object of Spring Security.
     * From the "sessionAuthUser" attribute of the HttpSession object of the Servlet API.
-* **RandomUtils**: Utility class to generate random strings, numbers, enum values or objects (used for security reasons).
+* **RandomUtils**: Utility class to get random strings, numbers, enum values or objects (used for security reasons).
 * **Remember me based on the email**: Implemented in the class [JdbcTokenByEmailRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/JdbcTokenByEmailRepository.java) making use of the DB table auth_persistent_logins (instead of using the **Remember me based on the username** implemented in the class [JdbcTokenRepositoryImpl](https://github.com/spring-projects/spring-security/blob/main/web/src/main/java/org/springframework/security/web/authentication/rememberme/JdbcTokenRepositoryImpl.java) of Spring Security).
 * **AllowedViewsEnum**: An enum that contains the allowed views for each role (anonymous, user, supervisor and administrator) when the anonymous access is allowed and when it is not allowed.
 * **EmailService**: This service has the following two methods to send emails (implemented in [EmailServiceImpl](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/service/EmailServiceImpl.java), using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish):
