@@ -351,7 +351,7 @@ The following Docker technologies (contained in [docker-windows](https://github.
 Other technologies currently used are:
 * **Sourcetree**: As the Git GUI for Windows.
 * **Git Bash**: As the command-line shell for the Git CLI.
-* **Powershell**: As the command-line shell for the Docker CLI.
+* **Powershell**: As the command-line shell for the Docker CLI for Windows.
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
     * Handle the exception thrown when uploading a file (CV or logo) too big (more than 10 MB).
