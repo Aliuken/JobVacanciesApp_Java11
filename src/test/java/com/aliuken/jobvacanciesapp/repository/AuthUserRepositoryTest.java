@@ -91,9 +91,12 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUser authUser = authUserRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(authUser);
-		Assertions.assertEquals(new AuthUser(), authUser);
+
+		final AuthUser authUser2 = new AuthUser();
+		Assertions.assertNotEquals(authUser2, authUser);
+		Assertions.assertNull(authUser.getId());
+		Assertions.assertNull(authUser2.getId());
 	}
 
 	@Test
@@ -127,9 +130,12 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUser authUser = authUserRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(authUser);
-		Assertions.assertEquals(new AuthUser(), authUser);
+
+		final AuthUser authUser2 = new AuthUser();
+		Assertions.assertNotEquals(authUser2, authUser);
+		Assertions.assertNull(authUser.getId());
+		Assertions.assertNull(authUser2.getId());
 	}
 
 	@Test

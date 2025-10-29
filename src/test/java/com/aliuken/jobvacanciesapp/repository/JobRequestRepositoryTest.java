@@ -9,6 +9,7 @@ import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobRequestConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -108,9 +109,12 @@ public class JobRequestRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final JobRequest jobRequest = jobRequestRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(jobRequest);
-		Assertions.assertEquals(new JobRequest(), jobRequest);
+
+		final JobRequest jobRequest2 = new JobRequest();
+		Assertions.assertNotEquals(jobRequest2, jobRequest);
+		Assertions.assertNull(jobRequest.getId());
+		Assertions.assertNull(jobRequest2.getId());
 	}
 
 	@Test
@@ -144,9 +148,12 @@ public class JobRequestRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final JobRequest jobRequest = jobRequestRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(jobRequest);
-		Assertions.assertEquals(new JobRequest(), jobRequest);
+
+		final JobRequest jobRequest2 = new JobRequest();
+		Assertions.assertNotEquals(jobRequest2, jobRequest);
+		Assertions.assertNull(jobRequest.getId());
+		Assertions.assertNull(jobRequest2.getId());
 	}
 
 	@Test

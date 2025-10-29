@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -45,9 +46,12 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserEntityQuery authUserEntityQuery = authUserEntityQueryRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(authUserEntityQuery);
-		Assertions.assertEquals(new AuthUserEntityQuery(), authUserEntityQuery);
+
+		final AuthUserEntityQuery authUserEntityQuery2 = new AuthUserEntityQuery();
+		Assertions.assertNotEquals(authUserEntityQuery2, authUserEntityQuery);
+		Assertions.assertNull(authUserEntityQuery.getId());
+		Assertions.assertNull(authUserEntityQuery2.getId());
 	}
 
 	@Test
@@ -81,9 +85,12 @@ public class AuthUserEntityQueryRepositoryTest extends AbstractTransactionalJUni
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserEntityQuery authUserEntityQuery = authUserEntityQueryRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(authUserEntityQuery);
-		Assertions.assertEquals(new AuthUserEntityQuery(), authUserEntityQuery);
+
+		final AuthUserEntityQuery authUserEntityQuery2 = new AuthUserEntityQuery();
+		Assertions.assertNotEquals(authUserEntityQuery2, authUserEntityQuery);
+		Assertions.assertNull(authUserEntityQuery.getId());
+		Assertions.assertNull(authUserEntityQuery2.getId());
 	}
 
 	@Test

@@ -71,9 +71,12 @@ public class AuthRoleRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthRole authRole = authRoleRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(authRole);
-		Assertions.assertEquals(new AuthRole(), authRole);
+
+		final AuthRole authRole2 = new AuthRole();
+		Assertions.assertNotEquals(authRole2, authRole);
+		Assertions.assertNull(authRole.getId());
+		Assertions.assertNull(authRole2.getId());
 	}
 
 	@Test
@@ -107,9 +110,12 @@ public class AuthRoleRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthRole authRole = authRoleRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(authRole);
-		Assertions.assertEquals(new AuthRole(), authRole);
+
+		final AuthRole authRole2 = new AuthRole();
+		Assertions.assertNotEquals(authRole2, authRole);
+		Assertions.assertNull(authRole.getId());
+		Assertions.assertNull(authRole2.getId());
 	}
 
 	@Test

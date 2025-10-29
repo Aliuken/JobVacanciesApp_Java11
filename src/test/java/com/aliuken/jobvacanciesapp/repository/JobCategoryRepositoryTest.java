@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCategoryConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
 import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -69,9 +70,12 @@ public class JobCategoryRepositoryTest extends AbstractTransactionalJUnit4Spring
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final JobCategory jobCategory = jobCategoryRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(jobCategory);
-		Assertions.assertEquals(new JobCategory(), jobCategory);
+
+		final JobCategory jobCategory2 = new JobCategory();
+		Assertions.assertNotEquals(jobCategory2, jobCategory);
+		Assertions.assertNull(jobCategory.getId());
+		Assertions.assertNull(jobCategory2.getId());
 	}
 
 	@Test
@@ -105,9 +109,12 @@ public class JobCategoryRepositoryTest extends AbstractTransactionalJUnit4Spring
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final JobCategory jobCategory = jobCategoryRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(jobCategory);
-		Assertions.assertEquals(new JobCategory(), jobCategory);
+
+		final JobCategory jobCategory2 = new JobCategory();
+		Assertions.assertNotEquals(jobCategory2, jobCategory);
+		Assertions.assertNull(jobCategory.getId());
+		Assertions.assertNull(jobCategory2.getId());
 	}
 
 	@Test

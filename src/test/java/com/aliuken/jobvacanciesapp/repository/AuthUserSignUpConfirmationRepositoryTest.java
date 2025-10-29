@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.repository;
 import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
@@ -97,9 +98,12 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.getNewEntityInstance();
-
 		Assertions.assertNotNull(authUserSignUpConfirmation);
-		Assertions.assertEquals(new AuthUserSignUpConfirmation(), authUserSignUpConfirmation);
+
+		final AuthUserSignUpConfirmation authUserSignUpConfirmation2 = new AuthUserSignUpConfirmation();
+		Assertions.assertNotEquals(authUserSignUpConfirmation2, authUserSignUpConfirmation);
+		Assertions.assertNull(authUserSignUpConfirmation.getId());
+		Assertions.assertNull(authUserSignUpConfirmation2.getId());
 	}
 
 	@Test
@@ -133,9 +137,12 @@ public class AuthUserSignUpConfirmationRepositoryTest extends AbstractTransactio
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationRepository.findByIdOrNewEntity(null);
-
 		Assertions.assertNotNull(authUserSignUpConfirmation);
-		Assertions.assertEquals(new AuthUserSignUpConfirmation(), authUserSignUpConfirmation);
+
+		final AuthUserSignUpConfirmation authUserSignUpConfirmation2 = new AuthUserSignUpConfirmation();
+		Assertions.assertNotEquals(authUserSignUpConfirmation2, authUserSignUpConfirmation);
+		Assertions.assertNull(authUserSignUpConfirmation.getId());
+		Assertions.assertNull(authUserSignUpConfirmation2.getId());
 	}
 
 	@Test
