@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
 import java.util.Collection;
 import java.util.Map;
-
-import com.aliuken.jobvacanciesapp.Constants;
 
 public class LogicalUtils {
 

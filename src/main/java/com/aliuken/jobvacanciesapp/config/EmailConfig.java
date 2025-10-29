@@ -1,9 +1,8 @@
 package com.aliuken.jobvacanciesapp.config;
 
+import com.aliuken.jobvacanciesapp.model.dto.EmailTemplateDTO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.aliuken.jobvacanciesapp.model.dto.EmailTemplateDTO;
 
 @Configuration
 public class EmailConfig {

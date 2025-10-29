@@ -1,13 +1,13 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Stream;
-
-import com.aliuken.jobvacanciesapp.Constants;
 
 public class StringUtils {
 

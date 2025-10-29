@@ -1,11 +1,21 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-
+import com.aliuken.jobvacanciesapp.MainClass;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobCategoryConverter;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
+import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,21 +29,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.MainClass;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobCategoryConverter;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

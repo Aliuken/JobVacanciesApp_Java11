@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 
 @Converter(autoApply=true)
 public class TableSortingDirectionConverter implements AttributeConverter<TableSortingDirection, String> {

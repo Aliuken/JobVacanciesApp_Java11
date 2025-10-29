@@ -1,16 +1,15 @@
 package com.aliuken.jobvacanciesapp.repository.superinterface;
 
-import java.util.List;
-import java.util.Map;
-
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
-import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import java.util.List;
+import java.util.Map;
 
 public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity> {
 	public abstract <S extends T> S saveAndFlush(S entity);

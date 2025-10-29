@@ -1,39 +1,5 @@
 package com.aliuken.jobvacanciesapp.repository.superinterface;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
-
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
-import org.ehcache.config.CacheConfiguration;
-import org.ehcache.config.ResourcePools;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
-import org.ehcache.config.builders.ResourcePoolsBuilder;
-import org.ehcache.core.internal.statistics.DefaultStatisticsService;
-import org.ehcache.core.spi.service.StatisticsService;
-import org.ehcache.core.statistics.CacheStatistics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaContext;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
-
 import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
 import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
@@ -49,6 +15,30 @@ import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.spring.aop.logging.RepositoryAspectLoggingUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.ResourcePools;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.core.internal.statistics.DefaultStatisticsService;
+import org.ehcache.core.spi.service.StatisticsService;
+import org.ehcache.core.statistics.CacheStatistics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaContext;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @NoRepositoryBean
 public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepository<T, Long>, UpgradedJpaRepositoryInterface<T> {

@@ -1,13 +1,12 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.util.List;
-import java.util.Locale;
-
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Locale;
 
 public enum Language implements ConfigurableEnum<Language> {
 	BY_DEFAULT("--", "language.byDefault", null),

@@ -1,15 +1,24 @@
 package com.aliuken.jobvacanciesapp.controller;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserEmailDTO;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserResetPasswordDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserResetPasswordConverter;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
+import com.aliuken.jobvacanciesapp.model.entity.*;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
+import com.aliuken.jobvacanciesapp.service.*;
+import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -20,51 +29,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.dto.AuthUserEmailDTO;
-import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
-import com.aliuken.jobvacanciesapp.model.dto.AuthUserResetPasswordDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserResetPasswordConverter;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserResetPassword;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
-import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.service.AuthRoleService;
-import com.aliuken.jobvacanciesapp.service.AuthUserCredentialsService;
-import com.aliuken.jobvacanciesapp.service.AuthUserResetPasswordService;
-import com.aliuken.jobvacanciesapp.service.AuthUserRoleService;
-import com.aliuken.jobvacanciesapp.service.AuthUserService;
-import com.aliuken.jobvacanciesapp.service.AuthUserSignUpConfirmationService;
-import com.aliuken.jobvacanciesapp.service.EmailService;
-import com.aliuken.jobvacanciesapp.service.JobCategoryService;
-import com.aliuken.jobvacanciesapp.service.JobVacancyService;
-import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Controller
 @Slf4j

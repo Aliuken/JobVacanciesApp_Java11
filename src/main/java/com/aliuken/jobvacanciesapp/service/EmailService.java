@@ -1,8 +1,8 @@
 package com.aliuken.jobvacanciesapp.service;
 
-import javax.mail.MessagingException;
-
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+
+import javax.mail.MessagingException;
 
 public interface EmailService {
 

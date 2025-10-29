@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 
 @Converter(autoApply=true)
 public class TablePageSizeConverter implements AttributeConverter<TablePageSize, Integer> {

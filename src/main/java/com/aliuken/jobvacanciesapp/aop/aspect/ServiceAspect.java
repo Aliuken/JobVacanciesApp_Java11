@@ -1,16 +1,14 @@
 package com.aliuken.jobvacanciesapp.aop.aspect;
 
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.CannotCreateTransactionException;
-
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class that contains the Advises used around services

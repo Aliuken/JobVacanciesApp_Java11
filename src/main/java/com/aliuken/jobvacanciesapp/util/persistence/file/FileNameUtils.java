@@ -1,14 +1,14 @@
 package com.aliuken.jobvacanciesapp.util.persistence.file;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileNameUtils {
 	private static final String EXTENSION_PATTERN = "^(.+)\\.([^.]+$)";

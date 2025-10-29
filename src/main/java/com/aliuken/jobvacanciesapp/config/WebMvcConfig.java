@@ -1,8 +1,8 @@
 package com.aliuken.jobvacanciesapp.config;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+import com.aliuken.jobvacanciesapp.model.formatter.LocalDateFormatter;
+import com.aliuken.jobvacanciesapp.model.formatter.LocalDateTimeFormatter;
+import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -11,9 +11,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import com.aliuken.jobvacanciesapp.model.formatter.LocalDateFormatter;
-import com.aliuken.jobvacanciesapp.model.formatter.LocalDateTimeFormatter;
-import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

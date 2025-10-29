@@ -1,19 +1,17 @@
 package com.aliuken.jobvacanciesapp.util.spring.aop.logging;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.MDC;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Utility class that contains the common methods used for logging in controllers

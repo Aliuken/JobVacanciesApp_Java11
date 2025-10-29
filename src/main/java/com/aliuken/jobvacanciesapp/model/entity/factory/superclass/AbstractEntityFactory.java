@@ -1,9 +1,8 @@
 package com.aliuken.jobvacanciesapp.model.entity.factory.superclass;
 
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public abstract class AbstractEntityFactory<T extends AbstractEntity> extends AbstractFactoryBean<T> {
 	private final Class<T> objectType = GenericsUtils.cast(this.createInstance().getClass());

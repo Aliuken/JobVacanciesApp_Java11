@@ -1,22 +1,15 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="auth_user_curriculum", indexes={
@@ -24,7 +17,8 @@ import lombok.Data;
 		@Index(name="auth_user_curriculum_key_1", columnList="first_registration_auth_user_id"),
 		@Index(name="auth_user_curriculum_key_2", columnList="last_modification_auth_user_id"),
 		@Index(name="auth_user_curriculum_key_3", columnList="auth_user_id")})
-@Data
+@Getter
+@Setter
 public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 	private static final long serialVersionUID = -8095503029320669346L;
 
@@ -105,22 +99,5 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(this.getAuthUser(), fileName);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		AuthUserCurriculum other = (AuthUserCurriculum) obj;
-		return Objects.equals(this.getAuthUser(), other.getAuthUser()) && Objects.equals(fileName, other.fileName);
 	}
 }

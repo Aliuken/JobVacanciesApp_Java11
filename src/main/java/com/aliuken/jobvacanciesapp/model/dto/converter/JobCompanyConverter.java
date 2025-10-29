@@ -1,13 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.dto.converter;
 
-import java.util.Set;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
+
+import java.util.Set;
 
 public class JobCompanyConverter extends EntityToDtoConverter<JobCompany, JobCompanyDTO> {
 

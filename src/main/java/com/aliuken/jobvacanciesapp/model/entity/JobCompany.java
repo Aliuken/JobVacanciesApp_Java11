@@ -1,30 +1,21 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Index;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="job_company", indexes={
@@ -32,7 +23,8 @@ import lombok.Data;
 		@Index(name="job_company_unique_key_2", columnList="id,selected_logo_file_name", unique=true),
 		@Index(name="job_company_key_1", columnList="first_registration_auth_user_id"),
 		@Index(name="job_company_key_2", columnList="last_modification_auth_user_id")})
-@Data
+@Getter
+@Setter
 public class JobCompany extends AbstractEntity {
 	private static final long serialVersionUID = 3938985347825170805L;
 
@@ -212,22 +204,5 @@ public class JobCompany extends AbstractEntity {
 			 ", jobCompanyLogos=", jobCompanyLogoSelectionNames, ", jobVacancies=", jobVacancyNames, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(name, description, selectedLogoFileName);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		JobCompany other = (JobCompany) obj;
-		return Objects.equals(name, other.name) && Objects.equals(description, other.description) && Objects.equals(selectedLogoFileName, other.selectedLogoFileName);
 	}
 }

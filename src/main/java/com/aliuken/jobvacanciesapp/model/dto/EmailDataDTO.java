@@ -1,15 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
-import java.util.List;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
+import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class EmailDataDTO implements Serializable {

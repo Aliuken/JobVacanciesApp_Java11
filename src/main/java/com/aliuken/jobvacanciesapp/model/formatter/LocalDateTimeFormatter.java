@@ -1,13 +1,12 @@
 package com.aliuken.jobvacanciesapp.model.formatter;
 
-import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.util.Locale;
-
+import com.aliuken.jobvacanciesapp.Constants;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
-import com.aliuken.jobvacanciesapp.Constants;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.Locale;
 
 @Component
 public class LocalDateTimeFormatter implements Formatter<LocalDateTime> {

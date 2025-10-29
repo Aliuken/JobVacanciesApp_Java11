@@ -1,12 +1,12 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigurableEnumUtils {
 	private static final ConfigurableEnumUtils SINGLETON_INSTANCE = new ConfigurableEnumUtils();

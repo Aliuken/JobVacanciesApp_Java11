@@ -1,10 +1,10 @@
 package com.aliuken.jobvacanciesapp.model.comparator;
 
-import java.util.Comparator;
-
 import com.aliuken.jobvacanciesapp.model.comparator.superinterface.AbstractEntityIdComparator;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
+
+import java.util.Comparator;
 
 public class AuthUserRoleAuthUserFullNameComparator implements Comparator<AuthUserRole>, AbstractEntityIdComparator {
 	@Override

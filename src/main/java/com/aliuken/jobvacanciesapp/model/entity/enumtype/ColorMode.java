@@ -1,10 +1,10 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+
+import javax.validation.constraints.NotNull;
 
 public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	BY_DEFAULT("-", "default", "colorMode.byDefault"),

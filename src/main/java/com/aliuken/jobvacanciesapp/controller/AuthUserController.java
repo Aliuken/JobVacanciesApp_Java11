@@ -1,13 +1,22 @@
 package com.aliuken.jobvacanciesapp.controller;
 
-import java.nio.file.Path;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
+import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
+import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
+import com.aliuken.jobvacanciesapp.service.*;
+import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
+import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,29 +30,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
-import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
-import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
-import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
-import com.aliuken.jobvacanciesapp.service.AuthUserCredentialsService;
-import com.aliuken.jobvacanciesapp.service.AuthUserCurriculumService;
-import com.aliuken.jobvacanciesapp.service.AuthUserRoleService;
-import com.aliuken.jobvacanciesapp.service.AuthUserService;
-import com.aliuken.jobvacanciesapp.service.AuthUserSignUpConfirmationService;
-import com.aliuken.jobvacanciesapp.service.JobRequestService;
-import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.nio.file.Path;
+import java.util.Objects;
+import java.util.Set;
 
 @Controller
 @Slf4j

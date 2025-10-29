@@ -1,15 +1,14 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Repository;
-
 import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.factory.JobCompanyFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public interface JobCompanyRepository extends UpgradedJpaRepository<JobCompany> {

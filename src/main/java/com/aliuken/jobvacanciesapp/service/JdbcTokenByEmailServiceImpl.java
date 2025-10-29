@@ -1,14 +1,13 @@
 package com.aliuken.jobvacanciesapp.service;
 
-import java.util.Date;
-
+import com.aliuken.jobvacanciesapp.annotation.ServiceMethod;
+import com.aliuken.jobvacanciesapp.repository.superinterface.JdbcTokenByEmailRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aliuken.jobvacanciesapp.annotation.ServiceMethod;
-import com.aliuken.jobvacanciesapp.repository.superinterface.JdbcTokenByEmailRepositoryInterface;
+import java.util.Date;
 
 @Service
 @Transactional

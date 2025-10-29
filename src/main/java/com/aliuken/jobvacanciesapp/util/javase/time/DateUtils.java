@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.util.javase.time;
 
+import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils;
 
 public class DateUtils implements TemporalUtils<LocalDate> {
 

@@ -1,10 +1,9 @@
 package com.aliuken.jobvacanciesapp.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import com.aliuken.jobvacanciesapp.enumtype.AllowedViewsEnum;
+import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
+import com.aliuken.jobvacanciesapp.security.CustomAuthenticationHandler;
+import com.aliuken.jobvacanciesapp.service.JdbcTokenByEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.aliuken.jobvacanciesapp.enumtype.AllowedViewsEnum;
-import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
-import com.aliuken.jobvacanciesapp.security.CustomAuthenticationHandler;
-import com.aliuken.jobvacanciesapp.service.JdbcTokenByEmailService;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity

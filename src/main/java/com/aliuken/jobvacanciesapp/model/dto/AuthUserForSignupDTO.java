@@ -1,15 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
+import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
+import java.io.Serializable;
 
 @Data
 public class AuthUserForSignupDTO implements AbstractEntityDTO, Serializable {

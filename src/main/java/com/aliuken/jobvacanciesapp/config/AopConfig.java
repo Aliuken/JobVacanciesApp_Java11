@@ -1,13 +1,12 @@
 package com.aliuken.jobvacanciesapp.config;
 
+import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
+import com.aliuken.jobvacanciesapp.aop.aspect.RepositoryAspect;
+import com.aliuken.jobvacanciesapp.aop.aspect.ServiceAspect;
 import org.aspectj.lang.Aspects;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-
-import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
-import com.aliuken.jobvacanciesapp.aop.aspect.RepositoryAspect;
-import com.aliuken.jobvacanciesapp.aop.aspect.ServiceAspect;
 
 @Configuration
 @EnableAspectJAutoProxy

@@ -1,6 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.Objects;
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,19 +15,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
-
-import lombok.Data;
-
 @Entity
 @Table(name="auth_user_credentials", indexes={
 		@Index(name="auth_user_credentials_unique_key_1", columnList="email", unique=true),
 		@Index(name="auth_user_credentials_key_1", columnList="first_registration_auth_user_id"),
 		@Index(name="auth_user_credentials_key_2", columnList="last_modification_auth_user_id")})
-@Data
+@Getter
+@Setter
 public class AuthUserCredentials extends AbstractEntity {
 	private static final long serialVersionUID = 1302984200214581263L;
 
@@ -80,22 +79,5 @@ public class AuthUserCredentials extends AbstractEntity {
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(email, encryptedPassword);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		AuthUserCredentials other = (AuthUserCredentials) obj;
-		return Objects.equals(email, other.email) && Objects.equals(encryptedPassword, other.encryptedPassword);
 	}
 }

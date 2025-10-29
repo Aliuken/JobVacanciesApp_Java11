@@ -1,8 +1,8 @@
 package com.aliuken.jobvacanciesapp.model.entity.superinterface;
 
-import java.io.Serializable;
-
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
+
+import java.io.Serializable;
 
 public interface AbstractEntityWithJobCompanyInterface extends Serializable {
 	public abstract JobCompany getJobCompany();

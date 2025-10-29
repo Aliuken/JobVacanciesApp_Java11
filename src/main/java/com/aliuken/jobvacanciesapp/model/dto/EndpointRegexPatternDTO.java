@@ -1,17 +1,14 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
+import org.springframework.http.HttpMethod;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.validation.constraints.NotNull;
-
-import org.springframework.http.HttpMethod;
-
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
 
 @Data
 public class EndpointRegexPatternDTO implements Serializable {

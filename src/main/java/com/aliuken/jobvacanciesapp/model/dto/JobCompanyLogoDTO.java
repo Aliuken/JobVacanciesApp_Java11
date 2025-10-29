@@ -1,16 +1,14 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
+import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 public class JobCompanyLogoDTO implements AbstractEntityDTO, Serializable {

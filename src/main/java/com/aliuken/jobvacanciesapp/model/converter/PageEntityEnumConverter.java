@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 
 @Converter(autoApply=true)
 public class PageEntityEnumConverter implements AttributeConverter<PageEntityEnum, String> {

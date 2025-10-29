@@ -1,19 +1,18 @@
 package com.aliuken.jobvacanciesapp.util.security;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SpringSecurityUtils {
 

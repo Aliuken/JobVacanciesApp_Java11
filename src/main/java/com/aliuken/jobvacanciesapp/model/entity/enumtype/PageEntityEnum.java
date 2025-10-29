@@ -1,8 +1,8 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.io.Serializable;
-
 import com.aliuken.jobvacanciesapp.Constants;
+
+import java.io.Serializable;
 
 public enum PageEntityEnum implements Serializable {
 	AUTH_USER           ("authUsers"),

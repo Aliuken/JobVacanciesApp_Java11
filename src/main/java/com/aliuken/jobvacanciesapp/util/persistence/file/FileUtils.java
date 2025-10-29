@@ -1,20 +1,5 @@
 package com.aliuken.jobvacanciesapp.util.persistence.file;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.data.domain.Page;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
@@ -31,9 +16,21 @@ import com.aliuken.jobvacanciesapp.util.persistence.pdf.AuthUserQueryReport;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
-
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.ZipFile;
+import org.springframework.data.domain.Page;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class FileUtils {

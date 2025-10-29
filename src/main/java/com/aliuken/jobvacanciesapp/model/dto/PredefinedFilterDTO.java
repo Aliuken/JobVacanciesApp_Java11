@@ -1,12 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 public class PredefinedFilterDTO implements Serializable {

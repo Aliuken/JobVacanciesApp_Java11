@@ -1,37 +1,29 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Index;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="job_category", indexes={
 		@Index(name="job_category_unique_key_1", columnList="name", unique=true),
 		@Index(name="job_category_key_1", columnList="first_registration_auth_user_id"),
 		@Index(name="job_category_key_2", columnList="last_modification_auth_user_id")})
-@Data
+@Getter
+@Setter
 public class JobCategory extends AbstractEntity {
 	private static final long serialVersionUID = -1716013269189038906L;
 
@@ -118,22 +110,5 @@ public class JobCategory extends AbstractEntity {
 			", jobVacancies=", jobVacancyNames, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(name, description);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		JobCategory other = (JobCategory) obj;
-		return Objects.equals(name, other.name) && Objects.equals(description, other.description);
 	}
 }

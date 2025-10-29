@@ -1,12 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 public enum JobVacancyStatus implements Serializable, Internationalizable {
 	CREATED ("C", "jobVacancyStatus.created"),

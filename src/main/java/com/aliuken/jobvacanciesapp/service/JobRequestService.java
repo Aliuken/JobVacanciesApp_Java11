@@ -1,11 +1,11 @@
 package com.aliuken.jobvacanciesapp.service;
 
-import java.util.List;
-
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.service.superclass.JobRequestServiceSuperclass;
+
+import java.util.List;
 
 public abstract class JobRequestService extends JobRequestServiceSuperclass {
 

@@ -1,38 +1,29 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.model.comparator.JobRequestAuthUserFullNameComparator;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithJobCompany;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.SortComparator;
+
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.SortComparator;
-
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
-import com.aliuken.jobvacanciesapp.model.comparator.JobRequestAuthUserFullNameComparator;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
-import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithJobCompany;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
-
-import lombok.Data;
 
 @Entity
 @Table(name="job_vacancy", indexes={
@@ -41,7 +32,8 @@ import lombok.Data;
 		@Index(name="job_vacancy_key_3", columnList="status"),
 		@Index(name="job_vacancy_key_4", columnList="job_company_id"),
 		@Index(name="job_vacancy_key_5", columnList="job_category_id")})
-@Data
+@Getter
+@Setter
 public class JobVacancy extends AbstractEntityWithJobCompany {
 	private static final long serialVersionUID = 6062234886735475157L;
 
@@ -238,26 +230,5 @@ public class JobVacancy extends AbstractEntityWithJobCompany {
 			", users=", authUserEmails, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(name, description, salary, currency, status, highlighted, jobCompany, jobCategory, publicationDateTime, details);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		JobVacancy other = (JobVacancy) obj;
-		return Objects.equals(name, other.name) && Objects.equals(description, other.description)
-			&& Objects.equals(salary, other.salary) && Objects.equals(currency, other.currency)
-			&& Objects.equals(status, other.status) && Objects.equals(highlighted, other.highlighted)
-			&& Objects.equals(jobCompany, other.jobCompany) && Objects.equals(jobCategory, other.jobCategory)
-			&& Objects.equals(publicationDateTime, other.publicationDateTime) && Objects.equals(details, other.details);
 	}
 }

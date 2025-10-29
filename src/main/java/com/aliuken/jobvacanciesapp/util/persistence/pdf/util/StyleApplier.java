@@ -1,10 +1,10 @@
 package com.aliuken.jobvacanciesapp.util.persistence.pdf.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Font;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StyleApplier {

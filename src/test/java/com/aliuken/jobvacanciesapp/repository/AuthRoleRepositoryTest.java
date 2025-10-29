@@ -1,9 +1,12 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
+import com.aliuken.jobvacanciesapp.MainClass;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +20,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.MainClass;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

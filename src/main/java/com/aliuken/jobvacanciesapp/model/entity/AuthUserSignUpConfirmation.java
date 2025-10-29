@@ -1,6 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.Objects;
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,20 +15,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
-
-import lombok.Data;
-
 @Entity
 @Table(name="auth_user_signup_confirmation", indexes={
 		@Index(name="auth_user_signup_confirmation_unique_key_1", columnList="email", unique=true),
 		@Index(name="auth_user_signup_confirmation_unique_key_2", columnList="email,uuid", unique=true),
 		@Index(name="auth_user_signup_confirmation_key_1", columnList="first_registration_auth_user_id"),
 		@Index(name="auth_user_signup_confirmation_key_2", columnList="last_modification_auth_user_id")})
-@Data
+@Getter
+@Setter
 public class AuthUserSignUpConfirmation extends AbstractEntity {
 	private static final long serialVersionUID = -3817688436517437137L;
 
@@ -81,22 +80,5 @@ public class AuthUserSignUpConfirmation extends AbstractEntity {
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(email, uuid);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		AuthUserSignUpConfirmation other = (AuthUserSignUpConfirmation) obj;
-		return Objects.equals(email, other.email) && Objects.equals(uuid, other.uuid);
 	}
 }

@@ -1,5 +1,8 @@
 package com.aliuken.jobvacanciesapp.util.persistence.file;
 
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -7,10 +10,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 
 public class CustomMultipartFile implements MultipartFile {
 

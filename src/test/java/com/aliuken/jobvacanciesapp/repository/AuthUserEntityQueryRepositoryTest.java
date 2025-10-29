@@ -1,7 +1,13 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.List;
-
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.MainClass;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,19 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.MainClass;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

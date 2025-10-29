@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.repository.superinterface;
 
-import java.util.Date;
-
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import java.util.Date;
 
 public interface JdbcTokenByEmailRepositoryInterface extends PersistentTokenRepository {
 	public abstract void initDao();

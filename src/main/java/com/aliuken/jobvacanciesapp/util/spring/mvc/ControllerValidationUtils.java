@@ -1,14 +1,12 @@
 package com.aliuken.jobvacanciesapp.util.spring.mvc;
 
-import java.util.List;
-
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 @Slf4j
 public class ControllerValidationUtils {

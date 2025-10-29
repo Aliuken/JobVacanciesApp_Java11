@@ -1,19 +1,14 @@
 package com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder;
 
-import java.util.List;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPCellEvent;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import java.util.List;
 
 public class GenericTableRowCellBuilder implements PdfPCellEvent {
 	private static final int CELL_VERTICAL_ALIGNMENT = Element.ALIGN_MIDDLE;

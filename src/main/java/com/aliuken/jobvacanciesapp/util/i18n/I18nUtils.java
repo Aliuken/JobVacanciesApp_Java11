@@ -1,14 +1,13 @@
 package com.aliuken.jobvacanciesapp.util.i18n;
 
-import java.util.Locale;
-
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
-import org.springframework.context.MessageSource;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import org.springframework.context.MessageSource;
+
+import java.util.Locale;
 
 public class I18nUtils {
 

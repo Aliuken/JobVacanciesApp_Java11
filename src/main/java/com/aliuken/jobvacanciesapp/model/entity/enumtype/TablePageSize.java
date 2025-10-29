@@ -1,12 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	BY_DEFAULT(0,   "tablePageSize.byDefault"),

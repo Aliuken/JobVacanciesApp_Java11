@@ -1,22 +1,15 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUserAndJobCompany;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="job_request", indexes={
@@ -26,7 +19,8 @@ import lombok.Data;
 		@Index(name="job_request_key_3", columnList="auth_user_id"),
 		@Index(name="job_request_key_4", columnList="job_vacancy_id"),
 		@Index(name="job_request_key_5", columnList="auth_user_id,curriculum_file_name")})
-@Data
+@Getter
+@Setter
 public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany {
 	private static final long serialVersionUID = 8508562505523280587L;
 
@@ -173,22 +167,5 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany {
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(jobVacancy, comments, curriculumFileName);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		JobRequest other = (JobRequest) obj;
-		return Objects.equals(jobVacancy, other.jobVacancy) && Objects.equals(comments, other.comments) && Objects.equals(curriculumFileName, other.curriculumFileName);
 	}
 }

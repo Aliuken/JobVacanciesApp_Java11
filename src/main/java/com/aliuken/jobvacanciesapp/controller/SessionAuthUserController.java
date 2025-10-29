@@ -1,23 +1,5 @@
 package com.aliuken.jobvacanciesapp.controller;
 
-import java.nio.file.Path;
-import java.util.Map;
-
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
@@ -30,6 +12,7 @@ import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserCredentialsConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.service.AuthUserCredentialsService;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
@@ -40,8 +23,22 @@ import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Path;
+import java.util.Map;
 
 @Controller
 @Slf4j

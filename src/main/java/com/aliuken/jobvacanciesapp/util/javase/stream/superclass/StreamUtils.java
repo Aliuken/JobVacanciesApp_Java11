@@ -1,5 +1,8 @@
 package com.aliuken.jobvacanciesapp.util.javase.stream.superclass;
 
+import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.SequentialStreamUtils;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +10,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
-
-import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
-import com.aliuken.jobvacanciesapp.util.javase.stream.SequentialStreamUtils;
 
 public abstract class StreamUtils {
 

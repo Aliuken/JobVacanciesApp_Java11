@@ -1,10 +1,10 @@
 package com.aliuken.jobvacanciesapp.enumtype.superinterface;
 
-import java.io.Serializable;
-
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+
+import java.io.Serializable;
 
 public interface ConfigurableEnum<T extends Enum<T>> extends Serializable, Internationalizable {
 	public static final String BY_DEFAULT_ELEMENT_NAME = "BY_DEFAULT";

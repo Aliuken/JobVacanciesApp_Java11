@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 
 @Converter(autoApply=true)
 public class LanguageConverter implements AttributeConverter<Language, String> {

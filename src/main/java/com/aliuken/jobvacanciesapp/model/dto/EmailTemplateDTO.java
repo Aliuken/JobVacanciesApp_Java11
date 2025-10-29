@@ -1,12 +1,10 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
+import java.io.Serializable;
 
 @Data
 public class EmailTemplateDTO implements Serializable {

@@ -1,16 +1,14 @@
 package com.aliuken.jobvacanciesapp.aop.aspect;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.aop.logging.ControllerAspectLoggingUtils;
+import com.aliuken.jobvacanciesapp.util.spring.aop.rest.ControllerAspectRestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +19,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.aop.logging.ControllerAspectLoggingUtils;
-import com.aliuken.jobvacanciesapp.util.spring.aop.rest.ControllerAspectRestUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class that contains the Advises used around controllers

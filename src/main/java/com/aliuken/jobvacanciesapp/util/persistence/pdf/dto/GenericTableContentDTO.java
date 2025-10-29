@@ -1,11 +1,10 @@
 package com.aliuken.jobvacanciesapp.util.persistence.pdf.dto;
 
-import java.io.Serializable;
-
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 public class GenericTableContentDTO implements Serializable {

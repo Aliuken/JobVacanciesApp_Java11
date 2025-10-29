@@ -1,59 +1,17 @@
 package com.aliuken.jobvacanciesapp.controller;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Function;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
-import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
-import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.dto.*;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
+import com.aliuken.jobvacanciesapp.model.entity.*;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
-import com.aliuken.jobvacanciesapp.service.AuthUserService;
-import com.aliuken.jobvacanciesapp.service.JobCategoryService;
-import com.aliuken.jobvacanciesapp.service.JobCompanyLogoService;
-import com.aliuken.jobvacanciesapp.service.JobCompanyService;
-import com.aliuken.jobvacanciesapp.service.JobRequestService;
-import com.aliuken.jobvacanciesapp.service.JobVacancyService;
+import com.aliuken.jobvacanciesapp.service.*;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
@@ -62,8 +20,28 @@ import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 
 @Controller
 @Slf4j

@@ -1,8 +1,5 @@
 package com.aliuken.jobvacanciesapp;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
 import com.aliuken.jobvacanciesapp.util.javase.stream.SequentialStreamUtils;
@@ -10,6 +7,9 @@ import com.aliuken.jobvacanciesapp.util.javase.stream.superclass.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateTimeUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Constants {
 

@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
 
 @Converter(autoApply=true)
 public class ColorModeConverter implements AttributeConverter<ColorMode, String> {

@@ -1,14 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.io.Serializable;
-import java.util.function.Predicate;
-
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.function.Predicate;
 
 public enum TableField implements Serializable, Internationalizable {
 	ID("id", null, "id", "abstractEntity.id", false),

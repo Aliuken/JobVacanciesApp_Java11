@@ -1,11 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.entity.superinterface;
 
-import java.io.Serializable;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+
+import java.io.Serializable;
 
 public interface AbstractEntityWithAuthUserInterface extends Serializable, AbstractEntityFieldsPrintable {
 	public abstract AuthUser getAuthUser();

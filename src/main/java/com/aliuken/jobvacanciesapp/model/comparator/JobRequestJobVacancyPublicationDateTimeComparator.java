@@ -1,11 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.comparator;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
-
 import com.aliuken.jobvacanciesapp.model.comparator.superinterface.AbstractEntityIdComparator;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
+
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 public class JobRequestJobVacancyPublicationDateTimeComparator implements Comparator<JobRequest>, AbstractEntityIdComparator {
 	@Override

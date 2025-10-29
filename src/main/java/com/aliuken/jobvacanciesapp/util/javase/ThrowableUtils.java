@@ -1,11 +1,10 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
+import com.aliuken.jobvacanciesapp.Constants;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import com.aliuken.jobvacanciesapp.Constants;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ThrowableUtils {

@@ -1,18 +1,15 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
+import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
-import lombok.Data;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 public class AuthUserCurriculumDTO implements AbstractEntityDTO, Serializable {

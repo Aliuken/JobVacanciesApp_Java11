@@ -1,11 +1,10 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
-
-import javax.sql.DataSource;
-
+import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
+import com.aliuken.jobvacanciesapp.repository.superinterface.JdbcTokenByEmailRepositoryInterface;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,12 +13,10 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Repository;
 
-import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
-import com.aliuken.jobvacanciesapp.repository.superinterface.JdbcTokenByEmailRepositoryInterface;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * JDBC based persistent login token repository implementation.

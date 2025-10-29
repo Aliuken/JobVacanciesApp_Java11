@@ -1,10 +1,9 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
-import java.io.Serializable;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
 import javax.validation.constraints.NotNull;
-
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import java.io.Serializable;
 
 public enum ControllerDependentTraceType implements Serializable {
 	DATABASE_TRACE                    ("DB "),

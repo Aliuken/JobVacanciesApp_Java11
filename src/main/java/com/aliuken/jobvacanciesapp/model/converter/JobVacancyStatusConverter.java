@@ -1,9 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 
 @Converter(autoApply=true)
 public class JobVacancyStatusConverter implements AttributeConverter<JobVacancyStatus, String> {

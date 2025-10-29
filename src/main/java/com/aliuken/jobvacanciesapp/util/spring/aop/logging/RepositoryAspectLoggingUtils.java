@@ -1,10 +1,9 @@
 package com.aliuken.jobvacanciesapp.util.spring.aop.logging;
 
-import org.slf4j.MDC;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import org.slf4j.MDC;
 
 /**
  * Utility class that contains the common methods used for logging in repositories

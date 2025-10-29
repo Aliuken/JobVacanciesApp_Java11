@@ -1,15 +1,16 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.persistence.Column;
-import javax.validation.ConstraintViolationException;
-import javax.validation.constraints.NotNull;
-
+import com.aliuken.jobvacanciesapp.MainClass;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
+import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserForSignupConverter;
+import com.aliuken.jobvacanciesapp.model.entity.*;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,22 +24,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.MainClass;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
-import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
-import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
-import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserForSignupConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
-import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

@@ -1,14 +1,13 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
-import javax.validation.constraints.NotEmpty;
-
-import com.aliuken.jobvacanciesapp.Constants;
 
 public enum AllowedViewsEnum implements Serializable {
 	ANONYMOUS_ACCESS_BY_DEFAULT (AnonymousAccessPermission.BY_DEFAULT),

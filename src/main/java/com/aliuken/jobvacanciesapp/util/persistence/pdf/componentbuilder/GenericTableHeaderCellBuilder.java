@@ -1,25 +1,19 @@
 package com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.PdfTableHeaderFieldType;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
+import com.itextpdf.text.*;
 import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPCellEvent;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class GenericTableHeaderCellBuilder implements PdfPCellEvent {
 	private static final Font NORMAL_FONT = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);

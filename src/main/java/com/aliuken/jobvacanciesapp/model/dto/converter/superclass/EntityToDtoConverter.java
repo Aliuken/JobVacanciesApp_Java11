@@ -1,13 +1,13 @@
 package com.aliuken.jobvacanciesapp.model.dto.converter.superclass;
 
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntFunction;
-
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
-import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 
 public abstract class EntityToDtoConverter<T extends AbstractEntity,U extends AbstractEntityDTO> {
 

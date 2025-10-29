@@ -1,9 +1,6 @@
 package com.aliuken.jobvacanciesapp.config;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +9,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 @Configuration
 public class I18nConfig {

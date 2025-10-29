@@ -1,14 +1,12 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.domain.Sort;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import org.springframework.data.domain.Sort;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 public enum TableSortingDirection implements Serializable, Internationalizable {
 	ASC("asc", "tableSortingDirection.asc", Sort.Direction.ASC),

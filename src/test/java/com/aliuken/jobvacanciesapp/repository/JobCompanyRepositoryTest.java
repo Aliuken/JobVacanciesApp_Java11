@@ -1,8 +1,17 @@
 package com.aliuken.jobvacanciesapp.repository;
 
-import java.util.List;
-import java.util.Set;
-
+import com.aliuken.jobvacanciesapp.MainClass;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
+import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyLogoConverter;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
+import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
+import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,18 +25,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.aliuken.jobvacanciesapp.MainClass;
-import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
-import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
-import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
-import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyLogoConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
-import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import java.util.List;
+import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

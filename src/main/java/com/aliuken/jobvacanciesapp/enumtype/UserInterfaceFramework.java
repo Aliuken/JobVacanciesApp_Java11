@@ -1,10 +1,10 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
-import javax.validation.constraints.NotNull;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+
+import javax.validation.constraints.NotNull;
 
 public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFramework> {
 	BY_DEFAULT     ("-", "uiFramework.byDefault"),

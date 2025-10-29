@@ -1,46 +1,34 @@
 package com.aliuken.jobvacanciesapp.model.entity;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithAuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 @Entity
 @Table(name = "auth_user_entity_query", indexes = {
 		@Index(name = "auth_user_entity_query_key_1", columnList = "auth_user_id"),
 		@Index(name = "auth_user_entity_query_key_2", columnList = "first_registration_auth_user_id"),
 		@Index(name = "auth_user_entity_query_key_3", columnList = "last_modification_auth_user_id")})
-@Data
+@Getter
+@Setter
 public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 	private static final long serialVersionUID = -2092511420655590241L;
 
@@ -330,29 +318,5 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
 				", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ Objects.hash(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, language, predefinedFilterEntity, predefinedFilterValue, filterTableField, filterValue, tableSortingField, tableSortingDirection, tablePageSize, pageNumber, queryUrl, finalResultFileName);
-
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if(!super.equals(obj)) {
-			return false;
-		}
-		AuthUserEntityQuery other = (AuthUserEntityQuery) obj;
-		return Objects.equals(initialPdfDocumentPageFormat, other.initialPdfDocumentPageFormat) && Objects.equals(finalPdfDocumentPageFormat, other.finalPdfDocumentPageFormat) && Objects.equals(language, other.language)
-			&& Objects.equals(predefinedFilterEntity, other.predefinedFilterEntity) && Objects.equals(predefinedFilterValue, other.predefinedFilterValue)
-			&& Objects.equals(filterTableField, other.filterTableField) && Objects.equals(filterValue, other.filterValue)
-			&& Objects.equals(tableSortingField, other.tableSortingField) && Objects.equals(tableSortingDirection, other.tableSortingDirection)
-			&& Objects.equals(tablePageSize, other.tablePageSize) && Objects.equals(pageNumber, other.pageNumber)
-			&& Objects.equals(queryUrl, other.queryUrl) && Objects.equals(finalResultFileName, other.finalResultFileName);
 	}
 }

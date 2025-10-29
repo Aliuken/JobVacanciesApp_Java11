@@ -1,7 +1,5 @@
 package com.aliuken.jobvacanciesapp.util.spring.mvc;
 
-import org.springframework.ui.Model;
-
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
@@ -11,8 +9,8 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 
 @Slf4j
 public class ControllerNavigationUtils {

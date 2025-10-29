@@ -1,18 +1,12 @@
 package com.aliuken.jobvacanciesapp.util.persistence.database;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 
-import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import javax.persistence.criteria.*;
+import java.time.LocalDateTime;
 
 public class DatabaseUtils {
 

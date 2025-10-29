@@ -1,8 +1,8 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
-import java.util.Optional;
-
 import com.aliuken.jobvacanciesapp.Constants;
+
+import java.util.Optional;
 
 public class GenericsUtils {
 
