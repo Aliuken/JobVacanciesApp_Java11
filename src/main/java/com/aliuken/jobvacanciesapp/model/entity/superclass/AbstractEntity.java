@@ -192,7 +192,7 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	}
 
 	@Override
-	public int compareTo(AbstractEntity other) {
+	public final int compareTo(AbstractEntity other) {
 		final int compareResult = this.compareTo(other, false);
 		return compareResult;
 	}
@@ -206,7 +206,7 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	 *   <li>ID value (ascending or descending)</li>
 	 * </ul>
 	 */
-	private int compareTo(AbstractEntity other, boolean descending) {
+	private final int compareTo(AbstractEntity other, boolean descending) {
 		final int direction = descending ? -1 : 1;
 
 		if (other == null) {
@@ -238,13 +238,13 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int result = Objects.hash(this.getClass(), this.id);
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if(this == obj) {
 			return true;
 		}
