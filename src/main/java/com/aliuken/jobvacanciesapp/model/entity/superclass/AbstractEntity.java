@@ -24,6 +24,8 @@ import java.util.Objects;
 @Slf4j
 public abstract class AbstractEntity implements Serializable, Comparable<AbstractEntity>, AbstractEntityFieldsPrintable {
 	private static final long serialVersionUID = -1146558230499546161L;
+	private static final int THIS_FIRST = -1;
+	private static final int OTHER_FIRST = 1;
 
 	@Id
 	@Column(name="id")
@@ -176,17 +178,6 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	}
 
 	@Override
-	public int compareTo(AbstractEntity abstractEntity) {
-		if(this.id == null) {
-			return -1;
-		}
-		if(abstractEntity == null || abstractEntity.id == null) {
-			return 1;
-		}
-		return Long.compare(abstractEntity.id, this.id);
-	}
-
-	@Override
 	public String toString() {
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
@@ -201,14 +192,54 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	}
 
 	@Override
-	public int hashCode() {
-		final int result;
-		if(id != null) {
-			final Class<? extends AbstractEntity> entityClass = this.getClass();
-			result = Objects.hash(entityClass, id);
-		} else {
-			result = System.identityHashCode(this);
+	public int compareTo(AbstractEntity other) {
+		final int compareResult = this.compareTo(other, false);
+		return compareResult;
+	}
+
+	/**
+	 * Defines a natural ordering among entities.
+	 * <p>
+	 * Entities are ordered by:
+	 * <ul>
+	 *   <li>Class name (lexicographically)</li>
+	 *   <li>ID value (ascending or descending)</li>
+	 * </ul>
+	 */
+	private int compareTo(AbstractEntity other, boolean descending) {
+		final int direction = descending ? -1 : 1;
+
+		if (other == null) {
+			// In ascending order, nulls are sorted last; in descending, first.
+			final int nullCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
+			return nullCompareResult;
 		}
+
+		final Class<? extends AbstractEntity> thisClass = this.getClass();
+		final Class<? extends AbstractEntity> otherClass = other.getClass();
+		if (thisClass != otherClass) {
+			// Different classes are sorted by their names (including packages).
+			final int classCompareResult = direction * thisClass.getName().compareTo(otherClass.getName());
+			return classCompareResult;
+		}
+
+		// In ascending order, entities with null ids are sorted last; in descending, first.
+		final int idCompareResult;
+		if (this.id == null && other.id == null) {
+			idCompareResult = 0;
+		} else if (this.id == null) {
+			idCompareResult = descending ? THIS_FIRST : OTHER_FIRST;
+		} else if (other.id == null) {
+			idCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
+		} else {
+			idCompareResult = direction * Long.compare(this.id, other.id);
+		}
+		return idCompareResult;
+	}
+
+	@Override
+	public int hashCode() {
+		final int result = Objects.hash(this.getClass(), this.id);
 		return result;
 	}
 
@@ -226,12 +257,7 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 
 		final AbstractEntity other = (AbstractEntity) obj;
 
-		final boolean result;
-		if (id != null && other.id != null) {
-			result = id.equals(other.id);
-		} else {
-			result = false;
-		}
+		final boolean result = Objects.equals(this.id, other.id);
 		return result;
 	}
 }
