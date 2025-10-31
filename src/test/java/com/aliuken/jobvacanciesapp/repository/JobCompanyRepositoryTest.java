@@ -78,12 +78,9 @@ public class JobCompanyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final JobCompany jobCompany = jobCompanyRepository.getNewEntityInstance();
-		Assertions.assertNotNull(jobCompany);
 
-		final JobCompany jobCompany2 = new JobCompany();
-		Assertions.assertNotEquals(jobCompany2, jobCompany);
-		Assertions.assertNull(jobCompany.getId());
-		Assertions.assertNull(jobCompany2.getId());
+		Assertions.assertNotNull(jobCompany);
+		Assertions.assertEquals(new JobCompany(), jobCompany);
 	}
 
 	@Test
@@ -117,12 +114,9 @@ public class JobCompanyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final JobCompany jobCompany = jobCompanyRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(jobCompany);
 
-		final JobCompany jobCompany2 = new JobCompany();
-		Assertions.assertNotEquals(jobCompany2, jobCompany);
-		Assertions.assertNull(jobCompany.getId());
-		Assertions.assertNull(jobCompany2.getId());
+		Assertions.assertNotNull(jobCompany);
+		Assertions.assertEquals(new JobCompany(), jobCompany);
 	}
 
 	@Test

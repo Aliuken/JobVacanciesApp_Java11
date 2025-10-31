@@ -4,7 +4,6 @@ import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserResetPassword;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
@@ -103,12 +102,9 @@ public class AuthUserRoleRepositoryTest extends AbstractTransactionalJUnit4Sprin
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserRole authUserRole = authUserRoleRepository.getNewEntityInstance();
-		Assertions.assertNotNull(authUserRole);
 
-		final AuthUserRole authUserRole2 = new AuthUserRole();
-		Assertions.assertNotEquals(authUserRole2, authUserRole);
-		Assertions.assertNull(authUserRole.getId());
-		Assertions.assertNull(authUserRole2.getId());
+		Assertions.assertNotNull(authUserRole);
+		Assertions.assertEquals(new AuthUserRole(), authUserRole);
 	}
 
 	@Test
@@ -142,12 +138,9 @@ public class AuthUserRoleRepositoryTest extends AbstractTransactionalJUnit4Sprin
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserRole authUserRole = authUserRoleRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(authUserRole);
 
-		final AuthUserRole authUserRole2 = new AuthUserRole();
-		Assertions.assertNotEquals(authUserRole2, authUserRole);
-		Assertions.assertNull(authUserRole.getId());
-		Assertions.assertNull(authUserRole2.getId());
+		Assertions.assertNotNull(authUserRole);
+		Assertions.assertEquals(new AuthUserRole(), authUserRole);
 	}
 
 	@Test

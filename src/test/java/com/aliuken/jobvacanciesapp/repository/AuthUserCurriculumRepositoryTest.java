@@ -7,7 +7,6 @@ import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserCurriculumConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
@@ -94,12 +93,9 @@ public class AuthUserCurriculumRepositoryTest extends AbstractTransactionalJUnit
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserCurriculum authUserCurriculum = authUserCurriculumRepository.getNewEntityInstance();
-		Assertions.assertNotNull(authUserCurriculum);
 
-		final AuthUserCurriculum authUserCurriculum2 = new AuthUserCurriculum();
-		Assertions.assertNotEquals(authUserCurriculum2, authUserCurriculum);
-		Assertions.assertNull(authUserCurriculum.getId());
-		Assertions.assertNull(authUserCurriculum2.getId());
+		Assertions.assertNotNull(authUserCurriculum);
+		Assertions.assertEquals(new AuthUserCurriculum(), authUserCurriculum);
 	}
 
 	@Test
@@ -133,12 +129,9 @@ public class AuthUserCurriculumRepositoryTest extends AbstractTransactionalJUnit
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserCurriculum authUserCurriculum = authUserCurriculumRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(authUserCurriculum);
 
-		final AuthUserCurriculum authUserCurriculum2 = new AuthUserCurriculum();
-		Assertions.assertNotEquals(authUserCurriculum2, authUserCurriculum);
-		Assertions.assertNull(authUserCurriculum.getId());
-		Assertions.assertNull(authUserCurriculum2.getId());
+		Assertions.assertNotNull(authUserCurriculum);
+		Assertions.assertEquals(new AuthUserCurriculum(), authUserCurriculum);
 	}
 
 	@Test

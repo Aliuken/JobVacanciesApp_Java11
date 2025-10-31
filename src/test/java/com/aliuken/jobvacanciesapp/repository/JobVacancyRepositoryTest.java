@@ -8,7 +8,10 @@ import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCategoryConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
-import com.aliuken.jobvacanciesapp.model.entity.*;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
+import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -102,12 +105,9 @@ public class JobVacancyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final JobVacancy jobVacancy = jobVacancyRepository.getNewEntityInstance();
-		Assertions.assertNotNull(jobVacancy);
 
-		final JobVacancy jobVacancy2 = new JobVacancy();
-		Assertions.assertNotEquals(jobVacancy2, jobVacancy);
-		Assertions.assertNull(jobVacancy.getId());
-		Assertions.assertNull(jobVacancy2.getId());
+		Assertions.assertNotNull(jobVacancy);
+		Assertions.assertEquals(new JobVacancy(), jobVacancy);
 	}
 
 	@Test
@@ -141,12 +141,9 @@ public class JobVacancyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final JobVacancy jobVacancy = jobVacancyRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(jobVacancy);
 
-		final JobVacancy jobVacancy2 = new JobVacancy();
-		Assertions.assertNotEquals(jobVacancy2, jobVacancy);
-		Assertions.assertNull(jobVacancy.getId());
-		Assertions.assertNull(jobVacancy2.getId());
+		Assertions.assertNotNull(jobVacancy);
+		Assertions.assertEquals(new JobVacancy(), jobVacancy);
 	}
 
 	@Test

@@ -6,7 +6,6 @@ import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyLogoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
@@ -97,12 +96,9 @@ public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4Spr
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final JobCompanyLogo jobCompanyLogo = jobCompanyLogoRepository.getNewEntityInstance();
-		Assertions.assertNotNull(jobCompanyLogo);
 
-		final JobCompanyLogo jobCompanyLogo2 = new JobCompanyLogo();
-		Assertions.assertNotEquals(jobCompanyLogo2, jobCompanyLogo);
-		Assertions.assertNull(jobCompanyLogo.getId());
-		Assertions.assertNull(jobCompanyLogo2.getId());
+		Assertions.assertNotNull(jobCompanyLogo);
+		Assertions.assertEquals(new JobCompanyLogo(), jobCompanyLogo);
 	}
 
 	@Test
@@ -136,12 +132,9 @@ public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4Spr
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final JobCompanyLogo jobCompanyLogo = jobCompanyLogoRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(jobCompanyLogo);
 
-		final JobCompanyLogo jobCompanyLogo2 = new JobCompanyLogo();
-		Assertions.assertNotEquals(jobCompanyLogo2, jobCompanyLogo);
-		Assertions.assertNull(jobCompanyLogo.getId());
-		Assertions.assertNull(jobCompanyLogo2.getId());
+		Assertions.assertNotNull(jobCompanyLogo);
+		Assertions.assertEquals(new JobCompanyLogo(), jobCompanyLogo);
 	}
 
 	@Test

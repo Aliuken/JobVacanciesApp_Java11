@@ -97,12 +97,9 @@ public class AuthUserResetPasswordRepositoryTest extends AbstractTransactionalJU
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserResetPassword authUserResetPassword = authUserResetPasswordRepository.getNewEntityInstance();
-		Assertions.assertNotNull(authUserResetPassword);
 
-		final AuthUserResetPassword authUserResetPassword2 = new AuthUserResetPassword();
-		Assertions.assertNotEquals(authUserResetPassword2, authUserResetPassword);
-		Assertions.assertNull(authUserResetPassword.getId());
-		Assertions.assertNull(authUserResetPassword2.getId());
+		Assertions.assertNotNull(authUserResetPassword);
+		Assertions.assertEquals(new AuthUserResetPassword(), authUserResetPassword);
 	}
 
 	@Test
@@ -136,12 +133,9 @@ public class AuthUserResetPasswordRepositoryTest extends AbstractTransactionalJU
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserResetPassword authUserResetPassword = authUserResetPasswordRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(authUserResetPassword);
 
-		final AuthUserResetPassword authUserResetPassword2 = new AuthUserResetPassword();
-		Assertions.assertNotEquals(authUserResetPassword2, authUserResetPassword);
-		Assertions.assertNull(authUserResetPassword.getId());
-		Assertions.assertNull(authUserResetPassword2.getId());
+		Assertions.assertNotNull(authUserResetPassword);
+		Assertions.assertEquals(new AuthUserResetPassword(), authUserResetPassword);
 	}
 
 	@Test

@@ -4,7 +4,6 @@ import com.aliuken.jobvacanciesapp.MainClass;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserCredentialsDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserCredentialsConverter;
-import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -100,12 +99,9 @@ public class AuthUserCredentialsRepositoryTest extends AbstractTransactionalJUni
 	@Test
 	public void testGetNewEntityInstance_Ok() {
 		final AuthUserCredentials authUserCredentials = authUserCredentialsRepository.getNewEntityInstance();
-		Assertions.assertNotNull(authUserCredentials);
 
-		final AuthUserCredentials authUserCredentials2 = new AuthUserCredentials();
-		Assertions.assertNotEquals(authUserCredentials2, authUserCredentials);
-		Assertions.assertNull(authUserCredentials.getId());
-		Assertions.assertNull(authUserCredentials2.getId());
+		Assertions.assertNotNull(authUserCredentials);
+		Assertions.assertEquals(new AuthUserCredentials(), authUserCredentials);
 	}
 
 	@Test
@@ -139,12 +135,9 @@ public class AuthUserCredentialsRepositoryTest extends AbstractTransactionalJUni
 	@Test
 	public void testFindByIdOrNewEntity_Null() {
 		final AuthUserCredentials authUserCredentials = authUserCredentialsRepository.findByIdOrNewEntity(null);
-		Assertions.assertNotNull(authUserCredentials);
 
-		final AuthUserCredentials authUserCredentials2 = new AuthUserCredentials();
-		Assertions.assertNotEquals(authUserCredentials2, authUserCredentials);
-		Assertions.assertNull(authUserCredentials.getId());
-		Assertions.assertNull(authUserCredentials2.getId());
+		Assertions.assertNotNull(authUserCredentials);
+		Assertions.assertEquals(new AuthUserCredentials(), authUserCredentials);
 	}
 
 	@Test
