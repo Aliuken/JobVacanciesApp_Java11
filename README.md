@@ -240,10 +240,11 @@ The data technologies currently used are:
 * **Transactions**: Defined with Spring using:
     * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
     * **@Transactional** in the @Service classes (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
-* **AbstractEntity**: A superclass for all the JPA entities that has:
+* **AbstractEntity**: A superclass for all the JPA entities (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)) that has:
     * An "id" of type Long.
     * The dateTime and user of the "first registration" of the entity.
     * The dateTime and user of the "last modification" of the entity.
+    * The "compareTo", "hashCode" and "equals" methods for all the entities (based on the object's Class and the id).
 * **JPA converters**: Between DB types and entity fields (pkg: [com.aliuken.jobvacanciesapp.model.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/converter)).
 * **DTO converters**: Between JPA entities and DTOs (pkg: [com.aliuken.jobvacanciesapp.model.dto.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter)).
 * **Date formatters**: For LocalDate and LocalDateTime (pkg: [com.aliuken.jobvacanciesapp.model.formatter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/formatter)).
