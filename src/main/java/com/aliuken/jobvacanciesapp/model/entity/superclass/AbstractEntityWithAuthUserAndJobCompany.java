@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractEntityWithAuthUserAndJobCompany extends AbstractEntity implements AbstractEntityWithAuthUserInterface, AbstractEntityWithJobCompanyInterface {
+public abstract class AbstractEntityWithAuthUserAndJobCompany<T extends AbstractEntity<T>> extends AbstractEntity<T> implements AbstractEntityWithAuthUserInterface, AbstractEntityWithJobCompanyInterface {
 	private static final long serialVersionUID = -6502895741206864193L;
 
 	public AbstractEntityWithAuthUserAndJobCompany() {

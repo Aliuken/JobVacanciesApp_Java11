@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 		@Index(name="job_vacancy_key_5", columnList="job_category_id")})
 @Getter
 @Setter
-public class JobVacancy extends AbstractEntityWithJobCompany {
+public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	private static final long serialVersionUID = 6062234886735475157L;
 
 	@NotNull

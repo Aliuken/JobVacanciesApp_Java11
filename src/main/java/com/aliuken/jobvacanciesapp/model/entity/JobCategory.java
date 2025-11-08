@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 		@Index(name="job_category_key_2", columnList="last_modification_auth_user_id")})
 @Getter
 @Setter
-public class JobCategory extends AbstractEntity {
+public class JobCategory extends AbstractEntity<JobCategory> {
 	private static final long serialVersionUID = -1716013269189038906L;
 
 	@NotNull

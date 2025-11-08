@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 		@Index(name="auth_user_curriculum_key_3", columnList="auth_user_id")})
 @Getter
 @Setter
-public class AuthUserCurriculum extends AbstractEntityWithAuthUser {
+public class AuthUserCurriculum extends AbstractEntityWithAuthUser<AuthUserCurriculum> {
 	private static final long serialVersionUID = -8095503029320669346L;
 
 	@NotNull

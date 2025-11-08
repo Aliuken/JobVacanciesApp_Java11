@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 		@Index(name="job_request_key_5", columnList="auth_user_id,curriculum_file_name")})
 @Getter
 @Setter
-public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany {
+public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobRequest> {
 	private static final long serialVersionUID = 8508562505523280587L;
 
 	@NotNull

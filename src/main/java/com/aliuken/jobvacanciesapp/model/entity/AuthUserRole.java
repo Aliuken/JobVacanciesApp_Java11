@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 		@Index(name="auth_user_role_key_4", columnList="auth_role_id")})
 @Getter
 @Setter
-public class AuthUserRole extends AbstractEntityWithAuthUser {
+public class AuthUserRole extends AbstractEntityWithAuthUser<AuthUserRole> {
 	private static final long serialVersionUID = -7984070191950848318L;
 
 	@NotNull

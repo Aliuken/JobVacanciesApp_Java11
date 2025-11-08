@@ -12,19 +12,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Data
-public class AbstractEntityPageWithExceptionDTO<T extends AbstractEntity> implements Serializable {
+public class AbstractEntityPageWithExceptionDTO<T extends AbstractEntity<T>> implements Serializable {
 	private static final long serialVersionUID = 7013173615371005888L;
-
-	private static final AbstractEntityPageWithExceptionDTO<? extends AbstractEntity> NO_ARGS_INSTANCE = new AbstractEntityPageWithExceptionDTO<>(Page.empty(), null);
 
 	@NotNull
 	private final Page<T> page;
 
 	private final Throwable throwable;
-
-	public static AbstractEntityPageWithExceptionDTO<? extends AbstractEntity> getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
 
 	public boolean hasException() {
 		final boolean result = (throwable != null);

@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepository<T, Long>, UpgradedJpaRepositoryInterface<T> {
+public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaRepository<T, Long>, UpgradedJpaRepositoryInterface<T> {
 	public static final Logger log = LoggerFactory.getLogger(UpgradedJpaRepository.class);
 
 	public static final String ENTITY_MANAGER_CACHE_NAME = "entityManagerCache";
@@ -49,7 +49,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 	public static final StatisticsService ENTITY_MANAGER_CACHE_STATISTICS_SERVICE = new DefaultStatisticsService();
 
 	@NotNull
-	public static final Cache<Class<? extends AbstractEntity>, EntityManager> ENTITY_MANAGER_CACHE_OBJECT = UpgradedJpaRepository.getEntityManagerCache();
+	public static final Cache<Class<? extends AbstractEntity<?>>, EntityManager> ENTITY_MANAGER_CACHE_OBJECT = UpgradedJpaRepository.getEntityManagerCache();
 
 	public abstract AbstractEntityFactory<T> getEntityFactory();
 
@@ -68,7 +68,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 	}
 
 	@RepositoryMethod
-	public static <S extends AbstractEntity> S getEntityStatically(final Long id, final Class<S> entityClass) {
+	public static <S extends AbstractEntity<S>> S getEntityStatically(final Long id, final Class<S> entityClass) {
 		if(id == null) {
 			return null;
 		}
@@ -99,7 +99,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		final T entity = GenericsUtils.unpackOptional(optionalEntity);
 		return entity;
 
-//		Alternativa comentada para no repetir para la misma petición el @RepositoryMethod en getEntityStatically y findByIdNotOptional
+//		Alternativa comentada porque repetiría el @RepositoryMethod en findByIdNotOptional y getEntityStatically
 //		final Class<T> entityClass = this.getEntityClass();
 //		final T entity = UpgradedJpaRepository.getEntityStatically(id, entityClass);
 //		return entity;
@@ -248,7 +248,11 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		}
 
 		final Class<S> entityClass = example.getProbeType();
-		final JpaRepository<S, Long> jpaRepository = UpgradedJpaRepository.getJpaRepository(entityClass);
+		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
+		if(jpaRepository == null) {
+			return null;
+		}
+
 		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
 		final Page<S> page = jpaRepository.findAll(example, finalPageable);
 
@@ -342,7 +346,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 			return null;
 		}
 
-		final Class<? extends AbstractEntity> initialEntityClass = entity.getClass();
+		final Class<?> initialEntityClass = entity.getClass();
 		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
 		entity = entityManager.find(entityClass, entityId);
@@ -382,14 +386,14 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		return jpaRepository;
 	}
 
-	private static <S extends AbstractEntity> SimpleJpaRepository<S, Long> getJpaRepository(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> SimpleJpaRepository<S, Long> getJpaRepository(final Class<S> entityClass) {
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
-		final SimpleJpaRepository<S, Long> jpaRepository = new SimpleJpaRepository<S, Long>(entityClass, entityManager);
+		final SimpleJpaRepository<S, Long> jpaRepository = new SimpleJpaRepository<>(entityClass, entityManager);
 
 		return jpaRepository;
 	}
 
-	private static <S extends AbstractEntity> EntityManager getEntityManagerConfigurable(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerConfigurable(final Class<S> entityClass) {
 		final boolean useEntityManagerCache = UpgradedJpaRepository.useEntityManagerCache();
 
 		final EntityManager entityManager;
@@ -402,7 +406,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		return entityManager;
 	}
 
-	private static <S extends AbstractEntity> EntityManager getEntityManagerCacheable(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerCacheable(final Class<S> entityClass) {
 		final String entityClassName = (entityClass != null) ? entityClass.getSimpleName() : null;
 
 		if(log.isInfoEnabled()) {
@@ -448,7 +452,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 		}
 	}
 
-	private static <S extends AbstractEntity> EntityManager getEntityManagerNotCached(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerNotCached(final Class<S> entityClass) {
 		final long init_time = System.currentTimeMillis();
 
 		final JpaContext jpaContext = BeanFactoryUtils.getBean(JpaContext.class);
@@ -468,14 +472,14 @@ public interface UpgradedJpaRepository<T extends AbstractEntity> extends JpaRepo
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Cache<Class<? extends AbstractEntity>, EntityManager> getEntityManagerCache() {
+	private static Cache<Class<? extends AbstractEntity<?>>, EntityManager> getEntityManagerCache() {
 		final CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().using(ENTITY_MANAGER_CACHE_STATISTICS_SERVICE).build();
 		cacheManager.init();
 
 		final ResourcePools resourcePools = ResourcePoolsBuilder.heap(10).build();
 		final CacheConfiguration<Class, EntityManager> cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(Class.class, EntityManager.class, resourcePools).build();
-		final CacheConfiguration<Class<? extends AbstractEntity>, EntityManager> cacheConfigurationWithGenerics = GenericsUtils.cast(cacheConfiguration);
-		final Cache<Class<? extends AbstractEntity>, EntityManager> entityManagerCache = cacheManager.createCache(ENTITY_MANAGER_CACHE_NAME, cacheConfigurationWithGenerics);
+		final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfigurationWithGenerics = GenericsUtils.cast(cacheConfiguration);
+		final Cache<Class<? extends AbstractEntity<?>>, EntityManager> entityManagerCache = cacheManager.createCache(ENTITY_MANAGER_CACHE_NAME, cacheConfigurationWithGenerics);
 
 		return entityManagerCache;
 	}

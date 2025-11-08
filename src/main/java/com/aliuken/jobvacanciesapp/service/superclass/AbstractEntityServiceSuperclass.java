@@ -30,7 +30,7 @@ import java.util.Map;
 
 @Transactional
 @Slf4j
-public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity> implements UpgradedJpaRepositoryInterface<T> {
+public abstract class AbstractEntityServiceSuperclass<T extends AbstractEntity<T>> implements UpgradedJpaRepositoryInterface<T> {
 
 	protected static final ExampleMatcher ID_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithExactOneField("id");
 	protected static final ExampleMatcher FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("firstRegistrationAuthUser.email");

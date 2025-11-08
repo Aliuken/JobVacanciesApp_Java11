@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 		@Index(name="auth_role_key_2", columnList="last_modification_auth_user_id")})
 @Getter
 @Setter
-public class AuthRole extends AbstractEntity implements Internationalizable {
+public class AuthRole extends AbstractEntity<AuthRole> implements Internationalizable {
 	private static final long serialVersionUID = -3571531666008146592L;
 
 	public static final String USER = "USER";

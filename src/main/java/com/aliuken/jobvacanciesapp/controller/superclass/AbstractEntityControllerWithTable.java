@@ -5,7 +5,7 @@ import com.aliuken.jobvacanciesapp.controller.SessionAuthUserEntityQueryControll
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 
-public abstract class AbstractEntityControllerWithTable<T extends AbstractEntity> extends AbstractEntityController<T> {
+public abstract class AbstractEntityControllerWithTable<T extends AbstractEntity<T>> extends AbstractEntityController<T> {
 	protected static final String EXPORT_TO_PDF_DISABLED_VALUE = Constants.EMPTY_STRING;
 
 	protected boolean hasExportToPdfEnabled(final TableSearchDTO tableSearchDTO) {

@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractEntityController<T extends AbstractEntity> {
+public abstract class AbstractEntityController<T extends AbstractEntity<T>> {
 	@Autowired
 	private ConfigPropertiesBean configPropertiesBean;
 

@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 		@Index(name="auth_user_signup_confirmation_key_2", columnList="last_modification_auth_user_id")})
 @Getter
 @Setter
-public class AuthUserSignUpConfirmation extends AbstractEntity {
+public class AuthUserSignUpConfirmation extends AbstractEntity<AuthUserSignUpConfirmation> {
 	private static final long serialVersionUID = -3817688436517437137L;
 
 	@NotNull

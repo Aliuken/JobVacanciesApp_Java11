@@ -3,7 +3,7 @@ package com.aliuken.jobvacanciesapp.controller.superclass;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 
-public abstract class AbstractEntityControllerWithPredefinedFilter<T extends AbstractEntity> extends AbstractEntityControllerWithTable<T> {
+public abstract class AbstractEntityControllerWithPredefinedFilter<T extends AbstractEntity<T>> extends AbstractEntityControllerWithTable<T> {
 	protected String getPaginationUrl(final long predefinedFilterId) {
 		final String predefinedFilterIdString = String.valueOf(predefinedFilterId);
 		final String paginationUrl = this.getPaginationUrl(predefinedFilterIdString);

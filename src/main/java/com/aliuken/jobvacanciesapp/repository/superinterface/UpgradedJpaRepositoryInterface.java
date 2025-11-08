@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 import java.util.Map;
 
-public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity> {
+public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity<T>> {
 	public abstract <S extends T> S saveAndFlush(S entity);
 
 	public abstract void deleteByIdAndFlush(Long entityId);

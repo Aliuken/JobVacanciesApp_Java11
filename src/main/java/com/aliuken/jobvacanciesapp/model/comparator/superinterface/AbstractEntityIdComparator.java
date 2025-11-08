@@ -3,7 +3,7 @@ package com.aliuken.jobvacanciesapp.model.comparator.superinterface;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 
 public interface AbstractEntityIdComparator {
-	public default int compareAbstractEntityIdDesc(final AbstractEntity abstractEntity1, final AbstractEntity abstractEntity2) {
+	public default <T extends AbstractEntity<T>> int compareAbstractEntityIdDesc(final T abstractEntity1, final T abstractEntity2) {
 		final Long abstractEntityId1;
 		if(abstractEntity1 != null) {
 			abstractEntityId1 = abstractEntity1.getId();

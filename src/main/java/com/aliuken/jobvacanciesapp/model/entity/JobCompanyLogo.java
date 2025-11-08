@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 		@Index(name="job_company_logo_key_3", columnList="job_company_id")})
 @Getter
 @Setter
-public class JobCompanyLogo extends AbstractEntityWithJobCompany {
+public class JobCompanyLogo extends AbstractEntityWithJobCompany<JobCompanyLogo> {
 	private static final long serialVersionUID = 3937298767687586305L;
 
 	@NotNull

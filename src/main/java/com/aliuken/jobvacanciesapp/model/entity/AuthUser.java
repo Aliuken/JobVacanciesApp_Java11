@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 		@Index(name="auth_user_key_3", columnList="enabled")})
 @Getter
 @Setter
-public class AuthUser extends AbstractEntity implements Externalizable {
+public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable {
 	private static final long serialVersionUID = -2992782217868515621L;
 
 	@NotNull

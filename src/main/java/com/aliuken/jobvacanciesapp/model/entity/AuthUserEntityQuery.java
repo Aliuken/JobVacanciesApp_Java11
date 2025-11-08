@@ -29,7 +29,7 @@ import java.util.Objects;
 		@Index(name = "auth_user_entity_query_key_3", columnList = "last_modification_auth_user_id")})
 @Getter
 @Setter
-public class AuthUserEntityQuery extends AbstractEntityWithAuthUser {
+public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEntityQuery> {
 	private static final long serialVersionUID = -2092511420655590241L;
 
 	@NotNull
