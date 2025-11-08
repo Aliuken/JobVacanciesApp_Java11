@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.superinterface.AbstractEntityFieldsPrintable;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-public abstract class AbstractEntity implements Serializable, Comparable<AbstractEntity>, AbstractEntityFieldsPrintable {
+public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Serializable, Comparable<T>, AbstractEntityFieldsPrintable {
 	private static final long serialVersionUID = -1146558230499546161L;
 	private static final int THIS_FIRST = -1;
 	private static final int OTHER_FIRST = 1;
@@ -62,7 +63,9 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 
 	@PreUpdate
 	private void preUpdate() {
-		final AbstractEntity currentEntity = UpgradedJpaRepository.getEntityStatically(id, this.getClass());
+		final Class<?> initialEntityClass = this.getClass();
+		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
+		final T currentEntity = UpgradedJpaRepository.getEntityStatically(id, entityClass);
 		if(currentEntity != null) {
 			firstRegistrationDateTime = currentEntity.getFirstRegistrationDateTime();
 			firstRegistrationAuthUser = currentEntity.getFirstRegistrationAuthUser();
@@ -192,7 +195,7 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	}
 
 	@Override
-	public final int compareTo(AbstractEntity other) {
+	public final int compareTo(T other) {
 		final int compareResult = this.compareTo(other, false);
 		return compareResult;
 	}
@@ -206,7 +209,7 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 	 *   <li>ID value (ascending or descending)</li>
 	 * </ul>
 	 */
-	private final int compareTo(AbstractEntity other, boolean descending) {
+	private final int compareTo(T other, boolean descending) {
 		final int direction = descending ? -1 : 1;
 
 		if (other == null) {
@@ -215,8 +218,8 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 			return nullCompareResult;
 		}
 
-		final Class<? extends AbstractEntity> thisClass = this.getClass();
-		final Class<? extends AbstractEntity> otherClass = other.getClass();
+		final Class<?> thisClass = this.getClass();
+		final Class<?> otherClass = other.getClass();
 		if (thisClass != otherClass) {
 			// Different classes are sorted by their names (including packages).
 			final int classCompareResult = direction * thisClass.getName().compareTo(otherClass.getName());
@@ -225,14 +228,14 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 
 		// In ascending order, entities with null ids are sorted last; in descending, first.
 		final int idCompareResult;
-		if (this.id == null && other.id == null) {
+		if (this.id == null && other.getId() == null) {
 			idCompareResult = 0;
 		} else if (this.id == null) {
 			idCompareResult = descending ? THIS_FIRST : OTHER_FIRST;
-		} else if (other.id == null) {
+		} else if (other.getId() == null) {
 			idCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
 		} else {
-			idCompareResult = direction * Long.compare(this.id, other.id);
+			idCompareResult = direction * Long.compare(this.id, other.getId());
 		}
 		return idCompareResult;
 	}
@@ -255,9 +258,9 @@ public abstract class AbstractEntity implements Serializable, Comparable<Abstrac
 			return false;
 		}
 
-		final AbstractEntity other = (AbstractEntity) obj;
+		final T other = GenericsUtils.cast(obj);
 
-		final boolean result = Objects.equals(this.id, other.id);
+		final boolean result = Objects.equals(this.id, other.getId());
 		return result;
 	}
 }
