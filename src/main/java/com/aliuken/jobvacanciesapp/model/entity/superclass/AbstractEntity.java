@@ -230,16 +230,23 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 			return classCompareResult;
 		}
 
+		final int idCompareResult = AbstractEntity.getIdCompareResult(this.id, other.getId(), descending);
+		return idCompareResult;
+	}
+
+	private static int getIdCompareResult(Long thisId, Long otherId, boolean descending) {
+		final int direction = descending ? -1 : 1;
+
 		// In ascending order, entities with null ids are sorted last; in descending, first.
 		final int idCompareResult;
-		if (this.id == null && other.getId() == null) {
+		if (thisId == null && otherId == null) {
 			idCompareResult = 0;
-		} else if (this.id == null) {
+		} else if (thisId == null) {
 			idCompareResult = descending ? THIS_FIRST : OTHER_FIRST;
-		} else if (other.getId() == null) {
+		} else if (otherId == null) {
 			idCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
 		} else {
-			idCompareResult = direction * Long.compare(this.id, other.getId());
+			idCompareResult = direction * Long.compare(thisId, otherId);
 		}
 		return idCompareResult;
 	}
