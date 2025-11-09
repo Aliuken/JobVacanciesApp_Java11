@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.function.Function;
 
 @MappedSuperclass
 @Getter
@@ -27,6 +28,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	private static final long serialVersionUID = -1146558230499546161L;
 	private static final int THIS_FIRST = -1;
 	private static final int OTHER_FIRST = 1;
+	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> compareTo(other, false);
+	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> compareTo(other, true);
 
 	@Id
 	@Column(name="id")
@@ -196,6 +199,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	@Override
 	public final int compareTo(T other) {
+		//final int compareResult = COMPARE_TO_ASC_FUNCTION.apply(other);
 		final int compareResult = this.compareTo(other, false);
 		return compareResult;
 	}
