@@ -6,8 +6,9 @@ import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import java.util.Comparator;
 
 public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implements Comparator<AbstractEntity<T>> {
-	public static final int ENTITY1_FIRST = -1;
-	public static final int ENTITY2_FIRST = 1;
+	public static final Integer ENTITIES_EQUAL = 0;
+	public static final Integer ENTITY1_FIRST = -1;
+	public static final Integer ENTITY2_FIRST = 1;
 
 	/**
 	 * Defines an ordering among entities.
@@ -40,7 +41,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implem
 	private final Integer getNullCompareResult(final T entity1, final T entity2) {
 		final Integer nullCompareResult;
 		if (entity1 == null && entity2 == null) {
-			nullCompareResult = 0;
+			nullCompareResult = ENTITIES_EQUAL;
 		} else if (entity1 == null) {
 			nullCompareResult = ENTITY2_FIRST;
 		} else if (entity2 == null) {
@@ -72,7 +73,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implem
 
 		final int idCompareResult;
 		if (abstractEntityId1 == null && abstractEntityId2 == null) {
-			idCompareResult = 0;
+			idCompareResult = ENTITIES_EQUAL;
 		} else if (abstractEntityId1 == null) {
 			idCompareResult = ENTITY2_FIRST;
 		} else if (abstractEntityId2 == null) {
