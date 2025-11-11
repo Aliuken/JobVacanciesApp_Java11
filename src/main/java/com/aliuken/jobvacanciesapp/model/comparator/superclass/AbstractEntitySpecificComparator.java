@@ -48,7 +48,7 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 	}
 
 	// Ascending order where null entities are sorted last.
-	private final Integer getNullCompareResult(final T entity1, final T entity2) {
+	private Integer getNullCompareResult(final T entity1, final T entity2) {
 		final Integer nullCompareResult;
 		if (entity1 == null && entity2 == null) {
 			nullCompareResult = ENTITIES_EQUAL;
@@ -57,27 +57,27 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		} else if (entity2 == null) {
 			nullCompareResult = ENTITY1_FIRST;
 		} else {
-			nullCompareResult = null;
+			nullCompareResult = null; //CONTINUE
 		}
 		return nullCompareResult;
 	}
 
 	// Ascending order where different classes are sorted by their names (including packages).
-	private final Integer getClassCompareResult(final T entity1, final T entity2) {
+	private Integer getClassCompareResult(final T entity1, final T entity2) {
 		final Class<?> abstractEntityClass1 = entity1.getClass();
 		final Class<?> abstractEntityClass2 = entity2.getClass();
 
 		final Integer classCompareResult;
-		if (abstractEntityClass1 != abstractEntityClass2) {
+		if (!abstractEntityClass1.equals(abstractEntityClass2)) {
 			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName());
 		} else {
-			classCompareResult = null;
+			classCompareResult = null; //CONTINUE
 		}
 		return classCompareResult;
 	}
 
 	// Ascending order where different classes are sorted by their names (including packages).
-	private final Integer getFirstCompareFieldResult(final T entity1, final T entity2) {
+	private Integer getFirstCompareFieldResult(final T entity1, final T entity2) {
 		final Function<T, U> firstCompareFieldFunction = this.getFirstCompareFieldFunction();
 
 		final Integer firstCompareFieldResult;
@@ -86,22 +86,22 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 			final U firstCompareFieldValue2 = firstCompareFieldFunction.apply(entity2);
 
 			if (firstCompareFieldValue1 == null && firstCompareFieldValue2 == null) {
-				firstCompareFieldResult = ENTITIES_EQUAL;
+				firstCompareFieldResult = ENTITIES_EQUAL; //CONTINUE
 			} else if (firstCompareFieldValue1 == null) {
 				firstCompareFieldResult = ENTITY2_FIRST;
 			} else if (firstCompareFieldValue2 == null) {
 				firstCompareFieldResult = ENTITY1_FIRST;
 			} else {
-				firstCompareFieldResult = firstCompareFieldValue1.compareTo(firstCompareFieldValue2);
+				firstCompareFieldResult = firstCompareFieldValue1.compareTo(firstCompareFieldValue2); //CONTINUE IF ZERO
 			}
 		} else {
-			firstCompareFieldResult = null;
+			firstCompareFieldResult = null; //CONTINUE
 		}
 		return firstCompareFieldResult;
 	}
 
 	// Ascending order where entities with null ids are sorted last.
-	private final int getIdCompareResult(final T entity1, final T entity2) {
+	private int getIdCompareResult(final T entity1, final T entity2) {
 		final Long abstractEntityId1 = entity1.getId();
 		final Long abstractEntityId2 = entity2.getId();
 
