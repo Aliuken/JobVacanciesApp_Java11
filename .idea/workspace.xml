@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superinterface/AbstractEntityIdComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superinterface/AbstractEntityIdComparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superclass/AbstractEntityDefaultComparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superclass/AbstractEntitySpecificComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/AuthUserRoleAuthRolePriorityComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/AuthUserRoleAuthRolePriorityComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/AuthUserRoleAuthUserFullNameComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/AuthUserRoleAuthUserFullNameComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/JobRequestAuthUserFullNameComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/JobRequestAuthUserFullNameComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/JobRequestJobVacancyPublicationDateTimeComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/JobRequestJobVacancyPublicationDateTimeComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superinterface/AbstractEntityIdComparator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/superclass/AbstractEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/superclass/AbstractEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,39 +51,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.App11.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Run App J11.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in jobvacanciesapp (1).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in jobvacanciesapp.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthUserRepositoryTest.testDeleteById_Ok.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.Run Tests J11.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Maven [clean,install] J11.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Maven [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.jobvacanciesapp [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.jobvacanciesapp [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.jobvacanciesapp [install].executor&quot;: &quot;Run&quot;,
-    &quot;Remote JVM Debug.Debug App J11.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11/src/main/resources/static&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App11.executor": "Run",
+    "Application.Run App J11.executor": "Run",
+    "JUnit.All in jobvacanciesapp (1).executor": "Run",
+    "JUnit.All in jobvacanciesapp.executor": "Run",
+    "JUnit.AuthUserRepositoryTest.testDeleteById_Ok.executor": "Run",
+    "JUnit.Run Tests J11.executor": "Run",
+    "Maven.Maven [clean,install] J11.executor": "Run",
+    "Maven.Maven [clean,install].executor": "Run",
+    "Maven.jobvacanciesapp [clean,install].executor": "Run",
+    "Maven.jobvacanciesapp [clean].executor": "Run",
+    "Maven.jobvacanciesapp [install].executor": "Run",
+    "Remote JVM Debug.Debug App J11.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Programacion/git/JobVacanciesApp_Java11/src/main/java/com/aliuken/jobvacanciesapp/model",
+    "project.structure.last.edited": "Problems",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\java\com\aliuken\jobvacanciesapp\model" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\resources\static" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-windows" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-linux" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11" />
-      <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-windows" />

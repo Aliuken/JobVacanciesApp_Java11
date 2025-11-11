@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.entity.superclass;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.comparator.superclass.AbstractEntityDefaultComparator;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.superinterface.AbstractEntityFieldsPrintable;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
@@ -26,10 +27,15 @@ import java.util.function.Function;
 @Slf4j
 public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Serializable, Comparable<T>, AbstractEntityFieldsPrintable {
 	private static final long serialVersionUID = -1146558230499546161L;
-	private static final int THIS_FIRST = -1;
-	private static final int OTHER_FIRST = 1;
-	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> compareTo(other, false);
-	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> compareTo(other, true);
+
+	@Transient
+	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR = new AbstractEntityDefaultComparator<>();
+
+	@Transient
+	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> DEFAULT_COMPARATOR.compare(this, other);
+
+	@Transient
+	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> DEFAULT_COMPARATOR.compare(other, this);
 
 	@Id
 	@Column(name="id")
@@ -199,56 +205,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	@Override
 	public final int compareTo(T other) {
-		//final int compareResult = COMPARE_TO_ASC_FUNCTION.apply(other);
-		final int compareResult = this.compareTo(other, false);
+		final int compareResult = COMPARE_TO_ASC_FUNCTION.apply(other);
 		return compareResult;
-	}
-
-	/**
-	 * Defines a natural ordering among entities.
-	 * <p>
-	 * Entities are ordered by:
-	 * <ul>
-	 *   <li>Class name (lexicographically)</li>
-	 *   <li>ID value (ascending or descending)</li>
-	 * </ul>
-	 */
-	private final int compareTo(T other, boolean descending) {
-		final int direction = descending ? -1 : 1;
-
-		if (other == null) {
-			// In ascending order, nulls are sorted last; in descending, first.
-			final int nullCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
-			return nullCompareResult;
-		}
-
-		final Class<?> thisClass = this.getClass();
-		final Class<?> otherClass = other.getClass();
-		if (thisClass != otherClass) {
-			// Different classes are sorted by their names (including packages).
-			final int classCompareResult = direction * thisClass.getName().compareTo(otherClass.getName());
-			return classCompareResult;
-		}
-
-		final int idCompareResult = AbstractEntity.getIdCompareResult(this.id, other.getId(), descending);
-		return idCompareResult;
-	}
-
-	private static int getIdCompareResult(Long thisId, Long otherId, boolean descending) {
-		final int direction = descending ? -1 : 1;
-
-		// In ascending order, entities with null ids are sorted last; in descending, first.
-		final int idCompareResult;
-		if (thisId == null && otherId == null) {
-			idCompareResult = 0;
-		} else if (thisId == null) {
-			idCompareResult = descending ? THIS_FIRST : OTHER_FIRST;
-		} else if (otherId == null) {
-			idCompareResult = descending ? OTHER_FIRST : THIS_FIRST;
-		} else {
-			idCompareResult = direction * Long.compare(thisId, otherId);
-		}
-		return idCompareResult;
 	}
 
 	@Override
