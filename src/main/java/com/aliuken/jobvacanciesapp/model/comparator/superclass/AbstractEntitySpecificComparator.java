@@ -27,6 +27,7 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 	public final int compare(final AbstractEntity<T> abstractEntity1, final AbstractEntity<T> abstractEntity2) {
 		final T entity1 = GenericsUtils.cast(abstractEntity1);
 		final T entity2 = GenericsUtils.cast(abstractEntity2);
+
 		final Integer nullCompareResult = this.getNullCompareResult(entity1, entity2);
 		if(nullCompareResult != null) {
 			return nullCompareResult;
