@@ -6,7 +6,6 @@ import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import java.util.Comparator;
 
 public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implements Comparator<AbstractEntity<T>> {
-	public static final Integer ENTITIES_EQUAL = 0;
 	public static final int ENTITY1_FIRST = -1;
 	public static final int ENTITY2_FIRST = 1;
 
