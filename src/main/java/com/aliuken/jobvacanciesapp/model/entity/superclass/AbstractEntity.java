@@ -195,17 +195,6 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return sessionAuthUser;
 	}
 
-	private EntityComparators<T> getComparisonFields() {
-		final Class<?> initialEntityClass = this.getClass();
-		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
-		EntityComparators<T> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
-		if (entityComparators == null) {
-			entityComparators = new EntityComparators<>();
-			ENTITY_COMPARATORS_MAP.put(entityClass, entityComparators);
-		}
-		return entityComparators;
-	}
-
 	@Override
 	public String toString() {
 		final String idString = this.getIdString();
@@ -264,5 +253,16 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	public final Function<T, Integer> getCompareToDescFunction() {
 		return other -> getComparisonFields().descComparator.compare(this, other);
+	}
+
+	private EntityComparators<T> getComparisonFields() {
+		final Class<?> initialEntityClass = this.getClass();
+		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
+		EntityComparators<T> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
+		if (entityComparators == null) {
+			entityComparators = new EntityComparators<>();
+			ENTITY_COMPARATORS_MAP.put(entityClass, entityComparators);
+		}
+		return entityComparators;
 	}
 }
