@@ -3,12 +3,7 @@ package com.aliuken.jobvacanciesapp.model.comparator.superclass;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 
-import java.util.Comparator;
-
-public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implements Comparator<AbstractEntity<T>> {
-	public static final Integer ENTITIES_EQUAL = 0;
-	public static final Integer ENTITY1_FIRST = -1;
-	public static final Integer ENTITY2_FIRST = 1;
+public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extends AbstractEntityComparator<T> {	public static final Integer ENTITIES_EQUAL = 0;
 
 	/**
 	 * Defines an ordering among entities.
@@ -35,53 +30,6 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> implem
 		}
 
 		final int idCompareResult = this.getIdCompareResult(entity1, entity2);
-		return idCompareResult;
-	}
-
-	// Ascending order where null entities are sorted last.
-	private Integer getNullCompareResult(final T entity1, final T entity2) {
-		final Integer nullCompareResult;
-		if (entity1 == null && entity2 == null) {
-			nullCompareResult = ENTITIES_EQUAL;
-		} else if (entity1 == null) {
-			nullCompareResult = ENTITY2_FIRST;
-		} else if (entity2 == null) {
-			nullCompareResult = ENTITY1_FIRST;
-		} else {
-			nullCompareResult = null; //CONTINUE
-		}
-		return nullCompareResult;
-	}
-
-	// Ascending order where different classes are sorted by their names (including packages).
-	private Integer getClassCompareResult(final T entity1, final T entity2) {
-		final Class<?> abstractEntityClass1 = entity1.getClass();
-		final Class<?> abstractEntityClass2 = entity2.getClass();
-
-		final Integer classCompareResult;
-		if (!abstractEntityClass1.equals(abstractEntityClass2)) {
-			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName());
-		} else {
-			classCompareResult = null; //CONTINUE
-		}
-		return classCompareResult;
-	}
-
-	// Ascending order where entities with null ids are sorted last.
-	private int getIdCompareResult(final T entity1, final T entity2) {
-		final Long abstractEntityId1 = entity1.getId();
-		final Long abstractEntityId2 = entity2.getId();
-
-		final int idCompareResult;
-		if (abstractEntityId1 == null && abstractEntityId2 == null) {
-			idCompareResult = ENTITIES_EQUAL;
-		} else if (abstractEntityId1 == null) {
-			idCompareResult = ENTITY2_FIRST;
-		} else if (abstractEntityId2 == null) {
-			idCompareResult = ENTITY1_FIRST;
-		} else {
-			idCompareResult = Long.compare(abstractEntityId1, abstractEntityId2);
-		}
 		return idCompareResult;
 	}
 }

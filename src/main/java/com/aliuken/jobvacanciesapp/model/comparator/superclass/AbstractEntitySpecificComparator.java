@@ -3,14 +3,9 @@ package com.aliuken.jobvacanciesapp.model.comparator.superclass;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 
-import java.util.Comparator;
 import java.util.function.Function;
 
-public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<T>, U extends Comparable<U>> implements Comparator<AbstractEntity<T>> {
-	public static final Integer ENTITIES_EQUAL = 0;
-	public static final Integer ENTITY1_FIRST = -1;
-	public static final Integer ENTITY2_FIRST = 1;
-
+public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<T>, U extends Comparable<U>> extends AbstractEntityComparator<T> {	public static final Integer ENTITIES_EQUAL = 0;
 	public abstract Function<T, U> getFirstCompareFieldFunction();
 
 	/**
@@ -47,35 +42,6 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		return idCompareResult;
 	}
 
-	// Ascending order where null entities are sorted last.
-	private Integer getNullCompareResult(final T entity1, final T entity2) {
-		final Integer nullCompareResult;
-		if (entity1 == null && entity2 == null) {
-			nullCompareResult = ENTITIES_EQUAL;
-		} else if (entity1 == null) {
-			nullCompareResult = ENTITY2_FIRST;
-		} else if (entity2 == null) {
-			nullCompareResult = ENTITY1_FIRST;
-		} else {
-			nullCompareResult = null; //CONTINUE
-		}
-		return nullCompareResult;
-	}
-
-	// Ascending order where different classes are sorted by their names (including packages).
-	private Integer getClassCompareResult(final T entity1, final T entity2) {
-		final Class<?> abstractEntityClass1 = entity1.getClass();
-		final Class<?> abstractEntityClass2 = entity2.getClass();
-
-		final Integer classCompareResult;
-		if (!abstractEntityClass1.equals(abstractEntityClass2)) {
-			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName());
-		} else {
-			classCompareResult = null; //CONTINUE
-		}
-		return classCompareResult;
-	}
-
 	// Ascending order where different classes are sorted by their names (including packages).
 	private Integer getFirstCompareFieldResult(final T entity1, final T entity2) {
 		final Function<T, U> firstCompareFieldFunction = this.getFirstCompareFieldFunction();
@@ -84,37 +50,10 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		if(firstCompareFieldFunction != null) {
 			final U firstCompareFieldValue1 = firstCompareFieldFunction.apply(entity1);
 			final U firstCompareFieldValue2 = firstCompareFieldFunction.apply(entity2);
-
-			if (firstCompareFieldValue1 == null && firstCompareFieldValue2 == null) {
-				firstCompareFieldResult = ENTITIES_EQUAL; //CONTINUE
-			} else if (firstCompareFieldValue1 == null) {
-				firstCompareFieldResult = ENTITY2_FIRST;
-			} else if (firstCompareFieldValue2 == null) {
-				firstCompareFieldResult = ENTITY1_FIRST;
-			} else {
-				firstCompareFieldResult = firstCompareFieldValue1.compareTo(firstCompareFieldValue2); //CONTINUE IF ZERO
-			}
+			firstCompareFieldResult = this.getCompareResult(firstCompareFieldValue1, firstCompareFieldValue2);
 		} else {
 			firstCompareFieldResult = null; //CONTINUE
 		}
 		return firstCompareFieldResult;
-	}
-
-	// Ascending order where entities with null ids are sorted last.
-	private int getIdCompareResult(final T entity1, final T entity2) {
-		final Long abstractEntityId1 = entity1.getId();
-		final Long abstractEntityId2 = entity2.getId();
-
-		final int idCompareResult;
-		if (abstractEntityId1 == null && abstractEntityId2 == null) {
-			idCompareResult = ENTITIES_EQUAL;
-		} else if (abstractEntityId1 == null) {
-			idCompareResult = ENTITY2_FIRST;
-		} else if (abstractEntityId2 == null) {
-			idCompareResult = ENTITY1_FIRST;
-		} else {
-			idCompareResult = Long.compare(abstractEntityId1, abstractEntityId2);
-		}
-		return idCompareResult;
 	}
 }
