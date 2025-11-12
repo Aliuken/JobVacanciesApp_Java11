@@ -5,9 +5,9 @@ import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import java.util.Comparator;
 
 public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> implements Comparator<AbstractEntity<T>> {
-    public static final Integer ENTITIES_EQUAL = 0;
-    public static final Integer ENTITY1_FIRST = -1;
-    public static final Integer ENTITY2_FIRST = 1;
+    public static final int ENTITIES_EQUAL = 0;
+    public static final int ENTITY1_FIRST = -1;
+    public static final int ENTITY2_FIRST = 1;
 
     // Ascending order where null entities are sorted last.
     protected final Integer getNullCompareResult(final T entity1, final T entity2) {
