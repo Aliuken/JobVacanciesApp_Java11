@@ -4,13 +4,18 @@ import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 
 public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extends AbstractEntityComparator<T> {
+	private final int direction;
+
+	public AbstractEntityDefaultComparator(final boolean isDescendingOrder) {
+		direction = isDescendingOrder ? -1 : 1;
+	}
 
 	/**
 	 * Defines an ordering among entities.
 	 * <p>
 	 * Entities are ordered by:
 	 * <ul>
-	 *   <li>Class name (lexicographically)</li>
+	 *   <li>Class name (lexicographically ascending)</li>
 	 *   <li>ID value (ascending)</li>
 	 * </ul>
 	 */
@@ -21,15 +26,15 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 
 		final Integer nullCompareResult = this.getNullCompareResult(entity1, entity2);
 		if(nullCompareResult != null) {
-			return nullCompareResult;
+			return direction * nullCompareResult;
 		}
 
 		final Integer classCompareResult = this.getClassCompareResult(entity1, entity2);
 		if(classCompareResult != null) {
-			return classCompareResult;
+			return direction * classCompareResult;
 		}
 
 		final int idCompareResult = this.getIdCompareResult(entity1, entity2);
-		return idCompareResult;
+		return direction * idCompareResult;
 	}
 }

@@ -10,4 +10,9 @@ public class AuthUserRoleAuthRolePriorityComparator extends AbstractEntitySpecif
 	public final Function<AuthUserRole, Byte> getFirstCompareFieldFunction() {
 		return authUserRole -> authUserRole.getAuthRole().getPriority();
 	}
+
+	@Override
+	public boolean getIsDescendingOrder() {
+		return false;
+	}
 }

@@ -10,4 +10,9 @@ public class JobRequestAuthUserFullNameComparator extends AbstractEntitySpecific
 	public final Function<JobRequest, String> getFirstCompareFieldFunction() {
 		return jobRequest -> jobRequest.getAuthUser().getFullName();
 	}
+
+	@Override
+	public boolean getIsDescendingOrder() {
+		return false;
+	}
 }

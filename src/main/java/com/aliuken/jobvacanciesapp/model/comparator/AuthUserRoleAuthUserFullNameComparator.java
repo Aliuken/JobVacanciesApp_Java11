@@ -10,4 +10,9 @@ public class AuthUserRoleAuthUserFullNameComparator extends AbstractEntitySpecif
 	public final Function<AuthUserRole, String> getFirstCompareFieldFunction() {
 		return authUserRole -> authUserRole.getAuthUser().getFullName();
 	}
+
+	@Override
+	public boolean getIsDescendingOrder() {
+		return false;
+	}
 }
