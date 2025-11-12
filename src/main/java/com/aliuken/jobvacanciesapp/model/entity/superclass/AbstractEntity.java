@@ -29,13 +29,16 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	private static final long serialVersionUID = -1146558230499546161L;
 
 	@Transient
-	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR = new AbstractEntityDefaultComparator<>(false);
+	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR_ASC = new AbstractEntityDefaultComparator<>(false);
 
 	@Transient
-	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> DEFAULT_COMPARATOR.compare(this, other);
+	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR_DESC = new AbstractEntityDefaultComparator<>(true);
 
 	@Transient
-	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> DEFAULT_COMPARATOR.compare(other, this);
+	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> DEFAULT_COMPARATOR_ASC.compare(this, other);
+
+	@Transient
+	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> DEFAULT_COMPARATOR_DESC.compare(this, other);
 
 	@Id
 	@Column(name="id")
