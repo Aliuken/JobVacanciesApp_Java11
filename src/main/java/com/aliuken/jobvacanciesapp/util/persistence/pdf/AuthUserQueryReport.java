@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
+import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
+public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocument {
 	private static final Font TITLE_CELL_FONT = new Font(FontFamily.COURIER, 18, Font.BOLD);
 
 	private static final float URL_TABLE_COLUMN_WIDTH = 20f;
@@ -44,9 +45,9 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 	private final AuthUserEntityQuery authUserEntityQuery;
 	private final String[][] contentArray;
 
-	public static <T extends AbstractEntity> AuthUserQueryReport<T> generatePdfDocument(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<T> entityPage) {
-		AuthUserQueryReport<T> result;
-		try(final AuthUserQueryReport<T> authUserQueryReport = new AuthUserQueryReport<>(byteArrayOutputStream, authUserEntityQuery, entityPage)) {
+	public static <U extends AbstractEntity<U>> AuthUserQueryReport<U> generatePdfDocument(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<U> entityPage) {
+		AuthUserQueryReport<U> result;
+		try(final AuthUserQueryReport<U> authUserQueryReport = new AuthUserQueryReport<>(byteArrayOutputStream, authUserEntityQuery, entityPage)) {
 			authUserQueryReport.open();
 			authUserQueryReport.createContent();
 			result = authUserQueryReport;
@@ -68,13 +69,12 @@ public class AuthUserQueryReport<T extends AbstractEntity> extends PdfDocument {
 		this.addPageEventHelper();
 	}
 
-	@SuppressWarnings("unchecked")
 	private String[][] createContentArrayFromPage(final Page<T> entityPage) {
-		final List<AbstractEntity> entityList = (List<AbstractEntity>) entityPage.getContent();
+		final List<AbstractEntity> entityList = GenericsUtils.cast(entityPage.getContent());
 
 		final String[][] contentArray;
 		if(entityList != null && !entityList.isEmpty()) {
-			final AbstractEntity abstractEntity = entityList.get(0);
+			final AbstractEntity<?> abstractEntity = entityList.get(0);
 			if(abstractEntity.isPrintableEntity()) {
 				final List<String[]> contentList = Constants.PARALLEL_STREAM_UTILS.convertList(entityList,
 						entity -> entity.getGroupedFields(), AbstractEntity.class, String[].class);

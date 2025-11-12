@@ -18,7 +18,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @MappedSuperclass
@@ -29,16 +31,17 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	private static final long serialVersionUID = -1146558230499546161L;
 
 	@Transient
-	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR_ASC = new AbstractEntityDefaultComparator<>(false);
+	private static final Map<Class<?>, EntityComparators<?>> ENTITY_COMPARATORS_MAP = new ConcurrentHashMap<>();
 
-	@Transient
-	public final AbstractEntityDefaultComparator<T> DEFAULT_COMPARATOR_DESC = new AbstractEntityDefaultComparator<>(true);
+	private static class EntityComparators<T extends AbstractEntity<T>> {
+		private final AbstractEntityDefaultComparator<T> ascComparator;
+		private final AbstractEntityDefaultComparator<T> descComparator;
 
-	@Transient
-	public final Function<T, Integer> COMPARE_TO_ASC_FUNCTION = other -> DEFAULT_COMPARATOR_ASC.compare(this, other);
-
-	@Transient
-	public final Function<T, Integer> COMPARE_TO_DESC_FUNCTION = other -> DEFAULT_COMPARATOR_DESC.compare(this, other);
+		private EntityComparators() {
+			this.ascComparator = new AbstractEntityDefaultComparator<>(false);
+			this.descComparator = new AbstractEntityDefaultComparator<>(true);
+		}
+	}
 
 	@Id
 	@Column(name="id")
@@ -192,6 +195,17 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return sessionAuthUser;
 	}
 
+	private EntityComparators<T> getComparisonFields() {
+		final Class<?> initialEntityClass = this.getClass();
+		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
+		EntityComparators<T> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
+		if (entityComparators == null) {
+			entityComparators = new EntityComparators<>();
+			ENTITY_COMPARATORS_MAP.put(entityClass, entityComparators);
+		}
+		return entityComparators;
+	}
+
 	@Override
 	public String toString() {
 		final String idString = this.getIdString();
@@ -204,12 +218,6 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
-	}
-
-	@Override
-	public final int compareTo(T other) {
-		final int compareResult = COMPARE_TO_ASC_FUNCTION.apply(other);
-		return compareResult;
 	}
 
 	@Override
@@ -234,5 +242,27 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 		final boolean result = Objects.equals(this.id, other.getId());
 		return result;
+	}
+
+	@Override
+	public final int compareTo(T other) {
+		final int compareResult = this.getCompareToAscFunction().apply(other);
+		return compareResult;
+	}
+
+	public final AbstractEntityDefaultComparator<T> getDefaultComparatorAsc() {
+		return getComparisonFields().ascComparator;
+	}
+
+	public final AbstractEntityDefaultComparator<T> getDefaultComparatorDesc() {
+		return getComparisonFields().descComparator;
+	}
+
+	public final Function<T, Integer> getCompareToAscFunction() {
+		return other -> getComparisonFields().ascComparator.compare(this, other);
+	}
+
+	public final Function<T, Integer> getCompareToDescFunction() {
+		return other -> getComparisonFields().descComparator.compare(this, other);
 	}
 }
