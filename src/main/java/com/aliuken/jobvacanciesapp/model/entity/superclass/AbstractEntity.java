@@ -18,10 +18,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 @MappedSuperclass
 @Getter
@@ -29,19 +27,6 @@ import java.util.function.Function;
 @Slf4j
 public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Serializable, Comparable<T>, AbstractEntityFieldsPrintable {
 	private static final long serialVersionUID = -1146558230499546161L;
-
-	@Transient
-	private static final Map<Class<?>, EntityComparators<?>> ENTITY_COMPARATORS_MAP = new ConcurrentHashMap<>();
-
-	private static class EntityComparators<T extends AbstractEntity<T>> {
-		private final AbstractEntityDefaultComparator<T> ascComparator;
-		private final AbstractEntityDefaultComparator<T> descComparator;
-
-		private EntityComparators() {
-			this.ascComparator = new AbstractEntityDefaultComparator<>(false);
-			this.descComparator = new AbstractEntityDefaultComparator<>(true);
-		}
-	}
 
 	@Id
 	@Column(name="id")
@@ -235,34 +220,12 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	@Override
 	public final int compareTo(T other) {
-		final int compareResult = this.getCompareToAscFunction().apply(other);
-		return compareResult;
-	}
-
-	public final Function<T, Integer> getCompareToAscFunction() {
-		return other -> this.getDefaultComparatorAsc().compare(this, other);
-	}
-
-	public final Function<T, Integer> getCompareToDescFunction() {
-		return other -> this.getDefaultComparatorDesc().compare(this, other);
-	}
-
-	public final AbstractEntityDefaultComparator<T> getDefaultComparatorAsc() {
-		return this.getComparisonFields().ascComparator;
-	}
-
-	public final AbstractEntityDefaultComparator<T> getDefaultComparatorDesc() {
-		return this.getComparisonFields().descComparator;
-	}
-
-	private EntityComparators<T> getComparisonFields() {
 		final Class<?> initialEntityClass = this.getClass();
 		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
-		EntityComparators<T> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
-		if (entityComparators == null) {
-			entityComparators = new EntityComparators<>();
-			ENTITY_COMPARATORS_MAP.put(entityClass, entityComparators);
-		}
-		return entityComparators;
+		final T thisEntity = GenericsUtils.cast(this);
+		final AbstractEntityDefaultComparator.EntityComparators<T> entityComparators = AbstractEntityDefaultComparator.getEntityComparators(entityClass);
+		final BiFunction<T, T, Integer> compareToAscFunction = entityComparators.getCompareToAscFunction();
+		final int compareResult = compareToAscFunction.apply(thisEntity, other);
+		return compareResult;
 	}
 }
