@@ -13,6 +13,6 @@ public class AuthUserRoleAuthRolePriorityComparator extends AbstractEntitySpecif
 
 	@Override
 	public boolean getIsDescendingOrder() {
-		return false;
+		return true;
 	}
 }
