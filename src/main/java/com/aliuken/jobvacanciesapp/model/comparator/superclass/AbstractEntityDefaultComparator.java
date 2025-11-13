@@ -42,10 +42,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 	 * </ul>
 	 */
 	@Override
-	public final int compare(final AbstractEntity<T> abstractEntity1, final AbstractEntity<T> abstractEntity2) {
-		final T entity1 = GenericsUtils.cast(abstractEntity1);
-		final T entity2 = GenericsUtils.cast(abstractEntity2);
-
+	public final int compare(final T entity1, final T entity2) {
 		final Integer nullCompareResult = this.getNullCompareResult(entity1, entity2);
 		if(nullCompareResult != null) {
 			return direction * nullCompareResult;

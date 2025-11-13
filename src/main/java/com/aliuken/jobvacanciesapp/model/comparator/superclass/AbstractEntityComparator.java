@@ -4,7 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 
 import java.util.Comparator;
 
-public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> implements Comparator<AbstractEntity<T>> {
+public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> implements Comparator<T> {
     public static final int ENTITIES_EQUAL = 0;
     public static final int ENTITY1_FIRST = -1;
     public static final int ENTITY2_FIRST = 1;
