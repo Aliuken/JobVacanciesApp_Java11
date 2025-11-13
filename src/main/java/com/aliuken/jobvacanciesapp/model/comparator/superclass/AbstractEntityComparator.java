@@ -38,7 +38,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
         return classCompareResult;
     }
 
-    // Ascending order where entities with null ids are sorted last.
+    // Ascending order where entities are sorted by their ids (where null ids are sorted last).
     protected final int getIdCompareResult(final T entity1, final T entity2) {
         final Long abstractEntityId1 = entity1.getId();
         final Long abstractEntityId2 = entity2.getId();
@@ -47,7 +47,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
         return idCompareResult;
     }
 
-    // Utility method
+    // Utility method to compare two comparable objects
     protected final <V extends Comparable<V>> int getCompareResult(final V object1, final V object2) {
         final int idCompareResult;
         if (object1 == null && object2 == null) {

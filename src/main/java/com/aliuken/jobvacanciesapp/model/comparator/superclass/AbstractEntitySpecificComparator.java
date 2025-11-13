@@ -42,7 +42,7 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		return direction * idCompareResult;
 	}
 
-	// Ascending order where different classes are sorted by their names (including packages).
+	// Ascending order where entities are sorted by their first compare field (where null values are sorted last).
 	private Integer getFirstCompareFieldResult(final T entity1, final T entity2) {
 		final Function<T, U> firstCompareFieldFunction = this.getFirstCompareFieldFunction();
 
