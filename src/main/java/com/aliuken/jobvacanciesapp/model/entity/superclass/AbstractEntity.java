@@ -239,20 +239,20 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return compareResult;
 	}
 
-	public final AbstractEntityDefaultComparator<T> getDefaultComparatorAsc() {
-		return getComparisonFields().ascComparator;
-	}
-
-	public final AbstractEntityDefaultComparator<T> getDefaultComparatorDesc() {
-		return getComparisonFields().descComparator;
-	}
-
 	public final Function<T, Integer> getCompareToAscFunction() {
-		return other -> getComparisonFields().ascComparator.compare(this, other);
+		return other -> this.getDefaultComparatorAsc().compare(this, other);
 	}
 
 	public final Function<T, Integer> getCompareToDescFunction() {
-		return other -> getComparisonFields().descComparator.compare(this, other);
+		return other -> this.getDefaultComparatorDesc().compare(this, other);
+	}
+
+	public final AbstractEntityDefaultComparator<T> getDefaultComparatorAsc() {
+		return this.getComparisonFields().ascComparator;
+	}
+
+	public final AbstractEntityDefaultComparator<T> getDefaultComparatorDesc() {
+		return this.getComparisonFields().descComparator;
 	}
 
 	private EntityComparators<T> getComparisonFields() {
