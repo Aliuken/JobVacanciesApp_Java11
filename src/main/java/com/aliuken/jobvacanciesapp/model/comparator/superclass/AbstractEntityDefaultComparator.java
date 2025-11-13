@@ -6,7 +6,6 @@ import lombok.Getter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extends AbstractEntityComparator<T> {
 	private static final Map<Class<?>, EntityComparators<?>> ENTITY_COMPARATORS_MAP = new ConcurrentHashMap<>();
@@ -15,14 +14,10 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 	public static class EntityComparators<U extends AbstractEntity<U>> {
 		private final AbstractEntityDefaultComparator<U> ascComparator;
 		private final AbstractEntityDefaultComparator<U> descComparator;
-		private final BiFunction<U, U, Integer> compareToAscFunction;
-		private final BiFunction<U, U, Integer> compareToDescFunction;
 
 		private EntityComparators() {
 			this.ascComparator = new AbstractEntityDefaultComparator<>(false);
 			this.descComparator = new AbstractEntityDefaultComparator<>(true);
-			this.compareToAscFunction = (entity1, entity2) -> ascComparator.compare(entity1, entity2);
-			this.compareToDescFunction = (entity1, entity2) -> descComparator.compare(entity1, entity2);
 		}
 	}
 

@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.function.BiFunction;
 
 @MappedSuperclass
 @Getter
@@ -224,8 +223,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
 		final T thisEntity = GenericsUtils.cast(this);
 		final AbstractEntityDefaultComparator.EntityComparators<T> entityComparators = AbstractEntityDefaultComparator.getEntityComparators(entityClass);
-		final BiFunction<T, T, Integer> compareToAscFunction = entityComparators.getCompareToAscFunction();
-		final int compareResult = compareToAscFunction.apply(thisEntity, other);
+		final AbstractEntityDefaultComparator<T> ascComparator = entityComparators.getAscComparator();
+		final int compareResult = ascComparator.compare(thisEntity, other);
 		return compareResult;
 	}
 }
