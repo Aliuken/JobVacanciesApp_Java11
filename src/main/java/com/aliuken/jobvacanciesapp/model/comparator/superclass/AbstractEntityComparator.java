@@ -43,12 +43,12 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
         final Long abstractEntityId1 = entity1.getId();
         final Long abstractEntityId2 = entity2.getId();
 
-        final int idCompareResult = this.getCompareResult(abstractEntityId1, abstractEntityId2);
+        final int idCompareResult = AbstractEntityComparator.getCompareResult(abstractEntityId1, abstractEntityId2);
         return idCompareResult;
     }
 
     // Utility method to compare two comparable objects
-    protected final <V extends Comparable<V>> int getCompareResult(final V object1, final V object2) {
+    protected static <U extends Comparable<U>> int getCompareResult(final U object1, final U object2) {
         final int idCompareResult;
         if (object1 == null && object2 == null) {
             idCompareResult = ENTITIES_EQUAL;

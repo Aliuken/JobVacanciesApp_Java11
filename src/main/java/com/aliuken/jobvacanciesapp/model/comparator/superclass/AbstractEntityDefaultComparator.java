@@ -32,8 +32,8 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 	 * <p>
 	 * Entities are ordered by:
 	 * <ul>
-	 *   <li>Class name (lexicographically ascending)</li>
-	 *   <li>ID value (ascending)</li>
+	 *   <li>Class name</li>
+	 *   <li>ID value</li>
 	 * </ul>
 	 */
 	@Override

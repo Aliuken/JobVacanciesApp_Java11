@@ -13,9 +13,9 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 	 * <p>
 	 * Entities are ordered by:
 	 * <ul>
-	 *   <li>Class name (lexicographically ascending)</li>
-	 *   <li>A first compare field (ascending)</li>
-	 *   <li>ID value (ascending)</li>
+	 *   <li>Class name</li>
+	 *   <li>A first compare field</li>
+	 *   <li>ID value</li>
 	 * </ul>
 	 */
 	@Override
@@ -50,7 +50,7 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		if(firstCompareFieldFunction != null) {
 			final U firstCompareFieldValue1 = firstCompareFieldFunction.apply(entity1);
 			final U firstCompareFieldValue2 = firstCompareFieldFunction.apply(entity2);
-			firstCompareFieldResult = this.getCompareResult(firstCompareFieldValue1, firstCompareFieldValue2); //CONTINUE IF ZERO
+			firstCompareFieldResult = AbstractEntityComparator.getCompareResult(firstCompareFieldValue1, firstCompareFieldValue2); //CONTINUE IF ZERO
 		} else {
 			firstCompareFieldResult = null; //CONTINUE
 		}
