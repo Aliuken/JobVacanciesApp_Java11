@@ -21,6 +21,7 @@
 > | JS           | JavaScript                         |
 > | L10n         | Localization                       |
 > | LLM          | Large Language Model               |
+> | MDN          | Mozilla Developer Network          |
 > | ORM          | Object–Relational Mapping          |
 > | OS           | Operating System                   |
 > | PC           | Personal Computer                  |
@@ -37,6 +38,8 @@
 > The PCs used to develop and execute the application were two:
 > * One with a **Linux Mint 22** 64-bit OS (**GNU/Linux**).
 > * Another one with a **Windows 11 Home** 64-bit OS.
+>
+> The main web browser used while developing the application was **Mozilla Firefox**.
 
 # JobVacanciesApp_Java11
 
@@ -224,6 +227,8 @@ The web technologies currently used are:
 > * **sortingDirection**: Which is the sort direction (one of the codes, ASC or DESC, defined in [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)).
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
+>
+> [MDN](https://developer.mozilla.org/en-US/docs/Learn_web_development) was used to learn about **HTML**, **JavaScript** and **CSS**.
 
 ### 3.6. Data technologies
 
