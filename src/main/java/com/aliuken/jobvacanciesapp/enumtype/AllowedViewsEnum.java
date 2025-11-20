@@ -14,11 +14,45 @@ public enum AllowedViewsEnum implements Serializable {
 	ANONYMOUS_ACCESS_ALLOWED    (AnonymousAccessPermission.ACCESS_ALLOWED),
 	ANONYMOUS_ACCESS_NOT_ALLOWED(AnonymousAccessPermission.ACCESS_NOT_ALLOWED);
 
-	private final String[] VARIABLE_VIEWS_ARRAY = new String[]{"/", "/search", "/auth-users/view/**", "/job-categories/view/**", "/job-companies/view/**", "/job-vacancies/view/**"};
-	private final String[] FIXED_ANONYMOUS_VIEWS_ARRAY = new String[]{"/login", "/logout", "/signup", "/signup-confirmed", "/forgotten-password", "/reset-password", "/about"};
-	private final String[] FIXED_USER_VIEWS_ARRAY = new String[]{"/my-user/**", "/my-user/auth-user-curriculums/**", "/my-user/auth-user-entity-queries/**", "/job-requests/create/**", "/job-requests/save/**", "/job-requests/view/**"};
-	private final String[] SUPERVISOR_VIEWS_ARRAY = new String[]{"/job-requests/**", "/job-vacancies/**", "/job-categories/**", "/job-companies/**"};
-	private final String[] ADMINISTRATOR_VIEWS_ARRAY = new String[]{"/auth-users/**", "/my-user/app/**"};
+	private final String[] VARIABLE_VIEWS_ARRAY = new String[]{
+		"/",
+		"/search",
+		"/auth-users/view/**",
+		"/job-categories/view/**",
+		"/job-companies/view/**",
+		"/job-vacancies/view/**"
+	};
+
+	private final String[] FIXED_ANONYMOUS_VIEWS_ARRAY = new String[]{
+		"/login",
+		"/logout",
+		"/signup",
+		"/signup-confirmed",
+		"/forgotten-password",
+		"/reset-password",
+		"/about"
+	};
+
+	private final String[] FIXED_USER_VIEWS_ARRAY = new String[]{
+		"/my-user/**",
+		"/my-user/auth-user-curriculums/**",
+		"/my-user/auth-user-entity-queries/**",
+		"/job-requests/create/**",
+		"/job-requests/save/**",
+		"/job-requests/view/**"
+	};
+
+	private final String[] SUPERVISOR_VIEWS_ARRAY = new String[]{
+		"/job-requests/**",
+		"/job-vacancies/**",
+		"/job-categories/**",
+		"/job-companies/**"
+	};
+
+	private final String[] ADMINISTRATOR_VIEWS_ARRAY = new String[]{
+		"/auth-users/**",
+		"/my-user/app/**"
+	};
 
 	private final AnonymousAccessPermission anonymousAccessPermission;
 

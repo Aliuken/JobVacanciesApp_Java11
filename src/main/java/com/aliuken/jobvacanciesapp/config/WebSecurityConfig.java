@@ -155,7 +155,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 //		BeanUtils.refreshBean("springSecurityFilterChain");
 //	}
 
-	private static final String[] getStaticResourcesArray() {
+	private static String[] getStaticResourcesArray() {
 		return new String[]{
 			"/auth-user-curriculum-files/**",
 			"/auth-user-entity-query-files/**",
