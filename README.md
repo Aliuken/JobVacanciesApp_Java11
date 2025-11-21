@@ -34,18 +34,12 @@
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
 > ```
->
-> The PCs used to develop and execute the application were two:
-> * One with a **Linux Mint 22** 64-bit OS (**GNU/Linux**).
-> * Another one with a **Windows 11 Home** 64-bit OS.
->
-> The main web browser used while developing the application was **Mozilla Firefox**.
 
 # JobVacanciesApp_Java11
 
 ## 1. About JobVacanciesApp_Java11
 
-**JobVacanciesApp_Java11** is an open-source web application made with **OpenJDK 11** and **Spring Boot 2.7** to learn how to make a website to manage job vacancies using state-of-the-art Spring-related technologies.
+**JobVacanciesApp_Java11** is an open-source web application made with **OpenJDK 11** and **Spring Boot 2.7.18** to learn how to make a website to manage job vacancies using state-of-the-art Spring-related technologies.
 
 The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **SOLID principles** in a **monolithic architecture**.
 
@@ -99,7 +93,6 @@ The core technologies currently used are:
 * **Maven**: As the dependency manager and for building the application.
 * **Git**: As the version control system.
 * **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
-* **IntelliJ IDEA Community Edition**: As the IDE.
 * **JUnit 5**: For unit testing.
 * **Spring AOP** and **AspectJ**: To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in section **[3.8. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#38-aop-technologies)**.
 * **Lombok**: To generate:
@@ -227,8 +220,6 @@ The web technologies currently used are:
 > * **sortingDirection**: Which is the sort direction (one of the codes, ASC or DESC, defined in [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)).
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
->
-> [MDN](https://developer.mozilla.org/en-US/docs/Learn_web_development) was used to learn about **HTML**, **JavaScript** and **CSS**.
 
 ### 3.6. Data technologies
 
@@ -357,10 +348,18 @@ The following Docker technologies (contained in [docker-windows](https://github.
 
 ### 3.10. Other technologies
 
+The PCs used to develop and execute the application were two:
+* One with a **Linux Mint 22** 64-bit OS (**GNU/Linux**).
+* Another one with a **Windows 11 Home** 64-bit OS.
+
 Other technologies currently used are:
+* **IntelliJ IDEA Community Edition 2025.2.5**: As the IDE.
+* **Mozilla Firefox**: As the main web browser.
 * **Sourcetree**: As the Git GUI for Windows.
 * **Git Bash**: As the command-line shell for the Git CLI.
 * **Powershell**: As the command-line shell for the Docker CLI for Windows.
+* **MDN** [[&#10138;]](https://developer.mozilla.org/en-US/docs/Learn_web_development): This website was used to learn about **HTTP**, **HTML**, **JavaScript** and **CSS**.
+* **DeepSeek R1**: This AI LLM was used (from [deepinfra](https://deepinfra.com/deepseek-ai/DeepSeek-R1) with 16000 max new tokens) in collaboration with ourselves to create the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
 * **GenericControllerAdvice**: To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
     * Handle the exception thrown when uploading a file (CV or logo) too big (more than 10 MB).
@@ -375,8 +374,6 @@ Other technologies currently used are:
 | true                  | No                  | getEntityManagerCacheable => getEntityManagerNotCached |
 | false                 | N/A                 | getEntityManagerNotCached                              |
 ```
-
-* **DeepSeek R1**: This AI LLM was used (from [deepinfra](https://deepinfra.com/deepseek-ai/DeepSeek-R1) with 16000 max new tokens) in collaboration with ourselves to create the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
 
 ## 4. Execution procedure
 
