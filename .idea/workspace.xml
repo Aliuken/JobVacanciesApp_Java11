@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages_es.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +26,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="customMavenHome" value="C:\apache-maven-3.9.9" />
+        <option name="customMavenHome" value="C:\apache-maven-3.9.11" />
         <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
       </MavenGeneralSettings>
     </option>
@@ -124,26 +121,7 @@
     </configuration>
     <configuration name="Maven [clean,install] J11" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
-        <option name="myGeneralSettings">
-          <MavenGeneralSettings>
-            <option name="alwaysUpdateSnapshots" value="false" />
-            <option name="checksumPolicy" value="NOT_SET" />
-            <option name="customMavenHome" value="$PROJECT_DIR$/../../../apache-maven-3.9.9" />
-            <option name="emulateTerminal" value="false" />
-            <option name="failureBehavior" value="NOT_SET" />
-            <option name="localRepository" value="" />
-            <option name="mavenHome" value="$PROJECT_DIR$/../../../apache-maven-3.9.9" />
-            <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
-            <option name="nonRecursive" value="false" />
-            <option name="outputLevel" value="INFO" />
-            <option name="printErrorStackTraces" value="false" />
-            <option name="showDialogWithAdvancedSettings" value="false" />
-            <option name="threads" />
-            <option name="useMavenConfig" value="true" />
-            <option name="userSettingsFile" value="" />
-            <option name="workOffline" value="false" />
-          </MavenGeneralSettings>
-        </option>
+        <option name="myGeneralSettings" />
         <option name="myRunnerSettings">
           <MavenRunnerSettings>
             <option name="delegateBuildToMaven" value="false" />
