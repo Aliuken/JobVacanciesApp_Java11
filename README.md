@@ -273,16 +273,16 @@ The data technologies currently used are:
 The security technologies currently used are:
 * **Spring Security**: Configured in [WebSecurityConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java).
 * **BCrypt**: As the Spring Security password encoder (variable "passwordEncoder" in the code).
-* **CustomAuthenticationHandler**: To handle the processes of:
+* **CustomAuthenticationHandler** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java): To handle the processes of:
     * **Login**: By adding the authenticated user to the session as the attribute "sessionAuthUser".
     * **Logout**: By removing the session attribute "sessionAuthUser" and redirecting to the result of the call "this.getRedirectEndpoint(...)".
-* **SpringSecurityUtils**: Utility class to manage the security from Java code in HTML pages with Thymeleaf (instead of using Thymeleaf's tag attribute "[sec:authorize](https://www.thymeleaf.org/doc/articles/springsecurity.html)", which is impossible to debug).
-* **SessionUtils**: Utility class to get the sessionAuthUser object from the following origins:
+* **SpringSecurityUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/security/SpringSecurityUtils.java): Utility class to manage the security from Java code in HTML pages with Thymeleaf (instead of using Thymeleaf's tag attribute "[sec:authorize](https://www.thymeleaf.org/doc/articles/springsecurity.html)", which is impossible to debug).
+* **SessionUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/security/SessionUtils.java): Utility class to get the sessionAuthUser object from the following origins:
     * From the Authentication object of Spring Security.
     * From the "sessionAuthUser" attribute of the HttpSession object of the Servlet API.
-* **RandomUtils**: Utility class to get random strings, numbers, enum values or objects (used for security reasons).
+* **RandomUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/security/RandomUtils.java): Utility class to get random strings, numbers, enum values or objects (used for security reasons).
 * **Remember me based on the email**: Implemented in the class [JdbcTokenByEmailRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/JdbcTokenByEmailRepository.java) making use of the DB table auth_persistent_logins (instead of using the **Remember me based on the username** implemented in the class [JdbcTokenRepositoryImpl](https://github.com/spring-projects/spring-security/blob/main/web/src/main/java/org/springframework/security/web/authentication/rememberme/JdbcTokenRepositoryImpl.java) of Spring Security).
-* **AllowedViewsEnum**: An enum that contains the allowed views for each role (anonymous, user, supervisor and administrator) when the anonymous access is allowed and when it is not allowed.
+* **AllowedViewsEnum** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/AllowedViewsEnum.java): An enum that contains the allowed views for each role (anonymous, user, supervisor and administrator) when the anonymous access is allowed and when it is not allowed.
 * **EmailService**: This service has the following two methods to send emails (implemented in [EmailServiceImpl](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/service/EmailServiceImpl.java), using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish):
     * **sendSignUpConfirmationEmail**: To send the confirmation email to new registered users.
     * **sendResetPasswordEmail**: To send the email to reset the password when you forgot the current one.
