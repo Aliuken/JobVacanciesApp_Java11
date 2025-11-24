@@ -335,7 +335,7 @@ The following Docker technologies (contained in [docker-linux](https://github.co
   * In **app-db-service**: The latest MySQL Docker image ("mysql:latest").
   * In **app-service**: The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
 * **Docker Compose for the Elastic Stack** (in [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-elk/docker-compose.yaml)). It uses:
-  * The **Elastic Stack 9.0.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat **&rArr;** Logstash **&rArr;** Elasticsearch **&rArr;** Kibana".
+  * The **Elastic Stack 9.2.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat **&rArr;** Logstash **&rArr;** Elasticsearch **&rArr;** Kibana".
 
 #### 3.9.2. Docker technologies for Windows
 
@@ -344,7 +344,7 @@ The following Docker technologies (contained in [docker-windows](https://github.
   * In **app-db-service**: The latest MySQL Docker image ("mysql:latest").
   * In **app-service**: The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), which uses "amazoncorretto:11-alpine-jdk" (a Docker image with JDK 11 for Alpine Linux).
 * **Docker Compose for the Elastic Stack** (in [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-elk/docker-compose.yaml)). It uses:
-  * The **Elastic Stack 9.0.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat **&rArr;** Logstash **&rArr;** Elasticsearch **&rArr;** Kibana".
+  * The **Elastic Stack 9.2.1** Docker images (url: <https://www.docker.elastic.co>): For analyzing the app log files, which pass through the stack in the next order: "Filebeat **&rArr;** Logstash **&rArr;** Elasticsearch **&rArr;** Kibana".
 
 ### 3.10. Other technologies
 
