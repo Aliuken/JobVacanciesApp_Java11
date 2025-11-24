@@ -161,7 +161,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			"/auth-user-entity-query-files/**",
 			"/job-company-logos/**",
 			"/bootstrap-5.3.8-dist/**",
-			"/fontawesome-free-6.7.2-web/**",
+			"/fontawesome-free-7.1.0-web/**",
 			"/images/**",
 			"/jobvacanciesapp-utils/**",
 			"/jquery/**",

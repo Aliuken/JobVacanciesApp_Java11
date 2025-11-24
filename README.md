@@ -184,7 +184,7 @@ The web technologies currently used are:
     * Other fragments in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments). More info about fragments at <https://www.thymeleaf.org/doc/articles/layouts.html>.
 * **JavaScript** (**ES2020**) compiled from **TypeScript** using the [TypeScript Playground](https://www.typescriptlang.org/play/) (so that we didn't need to install "Node.js", "npm" and "TypeScript"). In particular, the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts) was compiled to the following JS files: [ajax-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/ajax-utils.js) and [page-url-and-dom-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-url-and-dom-utils.js).
 * **Bootstrap 5.3.8** and **Material Design for Bootstrap 9.2.0**: For the look-and-feel.
-* **Font Awesome Free For The Web 6.7.2**: For the application icons.
+* **Font Awesome Free For The Web 7.1.0**: For the application icons.
 * **jQuery 3.7.1**: To make an easier use of **JavaScript**.
 * **jQuery UI 1.14.1** and **jQuery Timepicker Addon 1.6.3**: For the calendar UI-input element.
 * **TinyMCE Community 7.9.0**: For the rich text editor.
