@@ -286,7 +286,7 @@ The security technologies currently used are:
 * **EmailService**: This service has the following two methods to send emails (implemented in [EmailServiceImpl](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/service/EmailServiceImpl.java), using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish):
     * **sendSignUpConfirmationEmail**: To send the confirmation email to new registered users.
     * **sendResetPasswordEmail**: To send the email to reset the password when you forgot the current one.
-* **dependency-check-maven**: A maven plugin to generate a report with the dependency vulnerabilities in "target/dependency-check-report.html". The Dependency Check is skipped by using "&lt;skip&gt;true&lt;/skip&gt;" because it is a time-consuming task. To learn more about this plugin, check out these links:
+* **dependency-check-maven** [[&#10138;]](https://mvnrepository.com/artifact/org.owasp/dependency-check-maven): A maven plugin to generate a report with the dependency vulnerabilities in "target/dependency-check-report.html". The Dependency Check is skipped by using "&lt;skip&gt;true&lt;/skip&gt;" because it is a time-consuming task. To learn more about this plugin, check out these links:
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven>
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven/check-mojo.html>
 
