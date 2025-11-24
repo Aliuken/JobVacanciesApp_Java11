@@ -1,7 +1,7 @@
 function richTextEditor(richTextEditorId, useDarkMode) {
   tinymce.init({
     selector: 'textarea#' + richTextEditorId,
-      plugins: [
+    plugins: [
       'accordion', 'advlist', 'anchor', 'autolink', 'autoresize', 'autosave', 'charmap', 'code',
       'codesample', 'directionality', 'emoticons', 'fullscreen', 'help', 'image',
       'importcss', 'insertdatetime', 'link', 'lists', 'media',
