@@ -247,7 +247,7 @@ The data technologies currently used are:
 * **JPA converters**: Between DB types and entity fields (pkg: [com.aliuken.jobvacanciesapp.model.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/converter)).
 * **DTO converters**: Between JPA entities and DTOs (pkg: [com.aliuken.jobvacanciesapp.model.dto.converter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter)).
 * **Date formatters**: For LocalDate and LocalDateTime (pkg: [com.aliuken.jobvacanciesapp.model.formatter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/formatter)).
-* **UpgradedJpaRepository**: A subinterface of "JpaRepository<AbstractEntity, Long>" (from Spring Data JPA) to deal with pagination, sorting, query by example and query by specification.
+* **UpgradedJpaRepository** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java): A subinterface of "JpaRepository<AbstractEntity, Long>" (from Spring Data JPA) to deal with pagination, sorting, query by example and query by specification.
 * **DatabaseUtils**: To get objects (of type ExampleMatcher or Predicate) used in complex dynamic queries.
 * **FileUtils**, **FileNameUtils** and **FileType**: To manage the persistence in files (of CVs, query PDFs and logos).
 * **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
