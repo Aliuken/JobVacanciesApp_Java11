@@ -232,7 +232,7 @@ The data technologies currently used are:
 * **JPQL**: In the methods annotated with @RepositoryMethod in @Repository classes (instead of using **SQL**).
 * **MySQL Community Server**: As the main DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
 * **H2**: As the in-memory DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
-* **iText Core itextpdf 5.5.13.4** [[&#10138;]](https://mvnrepository.com/artifact/com.itextpdf/itextpdf): As the Java library to export queries to PDFs.
+* **iText Core itextpdf** [[&#10138;]](https://mvnrepository.com/artifact/com.itextpdf/itextpdf): As the Java library to export queries to PDFs.
 * **Transactions**: Defined with Spring using:
     * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
     * **@Transactional** in the @Service classes (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
@@ -321,6 +321,8 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * [ControllerAspectRestUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/rest/ControllerAspectRestUtils.java): It gets mappings for typical HTTP methods used in REST APIs (GET, POST, PUT and DELETE). Used in **ControllerAspect** to get the GetMapping or PostMapping from a JoinPoint.
 > * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
 > * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
+>
+> To get all working, the plugin [aspectj-maven-plugin](https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin) was needed.
 
 ### 3.9. Docker technologies
 
