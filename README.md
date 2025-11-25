@@ -123,6 +123,7 @@ The Java SE core technologies currently used are:
 * **Java enums**: Located in the packages:
     * [com.aliuken.jobvacanciesapp.model.entity.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype) (when they are used in JPA entities).
     * [com.aliuken.jobvacanciesapp.enumtype](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype) (when they are not used in JPA entities).
+* **Java functional programming**: In [FunctionalUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/FunctionalUtils.java).
 * **Java streams**: To iterate over elements using the following methods of [SequentialStreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/SequentialStreamUtils.java) or [ParallelStreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/ParallelStreamUtils.java) (of type [StreamUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/superclass/StreamUtils.java)):
     * **ofNullableCollection**: For JPA entity methods annotated with @LazyEntityRelationGetter.
     * **ofEnum**: For Java enum methods.
