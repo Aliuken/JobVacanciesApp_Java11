@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="" />
+    <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/FunctionalUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/concurrency/ConcurrencyUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/concurrency/ConcurrencyUtils.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +64,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Programacion/git/JobVacanciesApp_Java11/src/main/java/com/aliuken/jobvacanciesapp/util/concurrency",
+    "last_opened_file_path": "C:/Programacion/git/JobVacanciesApp_Java11/src/main/java/com/aliuken/jobvacanciesapp/util/javase",
     "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
@@ -69,11 +73,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\java\com\aliuken\jobvacanciesapp\util\javase" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\java\com\aliuken\jobvacanciesapp\util\concurrency" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\resources\static" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\src\main\java\com\aliuken\jobvacanciesapp\model" />
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-windows" />
-      <recent name="C:\Programacion\git\JobVacanciesApp_Java11\build-context-elk-linux" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\docker-windows" />
