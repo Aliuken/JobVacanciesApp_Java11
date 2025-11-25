@@ -249,7 +249,7 @@ The data technologies currently used are:
 * **Date formatters**: For LocalDate and LocalDateTime (pkg: [com.aliuken.jobvacanciesapp.model.formatter](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/formatter)).
 * **UpgradedJpaRepository** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java): A subinterface of "JpaRepository<AbstractEntity, Long>" (from Spring Data JPA) to deal with pagination, sorting, query by example and query by specification.
 * **DatabaseUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/database/DatabaseUtils.java): To get objects (of type ExampleMatcher or Predicate) used in complex dynamic queries.
-* **FileUtils**, **FileNameUtils** and **FileType**: To manage the persistence in files (of CVs, query PDFs and logos).
+* **FileUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileUtils.java), **FileNameUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileNameUtils.java) and **FileType** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java): To manage the persistence in files (of CVs, query PDFs or logos).
 * **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
 
 > [!NOTE]
