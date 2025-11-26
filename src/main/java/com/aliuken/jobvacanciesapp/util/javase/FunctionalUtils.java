@@ -1,10 +1,17 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
+import com.aliuken.jobvacanciesapp.Constants;
+
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FunctionalUtils {
+
+	private FunctionalUtils() throws InstantiationException {
+		final String className = this.getClass().getName();
+		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
+	}
 
 	//Converts a function to a consumer
 	public static <T, U> Consumer<T> convertFunctionToConsumer(final Function<T, U> function) {
