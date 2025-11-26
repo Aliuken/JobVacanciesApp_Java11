@@ -16,14 +16,37 @@ import java.util.function.Function;
 public class ConcurrencyUtils {
 
 	public static <E> void splitAndRunChunksInParallel(final Collection<E> initialElements, final int chunkSize,
-													   final int numberOfThreads, final Consumer<List<E>> chunkTask) {
+													   final int numberOfThreads, final Consumer<List<E>> chunkConsumer) {
+		if (initialElements == null || initialElements.isEmpty()) {
+			return;
+		}
 
-		final Function<List<E>, Void> chunkFunction = FunctionalUtils.convertConsumerToFunction(chunkTask);
-		ConcurrencyUtils.splitAndRunChunksInParallel(initialElements, chunkSize, numberOfThreads, chunkFunction);
+		if (numberOfThreads <= 0) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The numberOfThreads must be greater than 0"));
+		}
+
+		if (chunkConsumer == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The chunkConsumer must not be null"));
+		}
+
+		final List<List<E>> chunkList = ConcurrencyUtils.createChunkList(initialElements, chunkSize);
+		final Function<List<E>, Void> chunkFunction = FunctionalUtils.convertConsumerToFunction(chunkConsumer);
+		ConcurrencyUtils.runChunksInParallel(chunkList, numberOfThreads, chunkFunction);
 	}
 
 	public static <E,R> void splitAndRunChunksInParallel(final Collection<E> initialElements, final int chunkSize,
 														 final int numberOfThreads, final Function<List<E>,R> chunkFunction) {
+		if (initialElements == null || initialElements.isEmpty()) {
+			return;
+		}
+
+		if (numberOfThreads <= 0) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The numberOfThreads must be greater than 0"));
+		}
+
+		if (chunkFunction == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The chunkFunction must not be null"));
+		}
 
 		final List<List<E>> chunkList = ConcurrencyUtils.createChunkList(initialElements, chunkSize);
 		ConcurrencyUtils.runChunksInParallel(chunkList, numberOfThreads, chunkFunction);
@@ -31,8 +54,8 @@ public class ConcurrencyUtils {
 
 	//Create a chunkList from the initialElements with chunkSize as the maximum chuck size
 	private static <E> List<List<E>> createChunkList(final Collection<E> initialElements, final int chunkSize) {
-		if (initialElements == null || initialElements.isEmpty()) {
-			return Collections.emptyList();
+		if (chunkSize <= 0) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The chunkSize must be greater than 0"));
 		}
 
 		final List<List<E>> chunkList = new ArrayList<>();
@@ -56,34 +79,52 @@ public class ConcurrencyUtils {
 	//Execute the chunkTask for every chunk in the chunkList (with the given numberOfThreads)
 	private static <E,R> void runChunksInParallel(final List<List<E>> chunkList, final int numberOfThreads,
 												  final Function<List<E>,R> chunkTask) {
-		if (chunkList.isEmpty()) {
-			return;
-		}
-
 		final ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 		try {
-			final Map<Future<R>, List<E>> futureToChunkMap = new LinkedHashMap<>(chunkList.size());
+			final LinkedHashMap<Future<R>, List<E>> futureToChunkMap = new LinkedHashMap<>(chunkList.size());
 			for (final List<E> chunk : chunkList) {
 				final Callable<R> callable = () -> chunkTask.apply(chunk);
 				final Future<R> future = executorService.submit(callable);
 				futureToChunkMap.put(future, chunk);
 			}
-
-			for (final Map.Entry<Future<R>, List<E>> entry : futureToChunkMap.entrySet()) {
-				final Future<R> future = entry.getKey();
-				final List<E> chunk = entry.getValue();
-
-				try {
-					final R futureResult = future.get();
-					if (log.isDebugEnabled()) {
-						log.debug(StringUtils.getStringJoined("Future executed with result ", String.valueOf(futureResult), " for the chunk ", String.valueOf(chunk)));
-					}
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+			if (log.isDebugEnabled()) {
+				ConcurrencyUtils.runFuturesWithLogging(futureToChunkMap);
+			} else {
+				ConcurrencyUtils.runFuturesWithoutLogging(futureToChunkMap);
 			}
 		} finally {
 			executorService.shutdown();
+		}
+	}
+
+	private static <E,R> void runFuturesWithLogging(final LinkedHashMap<Future<R>, List<E>> futureToChunkMap) {
+		int futureIndex = 1;
+		for (final Map.Entry<Future<R>, List<E>> entry : futureToChunkMap.entrySet()) {
+			final Future<R> future = entry.getKey();
+			final R futureResult;
+			try {
+				futureResult = future.get();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+
+			final String futureIndexString = String.valueOf(futureIndex);
+			final String futureResultString = String.valueOf(futureResult);
+			final List<E> chunk = entry.getValue();
+			final String chunkString = String.valueOf(chunk);
+			log.debug(StringUtils.getStringJoined("Future ", futureIndexString, " executed with result ", futureResultString, " for the chunk ", chunkString));
+			futureIndex++;
+		}
+	}
+
+	private static <E,R> void runFuturesWithoutLogging(final LinkedHashMap<Future<R>, List<E>> futureToChunkMap) {
+		for (final Map.Entry<Future<R>, List<E>> entry : futureToChunkMap.entrySet()) {
+			final Future<R> future = entry.getKey();
+			try {
+				future.get();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }
