@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class FunctionalUtils {
 
 	//Converts a function to a consumer
-	public static <T, U> Consumer<T> convertFunctionToConsumer(Function<T, U> function) {
+	public static <T, U> Consumer<T> convertFunctionToConsumer(final Function<T, U> function) {
 		final Consumer<T> consumer = t -> function.apply(t);
 		return consumer;
 	}
