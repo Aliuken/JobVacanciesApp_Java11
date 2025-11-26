@@ -25,12 +25,8 @@ public class ConcurrencyUtils {
 			throw new IllegalArgumentException(StringUtils.getStringJoined("The numberOfThreads must be greater than 0"));
 		}
 
-		if (chunkConsumer == null) {
-			throw new IllegalArgumentException(StringUtils.getStringJoined("The chunkConsumer must not be null"));
-		}
-
-		final List<List<E>> chunkList = ConcurrencyUtils.createChunkList(initialElements, chunkSize);
 		final Function<List<E>, Void> chunkFunction = FunctionalUtils.convertConsumerToFunction(chunkConsumer);
+		final List<List<E>> chunkList = ConcurrencyUtils.createChunkList(initialElements, chunkSize);
 		ConcurrencyUtils.runChunksInParallel(chunkList, numberOfThreads, chunkFunction);
 	}
 

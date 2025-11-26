@@ -15,12 +15,18 @@ public class FunctionalUtils {
 
 	//Converts a function to a consumer
 	public static <T, U> Consumer<T> convertFunctionToConsumer(final Function<T, U> function) {
+		if (function == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The function must not be null"));
+		}
 		final Consumer<T> consumer = t -> function.apply(t);
 		return consumer;
 	}
 
 	//Converts a consumer to a function with Void output
 	public static <T> Function<T,Void> convertConsumerToFunction(final Consumer<T> consumer) {
+		if (consumer == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The consumer must not be null"));
+		}
 		final Function<T,Void> function = input -> {
 			consumer.accept(input);
 			return null;
@@ -30,6 +36,9 @@ public class FunctionalUtils {
 
 	//Converts a callable to a function with Void input
 	public static <T> Function<Void,T> convertCallableToFunction(final Callable<T> callable) {
+		if (callable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The callable must not be null"));
+		}
 		final Function<Void,T> function = input -> {
 			try {
 				return callable.call();
@@ -42,6 +51,9 @@ public class FunctionalUtils {
 
 	//Converts a runnable to a function with Void input and output
 	public static Function<Void,Void> convertRunnableToFunction(final Runnable runnable) {
+		if (runnable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The runnable must not be null"));
+		}
 		final Function<Void,Void> function = input -> {
 			runnable.run();
 			return null;
@@ -51,6 +63,9 @@ public class FunctionalUtils {
 
 	//Converts a callable to a runnable
 	public static <T> Runnable convertCallableToRunnable(final Callable<T> callable) {
+		if (callable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The callable must not be null"));
+		}
 		final Runnable runnable = () -> {
 			try {
 				callable.call();
@@ -63,6 +78,9 @@ public class FunctionalUtils {
 
 	//Converts a runnable to a callable with Void output
 	public static Callable<Void> convertRunnableToCallable(final Runnable runnable) {
+		if (runnable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The runnable must not be null"));
+		}
 		final Callable<Void> callable = () -> {
 			runnable.run();
 			return null;
