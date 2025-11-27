@@ -5,8 +5,15 @@ import com.aliuken.jobvacanciesapp.Constants;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class FunctionalUtils {
+    //SUMMARY FUNCTIONAL INTERFACES
+    // Function<T,U>:   U apply(T t);
+    // Consumer<T>:     void accept(T t);
+    // Supplier<T>:     T get();
+    // Callable<T>:     T call() throws Exception;
+    // Runnable:        void run();
 
 	private FunctionalUtils() throws InstantiationException {
 		final String className = this.getClass().getName();
@@ -31,6 +38,15 @@ public class FunctionalUtils {
 			consumer.accept(input);
 			return null;
 		};
+		return function;
+	}
+
+	//Converts a supplier to a function with Void input
+	public static <T> Function<Void, T> convertSupplierToFunction(Supplier<T> supplier) {
+		if (supplier == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The supplier must not be null"));
+		}
+		final Function<Void, T> function = input -> supplier.get();
 		return function;
 	}
 
@@ -86,5 +102,50 @@ public class FunctionalUtils {
 			return null;
 		};
 		return callable;
+	}
+
+	//Converts a supplier to a callable
+	public static <T> Callable<T> convertSupplierToCallable(Supplier<T> supplier) {
+		if (supplier == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The supplier must not be null"));
+		}
+		final Callable<T> callable = () -> supplier.get();
+		return callable;
+	}
+
+	//Converts a callable to a supplier
+	public static <T> Supplier<T> convertCallableToSupplier(Callable<T> callable) {
+		if (callable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The callable must not be null"));
+		}
+		final Supplier<T> supplier = () -> {
+			try {
+				return callable.call();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+		return supplier;
+	}
+
+	//Converts a supplier to a runnable
+	public static <T> Runnable convertSupplierToRunnable(Supplier<T> supplier) {
+		if (supplier == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The supplier must not be null"));
+		}
+		final Runnable runnable = () -> supplier.get();
+		return runnable;
+	}
+
+	//Converts a runnable to a supplier with Void output
+	public static Supplier<Void> convertRunnableToSupplier(Runnable runnable) {
+		if (runnable == null) {
+			throw new IllegalArgumentException(StringUtils.getStringJoined("The runnable must not be null"));
+		}
+		final Supplier<Void> supplier = () -> {
+			runnable.run();
+			return null;
+		};
+		return supplier;
 	}
 }
