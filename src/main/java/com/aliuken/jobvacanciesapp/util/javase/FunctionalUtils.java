@@ -8,12 +8,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class FunctionalUtils {
-    //SUMMARY FUNCTIONAL INTERFACES
-    // Function<T,U>:   U apply(T t);
-    // Consumer<T>:     void accept(T t);
-    // Supplier<T>:     T get();
-    // Callable<T>:     T call() throws Exception;
-    // Runnable:        void run();
+	//SUMMARY FUNCTIONAL INTERFACES
+	// Function<T,U>:   U apply(T t);
+	// Consumer<T>:     void accept(T t);
+	// Supplier<T>:     T get();
+	// Callable<T>:     T call() throws Exception;
+	// Runnable:        void run();
 
 	private FunctionalUtils() throws InstantiationException {
 		final String className = this.getClass().getName();
