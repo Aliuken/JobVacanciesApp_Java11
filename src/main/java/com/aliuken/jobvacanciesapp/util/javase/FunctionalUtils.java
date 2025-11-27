@@ -21,7 +21,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a function to a consumer
-	public static <T, U> Consumer<T> convertFunctionToConsumer(final Function<T, U> function) {
+	public static <T,U> Consumer<T> convertFunctionToConsumer(final Function<T,U> function) {
 		if (function == null) {
 			throw new IllegalArgumentException(StringUtils.getStringJoined("The function must not be null"));
 		}
@@ -42,11 +42,11 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to a function with Void input
-	public static <T> Function<Void, T> convertSupplierToFunction(Supplier<T> supplier) {
+	public static <T> Function<Void,T> convertSupplierToFunction(Supplier<T> supplier) {
 		if (supplier == null) {
 			throw new IllegalArgumentException(StringUtils.getStringJoined("The supplier must not be null"));
 		}
-		final Function<Void, T> function = input -> supplier.get();
+		final Function<Void,T> function = input -> supplier.get();
 		return function;
 	}
 
