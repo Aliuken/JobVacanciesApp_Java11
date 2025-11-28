@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class FunctionalUtils {
-	//SUMMARY FUNCTIONAL INTERFACES
+	// SUMMARY FUNCTIONAL INTERFACES
 	// Function<T,U>:   U apply(T t);
 	// Consumer<T>:     void accept(T t);
 	// Supplier<T>:     T get();

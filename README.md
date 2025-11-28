@@ -233,7 +233,7 @@ The data technologies currently used are:
 * **JPQL**: In the methods annotated with @RepositoryMethod in @Repository classes (instead of using **SQL**).
 * **MySQL Community Server**: As the main DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
 * **H2**: As the in-memory DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
-* **iText Core itextpdf** [[&#10138;]](https://mvnrepository.com/artifact/com.itextpdf/itextpdf): As the Java library to export queries to PDFs.
+* **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
 * **Transactions**: Defined with Spring using:
     * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
     * **@Transactional** in the @Service classes (pkg: [com.aliuken.jobvacanciesapp.service](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/service)).
@@ -251,7 +251,8 @@ The data technologies currently used are:
 * **UpgradedJpaRepository** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java): A subinterface of "JpaRepository<AbstractEntity, Long>" (from Spring Data JPA) to deal with pagination, sorting, query by example and query by specification.
 * **DatabaseUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/database/DatabaseUtils.java): To get objects (of type ExampleMatcher or Predicate) used in complex dynamic queries.
 * **FileUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileUtils.java), **FileNameUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileNameUtils.java) and **FileType** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java): To manage the persistence in files (of CVs, query PDFs or logos).
-* **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
+* **Zip4j** [[&#10138;]](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j): A Java library used to decompress zip files.
+* **iText Core itextpdf** [[&#10138;]](https://mvnrepository.com/artifact/com.itextpdf/itextpdf): A Java library used to export queries to PDFs.
 
 > [!NOTE]
 > In [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java), the method "saveAndFlush(S entity)" is used both to update and create an entity, depending on whether it already existed or not in the database.
@@ -287,7 +288,7 @@ The security technologies currently used are:
 * **EmailService**: This service has the following two methods to send emails (implemented in [EmailServiceImpl](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/service/EmailServiceImpl.java), using the templates defined in [EmailConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/EmailConfig.java) for English and Spanish):
     * **sendSignUpConfirmationEmail**: To send the confirmation email to new registered users.
     * **sendResetPasswordEmail**: To send the email to reset the password when you forgot the current one.
-* **dependency-check-maven** [[&#10138;]](https://mvnrepository.com/artifact/org.owasp/dependency-check-maven): A maven plugin to generate a report with the dependency vulnerabilities in "target/dependency-check-report.html". The Dependency Check is skipped by using "&lt;skip&gt;true&lt;/skip&gt;" because it is a time-consuming task. To learn more about this plugin, check out these links:
+* **dependency-check-maven** [[&#10138;]](https://mvnrepository.com/artifact/org.owasp/dependency-check-maven): A Maven plugin used to generate a report with the dependency vulnerabilities in "target/dependency-check-report.html". The Dependency Check is skipped by using "&lt;skip&gt;true&lt;/skip&gt;" because it is a time-consuming task. To learn more about this plugin, check out these links:
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven>
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven/check-mojo.html>
 
@@ -323,7 +324,7 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
 > * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 >
-> To get all working, the plugin [aspectj-maven-plugin](https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin) was needed.
+> To get all working, the Maven plugin [aspectj-maven-plugin](https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin) was needed.
 
 ### 3.9. Docker technologies
 
