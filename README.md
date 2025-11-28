@@ -324,7 +324,7 @@ Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.a
 > * [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in **ControllerAspect** to log multiple stats.
 > * [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in **RepositoryAspect** to log multiple stats.
 >
-> To get all working, the Maven plugin [aspectj-maven-plugin](https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin) was needed.
+> To make all this work, the Maven plugin [aspectj-maven-plugin](https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin) was needed.
 
 ### 3.9. Docker technologies
 
