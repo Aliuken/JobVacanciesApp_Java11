@@ -4,10 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
@@ -81,7 +78,8 @@ public class ControllerNavigationUtils {
 		return nextRedirect;
 	}
 
-	public static String getNextRedirect(final String nextRedirectPath, String languageCode, Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission, TablePageSize nextDefaultInitialTablePageSize, ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
+    public static String getNextRedirect(final String nextRedirectPath, String languageCode, Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission,
+                                         TableSortingDirection nextDefaultInitialTableSortingDirection, TablePageSize nextDefaultInitialTablePageSize, ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}
@@ -94,7 +92,11 @@ public class ControllerNavigationUtils {
 			nextDefaultAnonymousAccessPermission = AnonymousAccessPermission.BY_DEFAULT;
 		}
 
-		if(nextDefaultInitialTablePageSize == null) {
+        if(nextDefaultInitialTableSortingDirection == null) {
+            nextDefaultInitialTableSortingDirection = TableSortingDirection.BY_DEFAULT;
+        }
+
+        if(nextDefaultInitialTablePageSize == null) {
 			nextDefaultInitialTablePageSize = TablePageSize.BY_DEFAULT;
 		}
 
@@ -113,6 +115,7 @@ public class ControllerNavigationUtils {
 		final String nextRedirect = StringUtils.getStringJoined("redirect:", nextRedirectPath, "?languageParam=", languageCode,
 				"&nextDefaultLanguageCode=", nextDefaultLanguage.getCode(),
 				"&nextDefaultAnonymousAccessPermissionValue=", nextDefaultAnonymousAccessPermission.getValue(),
+                "&nextDefaultInitialTableSortingDirectionCode=", String.valueOf(nextDefaultInitialTableSortingDirection.getCode()),
 				"&nextDefaultInitialTablePageSizeValue=", String.valueOf(nextDefaultInitialTablePageSize.getValue()),
 				"&nextDefaultColorModeCode=", nextDefaultColorMode.getCode(),
 				"&nextDefaultUserInterfaceFrameworkCode=", nextDefaultUserInterfaceFramework.getCode(),

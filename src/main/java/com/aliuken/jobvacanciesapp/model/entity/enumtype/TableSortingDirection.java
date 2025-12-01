@@ -1,14 +1,16 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import org.springframework.data.domain.Sort;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.List;
 
-public enum TableSortingDirection implements Serializable, Internationalizable {
+public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirection> {
+    BY_DEFAULT("---",   "tableSortingDirection.byDefault", null),
 	ASC("asc", "tableSortingDirection.asc", Sort.Direction.ASC),
 	DESC("desc", "tableSortingDirection.desc", Sort.Direction.DESC);
 
@@ -52,4 +54,36 @@ public enum TableSortingDirection implements Serializable, Internationalizable {
 
 		return tableSortingDirection;
 	}
+
+    public static TableSortingDirection[] valuesWithoutByDefault() {
+//        final TableSortingDirection[] values = TableSortingDirection.values();
+//        final TableSortingDirection[] values = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSortingDirection.class)
+//            .toArray(TableSortingDirection[]::new);
+//
+//        final TableSortingDirection[] valuesWithoutByDefault = new TableSortingDirection[values.length - 1];
+//        for(int i = 0; i < valuesWithoutByDefault.length; i++) {
+//            valuesWithoutByDefault[i] = values[i + 1];
+//        }
+
+        final List<TableSortingDirection> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(TableSortingDirection.class);
+        final TableSortingDirection[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new TableSortingDirection[valuesWithoutByDefaultList.size()]);
+        return valuesWithoutByDefault;
+    }
+
+    @Override
+    public ConfigurableEnum<TableSortingDirection> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+        final TableSortingDirection tableSortingDirection = configPropertiesBean.getDefaultInitialTableSortingDirectionOverwritten();
+        return tableSortingDirection;
+    }
+
+    @Override
+    public ConfigurableEnum<TableSortingDirection> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+        final TableSortingDirection tableSortingDirection = configPropertiesBean.getDefaultInitialTableSortingDirection();
+        return tableSortingDirection;
+    }
+
+    @Override
+    public ConfigurableEnum<TableSortingDirection> getFinalDefaultEnumElement() {
+        return TableSortingDirection.ASC;
+    }
 }

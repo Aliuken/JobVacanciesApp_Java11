@@ -66,6 +66,13 @@
                 </select>
               </div>
               <div class="col-md-2 form-group">
+                <label for="nextDefaultInitialTableSortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultInitialTableSortingDirection}"></label>
+                <br/>
+                <select id="nextDefaultInitialTableSortingDirectionCombo" name="nextDefaultInitialTableSortingDirectionCombo" th:field="*{nextDefaultInitialTableSortingDirectionCode}" required>
+                  <option th:each="defaultInitialTableSortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}" th:value="${defaultInitialTableSortingDirection.code}" th:text="#{${defaultInitialTableSortingDirection.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
                 <label for="nextDefaultInitialTablePageSizeCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultInitialTablePageSize}"></label>
                 <br/>
                 <select id="nextDefaultInitialTablePageSizeCombo" name="nextDefaultInitialTablePageSizeCombo" th:field="*{nextDefaultInitialTablePageSizeValue}" required>

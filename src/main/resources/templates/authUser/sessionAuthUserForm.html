@@ -65,7 +65,7 @@
                 <label for="maxPriorityAuthRole" class="form-label mt-2 mb-1" th:text="#{authUser.maxPriorityAuthRole}"></label>
                 <input type="text" id="maxPriorityAuthRole" name="maxPriorityAuthRole" class="form-control" th:field="*{maxPriorityAuthRoleName}" required readonly></input>
               </div>
-              <div class="col-md-4 form-group">
+              <div class="col-md-3 form-group">
                 <label for="authRoles" class="form-label mt-2 mb-1" th:text="#{authUser.authRoles}"></label>
                 <input type="text" id="authRoles" name="authRoles" class="form-control" th:field="*{authRoleNames}" required readonly></input>
               </div>
@@ -86,6 +86,12 @@
                 <label for="initialCurrencyCombo" class="form-label mt-2 mb-1" th:text="#{authUser.initialCurrency}"></label>
                 <select id="initialCurrencyCombo" name="initialCurrencyCombo" th:field="*{initialCurrencySymbol}" required>
                   <option th:each="initialCurrency : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency).values()}" th:value="${initialCurrency.symbol}" th:text="#{${initialCurrency.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="initialTableSortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{authUser.initialTableSortingDirection}"></label>
+                <select id="initialTableSortingDirectionCombo" name="initialTableSortingDirectionCombo" th:field="*{initialTableSortingDirectionCode}" required>
+                  <option th:each="initialTableSortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}" th:value="${initialTableSortingDirection.code}" th:text="#{${initialTableSortingDirection.messageName}}"></option>
                 </select>
               </div>
               <div class="col-md-1 form-group">

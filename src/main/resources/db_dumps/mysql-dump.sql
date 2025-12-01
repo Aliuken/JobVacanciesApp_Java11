@@ -15,6 +15,7 @@ CREATE TABLE `auth_user` (
   `enabled` bit(1) NOT NULL DEFAULT 1,
   `color_mode` enum('-','L','D') NOT NULL DEFAULT '-',
   `initial_currency` enum('-','$','€') NOT NULL DEFAULT '-',
+  `initial_table_sorting_direction` enum('---','asc','desc') NOT NULL DEFAULT '---',
   `initial_table_page_size` integer NOT NULL DEFAULT 0,
   `pdf_document_page_format` enum('---','A3V','A3H','A4V','A4H') NOT NULL DEFAULT '---',
   `first_registration_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -31,15 +32,15 @@ CREATE TABLE `auth_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `auth_user` WRITE;
-INSERT INTO `auth_user` VALUES (1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-',0,'---',CURRENT_TIMESTAMP,null,null,null);
-INSERT INTO `auth_user` VALUES (2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$',0,'A3H',CURRENT_TIMESTAMP,null,null,null);
-INSERT INTO `auth_user` VALUES (3,'luis@aliuken.com','Luis','Esparza Gomez','--',1,'D','€',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
-INSERT INTO `auth_user` VALUES (4,'marisol@aliuken.com','Marisol','Salinas Rodarte','--',1,'D','-',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
-INSERT INTO `auth_user` VALUES (5,'daniel@aliuken.com','Daniel','López García','en',1,'-','$',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO `auth_user` VALUES (6,'guti@aliuken.com','José María','Gutiérrez Hernández','en',1,'-','€',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO `auth_user` VALUES (7,'raul@aliuken.com','Raúl','González Blanco','es',1,'L','-',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO `auth_user` VALUES (8,'antonio@aliuken.com','Antonio','Amaro Gómez','es',0,'-','$',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO `auth_user` VALUES (9,'pai.mei@aliuken.com','Pai','Mei','es',0,'-','€',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-','---',0,'---',CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO `auth_user` VALUES (2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$','---',0,'A3H',CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO `auth_user` VALUES (3,'luis@aliuken.com','Luis','Esparza Gomez','--',1,'D','€','asc',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
+INSERT INTO `auth_user` VALUES (4,'marisol@aliuken.com','Marisol','Salinas Rodarte','--',1,'D','-','asc',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
+INSERT INTO `auth_user` VALUES (5,'daniel@aliuken.com','Daniel','López García','en',1,'-','$','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (6,'guti@aliuken.com','José María','Gutiérrez Hernández','en',1,'-','€','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (7,'raul@aliuken.com','Raúl','González Blanco','es',1,'L','-','desc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (8,'antonio@aliuken.com','Antonio','Amaro Gómez','es',0,'-','$','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (9,'pai.mei@aliuken.com','Pai','Mei','es',0,'-','€','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
 UNLOCK TABLES;
 
 -- ---------------------------------------------------------------------

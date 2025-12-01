@@ -118,7 +118,7 @@
               filterNameModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterName : null}]]*/ null;
               filterValueModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterValue : null}]]*/ null;
               sortingFieldModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.sortingField : null}]]*/ null;
-              sortingDirectionModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.sortingDirection : null}]]*/ null;
+              sortingDirectionModelAttribute = /*[[${configPropertiesBean.getInitialTableSortingDirectionCode(param.sortingDirection)}]]*/ null;
               pageSizeModelAttribute = /*[[${configPropertiesBean.getInitialTablePageSizeValue(param.pageSize)}]]*/ null;
               pageNumberModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.pageNumber : null}]]*/ null;
             /*]]>*/

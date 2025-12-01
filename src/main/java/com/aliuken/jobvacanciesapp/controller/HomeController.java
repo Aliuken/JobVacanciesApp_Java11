@@ -169,6 +169,7 @@ public class HomeController {
 			authUser.setSurnames(surnames);
 			authUser.setLanguage(language);
 			authUser.setEnabled(Boolean.FALSE);
+            authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
 			authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
 			authUser.setColorMode(ColorMode.BY_DEFAULT);
 			authUser.setPdfDocumentPageFormat(PdfDocumentPageFormat.BY_DEFAULT);

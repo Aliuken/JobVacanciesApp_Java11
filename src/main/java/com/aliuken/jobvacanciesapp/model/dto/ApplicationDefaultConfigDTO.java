@@ -2,10 +2,7 @@ package com.aliuken.jobvacanciesapp.model.dto;
 
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
 
@@ -16,8 +13,7 @@ import java.util.Objects;
 public class ApplicationDefaultConfigDTO implements Serializable {
 	private static final long serialVersionUID = 7326190421458078482L;
 
-	private static final ApplicationDefaultConfigDTO NO_ARGS_INSTANCE = new ApplicationDefaultConfigDTO(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-
+    private static final ApplicationDefaultConfigDTO NO_ARGS_INSTANCE = new ApplicationDefaultConfigDTO(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	//Non-overwritable properties
 	private final String authUserCurriculumFilesPath;
 	private final String authUserEntityQueryFilesPath;
@@ -31,6 +27,7 @@ public class ApplicationDefaultConfigDTO implements Serializable {
 	//Overwritable properties
 	private final Language defaultLanguage;
 	private final AnonymousAccessPermission defaultAnonymousAccessPermission;
+    private final TableSortingDirection defaultInitialTableSortingDirection;
 	private final TablePageSize defaultInitialTablePageSize;
 	private final ColorMode defaultColorMode;
 	private final UserInterfaceFramework defaultUserInterfaceFramework;
@@ -49,6 +46,7 @@ public class ApplicationDefaultConfigDTO implements Serializable {
 		final String resetPasswordLinkExpirationHoursString = Objects.toString(resetPasswordLinkExpirationHours);
 		final String defaultLanguageName = Objects.toString(defaultLanguage);
 		final String defaultAnonymousAccessPermissionName = Objects.toString(defaultAnonymousAccessPermission);
+        final String defaultInitialTableSortingDirectionName = Objects.toString(defaultInitialTableSortingDirection);
 		final String defaultInitialTablePageSizeName = Objects.toString(defaultInitialTablePageSize);
 		final String defaultColorModeName = Objects.toString(defaultColorMode);
 		final String defaultUserInterfaceFrameworkName = Objects.toString(defaultUserInterfaceFramework);
@@ -65,6 +63,7 @@ public class ApplicationDefaultConfigDTO implements Serializable {
 				", resetPasswordLinkExpirationHours=", resetPasswordLinkExpirationHoursString,
 				", defaultLanguage=", defaultLanguageName,
 				", defaultAnonymousAccessPermission=", defaultAnonymousAccessPermissionName,
+                ", defaultInitialTableSortingDirection=", defaultInitialTableSortingDirectionName,
 				", defaultInitialTablePageSize=", defaultInitialTablePageSizeName,
 				", defaultColorMode=", defaultColorModeName,
 				", defaultUserInterfaceFramework=", defaultUserInterfaceFrameworkName,

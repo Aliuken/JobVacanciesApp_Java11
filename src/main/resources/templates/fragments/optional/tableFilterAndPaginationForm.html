@@ -70,8 +70,7 @@
     <label for="sortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText2} + ':'"></label>
     &nbsp;
     <select id="sortingDirectionCombo" name="sortingDirectionCombo" th:field="*{sortingDirection}" th:with="sortingDirections=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}">
-      <option th:each="sortingDirectionElem : ${sortingDirections}" th:value="${sortingDirectionElem.code}" th:text="#{${sortingDirectionElem.messageName}}"></option>
-    </select>
+      <option th:each="sortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).valuesWithoutByDefault()}" th:value="${sortingDirection.code}" th:text="#{${sortingDirection.messageName}}"></option>    </select>
     &nbsp;&nbsp;-&nbsp;&nbsp;
     <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>
     &nbsp;

@@ -60,6 +60,11 @@
     "description": "Default PDF document page format"
   },
   {
+    "name": "jobvacanciesapp.defaultInitialTableSortingDirectionCode",
+    "type": "java.lang.String",
+    "description": "Default initial sorting direction in entity tables"
+  },
+  {
     "name": "jobvacanciesapp.defaultInitialTablePageSizeValue",
     "type": "int",
     "description": "Default initial page size in entity tables"

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS auth_user (
   enabled TINYINT NOT NULL DEFAULT 1,
   color_mode ENUM('-','L','D') NOT NULL DEFAULT '-',
   initial_currency ENUM('-','$','€') NOT NULL DEFAULT '-',
+  initial_table_sorting_direction ENUM('---','asc','desc') NOT NULL DEFAULT '---',
   initial_table_page_size INTEGER NOT NULL DEFAULT 0,
   pdf_document_page_format ENUM('---','A3V','A3H','A4V','A4H') NOT NULL DEFAULT '---',
   first_registration_date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -327,24 +328,24 @@ DELETE FROM auth_role;
 DELETE FROM auth_user_credentials;
 DELETE FROM auth_user;
 
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-',0,'---',CURRENT_TIMESTAMP,null,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$',0,'A3H',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(3,'luis@aliuken.com','Luis','Esparza Gomez','--',1,'D','€',10,'A4V',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(4,'marisol@aliuken.com','Marisol','Salinas Rodarte','--',1,'D','-',10,'A4V',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(5,'daniel@aliuken.com','Daniel','López García','en',1,'-','$',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(6,'guti@aliuken.com','José María','Gutiérrez Hernández','en',1,'-','€',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(7,'raul@aliuken.com','Raúl','González Blanco','es',1,'L','-',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(8,'antonio@aliuken.com','Antonio','Amaro Gómez','es',0,'-','$',0,'---',CURRENT_TIMESTAMP,1,null,null);
-INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
- VALUES(9,'pai.mei@aliuken.com','Pai','Mei','es',0,'-','€',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-','---',0,'---',CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$','---',0,'A3H',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(3,'luis@aliuken.com','Luis','Esparza Gomez','--',1,'D','€','asc',10,'A4V',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(4,'marisol@aliuken.com','Marisol','Salinas Rodarte','--',1,'D','-','asc',10,'A4V',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(5,'daniel@aliuken.com','Daniel','López García','en',1,'-','$','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(6,'guti@aliuken.com','José María','Gutiérrez Hernández','en',1,'-','€','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(7,'raul@aliuken.com','Raúl','González Blanco','es',1,'L','-','desc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(8,'antonio@aliuken.com','Antonio','Amaro Gómez','es',0,'-','$','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO auth_user(id, email, name, surnames, language, enabled, color_mode, initial_currency, initial_table_sorting_direction, initial_table_page_size, pdf_document_page_format, first_registration_date_time, first_registration_auth_user_id, last_modification_date_time, last_modification_auth_user_id)
+ VALUES(9,'pai.mei@aliuken.com','Pai','Mei','es',0,'-','€','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);
 
 ALTER TABLE auth_user ALTER COLUMN id RESTART WITH (SELECT MAX(id) FROM auth_user) + 1;
 

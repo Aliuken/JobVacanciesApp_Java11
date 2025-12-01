@@ -28,6 +28,7 @@ public class AuthUserConverter extends EntityToDtoConverter<AuthUser, AuthUserDT
 				authUser.getEnabled(),
 				authUser.getColorMode().getCode(),
 				authUser.getInitialCurrency().getSymbol(),
+                authUser.getInitialTableSortingDirection().getCode(),
 				authUser.getInitialTablePageSize().getValue(),
 				authUser.getPdfDocumentPageFormat().getCode(),
 				authUser.getMaxPriorityAuthRoleName(),

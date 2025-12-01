@@ -10,15 +10,18 @@ import java.io.Serializable;
 public class ApplicationNextConfigDTO implements Serializable {
 	private static final long serialVersionUID = -3843025053487973796L;
 
-	private static final ApplicationNextConfigDTO NO_ARGS_INSTANCE = new ApplicationNextConfigDTO(null, null, null, null, null, null);
+    private static final ApplicationNextConfigDTO NO_ARGS_INSTANCE = new ApplicationNextConfigDTO(null, null, null, null, null, null, null);
 
-	@NotEmpty(message="{nextDefaultLanguageCode.notEmpty}")
+    @NotEmpty(message="{nextDefaultLanguageCode.notEmpty}")
 	private final String nextDefaultLanguageCode;
 
 	@NotEmpty(message="{nextDefaultAnonymousAccessPermissionValue.notEmpty}")
 	private final String nextDefaultAnonymousAccessPermissionValue;
 
-	@NotEmpty(message="{nextDefaultInitialTablePageSizeValue.notEmpty}")
+    @NotEmpty(message="{nextDefaultInitialTableSortingDirectionCode.notEmpty}")
+    private final String nextDefaultInitialTableSortingDirectionCode;
+
+    @NotEmpty(message="{nextDefaultInitialTablePageSizeValue.notEmpty}")
 	private final String nextDefaultInitialTablePageSizeValue;
 
 	@NotEmpty(message="{nextDefaultColorModeCode.notEmpty}")
@@ -39,6 +42,7 @@ public class ApplicationNextConfigDTO implements Serializable {
 		final String result = StringUtils.getStringJoined(
 			"ApplicationNextConfigDTO [nextDefaultLanguageCode=", nextDefaultLanguageCode,
 			", nextDefaultAnonymousAccessPermissionValue=", nextDefaultAnonymousAccessPermissionValue,
+            ", nextDefaultInitialTableSortingDirectionCode=", nextDefaultInitialTableSortingDirectionCode,
 			", nextDefaultInitialTablePageSizeValue=", nextDefaultInitialTablePageSizeValue,
 			", nextDefaultColorModeCode=", nextDefaultColorModeCode,
 			", nextDefaultUserInterfaceFrameworkCode=", nextDefaultUserInterfaceFrameworkCode,

@@ -31,15 +31,21 @@ public class MainClass {
 		MainClass.applicationContext = (GenericApplicationContext) MainClass.springApplication.run(args);
 	}
 
-	public static void restartApp(final String nextDefaultLanguageCode, final String nextDefaultAnonymousAccessPermissionValue, final String nextDefaultInitialTablePageSizeValue, final String nextDefaultColorModeCode, final String nextDefaultUserInterfaceFrameworkCode, final String nextDefaultPdfDocumentPageFormatCode) {
-		if(nextDefaultLanguageCode != null || nextDefaultAnonymousAccessPermissionValue != null || nextDefaultInitialTablePageSizeValue != null || nextDefaultColorModeCode != null || nextDefaultUserInterfaceFrameworkCode != null || nextDefaultPdfDocumentPageFormatCode != null) {
-			final Map<String, Object> additionalPropertiesMap = new HashMap<>();
+    public static void restartApp(final String nextDefaultLanguageCode, final String nextDefaultAnonymousAccessPermissionValue,
+                                  final String nextDefaultInitialTableSortingDirectionCode, final String nextDefaultInitialTablePageSizeValue,
+                                  final String nextDefaultColorModeCode, final String nextDefaultUserInterfaceFrameworkCode, final String nextDefaultPdfDocumentPageFormatCode) {
+        if(nextDefaultLanguageCode != null || nextDefaultAnonymousAccessPermissionValue != null ||
+                nextDefaultInitialTableSortingDirectionCode != null || nextDefaultInitialTablePageSizeValue != null ||
+                nextDefaultColorModeCode != null || nextDefaultUserInterfaceFrameworkCode != null || nextDefaultPdfDocumentPageFormatCode != null) {			final Map<String, Object> additionalPropertiesMap = new HashMap<>();
 			if(nextDefaultLanguageCode != null) {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultLanguageCodeOverwritten", nextDefaultLanguageCode);
 			}
 			if(nextDefaultAnonymousAccessPermissionValue != null) {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultAnonymousAccessPermissionValueOverwritten", nextDefaultAnonymousAccessPermissionValue);
 			}
+            if(nextDefaultInitialTableSortingDirectionCode != null) {
+                additionalPropertiesMap.put("jobvacanciesapp.defaultInitialTableSortingDirectionCodeOverwritten", nextDefaultInitialTableSortingDirectionCode);
+            }
 			if(nextDefaultInitialTablePageSizeValue != null) {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten", nextDefaultInitialTablePageSizeValue);
 			}

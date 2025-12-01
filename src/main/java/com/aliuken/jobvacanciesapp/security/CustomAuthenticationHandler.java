@@ -7,10 +7,7 @@ import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
 import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.*;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
@@ -40,7 +37,8 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 	private static final String LOGOUT_REDIRECT_ACCOUNT_DELETED = "&accountDeleted=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_LANGUAGE = "&restartWithDefaultLanguage=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = "&restartWithDefaultAnonymousAccessPermission=";
-	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_PAGE_SIZE = "&restartWithDefaultInitialPageSize=";
+    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_SORTING_DIRECTION = "&restartWithDefaultInitialSortingDirection=";
+    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_PAGE_SIZE = "&restartWithDefaultInitialPageSize=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_COLOR_MODE = "&restartWithDefaultColorMode=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_USER_INTERFACE_FRAMEWORK = "&restartWithDefaultUserInterfaceFramework=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = "&restartWithDefaultPdfDocumentPageFormat=";
@@ -79,6 +77,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
 		final Language nextDefaultLanguage;
 		final AnonymousAccessPermission nextDefaultAnonymousAccessPermission;
+        final TableSortingDirection nextDefaultInitialTableSortingDirection;
 		final TablePageSize nextDefaultInitialTablePageSize;
 		final ColorMode nextDefaultColorMode;
 		final UserInterfaceFramework nextDefaultUserInterfaceFramework;
@@ -86,6 +85,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		if(sessionAuthUserRole != null && AuthRole.ADMINISTRATOR.equals(sessionAuthUserRole.getName())) {
 			nextDefaultLanguage = this.getNextDefaultLanguage(httpServletRequest);
 			nextDefaultAnonymousAccessPermission = this.getNextDefaultAnonymousAccessPermission(httpServletRequest);
+            nextDefaultInitialTableSortingDirection = this.getNextDefaultInitialTableSortingDirection(httpServletRequest);
 			nextDefaultInitialTablePageSize = this.getNextDefaultInitialTablePageSize(httpServletRequest);
 			nextDefaultColorMode = this.getNextDefaultColorMode(httpServletRequest);
 			nextDefaultUserInterfaceFramework = this.getNextDefaultUserInterfaceFramework(httpServletRequest);
@@ -93,13 +93,15 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		} else {
 			nextDefaultLanguage = null;
 			nextDefaultAnonymousAccessPermission = null;
+            nextDefaultInitialTableSortingDirection = null;
 			nextDefaultInitialTablePageSize = null;
 			nextDefaultColorMode = null;
 			nextDefaultUserInterfaceFramework = null;
 			nextDefaultPdfDocumentPageFormat = null;
 		}
 
-		final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
+        final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission,
+                nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
 
 		final String languageUrlParamValue;
 		if(nextDefaultLanguage != null) {
@@ -129,7 +131,12 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION, urlParamValue);
 		}
 
-		if(nextDefaultInitialTablePageSize != null) {
+        if(nextDefaultInitialTableSortingDirection != null) {
+            final String urlParamValue = nextDefaultInitialTableSortingDirection.getCode();
+            redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_SORTING_DIRECTION, urlParamValue);
+        }
+
+        if(nextDefaultInitialTablePageSize != null) {
 			final String urlParamValue = String.valueOf(nextDefaultInitialTablePageSize.getValue());
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_PAGE_SIZE, urlParamValue);
 		}
@@ -199,7 +206,19 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultAnonymousAccessPermission;
 	}
 
-	private TablePageSize getNextDefaultInitialTablePageSize(final HttpServletRequest httpServletRequest) {
+    private TableSortingDirection getNextDefaultInitialTableSortingDirection(final HttpServletRequest httpServletRequest) {
+        final String nextDefaultInitialTableSortingDirectionCode = httpServletRequest.getParameter("nextDefaultInitialTableSortingDirectionCode");
+
+        final TableSortingDirection nextDefaultInitialTableSortingDirection;
+        if(nextDefaultInitialTableSortingDirectionCode != null) {
+            nextDefaultInitialTableSortingDirection = TableSortingDirection.findByCode(nextDefaultInitialTableSortingDirectionCode);
+        } else {
+            nextDefaultInitialTableSortingDirection = null;
+        }
+        return nextDefaultInitialTableSortingDirection;
+    }
+
+    private TablePageSize getNextDefaultInitialTablePageSize(final HttpServletRequest httpServletRequest) {
 		final String nextDefaultInitialTablePageSizeValue = httpServletRequest.getParameter("nextDefaultInitialTablePageSizeValue");
 
 		final TablePageSize nextDefaultInitialTablePageSize;
@@ -247,9 +266,13 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultPdfDocumentPageFormat;
 	}
 
-	private String getRedirectEndpoint(final Language nextDefaultLanguage, final AnonymousAccessPermission nextAnonymousAccessPermission, final TablePageSize nextDefaultInitialTablePageSize, final ColorMode nextDefaultColorMode, final UserInterfaceFramework nextUserInterfaceFramework, final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
-		final String redirectEndpoint;
-		if(nextDefaultLanguage != null || nextAnonymousAccessPermission != null || nextDefaultInitialTablePageSize != null || nextDefaultColorMode != null || nextUserInterfaceFramework != null || nextDefaultPdfDocumentPageFormat != null) {
+    private String getRedirectEndpoint(final Language nextDefaultLanguage, final AnonymousAccessPermission nextAnonymousAccessPermission,
+                                       final TableSortingDirection nextDefaultInitialTableSortingDirection, final TablePageSize nextDefaultInitialTablePageSize, final ColorMode nextDefaultColorMode, final UserInterfaceFramework nextUserInterfaceFramework, final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
+
+
+        final String redirectEndpoint;
+        if(nextDefaultLanguage != null || nextAnonymousAccessPermission != null || nextDefaultInitialTableSortingDirection != null ||
+                nextDefaultInitialTablePageSize != null || nextDefaultColorMode != null || nextUserInterfaceFramework != null || nextDefaultPdfDocumentPageFormat != null) {
 			redirectEndpoint = Constants.LOGIN_PATH;
 		} else {
 			final boolean anonymousAccessAllowed = (AnonymousAccessPermission.ACCESS_ALLOWED == ConfigPropertiesBean.CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION);
