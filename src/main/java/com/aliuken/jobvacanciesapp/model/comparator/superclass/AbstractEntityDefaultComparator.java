@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.comparator.superclass;
 
+import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import lombok.Getter;
@@ -19,6 +21,18 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 			this.ascComparator = new AbstractEntityDefaultComparator<>(false);
 			this.descComparator = new AbstractEntityDefaultComparator<>(true);
 		}
+
+        public AbstractEntityDefaultComparator<U> getCurrentDefaultComparator() {
+            final TableSortingDirection currentDefaultTableSortingDirection = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TableSortingDirection.class);
+
+            final AbstractEntityDefaultComparator<U> currentDefaultComparator;
+            if(TableSortingDirection.DESC.equals(currentDefaultTableSortingDirection)) {
+                currentDefaultComparator = descComparator;
+            } else {
+                currentDefaultComparator = ascComparator;
+            }
+            return currentDefaultComparator;
+        }
 	}
 
 	private final int direction;
