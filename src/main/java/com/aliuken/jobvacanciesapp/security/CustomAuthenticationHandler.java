@@ -103,16 +103,18 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
         final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission,
                 nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
 
-		final String languageUrlParamValue;
-		if(nextDefaultLanguage != null) {
-			languageUrlParamValue = nextDefaultLanguage.getCode();
-		} else if(language != null) {
-			languageUrlParamValue = language.getCode();
-		} else if(sessionAuthUser != null) {
-			languageUrlParamValue = sessionAuthUser.getLanguage().getCode();
-		} else {
-			languageUrlParamValue = Language.ENGLISH.getCode();
-		}
+        final Language languageUrlParam;
+        if(Constants.ENUM_UTILS.hasASpecificValue(nextDefaultLanguage)) {
+            languageUrlParam = nextDefaultLanguage;
+        } else if(Constants.ENUM_UTILS.hasASpecificValue(language)) {
+            languageUrlParam = language;
+        } else if(sessionAuthUser != null && Constants.ENUM_UTILS.hasASpecificValue(sessionAuthUser.getLanguage())) {
+            languageUrlParam = sessionAuthUser.getLanguage();
+        } else {
+            languageUrlParam = Language.ENGLISH;
+        }
+
+        final String languageUrlParamValue = languageUrlParam.getCode();
 
 		String redirectUrl = StringUtils.getStringJoined(httpServletRequest.getContextPath(), redirectEndpoint, LOGOUT_REDIRECT_LANGUAGE, languageUrlParamValue);
 
