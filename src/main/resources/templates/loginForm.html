@@ -106,20 +106,20 @@
     <div layout:fragment="additionalScripts">
       <script type="text/javascript" th:inline="javascript">
         $(document).ready(function() {
-          /*[[${(param.restartWithDefaultLanguage != null || param.restartWithDefaultAnonymousAccessPermission != null || param.restartWithDefaultInitialSortingDirection != null  || param.restartWithDefaultInitialPageSize != null || param.restartWithDefaultColorMode != null || param.restartWithDefaultUserInterfaceFramework != null) ? T(com.aliuken.jobvacanciesapp.MainClass).restartApp(param.restartWithDefaultLanguage, param.restartWithDefaultAnonymousAccessPermission, param.restartWithDefaultInitialSortingDirection, param.restartWithDefaultInitialPageSize, param.restartWithDefaultColorMode, param.restartWithDefaultUserInterfaceFramework, param.restartWithDefaultPdfDocumentPageFormat) : ''}]]*/
+          /*[[${(param.restartWithDefaultLanguage != null || param.restartWithDefaultAnonymousAccessPermission != null || param.restartWithDefaultInitialTableSortingDirection != null  || param.restartWithDefaultInitialTablePageSize != null || param.restartWithDefaultColorMode != null || param.restartWithDefaultUserInterfaceFramework != null) ? T(com.aliuken.jobvacanciesapp.MainClass).restartApp(param.restartWithDefaultLanguage, param.restartWithDefaultAnonymousAccessPermission, param.restartWithDefaultInitialTableSortingDirection, param.restartWithDefaultInitialTablePageSize, param.restartWithDefaultColorMode, param.restartWithDefaultUserInterfaceFramework, param.restartWithDefaultPdfDocumentPageFormat) : ''}]]*/
 
           let restartWithDefaultLanguageUrlParameter;
           let restartWithDefaultAnonymousAccessPermissionUrlParameter;
-          let restartWithDefaultInitialSortingDirectionUrlParameter;
-          let restartWithDefaultInitialPageSizeUrlParameter;
+          let restartWithDefaultInitialTableSortingDirectionUrlParameter;
+          let restartWithDefaultInitialTablePageSizeUrlParameter;
           let restartWithDefaultColorModeUrlParameter;
           let restartWithDefaultUserInterfaceFrameworkUrlParameter;
           let restartWithDefaultPdfDocumentPageFormatUrlParameter;
           /*<![CDATA[*/
             restartWithDefaultLanguageUrlParameter = /*[[${param.restartWithDefaultLanguage}]]*/ null;
             restartWithDefaultAnonymousAccessPermissionUrlParameter = /*[[${param.restartWithDefaultAnonymousAccessPermission}]]*/ null;
-            restartWithDefaultInitialSortingDirectionUrlParameter = /*[[${param.restartWithDefaultInitialSortingDirection}]]*/ null;
-            restartWithDefaultInitialPageSizeUrlParameter = /*[[${param.restartWithDefaultInitialPageSize}]]*/ null;
+            restartWithDefaultInitialTableSortingDirectionUrlParameter = /*[[${param.restartWithDefaultInitialTableSortingDirection}]]*/ null;
+            restartWithDefaultInitialTablePageSizeUrlParameter = /*[[${param.restartWithDefaultInitialTablePageSize}]]*/ null;
             restartWithDefaultColorModeUrlParameter = /*[[${param.restartWithDefaultColorMode}]]*/ null;
             restartWithDefaultUserInterfaceFrameworkUrlParameter = /*[[${param.restartWithDefaultUserInterfaceFramework}]]*/ null;
             restartWithDefaultPdfDocumentPageFormatUrlParameter = /*[[${param.restartWithDefaultPdfDocumentPageFormat}]]*/ null;
@@ -133,12 +133,12 @@
             deleteParameterInUrl("restartWithDefaultAnonymousAccessPermission");
           }
 
-          if(restartWithDefaultInitialSortingDirectionUrlParameter != null) {
-            deleteParameterInUrl("restartWithDefaultInitialSortingDirection");
+          if(restartWithDefaultInitialTableSortingDirectionUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultInitialTableSortingDirection");
           }
 
-          if(restartWithDefaultInitialPageSizeUrlParameter != null) {
-            deleteParameterInUrl("restartWithDefaultInitialPageSize");
+          if(restartWithDefaultInitialTablePageSizeUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultInitialTablePageSize");
           }
 
           if(restartWithDefaultColorModeUrlParameter != null) {

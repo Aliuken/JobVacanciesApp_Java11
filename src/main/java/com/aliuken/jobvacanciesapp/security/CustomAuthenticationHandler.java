@@ -37,8 +37,8 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 	private static final String LOGOUT_REDIRECT_ACCOUNT_DELETED = "&accountDeleted=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_LANGUAGE = "&restartWithDefaultLanguage=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = "&restartWithDefaultAnonymousAccessPermission=";
-    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_SORTING_DIRECTION = "&restartWithDefaultInitialSortingDirection=";
-    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_PAGE_SIZE = "&restartWithDefaultInitialPageSize=";
+    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = "&restartWithDefaultInitialTableSortingDirection=";
+    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE = "&restartWithDefaultInitialTablePageSize=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_COLOR_MODE = "&restartWithDefaultColorMode=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_USER_INTERFACE_FRAMEWORK = "&restartWithDefaultUserInterfaceFramework=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = "&restartWithDefaultPdfDocumentPageFormat=";
@@ -133,12 +133,12 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
         if(nextDefaultInitialTableSortingDirection != null) {
             final String urlParamValue = nextDefaultInitialTableSortingDirection.getCode();
-            redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_SORTING_DIRECTION, urlParamValue);
+            redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION, urlParamValue);
         }
 
         if(nextDefaultInitialTablePageSize != null) {
 			final String urlParamValue = String.valueOf(nextDefaultInitialTablePageSize.getValue());
-			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_PAGE_SIZE, urlParamValue);
+			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE, urlParamValue);
 		}
 
 		if(nextDefaultColorMode != null) {
