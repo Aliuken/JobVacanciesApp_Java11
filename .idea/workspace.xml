@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/FunctionalUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/FunctionalUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +47,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.App11.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Run App J11.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Run App J11.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.All in jobvacanciesapp (1).executor&quot;: &quot;Run&quot;,
     &quot;JUnit.All in jobvacanciesapp.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.AuthUserRepositoryTest.testDeleteById_Ok.executor&quot;: &quot;Run&quot;,
