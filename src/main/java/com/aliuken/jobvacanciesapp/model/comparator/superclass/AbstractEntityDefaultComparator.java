@@ -66,7 +66,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 		return direction * idCompareResult;
 	}
 
-	public static <U extends AbstractEntity<U>> EntityComparators<U> getEntityComparators(Class<U> entityClass) {
+	public static <U extends AbstractEntity<U>> EntityComparators<U> getEntityComparators(final Class<U> entityClass) {
 		EntityComparators<U> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
 		if (entityComparators == null) {
 			entityComparators = new EntityComparators<>();
