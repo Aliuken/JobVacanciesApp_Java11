@@ -4,7 +4,11 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
-import com.aliuken.jobvacanciesapp.model.dto.*;
+import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
+import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
+import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobCompanyConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
@@ -31,7 +35,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,7 +50,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 @Controller
 @Slf4j

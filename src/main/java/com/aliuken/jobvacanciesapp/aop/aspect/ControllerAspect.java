@@ -8,7 +8,11 @@ import com.aliuken.jobvacanciesapp.util.spring.aop.logging.ControllerAspectLoggi
 import com.aliuken.jobvacanciesapp.util.spring.aop.rest.ControllerAspectRestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;

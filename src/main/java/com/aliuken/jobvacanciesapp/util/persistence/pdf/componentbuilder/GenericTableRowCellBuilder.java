@@ -2,7 +2,12 @@ package com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
-import com.itextpdf.text.*;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPCellEvent;
