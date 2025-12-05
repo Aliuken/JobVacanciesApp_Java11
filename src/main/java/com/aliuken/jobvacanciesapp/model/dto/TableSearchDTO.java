@@ -81,12 +81,12 @@ public class TableSearchDTO implements Serializable {
 		return tableSortingDirection;
 	}
 
-    public TablePageSize getTablePageSize() {
-        final TablePageSize tablePageSize = TablePageSize.findByValue(pageSize);
-        return tablePageSize;
-    }
+	public TablePageSize getTablePageSize() {
+		final TablePageSize tablePageSize = TablePageSize.findByValue(pageSize);
+		return tablePageSize;
+	}
 
-    //If not all pagination URL parameters -> empty table (in Java)
+	//If not all pagination URL parameters -> empty table (in Java)
 	public boolean hasAllParameters() {
 		final boolean hasAllParameters = (
 			LogicalUtils.isNotNullNorEmptyString(languageParam) && !Language.BY_DEFAULT.getCode().equals(languageParam)
