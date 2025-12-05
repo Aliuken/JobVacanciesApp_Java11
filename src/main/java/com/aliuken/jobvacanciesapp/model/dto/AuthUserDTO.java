@@ -16,9 +16,9 @@ import java.util.Set;
 public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -7781889193918523592L;
 
-    private static final AuthUserDTO NO_ARGS_INSTANCE = new AuthUserDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
+	private static final AuthUserDTO NO_ARGS_INSTANCE = new AuthUserDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-    @NotNull(message="{id.notNull}")
+	@NotNull(message="{id.notNull}")
 	private final Long id;
 
 	@NotEmpty(message="{email.notEmpty}")
@@ -47,10 +47,10 @@ public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 	@NotNull(message="{initialCurrencySymbol.notEmpty}")
 	private final String initialCurrencySymbol;
 
-    @NotNull(message="{initialTableSortingDirectionCode.notNull}")
-    private final String initialTableSortingDirectionCode;
+	@NotNull(message="{initialTableSortingDirectionCode.notNull}")
+	private final String initialTableSortingDirectionCode;
 
-    @NotNull(message="{initialTablePageSizeValue.notNull}")
+	@NotNull(message="{initialTablePageSizeValue.notNull}")
 	private final Integer initialTablePageSizeValue;
 
 	@NotEmpty(message="{pdfDocumentPageFormatCode.notEmpty}")
@@ -74,8 +74,8 @@ public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 		final String initialTablePageSizeValueString = Objects.toString(initialTablePageSizeValue);
 		final String authRoleNamesString = authRoleNames.toString();
 
-        final String result = StringUtils.getStringJoined("AuthUserDTO [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", languageCode=", languageCode, ", enabled=", enabledString,
-                ", initialTableSortingDirectionCode=", initialTableSortingDirectionCode, ", initialTablePageSizeValue=", initialTablePageSizeValueString, ", colorModeCode=", colorModeCode, ", pdfDocumentPageFormatCode=", pdfDocumentPageFormatCode, ", maxPriorityAuthRoleName=", maxPriorityAuthRoleName, ", authRoleNames=", authRoleNamesString, "]");
-        return result;
+		final String result = StringUtils.getStringJoined("AuthUserDTO [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", languageCode=", languageCode, ", enabled=", enabledString,
+				", initialTableSortingDirectionCode=", initialTableSortingDirectionCode, ", initialTablePageSizeValue=", initialTablePageSizeValueString, ", colorModeCode=", colorModeCode, ", pdfDocumentPageFormatCode=", pdfDocumentPageFormatCode, ", maxPriorityAuthRoleName=", maxPriorityAuthRoleName, ", authRoleNames=", authRoleNamesString, "]");
+		return result;
 	}
 }
