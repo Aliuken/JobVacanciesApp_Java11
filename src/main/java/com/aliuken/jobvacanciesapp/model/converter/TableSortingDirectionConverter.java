@@ -10,22 +10,22 @@ public class TableSortingDirectionConverter implements AttributeConverter<TableS
 
 	@Override
 	public String convertToDatabaseColumn(final TableSortingDirection tableSortingDirection) {
-        if(tableSortingDirection == null) {
-            return TableSortingDirection.BY_DEFAULT.getCode();
-        }
+		if(tableSortingDirection == null) {
+			return TableSortingDirection.BY_DEFAULT.getCode();
+		}
 
-        final String tableSortingDirectionCode = tableSortingDirection.getCode();
-        return tableSortingDirectionCode;
+		final String tableSortingDirectionCode = tableSortingDirection.getCode();
+		return tableSortingDirectionCode;
 	}
 
 	@Override
 	public TableSortingDirection convertToEntityAttribute(final String tableSortingDirectionCode) {
-        final TableSortingDirection tableSortingDirection;
-        if(tableSortingDirectionCode != null) {
-            tableSortingDirection = TableSortingDirection.findByCode(tableSortingDirectionCode);
-        } else {
-            tableSortingDirection = TableSortingDirection.BY_DEFAULT;
-        }
-        return tableSortingDirection;
+		final TableSortingDirection tableSortingDirection;
+		if(tableSortingDirectionCode != null) {
+			tableSortingDirection = TableSortingDirection.findByCode(tableSortingDirectionCode);
+		} else {
+			tableSortingDirection = TableSortingDirection.BY_DEFAULT;
+		}
+		return tableSortingDirection;
 	}
 }
