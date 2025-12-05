@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirection> {
-	BY_DEFAULT("---", "tableSortingDirection.byDefault", null),
-	ASC("asc", "tableSortingDirection.asc", Sort.Direction.ASC),
-	DESC("desc", "tableSortingDirection.desc", Sort.Direction.DESC);
+	BY_DEFAULT("---",  "tableSortingDirection.byDefault", null),
+	ASC       ("asc",  "tableSortingDirection.asc",       Sort.Direction.ASC),
+	DESC      ("desc", "tableSortingDirection.desc",      Sort.Direction.DESC);
 
 	@NotNull
 	private final String code;

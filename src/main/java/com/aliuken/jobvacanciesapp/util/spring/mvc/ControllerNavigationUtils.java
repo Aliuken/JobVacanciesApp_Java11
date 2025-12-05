@@ -82,8 +82,8 @@ public class ControllerNavigationUtils {
 		return nextRedirect;
 	}
 
-    public static String getNextRedirect(final String nextRedirectPath, String languageCode, Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission,
-                                         TableSortingDirection nextDefaultInitialTableSortingDirection, TablePageSize nextDefaultInitialTablePageSize, ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
+	public static String getNextRedirect(final String nextRedirectPath, String languageCode, Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission,
+										 TableSortingDirection nextDefaultInitialTableSortingDirection, TablePageSize nextDefaultInitialTablePageSize, ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}
@@ -96,11 +96,11 @@ public class ControllerNavigationUtils {
 			nextDefaultAnonymousAccessPermission = AnonymousAccessPermission.BY_DEFAULT;
 		}
 
-        if(nextDefaultInitialTableSortingDirection == null) {
-            nextDefaultInitialTableSortingDirection = TableSortingDirection.BY_DEFAULT;
-        }
+		if(nextDefaultInitialTableSortingDirection == null) {
+			nextDefaultInitialTableSortingDirection = TableSortingDirection.BY_DEFAULT;
+		}
 
-        if(nextDefaultInitialTablePageSize == null) {
+		if(nextDefaultInitialTablePageSize == null) {
 			nextDefaultInitialTablePageSize = TablePageSize.BY_DEFAULT;
 		}
 
@@ -119,7 +119,7 @@ public class ControllerNavigationUtils {
 		final String nextRedirect = StringUtils.getStringJoined("redirect:", nextRedirectPath, "?languageParam=", languageCode,
 				"&nextDefaultLanguageCode=", nextDefaultLanguage.getCode(),
 				"&nextDefaultAnonymousAccessPermissionValue=", nextDefaultAnonymousAccessPermission.getValue(),
-                "&nextDefaultInitialTableSortingDirectionCode=", String.valueOf(nextDefaultInitialTableSortingDirection.getCode()),
+				"&nextDefaultInitialTableSortingDirectionCode=", String.valueOf(nextDefaultInitialTableSortingDirection.getCode()),
 				"&nextDefaultInitialTablePageSizeValue=", String.valueOf(nextDefaultInitialTablePageSize.getValue()),
 				"&nextDefaultColorModeCode=", nextDefaultColorMode.getCode(),
 				"&nextDefaultUserInterfaceFrameworkCode=", nextDefaultUserInterfaceFramework.getCode(),

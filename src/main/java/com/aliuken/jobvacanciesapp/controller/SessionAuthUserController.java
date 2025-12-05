@@ -126,13 +126,13 @@ public class SessionAuthUserController {
 				initialCurrency = Currency.BY_DEFAULT;
 			}
 
-            final String initialTableSortingDirectionCode = authUserDTO.getInitialTableSortingDirectionCode();
-            TableSortingDirection initialTableSortingDirection = TableSortingDirection.findByCode(initialTableSortingDirectionCode);
-            if(initialTableSortingDirection == null) {
-                initialTableSortingDirection = TableSortingDirection.BY_DEFAULT;
-            }
+			final String initialTableSortingDirectionCode = authUserDTO.getInitialTableSortingDirectionCode();
+			TableSortingDirection initialTableSortingDirection = TableSortingDirection.findByCode(initialTableSortingDirectionCode);
+			if(initialTableSortingDirection == null) {
+				initialTableSortingDirection = TableSortingDirection.BY_DEFAULT;
+			}
 
-            final Integer initialTablePageSizeValue = authUserDTO.getInitialTablePageSizeValue();
+			final Integer initialTablePageSizeValue = authUserDTO.getInitialTablePageSizeValue();
 			TablePageSize initialTablePageSize = TablePageSize.findByValue(initialTablePageSizeValue);
 			if(initialTablePageSize == null) {
 				initialTablePageSize = TablePageSize.BY_DEFAULT;
@@ -151,7 +151,7 @@ public class SessionAuthUserController {
 			sessionAuthUser.setEnabled(enabled);
 			sessionAuthUser.setColorMode(colorMode);
 			sessionAuthUser.setInitialCurrency(initialCurrency);
-            sessionAuthUser.setInitialTableSortingDirection(initialTableSortingDirection);
+			sessionAuthUser.setInitialTableSortingDirection(initialTableSortingDirection);
 			sessionAuthUser.setInitialTablePageSize(initialTablePageSize);
 			sessionAuthUser.setPdfDocumentPageFormat(pdfDocumentPageFormat);
 			sessionAuthUser = authUserService.saveAndFlush(sessionAuthUser);
@@ -359,10 +359,10 @@ public class SessionAuthUserController {
 				final String nextDefaultAnonymousAccessPermissionValue = applicationNextConfigDTO.getNextDefaultAnonymousAccessPermissionValue();
 				final AnonymousAccessPermission nextAnonymousAccessPermission = AnonymousAccessPermission.findByValue(nextDefaultAnonymousAccessPermissionValue);
 
-                final String nextDefaultInitialTableSortingDirectionCode = applicationNextConfigDTO.getNextDefaultInitialTableSortingDirectionCode();
-                final TableSortingDirection nextDefaultInitialTableSortingDirection = TableSortingDirection.findByCode(nextDefaultInitialTableSortingDirectionCode);
+				final String nextDefaultInitialTableSortingDirectionCode = applicationNextConfigDTO.getNextDefaultInitialTableSortingDirectionCode();
+				final TableSortingDirection nextDefaultInitialTableSortingDirection = TableSortingDirection.findByCode(nextDefaultInitialTableSortingDirectionCode);
 
-                final String nextDefaultInitialTablePageSizeValue = applicationNextConfigDTO.getNextDefaultInitialTablePageSizeValue();
+				final String nextDefaultInitialTablePageSizeValue = applicationNextConfigDTO.getNextDefaultInitialTablePageSizeValue();
 				final TablePageSize nextDefaultInitialTablePageSize = TablePageSize.findByValue(Integer.valueOf(nextDefaultInitialTablePageSizeValue));
 
 				final String nextDefaultColorModeCode = applicationNextConfigDTO.getNextDefaultColorModeCode();
@@ -374,8 +374,8 @@ public class SessionAuthUserController {
 				final String nextDefaultPdfDocumentPageFormatCode = applicationNextConfigDTO.getNextDefaultPdfDocumentPageFormatCode();
 				final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(nextDefaultPdfDocumentPageFormatCode);
 
-                return ControllerNavigationUtils.getNextRedirect("/logout", languageCode, nextDefaultLanguage, nextAnonymousAccessPermission,
-                        nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
+				return ControllerNavigationUtils.getNextRedirect("/logout", languageCode, nextDefaultLanguage, nextAnonymousAccessPermission,
+						nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
 			} else {
 				return ControllerNavigationUtils.getNextRedirect("/logout", languageCode);
 			}
@@ -406,8 +406,8 @@ public class SessionAuthUserController {
 		final Long resetPasswordLinkExpirationHours = configPropertiesBean.getResetPasswordLinkExpirationHours();
 		final Language defaultLanguage = configPropertiesBean.getDefaultLanguage();
 		final AnonymousAccessPermission defaultAnonymousAccessPermission = configPropertiesBean.getDefaultAnonymousAccessPermission();
-        final TableSortingDirection defaultInitialTableSortingDirection = configPropertiesBean.getDefaultInitialTableSortingDirection();
-        final TablePageSize defaultInitialTablePageSize = configPropertiesBean.getDefaultInitialTablePageSize();
+		final TableSortingDirection defaultInitialTableSortingDirection = configPropertiesBean.getDefaultInitialTableSortingDirection();
+		final TablePageSize defaultInitialTablePageSize = configPropertiesBean.getDefaultInitialTablePageSize();
 		final ColorMode defaultColorMode = configPropertiesBean.getDefaultColorMode();
 		final UserInterfaceFramework defaultUserInterfaceFramework = configPropertiesBean.getDefaultUserInterfaceFramework();
 		final PdfDocumentPageFormat defaultPdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormat();
@@ -416,22 +416,22 @@ public class SessionAuthUserController {
 				authUserCurriculumFilesPath, authUserEntityQueryFilesPath, jobCompanyLogosPath,
 				useAjaxToRefreshJobCompanyLogos, useEntityManagerCache, useParallelStreams,
 				signupConfirmationLinkExpirationHours, resetPasswordLinkExpirationHours,
-                defaultLanguage, defaultAnonymousAccessPermission, defaultInitialTableSortingDirection, defaultInitialTablePageSize,
-                defaultColorMode, defaultUserInterfaceFramework, defaultPdfDocumentPageFormat);
+				defaultLanguage, defaultAnonymousAccessPermission, defaultInitialTableSortingDirection, defaultInitialTablePageSize,
+				defaultColorMode, defaultUserInterfaceFramework, defaultPdfDocumentPageFormat);
 		return applicationDefaultConfigDTO;
 	}
 
 	private ApplicationNextConfigDTO getInitialApplicationNextConfigDTO() {
 		final String overwrittenLanguageCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_LANGUAGE.getCode();
 		final String overwrittenAnonymousAccessPermissionValue = ConfigPropertiesBean.CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION.getValue();
-        final String overwrittenInitialTableSortingDirectionCode = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION.getCode());
+		final String overwrittenInitialTableSortingDirectionCode = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION.getCode());
 		final String overwrittenInitialTablePageSizeValue = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE.getValue());
 		final String overwrittenColorModeCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_COLOR_MODE.getCode();
 		final String overwrittenUserInterfaceFrameworkCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK.getCode();
 		final String overwrittenPdfDocumentPageFormatCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT.getCode();
 
-        final ApplicationNextConfigDTO applicationNextConfigDTO = new ApplicationNextConfigDTO(overwrittenLanguageCode, overwrittenAnonymousAccessPermissionValue,
-                overwrittenInitialTableSortingDirectionCode, overwrittenInitialTablePageSizeValue, overwrittenColorModeCode, overwrittenUserInterfaceFrameworkCode, overwrittenPdfDocumentPageFormatCode);
+		final ApplicationNextConfigDTO applicationNextConfigDTO = new ApplicationNextConfigDTO(overwrittenLanguageCode, overwrittenAnonymousAccessPermissionValue,
+				overwrittenInitialTableSortingDirectionCode, overwrittenInitialTablePageSizeValue, overwrittenColorModeCode, overwrittenUserInterfaceFrameworkCode, overwrittenPdfDocumentPageFormatCode);
 		return applicationNextConfigDTO;
 	}
 }
