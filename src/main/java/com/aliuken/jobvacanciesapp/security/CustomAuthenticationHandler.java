@@ -41,8 +41,8 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 	private static final String LOGOUT_REDIRECT_ACCOUNT_DELETED = "&accountDeleted=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_LANGUAGE = "&restartWithDefaultLanguage=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = "&restartWithDefaultAnonymousAccessPermission=";
-    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = "&restartWithDefaultInitialTableSortingDirection=";
-    private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE = "&restartWithDefaultInitialTablePageSize=";
+	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = "&restartWithDefaultInitialTableSortingDirection=";
+	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE = "&restartWithDefaultInitialTablePageSize=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_COLOR_MODE = "&restartWithDefaultColorMode=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_USER_INTERFACE_FRAMEWORK = "&restartWithDefaultUserInterfaceFramework=";
 	private static final String LOGOUT_RESTART_APP_WITH_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = "&restartWithDefaultPdfDocumentPageFormat=";
@@ -81,7 +81,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
 		final Language nextDefaultLanguage;
 		final AnonymousAccessPermission nextDefaultAnonymousAccessPermission;
-        final TableSortingDirection nextDefaultInitialTableSortingDirection;
+		final TableSortingDirection nextDefaultInitialTableSortingDirection;
 		final TablePageSize nextDefaultInitialTablePageSize;
 		final ColorMode nextDefaultColorMode;
 		final UserInterfaceFramework nextDefaultUserInterfaceFramework;
@@ -89,7 +89,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		if(sessionAuthUserRole != null && AuthRole.ADMINISTRATOR.equals(sessionAuthUserRole.getName())) {
 			nextDefaultLanguage = this.getNextDefaultLanguage(httpServletRequest);
 			nextDefaultAnonymousAccessPermission = this.getNextDefaultAnonymousAccessPermission(httpServletRequest);
-            nextDefaultInitialTableSortingDirection = this.getNextDefaultInitialTableSortingDirection(httpServletRequest);
+			nextDefaultInitialTableSortingDirection = this.getNextDefaultInitialTableSortingDirection(httpServletRequest);
 			nextDefaultInitialTablePageSize = this.getNextDefaultInitialTablePageSize(httpServletRequest);
 			nextDefaultColorMode = this.getNextDefaultColorMode(httpServletRequest);
 			nextDefaultUserInterfaceFramework = this.getNextDefaultUserInterfaceFramework(httpServletRequest);
@@ -97,28 +97,28 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		} else {
 			nextDefaultLanguage = null;
 			nextDefaultAnonymousAccessPermission = null;
-            nextDefaultInitialTableSortingDirection = null;
+			nextDefaultInitialTableSortingDirection = null;
 			nextDefaultInitialTablePageSize = null;
 			nextDefaultColorMode = null;
 			nextDefaultUserInterfaceFramework = null;
 			nextDefaultPdfDocumentPageFormat = null;
 		}
 
-        final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission,
-                nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
+		final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission,
+				nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
 
-        final Language languageUrlParam;
-        if(Constants.ENUM_UTILS.hasASpecificValue(nextDefaultLanguage)) {
-            languageUrlParam = nextDefaultLanguage;
-        } else if(Constants.ENUM_UTILS.hasASpecificValue(language)) {
-            languageUrlParam = language;
-        } else if(sessionAuthUser != null && Constants.ENUM_UTILS.hasASpecificValue(sessionAuthUser.getLanguage())) {
-            languageUrlParam = sessionAuthUser.getLanguage();
-        } else {
-            languageUrlParam = Language.ENGLISH;
-        }
+		final Language languageUrlParam;
+		if(Constants.ENUM_UTILS.hasASpecificValue(nextDefaultLanguage)) {
+			languageUrlParam = nextDefaultLanguage;
+		} else if(Constants.ENUM_UTILS.hasASpecificValue(language)) {
+			languageUrlParam = language;
+		} else if(sessionAuthUser != null && Constants.ENUM_UTILS.hasASpecificValue(sessionAuthUser.getLanguage())) {
+			languageUrlParam = sessionAuthUser.getLanguage();
+		} else {
+			languageUrlParam = Language.ENGLISH;
+		}
 
-        final String languageUrlParamValue = languageUrlParam.getCode();
+		final String languageUrlParamValue = languageUrlParam.getCode();
 
 		String redirectUrl = StringUtils.getStringJoined(httpServletRequest.getContextPath(), redirectEndpoint, LOGOUT_REDIRECT_LANGUAGE, languageUrlParamValue);
 
@@ -137,12 +137,12 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION, urlParamValue);
 		}
 
-        if(nextDefaultInitialTableSortingDirection != null) {
-            final String urlParamValue = nextDefaultInitialTableSortingDirection.getCode();
-            redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION, urlParamValue);
-        }
+		if(nextDefaultInitialTableSortingDirection != null) {
+			final String urlParamValue = nextDefaultInitialTableSortingDirection.getCode();
+			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION, urlParamValue);
+		}
 
-        if(nextDefaultInitialTablePageSize != null) {
+		if(nextDefaultInitialTablePageSize != null) {
 			final String urlParamValue = String.valueOf(nextDefaultInitialTablePageSize.getValue());
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE, urlParamValue);
 		}
@@ -212,19 +212,19 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultAnonymousAccessPermission;
 	}
 
-    private TableSortingDirection getNextDefaultInitialTableSortingDirection(final HttpServletRequest httpServletRequest) {
-        final String nextDefaultInitialTableSortingDirectionCode = httpServletRequest.getParameter("nextDefaultInitialTableSortingDirectionCode");
+	private TableSortingDirection getNextDefaultInitialTableSortingDirection(final HttpServletRequest httpServletRequest) {
+		final String nextDefaultInitialTableSortingDirectionCode = httpServletRequest.getParameter("nextDefaultInitialTableSortingDirectionCode");
 
-        final TableSortingDirection nextDefaultInitialTableSortingDirection;
-        if(nextDefaultInitialTableSortingDirectionCode != null) {
-            nextDefaultInitialTableSortingDirection = TableSortingDirection.findByCode(nextDefaultInitialTableSortingDirectionCode);
-        } else {
-            nextDefaultInitialTableSortingDirection = null;
-        }
-        return nextDefaultInitialTableSortingDirection;
-    }
+		final TableSortingDirection nextDefaultInitialTableSortingDirection;
+		if(nextDefaultInitialTableSortingDirectionCode != null) {
+			nextDefaultInitialTableSortingDirection = TableSortingDirection.findByCode(nextDefaultInitialTableSortingDirectionCode);
+		} else {
+			nextDefaultInitialTableSortingDirection = null;
+		}
+		return nextDefaultInitialTableSortingDirection;
+	}
 
-    private TablePageSize getNextDefaultInitialTablePageSize(final HttpServletRequest httpServletRequest) {
+	private TablePageSize getNextDefaultInitialTablePageSize(final HttpServletRequest httpServletRequest) {
 		final String nextDefaultInitialTablePageSizeValue = httpServletRequest.getParameter("nextDefaultInitialTablePageSizeValue");
 
 		final TablePageSize nextDefaultInitialTablePageSize;
@@ -272,13 +272,13 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultPdfDocumentPageFormat;
 	}
 
-    private String getRedirectEndpoint(final Language nextDefaultLanguage, final AnonymousAccessPermission nextAnonymousAccessPermission,
-                                       final TableSortingDirection nextDefaultInitialTableSortingDirection, final TablePageSize nextDefaultInitialTablePageSize, final ColorMode nextDefaultColorMode, final UserInterfaceFramework nextUserInterfaceFramework, final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
+	private String getRedirectEndpoint(final Language nextDefaultLanguage, final AnonymousAccessPermission nextAnonymousAccessPermission,
+									   final TableSortingDirection nextDefaultInitialTableSortingDirection, final TablePageSize nextDefaultInitialTablePageSize, final ColorMode nextDefaultColorMode, final UserInterfaceFramework nextUserInterfaceFramework, final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
 
 
-        final String redirectEndpoint;
-        if(nextDefaultLanguage != null || nextAnonymousAccessPermission != null || nextDefaultInitialTableSortingDirection != null ||
-                nextDefaultInitialTablePageSize != null || nextDefaultColorMode != null || nextUserInterfaceFramework != null || nextDefaultPdfDocumentPageFormat != null) {
+		final String redirectEndpoint;
+		if(nextDefaultLanguage != null || nextAnonymousAccessPermission != null || nextDefaultInitialTableSortingDirection != null ||
+				nextDefaultInitialTablePageSize != null || nextDefaultColorMode != null || nextUserInterfaceFramework != null || nextDefaultPdfDocumentPageFormat != null) {
 			redirectEndpoint = Constants.LOGIN_PATH;
 		} else {
 			final boolean anonymousAccessAllowed = (AnonymousAccessPermission.ACCESS_ALLOWED == ConfigPropertiesBean.CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION);

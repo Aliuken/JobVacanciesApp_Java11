@@ -231,9 +231,9 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
 		final T thisEntity = GenericsUtils.cast(this);
 		final AbstractEntityDefaultComparator.EntityComparators<T> entityComparators = AbstractEntityDefaultComparator.getEntityComparators(entityClass);
-        final AbstractEntityDefaultComparator<T> currentDefaultComparator = entityComparators.getCurrentDefaultComparator();
+		final AbstractEntityDefaultComparator<T> currentDefaultComparator = entityComparators.getCurrentDefaultComparator();
 
-        final int compareResult = currentDefaultComparator.compare(thisEntity, other);
+		final int compareResult = currentDefaultComparator.compare(thisEntity, other);
 		return compareResult;
 	}
 }

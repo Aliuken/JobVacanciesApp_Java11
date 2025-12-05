@@ -174,7 +174,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 				Assertions.assertNotNull(authUser.getEnabled());
 				Assertions.assertNotNull(authUser.getColorMode());
 				Assertions.assertNotNull(authUser.getInitialCurrency());
-                Assertions.assertNotNull(authUser.getInitialTableSortingDirection());
+				Assertions.assertNotNull(authUser.getInitialTableSortingDirection());
 				Assertions.assertNotNull(authUser.getInitialTablePageSize());
 				Assertions.assertNotNull(authUser.getPdfDocumentPageFormat());
 				Assertions.assertNotNull(authUser.getFirstRegistrationDateTime());
@@ -201,7 +201,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		authUser.setEnabled(Boolean.FALSE);
 		authUser.setColorMode(ColorMode.BY_DEFAULT);
 		authUser.setInitialCurrency(Currency.BY_DEFAULT);
-        authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
+		authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
 		authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
 		authUser.setPdfDocumentPageFormat(PdfDocumentPageFormat.BY_DEFAULT);
 
@@ -246,7 +246,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Assertions.assertEquals(Boolean.FALSE, authUser.getEnabled());
 		Assertions.assertEquals(ColorMode.BY_DEFAULT, authUser.getColorMode());
 		Assertions.assertEquals(Currency.BY_DEFAULT, authUser.getInitialCurrency());
-        Assertions.assertEquals(TableSortingDirection.BY_DEFAULT, authUser.getInitialTableSortingDirection());
+		Assertions.assertEquals(TableSortingDirection.BY_DEFAULT, authUser.getInitialTableSortingDirection());
 		Assertions.assertEquals(TablePageSize.BY_DEFAULT, authUser.getInitialTablePageSize());
 
 		Assertions.assertNotNull(authUser.getFirstRegistrationDateTime());
@@ -394,7 +394,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 				authUser.setLanguage(Language.SPANISH);
 				authUser.setEnabled(Boolean.FALSE);
 				authUser.setInitialCurrency(Currency.BY_DEFAULT);
-                authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
+				authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
 				authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
 				authUser.setColorMode(null);
 
@@ -418,7 +418,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 				authUser.setLanguage(Language.SPANISH);
 				authUser.setEnabled(Boolean.FALSE);
 				authUser.setInitialCurrency(null);
-                authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
+				authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
 				authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
 				authUser.setColorMode(ColorMode.BY_DEFAULT);
 
@@ -431,31 +431,31 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Assertions.assertNotNull(rootCauseMessage);
 	}
 
-    @Test
-    public void testSave_InsertInitialTableSortingDirectionNull() {
-        final ConstraintViolationException exception = Assertions.assertThrows(
-                ConstraintViolationException.class, () -> {
-                    final AuthUser authUser = new AuthUser();
-                    authUser.setEmail("aliuken@aliuken.com");
-                    authUser.setName("New");
-                    authUser.setSurnames("User");
-                    authUser.setLanguage(Language.SPANISH);
-                    authUser.setEnabled(Boolean.FALSE);
-                    authUser.setInitialCurrency(Currency.BY_DEFAULT);
-                    authUser.setInitialTableSortingDirection(null);
-                    authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
-                    authUser.setColorMode(ColorMode.BY_DEFAULT);
+	@Test
+	public void testSave_InsertInitialTableSortingDirectionNull() {
+		final ConstraintViolationException exception = Assertions.assertThrows(
+				ConstraintViolationException.class, () -> {
+					final AuthUser authUser = new AuthUser();
+					authUser.setEmail("aliuken@aliuken.com");
+					authUser.setName("New");
+					authUser.setSurnames("User");
+					authUser.setLanguage(Language.SPANISH);
+					authUser.setEnabled(Boolean.FALSE);
+					authUser.setInitialCurrency(Currency.BY_DEFAULT);
+					authUser.setInitialTableSortingDirection(null);
+					authUser.setInitialTablePageSize(TablePageSize.BY_DEFAULT);
+					authUser.setColorMode(ColorMode.BY_DEFAULT);
 
-                    authUserRepository.saveAndFlush(authUser);
-                }
-        );
+					authUserRepository.saveAndFlush(authUser);
+				}
+		);
 
-        final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
 
-        Assertions.assertNotNull(rootCauseMessage);
-    }
+		Assertions.assertNotNull(rootCauseMessage);
+	}
 
-    @Test
+	@Test
 	public void testSave_InsertInitialTablePageSizeNull() {
 		final ConstraintViolationException exception = Assertions.assertThrows(
 			ConstraintViolationException.class, () -> {
@@ -466,7 +466,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 				authUser.setLanguage(Language.SPANISH);
 				authUser.setEnabled(Boolean.FALSE);
 				authUser.setInitialCurrency(Currency.BY_DEFAULT);
-                authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
+				authUser.setInitialTableSortingDirection(TableSortingDirection.BY_DEFAULT);
 				authUser.setInitialTablePageSize(null);
 				authUser.setColorMode(ColorMode.BY_DEFAULT);
 
@@ -655,7 +655,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Assertions.assertEquals(Boolean.TRUE, authUser.getEnabled());
 		Assertions.assertEquals(ColorMode.DARK, authUser.getColorMode());
 		Assertions.assertEquals(Currency.US_DOLLAR, authUser.getInitialCurrency());
-        Assertions.assertEquals(TableSortingDirection.BY_DEFAULT, authUser.getInitialTableSortingDirection());
+		Assertions.assertEquals(TableSortingDirection.BY_DEFAULT, authUser.getInitialTableSortingDirection());
 		Assertions.assertEquals(TablePageSize.BY_DEFAULT, authUser.getInitialTablePageSize());
 		Assertions.assertEquals(PdfDocumentPageFormat.A3_HORIZONTAL, authUser.getPdfDocumentPageFormat());
 		Assertions.assertNotNull(authUser.getFirstRegistrationDateTime());
@@ -875,7 +875,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Assertions.assertEquals(Boolean.TRUE, authUserDTO.getEnabled());
 		Assertions.assertEquals(ColorMode.DARK.getCode(), authUserDTO.getColorModeCode());
 		Assertions.assertEquals(Currency.US_DOLLAR.getSymbol(), authUserDTO.getInitialCurrencySymbol());
-        Assertions.assertEquals(TableSortingDirection.BY_DEFAULT.getCode(), authUserDTO.getInitialTableSortingDirectionCode());
+		Assertions.assertEquals(TableSortingDirection.BY_DEFAULT.getCode(), authUserDTO.getInitialTableSortingDirectionCode());
 		Assertions.assertEquals(TablePageSize.BY_DEFAULT.getValue(), authUserDTO.getInitialTablePageSizeValue());
 		Assertions.assertEquals(PdfDocumentPageFormat.A3_HORIZONTAL.getCode(), authUserDTO.getPdfDocumentPageFormatCode());
 
