@@ -24,7 +24,7 @@ import javax.annotation.PostConstruct;
 @Getter
 @Slf4j
 public class ConfigPropertiesBean {
-    private static final String BY_DEFAULT_SORTING_DIRECTION_CODE = TableSortingDirection.BY_DEFAULT.getCode();
+	private static final String BY_DEFAULT_SORTING_DIRECTION_CODE = TableSortingDirection.BY_DEFAULT.getCode();
 	private static final String BY_DEFAULT_PAGE_SIZE_VALUE_STRING = String.valueOf(TablePageSize.BY_DEFAULT.getValue());
 
 	//Non-overwritable properties
@@ -44,7 +44,7 @@ public class ConfigPropertiesBean {
 	private final ColorMode defaultColorMode;
 	private final Language defaultLanguage;
 	private final PdfDocumentPageFormat defaultPdfDocumentPageFormat;
-    private final TableSortingDirection defaultInitialTableSortingDirection;
+	private final TableSortingDirection defaultInitialTableSortingDirection;
 	private final TablePageSize defaultInitialTablePageSize;
 	private final UserInterfaceFramework defaultUserInterfaceFramework;
 
@@ -53,7 +53,7 @@ public class ConfigPropertiesBean {
 	private final ColorMode defaultColorModeOverwritten;
 	private final Language defaultLanguageOverwritten;
 	private final PdfDocumentPageFormat defaultPdfDocumentPageFormatOverwritten;
-    private final TableSortingDirection defaultInitialTableSortingDirectionOverwritten;
+	private final TableSortingDirection defaultInitialTableSortingDirectionOverwritten;
 	private final TablePageSize defaultInitialTablePageSizeOverwritten;
 	private final UserInterfaceFramework defaultUserInterfaceFrameworkOverwritten;
 
@@ -62,7 +62,7 @@ public class ConfigPropertiesBean {
 	public static Currency CURRENT_DEFAULT_CURRENCY;
 	public static Language CURRENT_DEFAULT_LANGUAGE;
 	public static PdfDocumentPageFormat CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT;
-    public static TableSortingDirection CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION;
+	public static TableSortingDirection CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION;
 	public static TablePageSize CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE;
 	public static UserInterfaceFramework CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK;
 
@@ -71,7 +71,7 @@ public class ConfigPropertiesBean {
 	public static Currency CURRENT_OVERWRITTEN_CURRENCY;
 	public static Language CURRENT_OVERWRITTEN_LANGUAGE;
 	public static PdfDocumentPageFormat CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT;
-    public static TableSortingDirection CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION;
+	public static TableSortingDirection CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION;
 	public static TablePageSize CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE;
 	public static UserInterfaceFramework CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK;
 
@@ -88,14 +88,14 @@ public class ConfigPropertiesBean {
 		@Value("${jobvacanciesapp.defaultColorModeCode}") String defaultColorModeCode,
 		@Value("${jobvacanciesapp.defaultLanguageCode}") String defaultLanguageCode,
 		@Value("${jobvacanciesapp.defaultPdfDocumentPageFormatCode}") String defaultPdfDocumentPageFormatCode,
-        @Value("${jobvacanciesapp.defaultInitialTableSortingDirectionCode}") String defaultInitialTableSortingDirectionCode,
+		@Value("${jobvacanciesapp.defaultInitialTableSortingDirectionCode}") String defaultInitialTableSortingDirectionCode,
 		@Value("${jobvacanciesapp.defaultInitialTablePageSizeValue}") int defaultInitialTablePageSizeValue,
 		@Value("${jobvacanciesapp.defaultUserInterfaceFrameworkCode}") String defaultUserInterfaceFrameworkCode,
 		@Value("${jobvacanciesapp.defaultAnonymousAccessPermissionValueOverwritten:-}") String defaultAnonymousAccessPermissionValueOverwritten,
 		@Value("${jobvacanciesapp.defaultColorModeCodeOverwritten:-}") String defaultColorModeCodeOverwritten,
 		@Value("${jobvacanciesapp.defaultLanguageCodeOverwritten:--}") String defaultLanguageCodeOverwritten,
 		@Value("${jobvacanciesapp.defaultPdfDocumentPageFormatCodeOverwritten:---}") String defaultPdfDocumentPageFormatCodeOverwritten,
-        @Value("${jobvacanciesapp.defaultInitialTableSortingDirectionCodeOverwritten:---}") String defaultInitialTableSortingDirectionCodeOverwritten,
+		@Value("${jobvacanciesapp.defaultInitialTableSortingDirectionCodeOverwritten:---}") String defaultInitialTableSortingDirectionCodeOverwritten,
 		@Value("${jobvacanciesapp.defaultInitialTablePageSizeValueOverwritten:0}") int defaultInitialTablePageSizeValueOverwritten,
 		@Value("${jobvacanciesapp.defaultUserInterfaceFrameworkCodeOverwritten:-}") String defaultUserInterfaceFrameworkCodeOverwritten) {
 
@@ -114,7 +114,7 @@ public class ConfigPropertiesBean {
 		this.defaultColorMode = ColorMode.findByCode(defaultColorModeCode);
 		this.defaultLanguage = Language.findByCode(defaultLanguageCode);
 		this.defaultPdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(defaultPdfDocumentPageFormatCode);
-        this.defaultInitialTableSortingDirection = TableSortingDirection.findByCode(defaultInitialTableSortingDirectionCode);
+		this.defaultInitialTableSortingDirection = TableSortingDirection.findByCode(defaultInitialTableSortingDirectionCode);
 		this.defaultInitialTablePageSize = TablePageSize.findByValue(defaultInitialTablePageSizeValue);
 		this.defaultUserInterfaceFramework = UserInterfaceFramework.findByCode(defaultUserInterfaceFrameworkCode);
 
@@ -122,8 +122,8 @@ public class ConfigPropertiesBean {
 		this.defaultColorModeOverwritten = ColorMode.findByCode(defaultColorModeCodeOverwritten);
 		this.defaultLanguageOverwritten = Language.findByCode(defaultLanguageCodeOverwritten);
 		this.defaultPdfDocumentPageFormatOverwritten = PdfDocumentPageFormat.findByCode(defaultPdfDocumentPageFormatCodeOverwritten);
-        this.defaultInitialTableSortingDirectionOverwritten = TableSortingDirection.findByCode(defaultInitialTableSortingDirectionCodeOverwritten);
-        this.defaultInitialTablePageSizeOverwritten = TablePageSize.findByValue(defaultInitialTablePageSizeValueOverwritten);
+		this.defaultInitialTableSortingDirectionOverwritten = TableSortingDirection.findByCode(defaultInitialTableSortingDirectionCodeOverwritten);
+		this.defaultInitialTablePageSizeOverwritten = TablePageSize.findByValue(defaultInitialTablePageSizeValueOverwritten);
 		this.defaultUserInterfaceFrameworkOverwritten = UserInterfaceFramework.findByCode(defaultUserInterfaceFrameworkCodeOverwritten);
 	}
 
@@ -134,7 +134,7 @@ public class ConfigPropertiesBean {
 		CURRENT_DEFAULT_CURRENCY = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(Currency.class, this);
 		CURRENT_DEFAULT_LANGUAGE = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(Language.class, this);
 		CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(PdfDocumentPageFormat.class, this);
-        CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TableSortingDirection.class, this);
+		CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TableSortingDirection.class, this);
 		CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TablePageSize.class, this);
 		CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(UserInterfaceFramework.class, this);
 
@@ -143,7 +143,7 @@ public class ConfigPropertiesBean {
 		CURRENT_OVERWRITTEN_CURRENCY = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(Currency.class, this);
 		CURRENT_OVERWRITTEN_LANGUAGE = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(Language.class, this);
 		CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(PdfDocumentPageFormat.class, this);
-        CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(TableSortingDirection.class, this);
+		CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(TableSortingDirection.class, this);
 		CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(TablePageSize.class, this);
 		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(UserInterfaceFramework.class, this);
 	}
@@ -172,47 +172,47 @@ public class ConfigPropertiesBean {
 		return initialCurrencySymbol;
 	}
 
-    public String getInitialTableSortingDirectionCode(final String sortingDirection) {
-        if(sortingDirection != null && !BY_DEFAULT_SORTING_DIRECTION_CODE.equals(sortingDirection)) {
-            return sortingDirection;
-        } else {
-            String initialTableSortingDirectionCode;
-            try {
-                final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
+	public String getInitialTableSortingDirectionCode(final String sortingDirection) {
+		if(sortingDirection != null && !BY_DEFAULT_SORTING_DIRECTION_CODE.equals(sortingDirection)) {
+			return sortingDirection;
+		} else {
+			String initialTableSortingDirectionCode;
+			try {
+				final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
 
-                final TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
+				final TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
 
-                if(Constants.ENUM_UTILS.hasASpecificValue(initialTableSortingDirection)) {
-                    initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
-                } else {
-                    initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
-                }
-            } catch(final Exception exception) {
-                if(log.isErrorEnabled()) {
-                    final String stackTrace = ThrowableUtils.getStackTrace(exception);
-                    log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial table sorting direction. The default initial table sorting direction will be used. Exception: ", stackTrace));
-                }
+				if(Constants.ENUM_UTILS.hasASpecificValue(initialTableSortingDirection)) {
+					initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
+				} else {
+					initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
+				}
+			} catch(final Exception exception) {
+				if(log.isErrorEnabled()) {
+					final String stackTrace = ThrowableUtils.getStackTrace(exception);
+					log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial table sorting direction. The default initial table sorting direction will be used. Exception: ", stackTrace));
+				}
 
-                initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
-            }
-            return initialTableSortingDirectionCode;
-        }
-    }
+				initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
+			}
+			return initialTableSortingDirectionCode;
+		}
+	}
 
-    private String getCurrentDefaultInitialTableSortingDirectionCode() {
-        try {
-            final String currentDefaultInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION.getCode();
-            return currentDefaultInitialTableSortingDirectionCode;
-        } catch(final Exception exception) {
-            if(log.isErrorEnabled()) {
-                final String stackTrace = ThrowableUtils.getStackTrace(exception);
-                log.error(StringUtils.getStringJoined("An exception happened when trying to get the current default initial table sorting direction. The sorting direction 'asc' will be used. Exception: ", stackTrace));
-            }
+	private String getCurrentDefaultInitialTableSortingDirectionCode() {
+		try {
+			final String currentDefaultInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION.getCode();
+			return currentDefaultInitialTableSortingDirectionCode;
+		} catch(final Exception exception) {
+			if(log.isErrorEnabled()) {
+				final String stackTrace = ThrowableUtils.getStackTrace(exception);
+				log.error(StringUtils.getStringJoined("An exception happened when trying to get the current default initial table sorting direction. The sorting direction 'asc' will be used. Exception: ", stackTrace));
+			}
 
-            final String currentDefaultInitialTableSortingDirectionCode = TableSortingDirection.ASC.getCode();
-            return currentDefaultInitialTableSortingDirectionCode;
-        }
-    }
+			final String currentDefaultInitialTableSortingDirectionCode = TableSortingDirection.ASC.getCode();
+			return currentDefaultInitialTableSortingDirectionCode;
+		}
+	}
 
 	public String getInitialTablePageSizeValue(final String pageSize) {
 		if(pageSize != null && !BY_DEFAULT_PAGE_SIZE_VALUE_STRING.equals(pageSize)) {
