@@ -51,15 +51,6 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	}
 
 	public static TablePageSize[] valuesWithoutByDefault() {
-//		final TablePageSize[] values = TablePageSize.values();
-//		final TablePageSize[] values = Constants.PARALLEL_STREAM_UTILS.ofEnum(TablePageSize.class)
-//			.toArray(TablePageSize[]::new);
-//
-//		final TablePageSize[] valuesWithoutByDefault = new TablePageSize[values.length - 1];
-//		for(int i = 0; i < valuesWithoutByDefault.length; i++) {
-//			valuesWithoutByDefault[i] = values[i + 1];
-//		}
-
 		final List<TablePageSize> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(TablePageSize.class);
 		final TablePageSize[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new TablePageSize[valuesWithoutByDefaultList.size()]);
 		return valuesWithoutByDefault;

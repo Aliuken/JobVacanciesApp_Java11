@@ -47,15 +47,6 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	}
 
 	public static Currency[] valuesWithoutByDefault() {
-//		final Currency[] values = Currency.values();
-//		final Currency[] values = Constants.PARALLEL_STREAM_UTILS.ofEnum(Currency.class)
-//			.toArray(Currency[]::new);
-//
-//		final Currency[] valuesWithoutByDefault = new Currency[values.length - 1];
-//		for(int i = 0; i < valuesWithoutByDefault.length; i++) {
-//			valuesWithoutByDefault[i] = values[i + 1];
-//		}
-
 		final List<Currency> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(Currency.class);
 		final Currency[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new Currency[valuesWithoutByDefaultList.size()]);
 		return valuesWithoutByDefault;

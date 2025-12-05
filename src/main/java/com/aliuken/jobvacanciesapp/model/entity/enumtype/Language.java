@@ -56,15 +56,6 @@ public enum Language implements ConfigurableEnum<Language> {
 	}
 
 	public static Language[] valuesWithoutByDefault() {
-//		final Language[] values = Language.values();
-//		final Language[] values = Constants.PARALLEL_STREAM_UTILS.ofEnum(Language.class)
-//			.toArray(Language[]::new);
-//
-//		final Language[] valuesWithoutByDefault = new Language[values.length - 1];
-//		for(int i = 0; i < valuesWithoutByDefault.length; i++) {
-//			valuesWithoutByDefault[i] = values[i + 1];
-//		}
-
 		final List<Language> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(Language.class);
 		final Language[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new Language[valuesWithoutByDefaultList.size()]);
 		return valuesWithoutByDefault;
