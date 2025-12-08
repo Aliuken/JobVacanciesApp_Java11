@@ -357,7 +357,7 @@ The PCs used to develop and execute the application were two:
 * Another one with a **Windows 11 Home** 64-bit OS.
 
 Other technologies currently used are:
-* **IntelliJ IDEA Community Edition 2025.2.5**: As the IDE.
+* **IntelliJ IDEA 2025.3**: As the IDE.
 * **Mozilla Firefox**: As the main web browser.
 * **Sourcetree**: As the Git GUI for Windows.
 * **Git Bash**: As the command-line shell for the Git CLI.
