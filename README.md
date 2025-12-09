@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> In the next sections, we use the following abbreviations for the indicated terms:
+> In the following glossary, we specify the abbreviations (for the indicated terms) used in the next sections:
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
