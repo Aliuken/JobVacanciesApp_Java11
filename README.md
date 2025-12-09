@@ -1,50 +1,50 @@
 > [!IMPORTANT]
 > In the following glossary, we specify the abbreviations (for the indicated terms) used in the next sections:
 > ```txt
-> | Abbreviation | Term                               | Link |
-> |---------------------------------------------------|------|
-> | 2FA          | Two-Factor Authentication          | [[&#10138;]](https://en.wikipedia.org/wiki/Multi-factor_authentication) |
-> | AI           | Artificial Intelligence            |      |
-> | API          | Application Programming Interface  |      |
-> | app          | Application                        |      |
-> | CLI          | Command-Line Interface             |      |
-> | config       | Configuration                      |      |
-> | CV           | Curriculum Vitae                   |      |
-> | DB           | Database                           |      |
-> | DOM          | Document Object Model              |      |
-> | ELK          | Elastic Stack                      |      |
-> | ERD          | Entity-Relationship Diagram        |      |
-> | GC           | Garbage Collector                  |      |
-> | GNU          | GNU's Not Unix!                    |      |
-> | GUI          | Graphical User Interface           |      |
-> | HTML         | Hypertext Markup Language          |      |
-> | HTTP         | Hypertext Transfer Protocol        |      |
-> | i18n         | Internationalization               |      |
-> | IDE          | Integrated Development Environment |      |
-> | info         | Information                        |      |
-> | JDBC         | Java Database Connectivity         |      |
-> | JS           | JavaScript                         |      |
-> | L10n         | Localization                       |      |
-> | LLM          | Large Language Model               |      |
-> | MDN          | Mozilla Developer Network          |      |
-> | ORM          | Object–Relational Mapping          |      |
-> | OS           | Operating System                   |      |
-> | PC           | Personal Computer                  |      |
-> | pkg          | Java package                       |      |
-> | PNG          | Portable Network Graphics          |      |
-> | prop         | Property                           |      |
-> | QUIC         | Quick UDP Internet Connections     |      |
-> | regex        | Regular Expression                 |      |
-> | REST         | Representational State Transfer    |      |
-> | SQL          | Structured Query Language          |      |
-> | SMS          | Short Message Service              |      |
-> | TCP          | Transmission Control Protocol      |      |
-> | TS           | TypeScript                         |      |
-> | UDP          | User Datagram Protocol             |      |
-> | UI           | User Interface                     |      |
-> | URL          | Uniform Resource Locator           |      |
-> | UUID         | Universally Unique Identifier      |      |
-> | WSL          | Windows Subsystem for Linux        |      |
+> | Abbreviation | Term                               |
+> |---------------------------------------------------|
+> | 2FA          | Two-Factor Authentication          |
+> | AI           | Artificial Intelligence            |
+> | API          | Application Programming Interface  |
+> | app          | Application                        |
+> | CLI          | Command-Line Interface             |
+> | config       | Configuration                      |
+> | CV           | Curriculum Vitae                   |
+> | DB           | Database                           |
+> | DOM          | Document Object Model              |
+> | ELK          | Elastic Stack                      |
+> | ERD          | Entity-Relationship Diagram        |
+> | GC           | Garbage Collector                  |
+> | GNU          | GNU's Not Unix!                    |
+> | GUI          | Graphical User Interface           |
+> | HTML         | Hypertext Markup Language          |
+> | HTTP         | Hypertext Transfer Protocol        |
+> | i18n         | Internationalization               |
+> | IDE          | Integrated Development Environment |
+> | info         | Information                        |
+> | JDBC         | Java Database Connectivity         |
+> | JS           | JavaScript                         |
+> | L10n         | Localization                       |
+> | LLM          | Large Language Model               |
+> | MDN          | Mozilla Developer Network          |
+> | ORM          | Object–Relational Mapping          |
+> | OS           | Operating System                   |
+> | PC           | Personal Computer                  |
+> | pkg          | Java package                       |
+> | PNG          | Portable Network Graphics          |
+> | prop         | Property                           |
+> | QUIC         | Quick UDP Internet Connections     |
+> | regex        | Regular Expression                 |
+> | REST         | Representational State Transfer    |
+> | SQL          | Structured Query Language          |
+> | SMS          | Short Message Service              |
+> | TCP          | Transmission Control Protocol      |
+> | TS           | TypeScript                         |
+> | UDP          | User Datagram Protocol             |
+> | UI           | User Interface                     |
+> | URL          | Uniform Resource Locator           |
+> | UUID         | Universally Unique Identifier      |
+> | WSL          | Windows Subsystem for Linux        |
 > ```
 
 # JobVacanciesApp_Java11
