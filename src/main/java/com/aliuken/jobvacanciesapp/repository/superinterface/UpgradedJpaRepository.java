@@ -479,17 +479,21 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityManager;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private static Cache<Class<? extends AbstractEntity<?>>, EntityManager> getEntityManagerCache() {
 		final CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().using(ENTITY_MANAGER_CACHE_STATISTICS_SERVICE).build();
 		cacheManager.init();
 
+		final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfiguration = UpgradedJpaRepository.getCacheConfiguration();
+		final Cache<Class<? extends AbstractEntity<?>>, EntityManager> entityManagerCache = cacheManager.createCache(ENTITY_MANAGER_CACHE_NAME, cacheConfiguration);
+		return entityManagerCache;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> getCacheConfiguration() {
 		final ResourcePools resourcePools = ResourcePoolsBuilder.heap(10).build();
 		final CacheConfiguration<Class, EntityManager> cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(Class.class, EntityManager.class, resourcePools).build();
 		final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfigurationWithGenerics = GenericsUtils.cast(cacheConfiguration);
-		final Cache<Class<? extends AbstractEntity<?>>, EntityManager> entityManagerCache = cacheManager.createCache(ENTITY_MANAGER_CACHE_NAME, cacheConfigurationWithGenerics);
-
-		return entityManagerCache;
+		return cacheConfigurationWithGenerics;
 	}
 
 	private static boolean getUseEntityManagerCache() {
