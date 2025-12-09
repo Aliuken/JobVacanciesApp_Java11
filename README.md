@@ -11,6 +11,7 @@
 > | config       | Configuration                      |
 > | CV           | Curriculum Vitae                   |
 > | DB           | Database                           |
+> | DOM          | Document Object Model              |
 > | ELK          | Elastic Stack                      |
 > | ERD          | Entity-Relationship Diagram        |
 > | GNU          | GNU's Not Unix!                    |
@@ -20,6 +21,7 @@
 > | i18n         | Internationalization               |
 > | IDE          | Integrated Development Environment |
 > | info         | Information                        |
+> | JDBC         | Java Database Connectivity         |
 > | JS           | JavaScript                         |
 > | L10n         | Localization                       |
 > | LLM          | Large Language Model               |
@@ -33,11 +35,13 @@
 > | QUIC         | Quick UDP Internet Connections     |
 > | regex        | Regular Expression                 |
 > | REST         | Representational State Transfer    |
+> | SQL          | Structured Query Language          |
 > | SMS          | Short Message Service              |
 > | TCP          | Transmission Control Protocol      |
 > | TS           | TypeScript                         |
 > | UDP          | User Datagram Protocol             |
 > | UI           | User Interface                     |
+> | URL          | Uniform Resource Locator           |
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
 > ```
@@ -237,8 +241,8 @@ The data technologies currently used are:
 * **Spring Data JPA**: To make an easier use of **JPA**. Configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java).
 * **Hibernate**: As the ORM and **JPA** implementation.
 * **JPQL**: In the methods annotated with @RepositoryMethod in @Repository classes (instead of using **SQL**).
-* **MySQL Community Server**: As the main DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
-* **H2**: As the in-memory DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
+* **MySQL Community Server**: As the main relational DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
+* **H2**: As the in-memory relational DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
 * **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
 * **Transactions**: Defined with Spring using:
     * **JpaTransactionManager** (configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java)).
