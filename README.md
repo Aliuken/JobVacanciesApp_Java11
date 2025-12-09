@@ -12,6 +12,8 @@
 > | CV           | Curriculum Vitae                   |
 > | DB           | Database                           |
 > | ELK          | Elastic Stack                      |
+> | ERD          | Entity-Relationship Diagram        |
+> | GNU          | GNU's Not Unix!                    |
 > | GUI          | Graphical User Interface           |
 > | HTML         | Hypertext Markup Language          |
 > | HTTP         | Hypertext Transfer Protocol        |
@@ -26,10 +28,15 @@
 > | OS           | Operating System                   |
 > | PC           | Personal Computer                  |
 > | pkg          | Java package                       |
+> | PNG          | Portable Network Graphics          |
 > | prop         | Property                           |
+> | QUIC         | Quick UDP Internet Connections     |
 > | regex        | Regular Expression                 |
 > | REST         | Representational State Transfer    |
+> | SMS          | Short Message Service              |
+> | TCP          | Transmission Control Protocol      |
 > | TS           | TypeScript                         |
+> | UDP          | User Datagram Protocol             |
 > | UI           | User Interface                     |
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
@@ -108,7 +115,6 @@ The core technologies currently used are:
     * The utility class [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in "ControllerAspect" to log multiple stats.
     * The utility class [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in "RepositoryAspect" to log multiple stats.
 * **Utilities**: There are multiple utility classes in the package [com.aliuken.jobvacanciesapp.util](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util).
-* **Markdown**: As the file format (***.md**) of the [documentation files](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/documentation).
 
 ### 3.2. Java SE core technologies
 
@@ -259,7 +265,7 @@ The data technologies currently used are:
 >
 > In [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java), "dataSource", "entityManagerFactory" and "transactionManager" are static final beans to get working the **application restart** (explained in section **[7.2. ConfigPropertiesBean](https://github.com/Aliuken/JobVacanciesApp_Java11#72-configpropertiesbean)**).
 >
-> The **Entity-Relationship Diagram** of the database is in the following files:
+> The **Entity-Relationship Diagram** of the DB is in the following files:
 > * **As an image** in: [documentation/Entity-Relationship-Diagram.png](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png).
 > * **As a draw.io file** (that can be modified using the [draw.io website](https://www.draw.io) or the [drawio-desktop app](https://github.com/jgraph/drawio-desktop/releases)) in: [documentation/Entity-Relationship-Diagram.drawio](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.drawio).
 >
@@ -359,6 +365,9 @@ The PCs used to develop and execute the application were two:
 Other technologies currently used are:
 * **IntelliJ IDEA 2025.3**: As the IDE.
 * **Mozilla Firefox**: As the main web browser.
+* **PNG**: As the images' format.
+* **draw.io**: As the ERD format.
+* **Markdown**: As the file format (***.md**) of the [documentation files](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/documentation).
 * **Sourcetree**: As the Git GUI for Windows.
 * **Git Bash**: As the command-line shell for the Git CLI.
 * **Powershell**: As the command-line shell for the Docker CLI for Windows.
