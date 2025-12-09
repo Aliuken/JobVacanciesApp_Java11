@@ -402,7 +402,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 	}
 
 	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerConfigurable(final Class<S> entityClass) {
-		final boolean useEntityManagerCache = UpgradedJpaRepository.useEntityManagerCache();
+		final boolean useEntityManagerCache = UpgradedJpaRepository.getUseEntityManagerCache();
 
 		final EntityManager entityManager;
 		if(useEntityManagerCache) {
@@ -492,7 +492,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityManagerCache;
 	}
 
-	private static boolean useEntityManagerCache() {
+	private static boolean getUseEntityManagerCache() {
 		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
 		final boolean useEntityManagerCache = configPropertiesBean.isUseEntityManagerCache();
 		return useEntityManagerCache;
