@@ -14,6 +14,7 @@
 > | DOM          | Document Object Model              |
 > | ELK          | Elastic Stack                      |
 > | ERD          | Entity-Relationship Diagram        |
+> | GC           | Garbage Collector                  |
 > | GNU          | GNU's Not Unix!                    |
 > | GUI          | Graphical User Interface           |
 > | HTML         | Hypertext Markup Language          |
