@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.EndpointRegexPatternDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 
@@ -105,6 +106,7 @@ public enum EndpointType implements Serializable {
 	APPLICATION_CONFIG_SHOW_FORM(GET, "/my-user/app/config", "Show application configuration form"),
 	APPLICATION_CONFIG_SAVE_FORM(POST, "/my-user/app/config", "Save application configuration form");
 
+	@Getter
 	@NotNull
 	private final EndpointRegexPatternDTO endpointRegexPatternDTO;
 
@@ -112,10 +114,6 @@ public enum EndpointType implements Serializable {
 
 	private EndpointType(final HttpMethod httpMethod, final String pathRegex, final String description) {
 		this.endpointRegexPatternDTO = EndpointRegexPatternDTO.getNewInstance(httpMethod, pathRegex, description);
-	}
-
-	public EndpointRegexPatternDTO getEndpointRegexPatternDTO() {
-		return endpointRegexPatternDTO;
 	}
 
 	public static EndpointType getInstance(final String httpMethod, String path) {

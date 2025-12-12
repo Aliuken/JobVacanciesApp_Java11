@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,24 +12,17 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 	ACCESS_ALLOWED    ("T", "anonymousAccessPermission.accessAllowed"),
 	ACCESS_NOT_ALLOWED("F", "anonymousAccessPermission.accessNotAllowed");
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String value;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
 	private AnonymousAccessPermission(final String value, final String messageName) {
 		this.value = value;
 		this.messageName = messageName;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
 	}
 
 	public static AnonymousAccessPermission findByValue(final String value) {

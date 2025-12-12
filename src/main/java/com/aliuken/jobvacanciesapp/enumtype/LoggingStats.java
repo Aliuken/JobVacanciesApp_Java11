@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 
 public enum LoggingStats implements Serializable {
@@ -13,13 +15,10 @@ public enum LoggingStats implements Serializable {
 	OTHER_TIME     ("stats.other_time"),
 	TOTAL_TIME     ("stats.total_time");
 
+	@Getter
 	private final String key;
 
 	private LoggingStats(final String key) {
 		this.key = key;
-	}
-
-	public String getKey() {
-		return key;
 	}
 }

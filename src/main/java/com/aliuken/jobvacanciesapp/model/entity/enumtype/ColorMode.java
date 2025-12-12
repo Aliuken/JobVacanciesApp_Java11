@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,12 +12,15 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	LIGHT     ("L", "light",   "colorMode.light"),
 	DARK      ("D", "dark",    "colorMode.dark");
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String code;
 
+	@Getter
 	@NotNull
 	private final String value;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
@@ -24,19 +28,6 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 		this.code = code;
 		this.value = value;
 		this.messageName = messageName;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
 	}
 
 	public static ColorMode findByCode(final String code) {

@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -29,20 +30,26 @@ public enum TableField implements Serializable, Internationalizable {
 	private final static Predicate<TableField> VALUES_WITHOUT_AUTH_USER_AND_JOB_COMPANY_PREDICATE = (tableField -> !tableField.isAuthUserField() && !tableField.isJobCompanyField());
 	private final static Predicate<TableField> VALUES_WITHOUT_AUTH_USER_AND_JOB_COMPANY_AND_LAST_MODIFICATION_PREDICATE = (tableField -> (!tableField.isAuthUserField() && !tableField.isJobCompanyField() && !tableField.isLastModificationField));
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String code;
 
-	private final TableFieldEntity entity;
+	@Getter
+    private final TableFieldEntity entity;
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String partialFieldPath;
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String finalFieldPath;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
+	@Getter
 	private final boolean isLastModificationField;
 
 	private TableField(final String code, final TableFieldEntity entity, final String partialFieldPath, final String messageName, final boolean isLastModificationField) {
@@ -59,31 +66,6 @@ public enum TableField implements Serializable, Internationalizable {
 
 		this.messageName = messageName;
 		this.isLastModificationField = isLastModificationField;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public TableFieldEntity getEntity() {
-		return entity;
-	}
-
-	public String getPartialFieldPath() {
-		return partialFieldPath;
-	}
-
-	public String getFinalFieldPath() {
-		return finalFieldPath;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
-	}
-
-	public boolean isLastModificationField() {
-		return isLastModificationField;
 	}
 
 	public boolean isAuthUserField() {

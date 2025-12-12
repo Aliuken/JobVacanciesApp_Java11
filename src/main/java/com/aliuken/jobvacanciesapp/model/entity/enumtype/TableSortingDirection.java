@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import lombok.Getter;
 import org.springframework.data.domain.Sort;
 
 import javax.validation.constraints.NotNull;
@@ -14,32 +15,21 @@ public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirect
 	ASC       ("asc",  "tableSortingDirection.asc",       Sort.Direction.ASC),
 	DESC      ("desc", "tableSortingDirection.desc",      Sort.Direction.DESC);
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String code;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
-	@NotNull
+	@Getter
 	private final Sort.Direction sortDirection;
 
 	private TableSortingDirection(final String code, final String messageName, final Sort.Direction sortDirection) {
 		this.code = code;
 		this.messageName = messageName;
 		this.sortDirection = sortDirection;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
-	}
-
-	public Sort.Direction getSortDirection() {
-		return sortDirection;
 	}
 
 	public static TableSortingDirection findByCode(final String code) {

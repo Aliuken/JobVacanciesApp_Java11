@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -54,18 +55,23 @@ public enum AllowedViewsEnum implements Serializable {
 		"/my-user/app/**"
 	};
 
-	private final AnonymousAccessPermission anonymousAccessPermission;
+	@Getter
+    private final AnonymousAccessPermission anonymousAccessPermission;
 
-	@NotEmpty
+	@Getter
+    @NotEmpty
 	private final String[] anonymousViewsArray;
 
-	@NotEmpty
+	@Getter
+    @NotEmpty
 	private final String[] userViewsArray;
 
-	@NotEmpty
+	@Getter
+    @NotEmpty
 	private final String[] supervisorViewsArray;
 
-	@NotEmpty
+	@Getter
+    @NotEmpty
 	private final String[] administratorViewsArray;
 
 	private static final Map<AnonymousAccessPermission, AllowedViewsEnum> ALLOWED_VIEWS_MAP = AllowedViewsEnum.getAllowedViewsMap();
@@ -85,27 +91,7 @@ public enum AllowedViewsEnum implements Serializable {
 		this.administratorViewsArray = ADMINISTRATOR_VIEWS_ARRAY;
 	}
 
-	public AnonymousAccessPermission getAnonymousAccessPermission() {
-		return anonymousAccessPermission;
-	}
-
-	public String[] getAnonymousViewsArray() {
-		return anonymousViewsArray;
-	}
-
-	public String[] getUserViewsArray() {
-		return userViewsArray;
-	}
-
-	public String[] getSupervisorViewsArray() {
-		return supervisorViewsArray;
-	}
-
-	public String[] getAdministratorViewsArray() {
-		return administratorViewsArray;
-	}
-
-	public static AllowedViewsEnum getInstance(final AnonymousAccessPermission anonymousAccessPermission) {
+    public static AllowedViewsEnum getInstance(final AnonymousAccessPermission anonymousAccessPermission) {
 		final AllowedViewsEnum allowedViewsEnum = ALLOWED_VIEWS_MAP.get(anonymousAccessPermission);
 		return allowedViewsEnum;
 	}

@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -13,12 +14,15 @@ public enum Language implements ConfigurableEnum<Language> {
 	ENGLISH   ("en", "language.english",   new Locale("en")),
 	SPANISH   ("es", "language.español",   new Locale("es"));
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String code;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
+	@Getter
 	@NotNull
 	private final Locale locale;
 
@@ -26,19 +30,6 @@ public enum Language implements ConfigurableEnum<Language> {
 		this.code = code;
 		this.messageName = messageName;
 		this.locale = locale;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
-	}
-
-	public Locale getLocale() {
-		return locale;
 	}
 
 	public static Language findByCode(final String code) {

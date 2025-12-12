@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -10,10 +11,12 @@ public enum TableFieldEntity implements Serializable {
 	AUTH_USER   ("AuthUser"),
 	JOB_COMPANY ("JobCompany");
 
+	@Getter
 	@NotNull
 	private final String upperCasedEntityName;
 
-	@NotNull
+	@Getter
+    @NotNull
 	private final String lowerCasedEntityName;
 
 	private TableFieldEntity(@NotNull final String upperCasedEntityName) {
@@ -21,15 +24,7 @@ public enum TableFieldEntity implements Serializable {
 		this.lowerCasedEntityName = StringUtils.lowerCaseFirstCharacter(upperCasedEntityName);
 	}
 
-	public String getUpperCasedEntityName() {
-		return upperCasedEntityName;
-	}
-
-	public String getLowerCasedEntityName() {
-		return lowerCasedEntityName;
-	}
-
-	public static String getLowerCasedEntityNameByEntityName(final String entityName) {
+    public static String getLowerCasedEntityNameByEntityName(final String entityName) {
 		final TableFieldEntity tableFieldEntity = TableFieldEntity.findByEntityName(entityName);
 
 		final String result;

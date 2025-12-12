@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,24 +12,17 @@ public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFram
 	MATERIAL_DESIGN("M", "uiFramework.materialDesign"),
 	BOOTSTRAP      ("B", "uiFramework.bootstrap");
 
+	@Getter
 	@NotNull
 	private final String code;
 
+	@Getter
 	@NotNull
 	private final String messageName;
 
 	private UserInterfaceFramework(final String code, final String messageName) {
 		this.code = code;
 		this.messageName = messageName;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessageName() {
-		return messageName;
 	}
 
 	public static UserInterfaceFramework findByCode(final String code) {

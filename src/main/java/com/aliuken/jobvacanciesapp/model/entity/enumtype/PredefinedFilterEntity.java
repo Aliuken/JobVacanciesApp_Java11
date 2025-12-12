@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -12,23 +13,17 @@ public enum PredefinedFilterEntity implements Serializable {
 	JOB_COMPANY ("JobCompany"),
 	JOB_VACANCY ("JobVacancy");
 
+	@Getter
 	@NotNull
 	private final String upperCasedEntityName;
 
+	@Getter
 	@NotNull
 	private final String lowerCasedEntityName;
 
 	private PredefinedFilterEntity(@NotNull final String upperCasedEntityName) {
 		this.upperCasedEntityName = upperCasedEntityName;
 		this.lowerCasedEntityName = StringUtils.lowerCaseFirstCharacter(upperCasedEntityName);
-	}
-
-	public String getUpperCasedEntityName() {
-		return upperCasedEntityName;
-	}
-
-	public String getLowerCasedEntityName() {
-		return lowerCasedEntityName;
 	}
 
 	public static String getLowerCasedEntityNameByEntityName(final String entityName) {
