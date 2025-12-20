@@ -1,0 +1,19 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{about.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{about.main.title}"></strong></h4>
+        <div class="card-body">
+          <p th:text="#{aboutApp.description}"></p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

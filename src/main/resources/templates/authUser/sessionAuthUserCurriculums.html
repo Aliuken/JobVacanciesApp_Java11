@@ -1,0 +1,70 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{authUserCurriculums.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{authUserCurriculums.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <a class="btn btn-primary" th:href="@{/my-user/auth-user-curriculums/create (languageParam=${param.languageParam})}" role="button">
+            <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+            &nbsp;
+            <span th:text="#{button.newAuthUserCurriculum}"></span>
+          </a>
+          <hr/>
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, false, 'AuthUser', true)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{authUserCurriculum.authUserEmail}"></th>
+                <th scope="col" th:text="#{authUserCurriculum.fileName}"></th>
+                <th scope="col" th:text="#{authUserCurriculum.description}"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="authUserCurriculum : ${authUserCurriculums.content}">
+                <th scope="row">
+                  <a th:href="@{/my-user/auth-user-curriculums/view/{id} (id=${authUserCurriculum.id}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.id}" th:title="#{authUserCurriculumDetail.main.title}"></a>
+                </th>
+                <td th:text="${authUserCurriculum.authUser.email}"></td>
+                <td th:text="${authUserCurriculum.fileName}"></td>
+                <td th:text="${authUserCurriculum.description}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUserCurriculum.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${authUserCurriculum.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/my-user/auth-user-curriculums/delete/{id} (id=${authUserCurriculum.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUserCurriculum.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUserCurriculum}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/auth-user-curriculum-files/{curriculumFilePath} (curriculumFilePath=${authUserCurriculum.filePath}, languageParam=${param.languageParam})}" target="_blank" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.downloadCurriculum}">
+                    <i class="fas fa-lg fa-file-arrow-down" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${authUserCurriculums.totalPages}, ${authUserCurriculums.number})}"></div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

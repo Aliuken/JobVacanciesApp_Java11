@@ -1,0 +1,100 @@
+name: "elk-j11"
+
+services:
+  filebeat-service:
+    image: docker.elastic.co/beats/filebeat:9.2.3
+    container_name: filebeat-container
+    command: filebeat -e --strict.perms=false
+    networks:
+      - internal-net-elk
+    volumes:
+      - //c/AppData_Java11/JobVacanciesApp/log-files:/var/log/jobVacanciesApp:ro
+      - //c/AppData_Java11/ElasticStack/filebeat-config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    depends_on:
+      logstash-service:
+        condition: service_healthy
+    healthcheck:
+      test: filebeat test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  logstash-service:
+    image: docker.elastic.co/logstash/logstash:9.2.3
+    container_name: logstash-container
+    networks:
+      - internal-net-elk
+    ports:
+      - "5044:5044"
+    volumes:
+      - logstash-data:/usr/share/logstash/pipeline
+      - //c/AppData_Java11/ElasticStack/logstash-config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - //c/AppData_Java11/ElasticStack/logstash-config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - //c/AppData_Java11/ElasticStack/logstash-config/jobVacanciesApp.conf:/usr/share/logstash/config/jobVacanciesApp.conf:ro
+      - //c/AppData_Java11/ElasticStack/logstash-config/keyboard.conf:/usr/share/logstash/config/keyboard.conf:ro
+    depends_on:
+      kibana-service:
+        condition: service_healthy
+    healthcheck:
+      test: bin/logstash -t
+      interval: 60s
+      timeout: 50s
+      retries: 5
+
+  elasticsearch-service:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.3
+    container_name: elasticsearch-container
+    networks:
+      - internal-net-elk
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=changeme1
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - //c/AppData_Java11/ElasticStack/elasticsearch-config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: "curl -s --user elastic:changeme1 -XPOST -H 'Content-Type: application/json' http://localhost:9200/_security/user/kibana_system/_password -d '{ \"password\": \"changeme2\" }'"
+      interval: 30s
+      timeout: 10s
+      retries: 50
+
+  kibana-service:
+    image: docker.elastic.co/kibana/kibana:9.2.3
+    container_name: kibana-container
+    command: ./bin/kibana-create-keystore.sh
+    networks:
+      - internal-net-elk
+      - external-net-elk
+    ports:
+      - 5601:5601
+    volumes:
+      - //c/AppData_Java11/ElasticStack/kibana-config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+      - //c/AppData_Java11/ElasticStack/kibana-config/kibana-create-keystore.sh:/usr/share/kibana/bin/kibana-create-keystore.sh
+    depends_on:
+      elasticsearch-service:
+        condition: service_healthy
+    healthcheck:
+      test: curl -s http://localhost:5601 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+
+networks:
+  internal-net-elk:
+    driver: bridge
+  external-net-elk:
+    external: true
+
+volumes:
+  logstash-data:
+    driver: local
+  elasticsearch-data:
+    driver: local

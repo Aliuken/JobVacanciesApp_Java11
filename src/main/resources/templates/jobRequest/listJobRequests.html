@@ -1,0 +1,77 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{listJobRequests.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+
+        <h4 class="card-header"><strong th:text="#{listJobRequests.main.title}"></strong></h4>
+
+        <div class="card-body">
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, true, true, null, true)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{jobRequest.jobVacancy}"></th>
+                <th scope="col" th:text="#{jobRequest.jobCategory}"></th>
+                <th scope="col" th:text="#{jobRequest.jobCompany}"></th>
+                <th scope="col" th:text="#{jobRequest.authUserEmail}"></th>
+                <th scope="col" th:text="#{jobRequest.authUserName}"></th>
+                <th scope="col" th:text="#{jobRequest.authUserSurnames}"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="jobRequest : ${jobRequests.content}">
+                <th scope="row">
+                  <a th:href="@{/job-requests/view/{id} (id=${jobRequest.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.id}" th:title="#{jobRequestDetail.main.title}"></a>
+                </th>
+                <td>
+                  <a th:href="@{/job-vacancies/view/{id} (id=${jobRequest.jobVacancy.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.name}" th:title="#{jobVacancyDetail.main.title}"></a>
+                </td>
+                <td>
+                  <a th:href="@{/job-categories/view/{id} (id=${jobRequest.jobVacancy.jobCategory.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.jobCategory.name}" th:title="#{jobCategoryDetail.main.title}"></a>
+                </td>
+                <td>
+                  <a th:href="@{/job-companies/view/{id} (id=${jobRequest.jobVacancy.jobCompany.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.jobCompany.name}" th:title="#{jobCompanyDetail.main.title}"></a>
+                </td>
+                <td>
+                  <a th:href="@{/auth-users/view/{id} (id=${jobRequest.authUser.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.authUser.email}" th:title="#{authUserDetail.main.title}"></a>
+                </td>
+                <td th:text="${jobRequest.authUser.name}"></td>
+                <td th:text="${jobRequest.authUser.surnames}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobRequest.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${jobRequest.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobRequest.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/job-requests/delete/{id} (id=${jobRequest.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobRequest.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobRequest}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/auth-user-curriculum-files/{curriculumFilePath} (curriculumFilePath=${jobRequest.authUserCurriculumFilePath}, languageParam=${param.languageParam})}" target="_blank" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.downloadCurriculum}">
+                    <i class="fas fa-lg fa-file-arrow-down" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${jobRequests.totalPages}, ${jobRequests.number})}"></div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{jobRequestDetail.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{jobRequestDetail.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div class="mb-1" th:if="${errorMsg != null}">
+            <br/>
+            <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mb-1" th:if="${successMsg != null}">
+            <br/>
+            <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <h5 class="card-title"><strong th:text="#{abstractEntity.id} + ': '"></strong> <span th:text="${jobRequest.id}"></span></h5>
+          <div class="row">
+            <div class="col-md-3">
+              <h6 class="card-title">
+                <strong th:text="#{jobRequest.jobVacancy} + ': '"></strong>
+                <a th:href="@{/job-vacancies/view/{id} (id=${jobRequest.jobVacancy.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.name}" th:title="#{jobVacancyDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title">
+                <strong th:text="#{jobRequest.jobCategory} + ': '"></strong>
+                <a th:href="@{/job-categories/view/{id} (id=${jobRequest.jobVacancy.jobCategory.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.jobCategory.name}" th:title="#{jobCategoryDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title">
+                <strong th:text="#{jobRequest.jobCompany} + ': '"></strong>
+                <a th:href="@{/job-companies/view/{id} (id=${jobRequest.jobVacancy.jobCompany.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.jobVacancy.jobCompany.name}" th:title="#{jobCompanyDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title">
+                <strong th:text="#{jobRequest.authUserEmail} + ': '"></strong>
+                <a th:href="@{/auth-users/view/{id} (id=${jobRequest.authUser.id}, languageParam=${param.languageParam})}" th:text="${jobRequest.authUser.email}" th:title="#{authUserDetail.main.title}"></a>
+              </h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.authUserName} + ': '"></strong> <span th:text="${jobRequest.authUser.fullName}"></span></h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobRequest.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="firstRegistrationAuthUserId=${jobRequest.getFirstRegistrationAuthUserId()}">
+                <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobRequest.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobRequest.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="lastModificationAuthUserId=${jobRequest.getLastModificationAuthUserId()}">
+                <strong th:text="#{abstractEntity.lastModificationAuthUserEmail} + ': '"></strong>
+                <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobRequest.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+            </div>
+            <div class="col-md-2">
+              <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobRequest.jobVacancy.jobCompany.selectedJobCompanyLogoFilePath})}" style="max-width:160px; max-height:160px;"></img>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

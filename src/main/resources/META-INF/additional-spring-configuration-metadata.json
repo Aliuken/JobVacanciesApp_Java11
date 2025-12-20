@@ -1,0 +1,77 @@
+{"properties": [
+  {
+    "name": "jobvacanciesapp.authUserCurriculumFilesPath",
+    "type": "java.lang.String",
+    "description": "Folder of the user curriculum files"
+  },
+  {
+    "name": "jobvacanciesapp.authUserEntityQueryFilesPath",
+    "type": "java.lang.String",
+    "description": "Folder of the user entity query files"
+  },
+  {
+    "name": "jobvacanciesapp.jobCompanyLogosPath",
+    "type": "java.lang.String",
+    "description": "Folder of the company logotypes"
+  },
+  {
+    "name": "jobvacanciesapp.useAjaxToRefreshJobCompanyLogos",
+    "type": "boolean",
+    "description": "Indicator of use of Ajax to refresh company logotypes instead of URL params"
+  },
+  {
+    "name": "jobvacanciesapp.useEntityManagerCache",
+    "type": "boolean",
+    "description": "Indicator of use of the cache that relates AbstractEntity classes with their EntityManagers"
+  },
+  {
+    "name": "jobvacanciesapp.useParallelStreams",
+    "type": "boolean",
+    "description": "Indicator of use of parallel or sequential streams in the application"
+  },
+  {
+    "name": "jobvacanciesapp.signupConfirmationLinkExpirationHours",
+    "type": "long",
+    "description": "Expiration hours of the signup confirmation link."
+  },
+  {
+    "name": "jobvacanciesapp.resetPasswordLinkExpirationHours",
+    "type": "long",
+    "description": "Expiration hours of the reset password link"
+  },
+  {
+    "name": "jobvacanciesapp.defaultAnonymousAccessPermissionValue",
+    "type": "java.lang.String",
+    "description": "Default anonymous access permission"
+  },
+  {
+    "name": "jobvacanciesapp.defaultColorModeCode",
+    "type": "java.lang.String",
+    "description": "Default color mode"
+  },
+  {
+    "name": "jobvacanciesapp.defaultLanguageCode",
+    "type": "java.lang.String",
+    "description": "Default language code"
+  },
+  {
+    "name": "jobvacanciesapp.defaultPdfDocumentPageFormatCode",
+    "type": "java.lang.String",
+    "description": "Default PDF document page format"
+  },
+  {
+    "name": "jobvacanciesapp.defaultInitialTableSortingDirectionCode",
+    "type": "java.lang.String",
+    "description": "Default initial sorting direction in entity tables"
+  },
+  {
+    "name": "jobvacanciesapp.defaultInitialTablePageSizeValue",
+    "type": "int",
+    "description": "Default initial page size in entity tables"
+  },
+  {
+    "name": "jobvacanciesapp.defaultUserInterfaceFrameworkCode",
+    "type": "java.lang.String",
+    "description": "Default user interface framework"
+  }
+]}

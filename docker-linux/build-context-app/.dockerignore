@@ -1,0 +1,8 @@
+.dockerignore
+.env
+docker-compose.yaml
+docker-compose-start.sh
+docker-compose-stop.sh
+Dockerfile
+Dockerfile-start.sh
+lib/NOTE.md

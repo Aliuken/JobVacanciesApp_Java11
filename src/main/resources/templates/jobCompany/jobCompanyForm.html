@@ -1,0 +1,149 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${jobCompanyDTO.id} == null) ? #{jobCompanyCreation.head.title} : #{jobCompanyEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobCompanyDTO.id} == null) ? #{jobCompanyCreation.main.title} : #{jobCompanyEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/job-companies/save (languageParam=${param.languageParam})}" th:object="${jobCompanyDTO}" method="post" enctype="multipart/form-data">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{jobCompany.name} + ': '"></label>
+                <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required></input>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="description" class="form-label mt-2 mb-1" th:text="#{jobCompany.description} + ': '"></label>
+                <textarea id="description" name="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label for="jobCompanyLogoCombo" class="form-label mt-2 mb-1" th:text="#{jobCompany.selectedLogo} + ': '"></label>
+                <select id="jobCompanyLogoCombo" name="jobCompanyLogoCombo" th:field="*{selectedLogoId}" class="form-select mb-3" style="height:40px">
+                  <option th:value="null" th:text="#{jobCompany.newLogo}"></option>
+                  <option th:value="0" th:text="#{jobCompany.noLogo}"></option>
+                  <option th:each="jobCompanyLogo : *{jobCompanyLogos}" th:text="${jobCompanyLogo.selectionName}" th:value="${jobCompanyLogo.id}"></option>
+                </select>
+                <input type="hidden" th:field="*{isSelectedLogo}" value="true"></input>
+                <input type="hidden" th:field="*{selectedLogoFilePath}" value="${jobCompanyDTO.selectedLogoFilePath}"></input>
+              </div>
+            </div>
+            <div th:replace="~{fragments/optional/jobCompanyLogoFragment :: jobCompanyLogoFragment(${jobCompanyDTO}, true)}"></div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
+            <br/>
+            <br/>
+
+            <div th:if="${jobCompanyDTO.id} != null">
+              <hr/>
+              <h5 th:text="#{option.otherOperations}"></h5>
+
+              <div class="row">
+                <div class="col-md-2 form-group">
+                  <label for="getJobVacancies" class="form-label mt-2 mb-1" th:text="#{jobCompany.jobVacancies}"></label>
+                  <br/>
+                  <a class="btn btn-primary" id="getJobVacancies" name="getJobVacancies" th:href="@{/job-companies/job-vacancies/{id} (id=${jobCompanyDTO.id}, languageParam=${param.languageParam})}" th:text="#{jobCompany.getJobVacancies}"></a>
+                </div>
+                <div class="col-md-2 form-group">
+                  <label for="getJobCompanyLogos" class="form-label mt-2 mb-1" th:text="#{jobCompany.jobCompanyLogos}"></label>
+                  <br/>
+                  <a class="btn btn-primary" id="getJobCompanyLogos" name="getJobCompanyLogos" th:href="@{/job-companies/job-company-logos/{id} (id=${jobCompanyDTO.id}, languageParam=${param.languageParam})}" th:text="#{jobCompany.getJobCompanyLogos}"></a>
+                </div>
+              </div>
+
+              <br/>
+              <h5 th:text="#{jobCompany.jobCompanyLogos}"></h5>
+
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <div class="row">
+                    <div class="col-md-2 mx-1 px-1 my-1 pt-1 pb-4" th:each="jobCompanyLogo : *{jobCompanyLogos}" style="border:1px solid black; position:relative; display:flex; justify-content:center;">
+                      <a th:href="@{/job-company-logos/{img} (img=${jobCompanyLogo.filePath})}" style="height:auto; margin:auto;">
+                        <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobCompanyLogo.filePath})}" style="max-width:260px; max-height:260px;"></img>
+                      </a>
+                      <span th:text="${jobCompanyLogo.selectionName}" style="position:absolute; width:100%; bottom:0; text-align:center; font-size:14px;"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="additionalScripts">
+      <script type="text/javascript" th:inline="javascript">
+        function changePreviewImage(file) {
+          let objectURL = window.URL.createObjectURL(file);
+          document.getElementById('jobCompanyLogoImage').src = objectURL;
+          document.getElementById('jobCompanyLogoImageLink').href = objectURL;
+        };
+      </script>
+      <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/ajax-utils.js}"></script>
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+          let jobCompanyLogoModelAttribute;
+          let useAjaxToRefreshJobCompanyLogosModelAttribute;
+          /*<![CDATA[*/
+            jobCompanyLogoModelAttribute = /*[[${jobCompanyLogo}]]*/ null;
+            useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
+          /*]]>*/
+
+          if(useAjaxToRefreshJobCompanyLogosModelAttribute) {
+            let jobCompanyDTOModelAttribute;
+            let refreshUrlModelAttribute;
+            /*<![CDATA[*/
+              jobCompanyDTOModelAttribute = /*[[${jobCompanyDTO}]]*/ null;
+              refreshUrlModelAttribute = /*[[@{/job-companies/refresh-logo}]]*/ null;
+            /*]]>*/
+
+            let jobCompanyIdModelAttribute = (jobCompanyDTOModelAttribute != null) ? jobCompanyDTOModelAttribute.id : null;
+
+            treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
+          } else {
+            treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoModelAttribute);
+          }
+        });
+      </script>
+    </div>
+
+  </body>
+</html>

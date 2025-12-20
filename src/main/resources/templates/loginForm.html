@@ -1,0 +1,160 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{loginPage.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <div class="card-body">
+          <form th:action="@{/login (languageParam=${param.languageParam})}" method="post" class="form-signin">
+            <div class="row">
+
+              <div class="col-md-3"></div>
+
+              <div class="col-md-6">
+
+                <div class="row">
+
+                  <div th:if="${param.error}" th:with="springSecurityLastExceptionMessage=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                    <div class="mb-1">
+                      <br/>
+                      <strong class="text-danger" th:text="${springSecurityLastExceptionMessage}"></strong>
+                      <br/>
+                      <br/>
+                    </div>
+                  </div>
+
+                  <div class="mb-1" th:if="${errorMsg != null}">
+                    <br/>
+                    <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+                    <br/>
+                    <br/>
+                  </div>
+
+                  <div class="mb-1" th:if="${successMsg != null}">
+                    <br/>
+                    <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+                    <br/>
+                    <br/>
+                  </div>
+
+                  <div class="mb-1" th:if="${deleteAccountSuccessMsg != null}">
+                    <br/>
+                    <strong class='alert alert-success' th:text="${deleteAccountSuccessMsg}" role='alert'></strong>
+                    <br/>
+                    <br/>
+                  </div>
+
+                  <div class="col-md-1"></div>
+
+                  <div class="col-md-10">
+
+                    <div class="mb-1">
+                      <img class="mb-4 rounded mx-auto d-block" th:src="@{/images/lock.png}" height="128"></img>
+                      <h4 class="h3 mb-3 font-weight-normal" th:text="#{loginPage.main.title}"></h4>
+                    </div>
+
+                    <p class="mb-1">
+                      <label for="email" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.email} + ':'"></label>
+                      <input type="email" name="email" id="email" class="form-control" required autofocus></input>
+                      <br/>
+                    </p>
+
+                    <p class="mb-1">
+                      <label for="password" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password} + ':'"></label>
+                      <input type="password" name="password" id="password" class="form-control" required></input>
+                      <br/>
+                    </p>
+
+                    <p class="mb-1 form-check">
+                      <label for="remember-me" class="form-check-label" th:text="#{button.rememberMe}"></label>
+                      <input type="checkbox" name="remember-me" id="remember-me" class="form-check-input"></input>
+                      <br/>
+                    </p>
+
+                    <div class="mb-1">
+                      <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{button.enter}"></button>
+                    </div>
+
+                    <div class="mb-1">
+                      <p class="text-primary" style="font-size: small">
+                          <span th:text="#{login.signup.text1} + ' '"></span><strong><a th:href="@{/signup (languageParam=${param.languageParam})}" th:text="#{login.signup.text2}"></a></strong>
+                          <br/>
+                          <span th:text="#{login.resetPassword.text1} + ' '"></span><strong><a th:href="@{/forgotten-password (languageParam=${param.languageParam})}" th:text="#{login.resetPassword.text2}"></a></strong>
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-1"></div>
+
+                </div>
+
+              </div>
+
+              <div class="col-md-3"></div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="additionalScripts">
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+          /*[[${(param.restartWithDefaultLanguage != null || param.restartWithDefaultAnonymousAccessPermission != null || param.restartWithDefaultInitialTableSortingDirection != null  || param.restartWithDefaultInitialTablePageSize != null || param.restartWithDefaultColorMode != null || param.restartWithDefaultUserInterfaceFramework != null) ? T(com.aliuken.jobvacanciesapp.MainClass).restartApp(param.restartWithDefaultLanguage, param.restartWithDefaultAnonymousAccessPermission, param.restartWithDefaultInitialTableSortingDirection, param.restartWithDefaultInitialTablePageSize, param.restartWithDefaultColorMode, param.restartWithDefaultUserInterfaceFramework, param.restartWithDefaultPdfDocumentPageFormat) : ''}]]*/
+
+          let restartWithDefaultLanguageUrlParameter;
+          let restartWithDefaultAnonymousAccessPermissionUrlParameter;
+          let restartWithDefaultInitialTableSortingDirectionUrlParameter;
+          let restartWithDefaultInitialTablePageSizeUrlParameter;
+          let restartWithDefaultColorModeUrlParameter;
+          let restartWithDefaultUserInterfaceFrameworkUrlParameter;
+          let restartWithDefaultPdfDocumentPageFormatUrlParameter;
+          /*<![CDATA[*/
+            restartWithDefaultLanguageUrlParameter = /*[[${param.restartWithDefaultLanguage}]]*/ null;
+            restartWithDefaultAnonymousAccessPermissionUrlParameter = /*[[${param.restartWithDefaultAnonymousAccessPermission}]]*/ null;
+            restartWithDefaultInitialTableSortingDirectionUrlParameter = /*[[${param.restartWithDefaultInitialTableSortingDirection}]]*/ null;
+            restartWithDefaultInitialTablePageSizeUrlParameter = /*[[${param.restartWithDefaultInitialTablePageSize}]]*/ null;
+            restartWithDefaultColorModeUrlParameter = /*[[${param.restartWithDefaultColorMode}]]*/ null;
+            restartWithDefaultUserInterfaceFrameworkUrlParameter = /*[[${param.restartWithDefaultUserInterfaceFramework}]]*/ null;
+            restartWithDefaultPdfDocumentPageFormatUrlParameter = /*[[${param.restartWithDefaultPdfDocumentPageFormat}]]*/ null;
+          /*]]>*/
+
+          if(restartWithDefaultLanguageUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultLanguage");
+          }
+
+          if(restartWithDefaultAnonymousAccessPermissionUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultAnonymousAccessPermission");
+          }
+
+          if(restartWithDefaultInitialTableSortingDirectionUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultInitialTableSortingDirection");
+          }
+
+          if(restartWithDefaultInitialTablePageSizeUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultInitialTablePageSize");
+          }
+
+          if(restartWithDefaultColorModeUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultColorMode");
+          }
+
+          if(restartWithDefaultUserInterfaceFrameworkUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultUserInterfaceFramework");
+          }
+
+          if(restartWithDefaultPdfDocumentPageFormatUrlParameter != null) {
+            deleteParameterInUrl("restartWithDefaultPdfDocumentPageFormat");
+          }
+        });
+      </script>
+    </div>
+
+  </body>
+</html>

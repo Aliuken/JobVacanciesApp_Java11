@@ -1,0 +1,188 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${jobVacancyDTO.id} == null) ? #{jobVacancyCreation.head.title} : #{jobVacancyEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="additionalStyles">
+      <link th:href="@{/jquery-ui-1.14.1/jquery-ui.min.css}" rel="stylesheet">
+      <link th:href="@{/jquery-timepicker-addon-1.6.3-dist/jquery-ui-timepicker-addon.min.css}" rel="stylesheet">
+      <link th:href="@{/jobvacanciesapp-utils/css/calendar-ui-input.css}" rel="stylesheet">
+      <link th:href="@{/jobvacanciesapp-utils/css/rich-text-editor.css}" rel="stylesheet">
+    </div>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobVacancyDTO.id} == null) ? #{jobVacancyCreation.main.title} : #{jobVacancyEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/job-vacancies/save (languageParam=${param.languageParam})}" th:object="${jobVacancyDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{jobVacancy.name} + ':'"></label>
+                <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required></input>
+              </div>
+
+              <div class="col-md-9 form-group">
+                <label for="description" class="form-label mt-2 mb-1" th:text="#{jobVacancy.description} + ':'"></label>
+                <input type="text" id="description" name="description" th:field="*{description}" class="form-control" required></input>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label for="jobCategoryCombo" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCategory} + ':'"></label>
+                <select id="jobCategoryCombo" name="jobCategoryCombo" class="form-control" th:field="*{jobCategoryId}" required>
+                  <option th:each="jobCategory : ${jobCategories}" th:value="${jobCategory.id}" th:text="${jobCategory.name}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="jobCompanyLogoCombo" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCompany} + ':'"></label>
+                <select id="jobCompanyLogoCombo" name="jobCompanyLogoCombo" class="form-control" th:field="*{jobCompanyId}" required>
+                  <option th:each="jobCompany : ${jobCompanies}" th:value="${jobCompany.id}" th:text="${jobCompany.name}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-1 form-group">
+                <label for="statusCombo" class="form-label mt-2 mb-1" th:text="#{jobVacancy.status} + ':'"></label>
+                <select id="statusCombo" name="statusCombo" class="form-control" th:field="*{statusCode}" required>
+                  <option th:each="jobVacancyStatus : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus).values()}" th:value="${jobVacancyStatus.code}" th:text="#{${jobVacancyStatus.messageName}}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="publicationDateTime" class="form-label mt-2 mb-1" th:text="#{jobVacancy.publicationDateTime} + ':'"></label>
+                <input type="text" id="publicationDateTime" name="publicationDateTime" class="form-control" th:field="*{publicationDateTime}" required></input>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <label for="salary" class="form-label mt-2 mb-1" th:text="#{jobVacancy.salary} + ':'"></label>
+                <div class="input-group">
+                  <input type="text" id="salary" name="salary" class="form-control" th:field="*{salaryString}"></input>
+                  <select id="currencyCombo" name="currencyCombo" class="input-group-text" th:field="*{currencySymbol}" required>
+                    <option th:each="currency : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency).valuesWithoutByDefault()}" th:value="${currency.symbol}" th:text="${currency.symbol}"></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-2 form-group">
+                <br/>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="highlighted1" name="highlighted1" th:field="*{highlighted}" value="1" required></input>
+                  <label class="form-check-label" for="highlighted1" th:text="#{jobVacancyHighlighted.yes}"></label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="highlighted2" name="highlighted2" th:field="*{highlighted}" value="0" required></input>
+                  <label class="form-check-label" for="highlighted2" th:text="#{jobVacancyHighlighted.no}"></label>
+                </div>
+              </div>
+
+            </div>
+            <hr/>
+
+            <div class="row">
+
+              <div class="col-md-9 form-group">
+                <label for="details" class="form-label mt-2 mb-1" th:text="#{jobVacancy.details} + ':'"></label>
+                <textarea class="form-control" id="details" name="details" th:field="*{details}" rows="10"></textarea>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label for="jobCompanyLogoImage" class="form-label mt-2 mb-1" th:text="#{jobVacancy.jobCompanyLogo} + ': '"></label>
+                <div th:replace="~{fragments/optional/jobCompanyLogoFragment :: jobCompanyLogoFragment(${jobVacancyDTO.jobCompany}, false)}"></div>
+              </div>
+
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}"></button>
+            <br/>
+            <br/>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div layout:fragment="additionalScripts">
+      <script type="text/javascript" th:src="@{/jquery-ui-1.14.1/jquery-ui.min.js}"></script>
+      <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/ajax-utils.js}"></script>
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+          let jobCompanyLogoModelAttribute;
+          let useAjaxToRefreshJobCompanyLogosModelAttribute;
+          /*<![CDATA[*/
+            jobCompanyLogoModelAttribute = /*[[${jobCompanyLogo}]]*/ null;
+            useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
+          /*]]>*/
+
+          if(useAjaxToRefreshJobCompanyLogosModelAttribute) {
+            let jobVacancyDTOModelAttribute;
+            let refreshUrlModelAttribute;
+            /*<![CDATA[*/
+              jobVacancyDTOModelAttribute = /*[[${jobVacancyDTO}]]*/ null;
+              refreshUrlModelAttribute = /*[[@{/job-vacancies/refresh-logo}]]*/ null;
+            /*]]>*/
+
+            let jobCompanyIdModelAttribute = (jobVacancyDTOModelAttribute != null && jobVacancyDTOModelAttribute.jobCompany != null) ? jobVacancyDTOModelAttribute.jobCompany.id : null;
+
+            treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
+          } else {
+            treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoModelAttribute);
+          }
+        });
+      </script>
+      <script type="text/javascript" th:src="@{/jquery-timepicker-addon-1.6.3-dist/jquery-ui-timepicker-addon.min.js}"></script>
+      <script type="text/javascript" th:src="@{/jquery-timepicker-addon-1.6.3-dist/i18n/jquery-ui-timepicker-addon-i18n.min.js}"></script>
+      <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/calendar-ui-input.js}"></script>
+      <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/rich-text-editor.js}"></script>
+      <script type="text/javascript">
+        $(function () {
+          calendarInputUIElement("publicationDateTime");
+        });
+      </script>
+      <script type="text/javascript" th:src="@{/tinymce-8.3.1/js/tinymce/tinymce.min.js}"></script>
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function() {
+          let useDarkMode;
+          /*<![CDATA[*/
+            useDarkMode = /*[[${colorModeValue} == 'dark']]*/ false;
+          /*]]>*/
+          //let useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+          richTextEditor("details", useDarkMode);
+        });
+      </script>
+    </div>
+
+  </body>
+</html>

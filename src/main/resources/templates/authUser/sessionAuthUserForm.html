@@ -1,0 +1,161 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${authUserDTO.id} == null) ? #{authUserCreation.head.title} : #{authUserEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${authUserDTO.id} == null) ? #{authUserCreation.main.title} : #{authUserEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/my-user (languageParam=${param.languageParam})}" th:object="${authUserDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+              <div class="col-md-1 form-group">
+                <label for="sessionAuthUserLanguageCombo" class="form-label mt-2 mb-1" th:text="#{authUser.language}"></label>
+                <select id="sessionAuthUserLanguageCombo" name="sessionAuthUserLanguageCombo" th:field="*{languageCode}" required>
+                  <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).values()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <input type="hidden" th:field="*{id}"></input>
+                <label for="name" class="form-label mt-2 mb-1" th:text="#{authUser.name}"></label>
+                <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required></input>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="surnames" class="form-label mt-2 mb-1" th:text="#{authUser.surnames}"></label>
+                <input type="text" id="surnames" name="surnames" class="form-control" th:field="*{surnames}" required></input>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="email" class="form-label mt-2 mb-1" th:text="#{authUser.email}"></label>
+                <input type="text" id="email" name="email" class="form-control" th:field="*{email}" required readonly></input>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 form-group">
+                <label for="maxPriorityAuthRole" class="form-label mt-2 mb-1" th:text="#{authUser.maxPriorityAuthRole}"></label>
+                <input type="text" id="maxPriorityAuthRole" name="maxPriorityAuthRole" class="form-control" th:field="*{maxPriorityAuthRoleName}" required readonly></input>
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="authRoles" class="form-label mt-2 mb-1" th:text="#{authUser.authRoles}"></label>
+                <input type="text" id="authRoles" name="authRoles" class="form-control" th:field="*{authRoleNames}" required readonly></input>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="status" class="form-label mt-2 mb-1" th:text="#{authUser.status}"></label>
+                <select id="status" name="status" th:field="*{enabled}" required>
+                  <option th:value="true" th:text="#{authUserStatus.enabled}"></option>
+                  <option th:value="false" th:text="#{authUserStatus.disabled}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="colorModeCombo" class="form-label mt-2 mb-1" th:text="#{authUser.colorMode}"></label>
+                <select id="colorModeCombo" name="colorModeCombo" th:field="*{colorModeCode}" required>
+                  <option th:each="colorMode : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode).values()}" th:value="${colorMode.code}" th:text="#{${colorMode.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="initialCurrencyCombo" class="form-label mt-2 mb-1" th:text="#{authUser.initialCurrency}"></label>
+                <select id="initialCurrencyCombo" name="initialCurrencyCombo" th:field="*{initialCurrencySymbol}" required>
+                  <option th:each="initialCurrency : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency).values()}" th:value="${initialCurrency.symbol}" th:text="#{${initialCurrency.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="initialTableSortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{authUser.initialTableSortingDirection}"></label>
+                <select id="initialTableSortingDirectionCombo" name="initialTableSortingDirectionCombo" th:field="*{initialTableSortingDirectionCode}" required>
+                  <option th:each="initialTableSortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}" th:value="${initialTableSortingDirection.code}" th:text="#{${initialTableSortingDirection.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="initialTablePageSizeCombo" class="form-label mt-2 mb-1" th:text="#{authUser.initialTablePageSize}"></label>
+                <select id="initialTablePageSizeCombo" name="initialTablePageSizeCombo" th:field="*{initialTablePageSizeValue}" required>
+                  <option th:each="initialTablePageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).values()}" th:value="${initialTablePageSize.value}" th:text="#{${initialTablePageSize.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-1 form-group">
+                <label for="pdfDocumentPageFormatCombo" class="form-label mt-2 mb-1" th:text="#{authUser.pdfDocumentPageFormat}"></label>
+                <select id="pdfDocumentPageFormatCombo" name="pdfDocumentPageFormatCombo" th:field="*{pdfDocumentPageFormatCode}" required>
+                  <option th:each="pdfDocumentPageFormat : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat).values()}" th:value="${pdfDocumentPageFormat.code}" th:text="#{${pdfDocumentPageFormat.messageName}}"></option>
+                </select>
+              </div>
+            </div>
+
+            <br/>
+            <button type="submit" id="saveButton" class="btn btn-primary" th:text="#{button.save}"></button>
+            <br/>
+            <br/>
+
+            <hr/>
+
+            <h5 th:text="#{option.otherOperations}"></h5>
+
+            <div class="row mx-0 px-0 my-0 py-0">
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0">
+                <label for="changePassword" class="form-label mt-2 mb-1" th:text="#{authUserCredentials.password}"></label>
+                <br/>
+                <a class="btn btn-primary" id="changePassword" name="changePassword" th:href="@{/my-user/change-password (languageParam=${param.languageParam})}" th:text="#{authUserCredentials.changePassword}"></a>
+              </div>
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0">
+                <label for="getJobRequests" class="form-label mt-2 mb-1" th:text="#{authUser.jobRequests}"></label>
+                <br/>
+                <a class="btn btn-primary" id="getJobRequests" name="getJobRequests" th:href="@{/my-user/job-requests (languageParam=${param.languageParam})}" th:text="#{authUser.getJobRequests}"></a>
+              </div>
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0">
+                <label for="getAuthUserCurriculums" class="form-label mt-2 mb-1" th:text="#{authUser.authUserCurriculums}"></label>
+                <br/>
+                <a class="btn btn-primary" id="getAuthUserCurriculums" name="getAuthUserCurriculums" th:href="@{/my-user/auth-user-curriculums (languageParam=${param.languageParam})}" th:text="#{authUser.getAuthUserCurriculums}"></a>
+              </div>
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0">
+                <label for="getAuthUserEntityQueries" class="form-label mt-2 mb-1" th:text="#{authUser.authUserEntityQueries}"></label>
+                <br/>
+                <a class="btn btn-primary" id="getAuthUserEntityQueries" name="getAuthUserEntityQueries" th:href="@{/my-user/auth-user-entity-queries (languageParam=${param.languageParam})}" th:text="#{authUser.getAuthUserEntityQueries}"></a>
+              </div>
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0">
+                <label for="deleteAuthUserAccount" class="form-label mt-2 mb-1" th:text="#{authUser.authUserAccount}"></label>
+                <br/>
+                <a class="btn btn-danger" id="deleteAuthUserAccount" name="deleteAuthUserAccount" th:href="@{/my-user/delete (languageParam=${param.languageParam})}" th:text="#{authUser.deleteAuthUserAccount}" th:attr="onclick='return confirm(\'' + #{authUser.deleteAuthUserAccount.confirm} + '\');'"></a>
+              </div>
+              <div class="col-lg-1 form-group mx-2 px-0 my-0 py-0" th:if="${springSecurityUtils.isAuthenticatedAndHasAnyAuthority('ADMINISTRATOR')}">
+                <label for="configureApplication" class="form-label mt-2 mb-1" th:text="#{app.application}"></label>
+                <br/>
+                <a class="btn btn-danger" id="configureApplication" name="configureApplication" th:href="@{/my-user/app/config (languageParam=${param.languageParam})}" th:text="#{app.configureApplication}"></a>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{listJobCompanies.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+
+        <h4 class="card-header"><strong th:text="#{listJobCompanies.main.title}"></strong></h4>
+
+        <div class="card-body">
+          <a class="btn btn-primary" th:href="@{/job-companies/create (languageParam=${param.languageParam})}" role="button">
+            <i class="fas fa-lg fa-file-arrow-up" aria-hidden="true"></i>
+            &nbsp;
+            <span th:text="#{button.newJobCompany}"></span>
+          </a>
+          <hr/>
+
+          <div th:replace="~{fragments/optional/tableFilterAndPaginationForm :: tableFilterAndPaginationForm(${paginationUrl}, true, false, true, null, false)}"></div>
+          <br/>
+
+          <table id="mainTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col" th:text="#{abstractEntity.id}"></th>
+                <th scope="col" th:text="#{jobCompany.name}"></th>
+                <th scope="col" th:text="#{jobCompany.description}" style="width:35%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.firstRegistrationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationDateTime}" style="width:7.25%"></th>
+                <th scope="col" th:text="#{abstractEntity.lastModificationAuthUserEmail}"></th>
+                <th scope="col" th:text="#{table.operations}" style="width:12.25%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="jobCompany : ${jobCompanies.content}">
+                <th scope="row" th:text="${jobCompany.id}"></th>
+                <td>
+                  <a th:href="@{/job-companies/view/{id} (id=${jobCompany.id}, languageParam=${param.languageParam})}" th:text="${jobCompany.name}" th:title="#{jobCompanyDetail.main.title}"></a>
+                </td>
+                <td th:text="${jobCompany.description}"></td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCompany.firstRegistrationDateTime)}"></td>
+                <td th:with="firstRegistrationAuthUserId=${jobCompany.getFirstRegistrationAuthUserId()}">
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompany.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCompany.lastModificationDateTime)}"></td>
+                <td th:with="lastModificationAuthUserId=${jobCompany.getLastModificationAuthUserId()}">
+                  <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompany.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                  <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+                </td>
+                <td>
+                  <a th:href="@{/job-companies/edit/{id} (id=${jobCompany.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.editJobCompany}">
+                    <i class="fas fa-lg fa-pen-to-square" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-companies/job-vacancies/{id} (id=${jobCompany.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobVacancies}">
+                    <i class="fas fa-lg fa-table" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-companies/job-company-logos/{id} (id=${jobCompany.id}, languageParam=${param.languageParam})}" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.listJobCompanyLogos}">
+                    <i class="fas fa-lg fa-image" aria-hidden="true"></i>
+                  </a>
+                  <a th:href="@{/job-companies/delete/{id} (id=${jobCompany.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobCompany.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobCompany}">
+                    <i class="fas fa-lg fa-trash-can" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div th:replace="~{fragments/optional/tablePaginationNav :: tablePaginationNav(${paginationUrl}, ${exportToPdfUrl}, ${jobCompanies.totalPages}, ${jobCompanies.number})}"></div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

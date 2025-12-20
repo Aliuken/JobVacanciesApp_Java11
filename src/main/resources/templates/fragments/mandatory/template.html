@@ -1,0 +1,138 @@
+<!doctype html>
+<html th:with="currentUserInterfaceFrameworkCode=${currentDefaultUserInterfaceFrameworkCode}, refreshedSessionAuthUser=${@authUserService.refreshEntity(session.sessionAuthUser)}, refreshedSessionAuthUserColorModeValue=${refreshedSessionAuthUser?.colorMode?.value}, colorModeValue=(((${refreshedSessionAuthUserColorModeValue} != null and ${refreshedSessionAuthUserColorModeValue} != 'default') ? ${refreshedSessionAuthUserColorModeValue} : ${currentDefaultColorModeValue}) ?: 'light')" th:data-bs-theme="${colorModeValue}">
+
+  <head>
+
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+    <meta name="description" content="JobVacanciesApp - Web application to manage job vacancies"></meta>
+    <meta name="author" content="Aliuken"></meta>
+
+    <link th:href="@{/images/favicon.ico}" rel="shortcut icon" type="image/x-icon"></link>
+
+    <title layout:title-pattern="$LAYOUT_TITLE"></title>
+
+    <!-- Generic library styles -->
+    <link id="bootstrapCSS" th:href="@{/bootstrap-5.3.8-dist/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <link id="materialDesignCSS" th:if="${currentUserInterfaceFrameworkCode == 'M'}" th:href="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/css/mdb.min.css}" rel="stylesheet"></link>
+    <link id="fontAwesomeCSS" th:href="@{/fontawesome-free-7.1.0-web/css/all.min.css}" rel="stylesheet"></link>
+
+    <!-- Custom styles for this template -->
+    <style type="text/css">
+      html {
+        overflow-x: hidden;
+      }
+
+      main {
+        min-height: 87.2vh;
+        height: 100% !important;
+      }
+
+      table#mainTable tr th{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+      }
+
+      table#mainTable tr td{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+      }
+
+      a.disabled {
+        pointer-events: none;
+        cursor: default;
+      }
+    </style>
+
+    <div layout:fragment="additionalStyles"></div>
+
+  </head>
+
+  <body th:with="currentDefaultLanguageCode=${currentDefaultLanguageCode}">
+
+    <div class="container-fluid mx-0 px-0">
+
+      <header th:replace="~{fragments/mandatory/menu :: menu}"></header>
+
+      <main role="main" class="mx-1 px-1 my-1 py-1">
+        <input type="hidden" id="languageSessionAttributeElement" name="languageSessionAttributeElement" th:value="${refreshedSessionAuthUser?.language?.code}" />
+        <div layout:fragment="mainContent"></div>
+      </main>
+
+      <div th:replace="~{fragments/mandatory/footer :: footer}"></div>
+
+    </div>
+
+    <!-- ======================================================================== -->
+    <!-- Scripts: placed at the end of the document so that the pages load faster -->
+    <!-- ======================================================================== -->
+
+    <!-- Generic library scripts -->
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-5.3.8-dist/js/bootstrap.min.js}"></script>
+    <script id="materialDesignJS" th:if="${currentUserInterfaceFrameworkCode == 'M'}" type="text/javascript" th:src="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/js/mdb.min.js}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/page-url-and-dom-utils.js}"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+      $(document).ready(function() {
+        let languageSessionAttributeElement = document.getElementById("languageSessionAttributeElement");
+
+        let languageSessionAttribute = null;
+        if(languageSessionAttributeElement != null) {
+          languageSessionAttribute = languageSessionAttributeElement.value;
+        }
+
+        let languageModelAttribute;
+        let defaultLanguage;
+        /*<![CDATA[*/
+          languageModelAttribute = /*[[${language}]]*/ null;
+          defaultLanguage = /*[[${currentDefaultLanguageCode}]]*/ null;
+        /*]]>*/
+
+        let descriptionModelAttribute;
+        let jobCategoryIdModelAttribute;
+        /*<![CDATA[*/
+          descriptionModelAttribute = /*[[${description}]]*/ null;
+          jobCategoryIdModelAttribute = /*[[${jobCategoryId}]]*/ null;
+        /*]]>*/
+
+        let isSearchJobVacanciesFromHome = getIsSearchJobVacanciesFromHome(descriptionModelAttribute, jobCategoryIdModelAttribute);
+        //alert("isSearchJobVacanciesFromHome: " + isSearchJobVacanciesFromHome);
+
+        if(isSearchJobVacanciesFromHome) {
+            treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModelAttribute, defaultLanguage, descriptionModelAttribute, jobCategoryIdModelAttribute);
+        } else {
+          let isPageWithTable = getIsPageWithTable();
+          //alert("isPageWithTable: " + isPageWithTable);
+
+          if(isPageWithTable) {
+            let filterNameModelAttribute;
+            let filterValueModelAttribute;
+            let sortingFieldModelAttribute;
+            let sortingDirectionModelAttribute;
+            let pageSizeModelAttribute;
+            let pageNumberModelAttribute;
+            /*<![CDATA[*/
+              filterNameModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterName : null}]]*/ null;
+              filterValueModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.filterValue : null}]]*/ null;
+              sortingFieldModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.sortingField : null}]]*/ null;
+              sortingDirectionModelAttribute = /*[[${configPropertiesBean.getInitialTableSortingDirectionCode(param.sortingDirection)}]]*/ null;
+              pageSizeModelAttribute = /*[[${configPropertiesBean.getInitialTablePageSizeValue(param.pageSize)}]]*/ null;
+              pageNumberModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.pageNumber : null}]]*/ null;
+            /*]]>*/
+
+            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
+          } else {
+            treatLanguageComboAndUrlParameter(languageSessionAttribute, languageModelAttribute, defaultLanguage);
+          }
+        }
+      });
+    </script>
+
+    <div layout:fragment="additionalScripts"></div>
+
+  </body>
+
+</html>

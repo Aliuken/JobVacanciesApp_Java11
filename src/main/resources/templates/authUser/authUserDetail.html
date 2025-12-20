@@ -1,0 +1,65 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{authUserDetail.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{authUserDetail.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div class="mb-1" th:if="${errorMsg != null}">
+            <br/>
+            <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mb-1" th:if="${successMsg != null}">
+            <br/>
+            <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <h5 class="card-title"><strong th:text="#{authUser.name} + ': '"></strong> <span th:text="${authUser.fullName}"></span></h5>
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="card-title"><strong th:text="#{authUser.email} + ': '"></strong> <span th:text="${authUser.email}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.status} + ': '"></strong> <span th:text="#{${authUser.enabled} ? 'authUserStatus.enabled' : 'authUserStatus.disabled'}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.language} + ': '"></strong> <span th:text="#{${authUser.language.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.colorMode} + ': '"></strong> <span th:text="#{${authUser.colorMode.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.initialCurrency} + ': '"></strong> <span th:text="#{${authUser.initialCurrency.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.initialTableSortingDirection} + ': '"></strong> <span th:text="#{${authUser.initialTableSortingDirection.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.initialTablePageSize} + ': '"></strong> <span th:text="#{${authUser.initialTablePageSize.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.pdfDocumentPageFormat} + ': '"></strong> <span th:text="#{${authUser.pdfDocumentPageFormat.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.maxPriorityAuthRole} + ': '"></strong> <span th:text="${authUser.maxPriorityAuthRoleName}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{authUser.authRoles} + ': '"></strong> <span th:text="${authUser.authRoleNames}"></span></h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="firstRegistrationAuthUserId=${authUser.getFirstRegistrationAuthUserId()}">
+                <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="lastModificationAuthUserId=${authUser.getLastModificationAuthUserId()}">
+                <strong th:text="#{abstractEntity.lastModificationAuthUserEmail} + ': '"></strong>
+                <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

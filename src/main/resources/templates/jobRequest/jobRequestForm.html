@@ -1,0 +1,84 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="(${jobRequestDTO.id} == null) ? #{jobRequestCreation.head.title} : #{jobRequestEdition.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="(${jobRequestDTO.id} == null) ? #{jobRequestCreation.main.title} : #{jobRequestEdition.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <h5 class="card-title"><strong th:text="#{jobRequest.jobVacancy} + ': '"></strong><span th:text="${jobRequestDTO.jobVacancy.name}"></span></h5>
+          <div class="row">
+            <div class="col-md-3">
+              <h6 class="card-title"><strong th:text="#{jobRequest.jobCategory} + ': '"></strong><span th:text="${jobRequestDTO.jobVacancy.jobCategory.name}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.jobCompany} + ': '"></strong><span th:text="${jobRequestDTO.jobVacancy.jobCompany.name}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.publicationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobRequestDTO.jobVacancy.publicationDateTime)}"></span></h6>
+              <h6 class="card-title"><strong th:text="#{jobRequest.salary} + ': '"></strong><span th:text="${jobRequestDTO.jobVacancy.salary}"></span></h6>
+            </div>
+            <div class="col-md-2">
+              <img class="rounded mx-auto d-block" th:src="@{/job-company-logos/{img} (img=${jobRequestDTO.jobVacancy.jobCompany.selectedLogoFilePath})}" style="max-width:160px; max-height:160px;"></img>
+            </div>
+          </div>
+          <p class="card-text" th:text="${jobRequestDTO.jobVacancy.description}"></p>
+          <hr/>
+
+          <form th:action="@{/job-requests/save (languageParam=${param.languageParam})}" th:object="${jobRequestDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="hidden" th:field="*{id}"></input>
+                  <input type="hidden" th:field="*{jobVacancyId}"></input>
+                  <label for="comments" class="form-label mt-2 mb-1" th:text="#{jobRequest.comments} + ': '"></label>
+                  <textarea class="form-control" name="comments" th:field="*{comments}" id="comments" rows="3" required></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="curriculumFileCombo" class="form-label mt-2 mb-1" th:text="#{jobRequest.curriculum} + ': '"></label>
+                <select id="curriculumFileCombo" name="curriculumFileCombo" th:field="*{curriculumFileName}" class="form-select mb-3" style="height:40px">
+                  <option th:each="authUserCurriculums : ${authUserCurriculums}" th:text="${authUserCurriculums.selectionName}" th:value="${authUserCurriculums.fileName}"></option>
+                </select>
+              </div>
+
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary" th:text="#{button.send}"></button>
+            <br/>
+            <br/>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

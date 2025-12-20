@@ -1,0 +1,94 @@
+<div th:fragment="tableFilterAndPaginationForm(endpoint, showFilterForm, isAuthUserEntityOrContainsDifferentAuthUsers, isJobCompanyEntityOrContainsDifferentJobCompanies, predefinedFilterName, isUnmodifiableEntity)" class="container-fluid mx-1 px-1 my-2 py-1" id="filterFormContainer" name="filterFormContainer">
+
+  <form id="tableFilterAndPaginationForm" th:action="@{${endpoint}}" th:object="${tableSearchDTO}" method="get" class="form-inline" th:with="lowerCasedPredefinedFilterEntityName=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity).getLowerCasedEntityNameByEntityName(predefinedFilterName)}, tableFields=${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField).valuesForCombo(isAuthUserEntityOrContainsDifferentAuthUsers, isJobCompanyEntityOrContainsDifferentJobCompanies, isUnmodifiableEntity)}">
+
+    <div th:if="${showBindingResultErrors == true} and ${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+      <span th:text="#{error.correctFields} + ':'"></span>
+      <ul>
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+      </ul>
+    </div>
+
+    <div class="mb-1" th:if="${errorMsg != null}">
+      <br/>
+      <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <div class="mb-1" th:if="${successMsg != null}">
+      <br/>
+      <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+      <br/>
+      <br/>
+    </div>
+
+    <input type="hidden" th:field="*{languageParam}" th:value="${param.languageParam}"></input>
+    <input type="hidden" th:field="*{pageNumber}" th:value="'0'"></input>
+
+    <div th:if="${lowerCasedPredefinedFilterEntityName != null}" class="mx-0 px-0 my-0 py-0">
+      <label class="mx-0 px-0 my-0 py-0" th:text="#{'table.filteredBy' + ${predefinedFilterName}} + ':'"></label>
+      <br/>
+      <label for="filterByPredefinedFilterField1" class="form-label mx-0 px-0 my-2 py-0" th:text="#{${lowerCasedPredefinedFilterEntityName} + 'PredefinedFilterField1'} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByPredefinedFilterField1" name="filterByPredefinedFilterField1" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField1}" disabled></input>
+      &nbsp;&nbsp;&nbsp;
+      <label for="filterByPredefinedFilterField2" class="form-label mx-0 px-0 my-2 py-0" th:text="#{${lowerCasedPredefinedFilterEntityName} + 'PredefinedFilterField2'} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterByPredefinedFilterField2" name="filterByPredefinedFilterField2" class="mx-0 px-1 my-2 py-0" th:value="${predefinedFilterField2}" size="100" disabled></input>
+      <br/>
+      <br/>
+    </div>
+
+    <div th:if="${showFilterForm} == true" class="mx-0 px-0 my-0 py-0">
+      <label th:text="#{filterContainer.label} + ':'"></label>
+      <br/>
+      <label for="tableFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.filterText1} + ':'"></label>
+      &nbsp;
+      <select id="tableFieldCombo" name="tableFieldCombo" th:field="*{filterName}">
+        <option th:value="null" th:text="#{tableField.select}" selected></option>
+        <option th:each="filterTableField : ${tableFields}" th:value="${filterTableField.code}" th:text="#{${filterTableField.messageName}}"></option>
+      </select>
+      &nbsp;&nbsp;
+      <label for="filterValue" class="form-label mt-2 mb-1" th:text="#{table.filterText2} + ':'"></label>
+      &nbsp;
+      <input type="text" id="filterValue" name="filterValue" th:field="*{filterValue}"></input>
+      &nbsp;
+      <button id="filterButton" th:text="#{button.filter}"></button>
+      <br/>
+      <br/>
+    </div>
+
+    <label th:text="#{paginationContainer.label} + ':'"></label>
+    <br/>
+    <label for="sortingFieldCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText1} + ':'"></label>
+    &nbsp;
+    <select id="sortingFieldCombo" name="sortingFieldCombo" th:field="*{sortingField}">
+      <option th:each="sortingTableField : ${tableFields}" th:value="${sortingTableField.code}" th:text="#{${sortingTableField.messageName}}"></option>
+    </select>
+    &nbsp;&nbsp;
+    <label for="sortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText2} + ':'"></label>
+    &nbsp;
+    <select id="sortingDirectionCombo" name="sortingDirectionCombo" th:field="*{sortingDirection}" required>
+      <option th:each="sortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).valuesWithoutByDefault()}" th:value="${sortingDirection.code}" th:text="#{${sortingDirection.messageName}}"></option>    </select>
+    &nbsp;&nbsp;-&nbsp;&nbsp;
+    <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>
+    &nbsp;
+    <select id="pageSizeCombo" name="pageSizeCombo" th:field="*{pageSize}" required>
+      <option th:each="pageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).valuesWithoutByDefault()}" th:value="${pageSize.value}" th:text="#{${pageSize.messageName}}"></option>
+    </select>
+
+  </form>
+
+  <script type="text/javascript" th:inline="javascript">
+    let filterButton = document.getElementById('filterButton');
+    filterButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      let resetDone = resetPageNumberParameterInUrl();
+      if(!resetDone) {
+        document.tableFilterAndPaginationForm.submit();
+      }
+    });
+  </script>
+
+</div>

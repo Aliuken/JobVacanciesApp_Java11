@@ -1,0 +1,56 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{authUserCurriculumDetail.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{authUserCurriculumDetail.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <div class="mb-1" th:if="${errorMsg != null}">
+            <br/>
+            <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mb-1" th:if="${successMsg != null}">
+            <br/>
+            <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+            <br/>
+            <br/>
+          </div>
+
+          <h5 class="card-title"><strong th:text="#{authUserCurriculum.fileName} + ': '"></strong> <span th:text="${authUserCurriculum.fileName}"></span></h5>
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="card-title"><strong th:text="#{authUserCurriculum.description} + ': '"></strong> <span th:text="${authUserCurriculum.description}"></span></h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUserCurriculum.firstRegistrationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="firstRegistrationAuthUserId=${authUserCurriculum.getFirstRegistrationAuthUserId()}">
+                <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+              <h6 class="card-title"><strong th:text="#{abstractEntity.lastModificationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(authUserCurriculum.lastModificationDateTime)}"></span></h6>
+              <h6 class="card-title" th:with="lastModificationAuthUserId=${authUserCurriculum.getLastModificationAuthUserId()}">
+                <strong th:text="#{abstractEntity.lastModificationAuthUserEmail} + ': '"></strong>
+                <a th:if="${lastModificationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${lastModificationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getLastModificationAuthUserEmail('-')}" th:title="#{lastModificationAuthUserDetail.main.title}"></a>
+                <span th:if="${lastModificationAuthUserId} == null" th:text="'-'"></span>
+              </h6>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

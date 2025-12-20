@@ -1,0 +1,134 @@
+<!doctype html>
+<html layout:decorate="~{fragments/mandatory/template}">
+  <head>
+    <title th:text="#{configureApplication.head.title}"></title>
+  </head>
+
+  <body>
+
+    <div layout:fragment="mainContent">
+      <div class="card">
+        <h4 class="card-header"><strong th:text="#{configureApplication.main.title}"></strong></h4>
+        <div class="card-body">
+
+          <form th:action="@{/my-user/app/config (languageParam=${param.languageParam})}" th:object="${applicationNextConfigDTO}" method="post">
+
+            <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+              <span th:text="#{error.correctFields} + ':'"></span>
+              <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+              </ul>
+            </div>
+
+            <div class="mb-1" th:if="${errorMsg != null}">
+              <br/>
+              <strong class="alert alert-danger" th:text="${errorMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="mb-1" th:if="${successMsg != null}">
+              <br/>
+              <strong class='alert alert-success' th:text="${successMsg}" role='alert'></strong>
+              <br/>
+              <br/>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultAnonymousAccessPermissionCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultAnonymousAccessPermission}"></label>
+                <br/>
+                <select id="nextDefaultAnonymousAccessPermissionCombo" name="nextDefaultAnonymousAccessPermissionCombo" th:field="*{nextDefaultAnonymousAccessPermissionValue}" required>
+                  <option th:each="defaultAnonymousAccessPermission : ${T(com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission).values()}" th:value="${defaultAnonymousAccessPermission.value}" th:text="#{${defaultAnonymousAccessPermission.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultColorModeCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultColorMode}"></label>
+                <br/>
+                <select id="nextDefaultColorModeCombo" name="nextDefaultColorModeCombo" th:field="*{nextDefaultColorModeCode}" required>
+                  <option th:each="defaultColorMode : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode).values()}" th:value="${defaultColorMode.code}" th:text="#{${defaultColorMode.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultLanguageCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultLanguage}"></label>
+                <br/>
+                <select id="nextDefaultLanguageCombo" name="nextDefaultLanguageCombo" th:field="*{nextDefaultLanguageCode}" required>
+                  <option th:each="defaultLanguage : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).values()}" th:value="${defaultLanguage.code}" th:text="#{${defaultLanguage.messageName}}"></option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultPdfDocumentPageFormatCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultPdfDocumentPageFormat}"></label>
+                <br/>
+                <select id="nextDefaultPdfDocumentPageFormatCombo" name="nextDefaultPdfDocumentPageFormatCombo" th:field="*{nextDefaultPdfDocumentPageFormatCode}" required>
+                  <option th:each="defaultPdfDocumentPageFormat : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat).values()}" th:value="${defaultPdfDocumentPageFormat.code}" th:text="#{${defaultPdfDocumentPageFormat.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultInitialTableSortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultInitialTableSortingDirection}"></label>
+                <br/>
+                <select id="nextDefaultInitialTableSortingDirectionCombo" name="nextDefaultInitialTableSortingDirectionCombo" th:field="*{nextDefaultInitialTableSortingDirectionCode}" required>
+                  <option th:each="defaultInitialTableSortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).values()}" th:value="${defaultInitialTableSortingDirection.code}" th:text="#{${defaultInitialTableSortingDirection.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultInitialTablePageSizeCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultInitialTablePageSize}"></label>
+                <br/>
+                <select id="nextDefaultInitialTablePageSizeCombo" name="nextDefaultInitialTablePageSizeCombo" th:field="*{nextDefaultInitialTablePageSizeValue}" required>
+                  <option th:each="defaultInitialTablePageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).values()}" th:value="${defaultInitialTablePageSize.value}" th:text="#{${defaultInitialTablePageSize.messageName}}"></option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="nextDefaultUserInterfaceFrameworkCombo" class="form-label mt-2 mb-1" th:text="#{app.defaultUserInterfaceFramework}"></label>
+                <br/>
+                <select id="nextDefaultUserInterfaceFrameworkCombo" name="nextDefaultUserInterfaceFrameworkCombo" th:field="*{nextDefaultUserInterfaceFrameworkCode}" required>
+                  <option th:each="defaultUserInterfaceFramework : ${T(com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework).values()}" th:value="${defaultUserInterfaceFramework.code}" th:text="#{${defaultUserInterfaceFramework.messageName}}"></option>
+                </select>
+              </div>
+            </div>
+
+            <br/>
+
+            <div class="row mx-0 px-0 my-0 py-0">
+              <div class="col-md-4 form-group mx-0 px-0 my-0 py-0">
+                <a id="cancelButton" th:href="@{/my-user (languageParam=${param.languageParam})}" class="btn btn-secondary" role="button">
+                  <span th:text="#{button.cancel}"></span>
+                </a>
+                &nbsp;
+                <button type="submit" id="saveButton" class="btn btn-primary" th:text="#{button.save}"></button>
+              </div>
+            </div>
+
+          </form>
+
+          <br/>
+          <hr/>
+          <br/>
+
+          <h5 class="card-title"><strong th:text="#{configureApplication.defaultValues} + ':'"></strong></h5>
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="card-title"><strong th:text="'authUserCurriculumFilesPath: '"></strong> <span th:text="${applicationDefaultConfigDTO.authUserCurriculumFilesPath}"></span></h6>
+              <h6 class="card-title"><strong th:text="'authUserEntityQueryFilesPath: '"></strong> <span th:text="${applicationDefaultConfigDTO.authUserEntityQueryFilesPath}"></span></h6>
+              <h6 class="card-title"><strong th:text="'jobCompanyLogosPath: '"></strong> <span th:text="${applicationDefaultConfigDTO.jobCompanyLogosPath}"></span></h6>
+              <h6 class="card-title"><strong th:text="'useAjaxToRefreshJobCompanyLogos: '"></strong> <span th:text="${applicationDefaultConfigDTO.useAjaxToRefreshJobCompanyLogos}"></span></h6>
+              <h6 class="card-title"><strong th:text="'useEntityManagerCache: '"></strong> <span th:text="${applicationDefaultConfigDTO.useEntityManagerCache}"></span></h6>
+              <h6 class="card-title"><strong th:text="'useParallelStreams: '"></strong> <span th:text="${applicationDefaultConfigDTO.useParallelStreams}"></span></h6>
+              <h6 class="card-title"><strong th:text="'signupConfirmationLinkExpirationHours: '"></strong> <span th:text="${applicationDefaultConfigDTO.signupConfirmationLinkExpirationHours}"></span></h6>
+              <h6 class="card-title"><strong th:text="'resetPasswordLinkExpirationHours: '"></strong> <span th:text="${applicationDefaultConfigDTO.resetPasswordLinkExpirationHours}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultAnonymousAccessPermission: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultAnonymousAccessPermission.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultColorMode: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultColorMode.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultLanguage: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultLanguage.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultPdfDocumentPageFormat: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultPdfDocumentPageFormat.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultInitialTablePageSize: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultInitialTablePageSize.messageName}}"></span></h6>
+              <h6 class="card-title"><strong th:text="'defaultUserInterfaceFramework: '"></strong> <span th:text="#{${applicationDefaultConfigDTO.defaultUserInterfaceFramework.messageName}}"></span></h6>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
