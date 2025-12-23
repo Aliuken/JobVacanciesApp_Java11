@@ -105,7 +105,7 @@ The core technologies currently used are:
 * **OpenJDK 11**: As the **Java SE** implementation (using the default garbage collector: **G1 GC**). More details in section **[3.2. Java SE core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies)**.
 * **Jakarta EE 8** "javax" classes (detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**), including:
     * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits and @Email).
-    * **Servlet** API, **Java Persistence API** (**JPA**) and **Mail** API.
+    * **Servlet** API, **Jakarta Persistence API** (**JPA**) and **Mail** API.
 * **Spring Boot 2.7.18** (**Spring Framework 5.3**): Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java), which is restartable through the method "MainClass.restartApp(...)". More details in section **[3.4. Spring core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#34-spring-core-technologies)**.
 * **Maven**: As the dependency manager and for building the application.
 * **Git**: As the version control system.
