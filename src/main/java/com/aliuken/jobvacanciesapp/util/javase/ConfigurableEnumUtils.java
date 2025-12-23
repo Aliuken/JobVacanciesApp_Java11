@@ -185,7 +185,7 @@ public class ConfigurableEnumUtils {
 		final ConfigurableEnum<T>[] configurableEnumElements = defaultConfigurableEnumElement.getEnumElements(configurableEnumClass);
 
 		final List<ConfigurableEnum<T>> configurableEnumList = new ArrayList<>();
-		for(ConfigurableEnum<T> configurableEnumElement : configurableEnumElements) {
+		for(final ConfigurableEnum<T> configurableEnumElement : configurableEnumElements) {
 			if(this.hasASpecificValue(configurableEnumElement)) {
 				configurableEnumList.add(configurableEnumElement);
 			}
