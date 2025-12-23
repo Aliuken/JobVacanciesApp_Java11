@@ -367,7 +367,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 			final Language queryLanguage = this.getQueryLanguage();
 			columnNames = new String[columnMessageNames.length];
 			int columnIndex = 0;
-			for(String columnMessageName : columnMessageNames) {
+			for(final String columnMessageName : columnMessageNames) {
 				final String columnName = I18nUtils.getInternationalizedMessage(queryLanguage, columnMessageName, null);
 				columnNames[columnIndex] = columnName;
 				columnIndex++;
