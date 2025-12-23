@@ -26,6 +26,7 @@
 > | JDBC         | Java Database Connectivity         |
 > | JDK          | Java Development Kit               |
 > | JS           | JavaScript                         |
+> | JSON         | JavaScript Object Notation         |
 > | L10n         | Localization                       |
 > | LLM          | Large Language Model               |
 > | MDN          | Mozilla Developer Network          |
@@ -49,6 +50,7 @@
 > | URL          | Uniform Resource Locator           |
 > | UUID         | Universally Unique Identifier      |
 > | WSL          | Windows Subsystem for Linux        |
+> | XML          | Extensible Markup Language         |
 > ```
 
 # JobVacanciesApp_Java11
@@ -383,7 +385,7 @@ Other technologies currently used are:
 * **Sourcetree**: As the Git GUI for Windows.
 * **Git Bash**: As the command-line shell for the Git CLI.
 * **Powershell**: As the command-line shell for the Docker CLI for Windows.
-* **MDN** [[&#10138;]](https://developer.mozilla.org/en-US/docs/Learn_web_development): This website was used to learn about **HTTP**, **HTML**, **DOM**, **JS** and **CSS**.
+* **MDN** [[&#10138;]](https://developer.mozilla.org/en-US/docs/Learn_web_development): This website was used to learn about **HTTP**, **HTML**, **DOM**, **JS**, **JSON**, **XML** and **CSS**.
 * **DeepSeek R1**: This AI LLM was used (from [deepinfra](https://deepinfra.com/deepseek-ai/DeepSeek-R1) with 16000 max new tokens) in collaboration with ourselves to create the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
 * **GenericControllerAdvice** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/advice/GenericControllerAdvice.java): To be able to:
     * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
