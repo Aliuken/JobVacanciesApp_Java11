@@ -17,7 +17,7 @@ public class StringUtils {
 	}
 
 	public static String lowerCaseFirstCharacter(String string) {
-		if (LogicalUtils.isNullOrEmptyString(string)) {
+		if(LogicalUtils.isNullOrEmptyString(string)) {
 			return string;
 		}
 
@@ -29,7 +29,7 @@ public class StringUtils {
 	}
 
 	public static String upperCaseFirstCharacter(String string) {
-		if (LogicalUtils.isNullOrEmptyString(string)) {
+		if(LogicalUtils.isNullOrEmptyString(string)) {
 			return string;
 		}
 

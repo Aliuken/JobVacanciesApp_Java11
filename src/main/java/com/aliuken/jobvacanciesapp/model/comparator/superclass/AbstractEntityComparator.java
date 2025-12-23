@@ -12,11 +12,11 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 	// Ascending order where null entities are sorted last.
 	protected final Integer getNullCompareResult(final T entity1, final T entity2) {
 		final Integer nullCompareResult;
-		if (entity1 == null && entity2 == null) {
+		if(entity1 == null && entity2 == null) {
 			nullCompareResult = ENTITIES_EQUAL;
-		} else if (entity1 == null) {
+		} else if(entity1 == null) {
 			nullCompareResult = ENTITY2_FIRST;
-		} else if (entity2 == null) {
+		} else if(entity2 == null) {
 			nullCompareResult = ENTITY1_FIRST;
 		} else {
 			nullCompareResult = null; //CONTINUE
@@ -30,7 +30,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 		final Class<?> abstractEntityClass2 = entity2.getClass();
 
 		final Integer classCompareResult;
-		if (!abstractEntityClass1.equals(abstractEntityClass2)) {
+		if(!abstractEntityClass1.equals(abstractEntityClass2)) {
 			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName());
 		} else {
 			classCompareResult = null; //CONTINUE
@@ -50,11 +50,11 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 	// Utility method to compare two comparable objects
 	protected static <U extends Comparable<U>> int getCompareResult(final U object1, final U object2) {
 		final int idCompareResult;
-		if (object1 == null && object2 == null) {
+		if(object1 == null && object2 == null) {
 			idCompareResult = ENTITIES_EQUAL;
-		} else if (object1 == null) {
+		} else if(object1 == null) {
 			idCompareResult = ENTITY2_FIRST;
-		} else if (object2 == null) {
+		} else if(object2 == null) {
 			idCompareResult = ENTITY1_FIRST;
 		} else {
 			idCompareResult = object1.compareTo(object2);

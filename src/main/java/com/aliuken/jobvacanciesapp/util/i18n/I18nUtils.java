@@ -30,7 +30,7 @@ public class I18nUtils {
 			finalFieldName = strippedFieldNameProperty;
 		} else {
 			final String strippedFieldName = fieldName.strip();
-			if (strippedFieldName.isEmpty()) {
+			if(strippedFieldName.isEmpty()) {
 				finalFieldName = strippedFieldNameProperty;
 			} else {
 				finalFieldName = strippedFieldName;

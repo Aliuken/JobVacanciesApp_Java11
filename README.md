@@ -153,10 +153,10 @@ The Java SE core technologies currently used are:
     * The standard Java classes "LocalDate" and "LocalDateTime".
     * The utility classes [DateUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/DateUtils.java) and [DateTimeUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/DateTimeUtils.java) (of type [TemporalUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/time/superinterface/TemporalUtils.java)).
 * **Java try-with-resources**: Used in the classes:
-    * **FileType**: Over "DirectoryStream&lt;Path&gt;".
-    * **ThrowableUtils**: Over "StringWriter" and "PrintWriter".
-    * **FileUtils**: Over "ServletOutputStream" and "ZipFile".
-    * **AuthUserQueryReport**: Over "AuthUserQueryReport&lt;T&gt;".
+    * **FileType** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/enumtype/FileType.java): Over "DirectoryStream&lt;Path&gt;".
+    * **ThrowableUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ThrowableUtils.java): Over "StringWriter" and "PrintWriter".
+    * **FileUtils** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/file/FileUtils.java): Over "ServletOutputStream" and "ZipFile".
+    * **AuthUserQueryReport** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/persistence/pdf/AuthUserQueryReport.java): Over "AuthUserQueryReport&lt;T&gt;".
 * **Java varargs**: When needed (adding the suffix "Varargs" to the name of the last method argument).
 * **Java StringJoiner class**: In [StringUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/javase/StringUtils.java), to deal with String concatenation.
 * **Java Locale class**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with i18n and L10n.
