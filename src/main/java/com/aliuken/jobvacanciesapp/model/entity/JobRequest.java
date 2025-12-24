@@ -78,9 +78,9 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final AuthUserCurriculum authUserCurriculum = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-				.findFirst()
-				.orElse(null);
+			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+			.findFirst()
+			.orElse(null);
 
 		return authUserCurriculum;
 	}
@@ -92,10 +92,10 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final Long authUserCurriculumId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-				.map(auc -> auc.getId())
-				.findFirst()
-				.orElse(null);
+			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+			.map(auc -> auc.getId())
+			.findFirst()
+			.orElse(null);
 
 		return authUserCurriculumId;
 	}
@@ -107,10 +107,10 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final String authUserCurriculumFilePath = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-				.map(auc -> auc.getFilePath())
-				.findFirst()
-				.orElse(null);
+			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+			.map(auc -> auc.getFilePath())
+			.findFirst()
+			.orElse(null);
 
 		return authUserCurriculumFilePath;
 	}
@@ -122,10 +122,10 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final String authUserCurriculumSelectionName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-				.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-				.map(auc -> auc.getSelectionName())
-				.findFirst()
-				.orElse(null);
+			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+			.map(auc -> auc.getSelectionName())
+			.findFirst()
+			.orElse(null);
 
 		return authUserCurriculumSelectionName;
 	}

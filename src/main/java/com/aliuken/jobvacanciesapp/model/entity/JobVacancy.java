@@ -141,8 +141,8 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	@LazyEntityRelationGetter
 	public Set<Long> getJobRequestIds() {
 		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobRequestIds;
 	}
@@ -150,8 +150,8 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	@LazyEntityRelationGetter
 	public Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getAuthUser())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getAuthUser())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUsers;
 	}
@@ -159,9 +159,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getAuthUser())
-				.map(jv -> jv.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getAuthUser())
+			.map(jv -> jv.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserIds;
 	}
@@ -169,9 +169,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	@LazyEntityRelationGetter
 	public Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getAuthUser())
-				.map(jv -> jv.getEmail())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getAuthUser())
+			.map(jv -> jv.getEmail())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEmails;
 	}

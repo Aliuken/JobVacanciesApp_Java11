@@ -111,8 +111,8 @@ public class SpringSecurityUtils {
 		}
 
 		final Set<String> grantedAuthorityNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(grantedAuthorities)
-				.map(grantedAuthority -> grantedAuthority.getAuthority())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(grantedAuthority -> grantedAuthority.getAuthority())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return grantedAuthorityNames;
 	}

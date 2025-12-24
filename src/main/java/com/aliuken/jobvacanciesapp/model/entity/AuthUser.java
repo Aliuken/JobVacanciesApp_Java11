@@ -182,8 +182,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserRoleIds() {
 		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserRoleIds;
 	}
@@ -191,8 +191,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<AuthRole> getAuthRoles() {
 		final Set<AuthRole> authRoles = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthRole())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthRole())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoles;
 	}
@@ -200,9 +200,9 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthRoleIds() {
 		final Set<Long> authRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthRole())
-				.map(ar -> ar.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthRole())
+			.map(ar -> ar.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoleIds;
 	}
@@ -210,9 +210,9 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<String> getAuthRoleNames() {
 		final Set<String> authRoleNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthRole())
-				.map(ar -> ar.getName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthRole())
+			.map(ar -> ar.getName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoleNames;
 	}
@@ -220,8 +220,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getJobRequestIds() {
 		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobRequestIds;
 	}
@@ -229,8 +229,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<JobVacancy> getJobVacancies() {
 		final Set<JobVacancy> jobVacancies = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getJobVacancy())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getJobVacancy())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancies;
 	}
@@ -238,9 +238,9 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getJobVacancy())
-				.map(jv -> jv.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getJobVacancy())
+			.map(jv -> jv.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyIds;
 	}
@@ -248,9 +248,9 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<String> getJobVacancyNames() {
 		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-				.map(jr -> jr.getJobVacancy())
-				.map(jv -> jv.getName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jr -> jr.getJobVacancy())
+			.map(jv -> jv.getName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyNames;
 	}
@@ -258,8 +258,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserCurriculumIds() {
 		final Set<Long> authUserCurriculumIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
-				.map(auc -> auc.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(auc -> auc.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserCurriculumIds;
 	}
@@ -267,8 +267,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<String> getAuthUserCurriculumSelectionNames() {
 		final Set<String> authUserCurriculumSelectionNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
-				.map(auc -> auc.getSelectionName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(auc -> auc.getSelectionName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserCurriculumSelectionNames;
 	}
@@ -276,8 +276,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserEntityQueryIds() {
 		final Set<Long> authUserEntityQueryIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserEntityQueries)
-				.map(aueq -> aueq.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aueq -> aueq.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEntityQueryIds;
 	}
@@ -288,10 +288,10 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 			return null;
 		}
 
-		AuthRole authRole = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.findFirst()
-				.map(aur -> aur.getAuthRole())
-				.orElse(null);
+		final AuthRole authRole = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+			.findFirst()
+			.map(aur -> aur.getAuthRole())
+			.orElse(null);
 
 		return authRole;
 	}
@@ -302,11 +302,11 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 			return null;
 		}
 
-		Long authRoleId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.findFirst()
-				.map(aur -> aur.getAuthRole())
-				.map(ar -> ar.getId())
-				.orElse(null);
+		final Long authRoleId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+			.findFirst()
+			.map(aur -> aur.getAuthRole())
+			.map(ar -> ar.getId())
+			.orElse(null);
 
 		return authRoleId;
 	}
@@ -317,11 +317,11 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 			return null;
 		}
 
-		String authRoleName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.findFirst()
-				.map(aur -> aur.getAuthRole())
-				.map(ar -> ar.getName())
-				.orElse(null);
+		final String authRoleName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+			.findFirst()
+			.map(aur -> aur.getAuthRole())
+			.map(ar -> ar.getName())
+			.orElse(null);
 
 		return authRoleName;
 	}

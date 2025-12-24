@@ -78,8 +78,8 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserRoleIds() {
 		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserRoleIds;
 	}
@@ -87,8 +87,8 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthUser())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthUser())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUsers;
 	}
@@ -96,9 +96,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthUser())
-				.map(au -> au.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthUser())
+			.map(au -> au.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserIds;
 	}
@@ -106,9 +106,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-				.map(aur -> aur.getAuthUser())
-				.map(au -> au.getEmail())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(aur -> aur.getAuthUser())
+			.map(au -> au.getEmail())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEmails;
 	}

@@ -60,8 +60,8 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 	@LazyEntityRelationGetter
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-				.map(jv -> jv.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jv -> jv.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyIds;
 	}
@@ -69,8 +69,8 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 	@LazyEntityRelationGetter
 	public Set<String> getJobVacancyNames() {
 		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-				.map(jv -> jv.getName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jv -> jv.getName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyNames;
 	}

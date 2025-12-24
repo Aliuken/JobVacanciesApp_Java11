@@ -79,9 +79,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 		}
 
 		final JobCompanyLogo selectedJobCompanyLogo = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-				.findFirst()
-				.orElse(null);
+			.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+			.findFirst()
+			.orElse(null);
 
 		return selectedJobCompanyLogo;
 	}
@@ -93,10 +93,10 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 		}
 
 		final Long selectedJobCompanyLogoId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-				.map(jcl -> jcl.getId())
-				.findFirst()
-				.orElse(null);
+			.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+			.map(jcl -> jcl.getId())
+			.findFirst()
+			.orElse(null);
 
 		return selectedJobCompanyLogoId;
 	}
@@ -108,10 +108,10 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 		}
 
 		final String selectedJobCompanyLogoFilePath = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-				.map(jcl -> jcl.getFilePath())
-				.findFirst()
-				.orElse(Constants.NO_SELECTED_LOGO_FILE_PATH);
+			.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+			.map(jcl -> jcl.getFilePath())
+			.findFirst()
+			.orElse(Constants.NO_SELECTED_LOGO_FILE_PATH);
 
 		return selectedJobCompanyLogoFilePath;
 	}
@@ -123,10 +123,10 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 		}
 
 		final String selectedJobCompanyLogoSelectionName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
-				.map(jcl -> jcl.getSelectionName())
-				.findFirst()
-				.orElse(null);
+			.filter(jcl -> selectedLogoFileName.equals(jcl.getFileName()))
+			.map(jcl -> jcl.getSelectionName())
+			.findFirst()
+			.orElse(null);
 
 		return selectedJobCompanyLogoSelectionName;
 	}
@@ -134,8 +134,8 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 	@LazyEntityRelationGetter
 	public Set<Long> getJobCompanyLogoIds() {
 		final Set<Long> jobCompanyLogoIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.map(jcl -> jcl.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jcl -> jcl.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobCompanyLogoIds;
 	}
@@ -143,8 +143,8 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 	@LazyEntityRelationGetter
 	public Set<String> getJobCompanyLogoSelectionNames() {
 		final Set<String> jobCompanyLogoSelectionNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.map(jcl -> jcl.getSelectionName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jcl -> jcl.getSelectionName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobCompanyLogoSelectionNames;
 	}
@@ -152,8 +152,8 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 	@LazyEntityRelationGetter
 	public Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-				.map(jv -> jv.getId())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jv -> jv.getId())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyIds;
 	}
@@ -161,8 +161,8 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 	@LazyEntityRelationGetter
 	public Set<String> getJobVacancyNames() {
 		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-				.map(jv -> jv.getName())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			.map(jv -> jv.getName())
+			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyNames;
 	}
