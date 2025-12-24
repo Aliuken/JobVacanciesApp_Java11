@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/AuthRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/AuthRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/AuthUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/AuthUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobCompany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobVacancy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/JobVacancy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/security/SpringSecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/security/SpringSecurityUtils.java" afterDir="false" />
-    </list>
+    <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
