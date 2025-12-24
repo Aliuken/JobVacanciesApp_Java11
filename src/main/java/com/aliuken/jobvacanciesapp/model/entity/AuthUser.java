@@ -363,7 +363,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 			StyleApplier.getBoldString("enabled: "), enabledString, Constants.NEWLINE,
 			StyleApplier.getBoldString("colorMode: "), this.getColorModeName(), Constants.NEWLINE,
 			StyleApplier.getBoldString("initialCurrency: "), initialCurencySymbol, Constants.NEWLINE,
-			StyleApplier.getBoldString("initialTableSortingDirection: "), initialTableSortingDirectionName,
+			StyleApplier.getBoldString("initialTableSortingDirection: "), initialTableSortingDirectionName, Constants.NEWLINE,
 			StyleApplier.getBoldString("initialTablePageSize: "), initialTablePageSizeName);
 		return result;
 	}
