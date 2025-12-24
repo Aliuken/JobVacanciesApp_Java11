@@ -34,6 +34,7 @@
 > | OS           | Operating System                   |
 > | OSI          | Open Systems Interconnection       |
 > | PC           | Personal Computer                  |
+> | PDF          | Portable Document Format           |
 > | pkg          | Java package                       |
 > | PNG          | Portable Network Graphics          |
 > | prop         | Property                           |
