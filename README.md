@@ -40,7 +40,7 @@
 > | OSIV         | Open Session In View               |
 > ```
 >
-> Glossary for web-related technologies:
+> Glossary for web-related terms:
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
@@ -63,7 +63,7 @@
 > | XML          | Extensible Markup Language         |
 > ```
 >
-> Glossary for data-related technologies:
+> Glossary for data-related terms:
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
