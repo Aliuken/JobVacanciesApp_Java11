@@ -67,11 +67,13 @@
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
 > | DB           | Database                           |
+> | DBMS         | Database Management System         |
 > | ELK          | Elastic Stack                      |
 > | ERD          | Entity-Relationship Diagram        |
 > | JDBC         | Java Database Connectivity         |
 > | JPQL         | Jakarta Persistence Query Language |
 > | ORM          | Object–Relational Mapping          |
+> | RDBMS        | Relational DBMS                    |
 > | SQL          | Structured Query Language          |
 > ```
 >
@@ -295,7 +297,7 @@ The data technologies currently used are:
 * **Spring Data JPA**: To make an easier use of **JPA**. Configured in [PersistenceConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/PersistenceConfig.java).
 * **Hibernate**: As the ORM and **JPA** implementation.
 * **JPQL**: In the methods annotated with @RepositoryMethod in @Repository classes (instead of using **SQL**).
-* **MySQL Community Server**: As the main relational DB (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
+* **MySQL Community Server**: As the main RDBMS (script: [src/main/resources/db_dumps/mysql-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/db_dumps/mysql-dump.sql)).
 * **H2**: As the in-memory relational DB for testing (script: [src/test/resources/db_dumps/h2-dump.sql](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/test/resources/db_dumps/h2-dump.sql)).
 * **MySQL Workbench**: As the database administration tool. Although another tool can be used instead.
 * **Transactions**: Defined with Spring using:
