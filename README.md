@@ -16,7 +16,7 @@
 > | IDE          | Integrated Development Environment |
 > | L10n         | Localization                       |
 > | LLM          | Large Language Model               |
-> | MFA          | Multi-factor authentication        |
+> | MFA          | Multi-Factor Authentication        |
 > | OS           | Operating System                   |
 > | PC           | Personal Computer                  |
 > | prop         | Property                           |
