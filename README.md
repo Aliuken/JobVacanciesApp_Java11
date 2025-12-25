@@ -1,57 +1,95 @@
 > [!IMPORTANT]
-> In the following glossary, we specify the abbreviations (for the indicated terms) used in the next sections:
+> Glossary for basic computing terms:
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
-> | 2FA          | Two-Factor Authentication          |
 > | AI           | Artificial Intelligence            |
-> | AJAX         | Asynchronous JavaScript And XML    |
 > | API          | Application Programming Interface  |
 > | app          | Application                        |
+> | AuthN        | Authentication                     |
+> | AuthZ        | Authorization                      |
 > | CLI          | Command-Line Interface             |
 > | config       | Configuration                      |
-> | CV           | Curriculum Vitae                   |
-> | DB           | Database                           |
-> | DOM          | Document Object Model              |
-> | ELK          | Elastic Stack                      |
-> | ERD          | Entity-Relationship Diagram        |
 > | GC           | Garbage Collector                  |
-> | GNU          | GNU's Not Unix!                    |
 > | GUI          | Graphical User Interface           |
-> | HTML         | Hypertext Markup Language          |
-> | HTTP         | Hypertext Transfer Protocol        |
 > | i18n         | Internationalization               |
 > | IDE          | Integrated Development Environment |
-> | info         | Information                        |
-> | JDBC         | Java Database Connectivity         |
-> | JDK          | Java Development Kit               |
-> | JS           | JavaScript                         |
-> | JSON         | JavaScript Object Notation         |
 > | L10n         | Localization                       |
 > | LLM          | Large Language Model               |
-> | MDN          | Mozilla Developer Network          |
-> | ORM          | Object–Relational Mapping          |
+> | MFA          | Multi-factor authentication        |
 > | OS           | Operating System                   |
-> | OSI          | Open Systems Interconnection       |
 > | PC           | Personal Computer                  |
-> | PDF          | Portable Document Format           |
-> | pkg          | Java package                       |
-> | PNG          | Portable Network Graphics          |
 > | prop         | Property                           |
-> | QUIC         | Quick UDP Internet Connections     |
 > | regex        | Regular Expression                 |
+> | UI           | User Interface                     |
+> | UUID         | Universally Unique Identifier      |
+> ```
+>
+> Glossary for programming paradigms and design patterns:
+> ```txt
+> | Abbreviation | Term                               |
+> |---------------------------------------------------|
+> | AOP          | Aspect-Oriented Programming        |
+> | DAO          | Data Access Object                 |
+> | DI           | Dependency Injection               |
+> | DTO          | Data Transfer Object               |
+> | MVC          | Model-View-Controller              |
+> | OOP          | Object-Oriented Programming        |
+> | OSIV         | Open Session In View               |
+> ```
+>
+> Glossary for web technologies:
+> ```txt
+> | Abbreviation | Term                               |
+> |---------------------------------------------------|
+> | AJAX         | Asynchronous JavaScript And XML    |
+> | DNS          | Domain Name System                 |
+> | DOM          | Document Object Model              |
+> | HTML         | Hypertext Markup Language          |
+> | HTTP         | Hypertext Transfer Protocol        |
+> | JS           | JavaScript                         |
+> | JSON         | JavaScript Object Notation         |
+> | MDN          | Mozilla Developer Network          |
+> | OSI          | Open Systems Interconnection       |
+> | QUIC         | Quick UDP Internet Connections     |
 > | REST         | Representational State Transfer    |
-> | SLF4J        | Simple Logging Facade for Java     |
-> | SQL          | Structured Query Language          |
-> | SMS          | Short Message Service              |
 > | TCP          | Transmission Control Protocol      |
 > | TS           | TypeScript                         |
 > | UDP          | User Datagram Protocol             |
-> | UI           | User Interface                     |
 > | URL          | Uniform Resource Locator           |
-> | UUID         | Universally Unique Identifier      |
-> | WSL          | Windows Subsystem for Linux        |
+> | W3 / WWW     | World Wide Web                     |
 > | XML          | Extensible Markup Language         |
+> ```
+>
+> Glossary for data technologies:
+> ```txt
+> | Abbreviation | Term                               |
+> |---------------------------------------------------|
+> | DB           | Database                           |
+> | ELK          | Elastic Stack                      |
+> | ERD          | Entity-Relationship Diagram        |
+> | JDBC         | Java Database Connectivity         |
+> | JPQL         | Jakarta Persistence Query Language |
+> | ORM          | Object–Relational Mapping          |
+> | SQL          | Structured Query Language          |
+> ```
+>
+> Glossary for other terms:
+> ```txt
+> | Abbreviation | Term                               |
+> |---------------------------------------------------|
+> | CV           | Curriculum Vitae                   |
+> | G1           | Garbage-First collector            |
+> | GNU          | GNU's Not Unix!                    |
+> | info         | Information                        |
+> | JDK          | Java Development Kit               |
+> | PDF          | Portable Document Format           |
+> | pkg          | Java package                       |
+> | PNG          | Portable Network Graphics          |
+> | SLF4J        | Simple Logging Facade for Java     |
+> | SMS          | Short Message Service              |
+> | SpEL         | Spring Expression Language         |
+> | WSL          | Windows Subsystem for Linux        |
 > ```
 
 # JobVacanciesApp_Java11
@@ -84,12 +122,12 @@ Other related projects include:
 ## 2. Design patterns
 
 The following design patterns are used in the application:
-* **MVC** (**Model-View-Controller**): Through:
+* **MVC**: Through:
     * @Controller classes (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)) from Spring MVC.
     * The MVC utility classes (pkg: [com.aliuken.jobvacanciesapp.util.spring.mvc](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/mvc)).
-* **Open Session in View**: Through the "spring.jpa.open-in-view" property.
-* **DTO** (**Data Transfer Object**): In the package [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto).
-* **DAO** (**Data Access Object**): Through:
+* **OSIV**: Through the "spring.jpa.open-in-view" property.
+* **DTO**: In the package [com.aliuken.jobvacanciesapp.model.dto](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/dto).
+* **DAO**: Through:
     * @Repository interfaces (pkg: [com.aliuken.jobvacanciesapp.repository](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/repository)).
     * @Entity classes (pkg: [com.aliuken.jobvacanciesapp.model.entity](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity)).
 * **Singleton**: It is used when we want a single instance of a class and it is not possible to use enums, @Autowired or utility classes (with only static methods). This pattern is used in the packages:
@@ -105,7 +143,7 @@ The following design patterns are used in the application:
 ### 3.1. Core technologies
 
 The core technologies currently used are:
-* **OpenJDK 11**: As the **Java SE** implementation (using the default garbage collector: **G1 GC**). More details in section **[3.2. Java SE core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies)**.
+* **OpenJDK 11**: As the **Java SE** implementation (using Java as the backend OOP language with the default GC: **G1**). More details in section **[3.2. Java SE core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies)**.
 * **Jakarta EE 8** "javax" classes (detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**), including:
     * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits and @Email).
     * **Servlet** API, **Jakarta Persistence API** (**JPA**) and **Mail** API.
@@ -180,13 +218,13 @@ The Jakarta EE technologies currently used are:
 > The utility classes related to Spring core are in the package [com.aliuken.jobvacanciesapp.util.spring](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring).
 
 The Spring core technologies currently used are:
-* **Dependency Injection** (**DI**): By using:
+* **DI**: By using:
     * Beans created with **@Component**, **@Controller**, **@Service** and **@Repository**.
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
     * The utility class [BeanFactoryUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/di/BeanFactoryUtils.java) to get, refresh and replace beans statically. It uses internally Spring's **ApplicationContextAware** and **GenericApplicationContext**.
-* **Aspect-Oriented Programming** (**AOP**): To deal with cross-cutting concerns. Explained in section **[3.8. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#38-aop-technologies)**.
-* **Spring Expression Language** (**SpEL**): Used to express values dynamically in the HTML pages.
+* **AOP**: To deal with cross-cutting concerns. Explained in section **[3.8. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#38-aop-technologies)**.
+* **SpEL**: Used to express values dynamically in the HTML pages.
 * **Spring @Value annotation**: To get config values from "application.properties" or "application.yaml" files.
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with i18n and L10n. Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
 * **Spring Validation**: In [ControllerValidationUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/mvc/ControllerValidationUtils.java), to deal with controller binding validation.
@@ -204,7 +242,8 @@ The web technologies currently used are:
 * **Thymeleaf**: As the HTML5 template engine (configured in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)), using:
     * The decorator [template.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/mandatory/template.html) (which uses **thymeleaf-layout-dialect** [[&#10138;]](https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect) to create the layout template).
     * Other fragments in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments). More info about fragments at <https://www.thymeleaf.org/doc/articles/layouts.html>.
-* **JavaScript** (**ES2020**) compiled from **TypeScript** using the [TypeScript Playground](https://www.typescriptlang.org/play/) (so that we didn't need to install "Node.js", "npm" and "TypeScript"). In particular, the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts) was compiled to the following JS files: [ajax-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/ajax-utils.js) and [page-url-and-dom-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-url-and-dom-utils.js).
+* **JS**: As the frontend OOP language.
+* **TS**: compiled to JS (version **ES2020**) using the [TypeScript Playground](https://www.typescriptlang.org/play/) (so that we didn't need to install "Node.js", "npm" and "TS").
 * **Bootstrap 5.3.8** and **Material Design for Bootstrap 9.3.0**: For the look-and-feel.
 * **Font Awesome Free For The Web 7.1.0**: For the application icons.
 * **jQuery 3.7.1**: To make an easier use of **JavaScript**.
@@ -213,8 +252,9 @@ The web technologies currently used are:
 * The **static resources** (like image/TS/JS/CSS files) are located in [src/main/resources/static](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static). The following **ad-hoc static files** (created by ourselves) are located in [src/main/resources/static/jobvacanciesapp-utils](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static/jobvacanciesapp-utils):
     * **calendar-ui-input.css** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/css/calendar-ui-input.css) and **calendar-ui-input.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/calendar-ui-input.js): For the calendar UI-input element.
     * **rich-text-editor.css** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/css/rich-text-editor.css) and **rich-text-editor.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/rich-text-editor.js): For the rich text editor. The TinyMCE "[Full featured demo: Non-Premium Plugins only](https://www.tiny.cloud/docs/tinymce/latest/full-featured-open-source-demo)" CSS and JS code was copied in those files.
-    * **ajax-utils.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/ajax-utils.js): With an **AJAX** call to refresh the company logo from model attributes without reloading the full page. This JS file was created by compiling the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
-    * **page-url-and-dom-utils.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-url-and-dom-utils.js): To reload the full page depending on URL parameters extracted from session attributes and model attributes and also to get elements from the current page DOM. This JS file was created by compiling the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
+    * **ajax-utils.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/ajax-utils.js): With an **AJAX** call to refresh the company logo from model attributes without reloading the full page.
+    * **page-url-and-dom-utils.js** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-url-and-dom-utils.js): To reload the full page depending on URL parameters extracted from session attributes and model attributes and also to get elements from the current page DOM.
+    * **jobvacanciesapp.ts** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts): The TS file used to compile to these JS files: **ajax-utils.js** and **page-url-and-dom-utils.js**.
 
 > [!NOTE]
 > The decorator [template.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/mandatory/template.html) calls the JS function **getIsPageWithTable()** of [page-url-and-dom-utils.js](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/js/page-url-and-dom-utils.js) (to check if the current page has a table) and has the following Thymeleaf fragments:
@@ -242,6 +282,8 @@ The web technologies currently used are:
 > * **sortingDirection**: Which is the sort direction (one of the codes, ASC or DESC, defined in [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)).
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
+>
+> One to-do task would be to use a web hosting service with a DNS to make the app accessible on the W3.
 
 ### 3.6. Data technologies
 
@@ -294,7 +336,7 @@ The data technologies currently used are:
 > The session timeout is set in the **server.servlet.session.timeout** property to 30 minutes.
 
 The security technologies currently used are:
-* **Spring Security**: Configured in [WebSecurityConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java).
+* **Spring Security**: Used to handle the AuthN and AuthZ processes. Configured in [WebSecurityConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebSecurityConfig.java).
 * **BCrypt**: As the Spring Security password encoder (variable "passwordEncoder" in the code).
 * **CustomAuthenticationHandler** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java): To handle the processes of:
     * **Login**: By adding the authenticated user to the session as the attribute "sessionAuthUser".
@@ -314,17 +356,17 @@ The security technologies currently used are:
     * <https://jeremylong.github.io/DependencyCheck/dependency-check-maven/check-mojo.html>
 
 > [!NOTE]
-> Other possible improvements would be:
+> Some possible improvements would be:
 > - Using **https** instead of **http**. And maybe **HTTP/3 (over QUIC)** instead of **HTTP/2 (over TCP)**.
 > - Using a **captcha** in the **user registration**.
-> - Storing in the DB the user **mobile phone number** to implement **2FA by sending an SMS** (with a random authentication code). This feature could be optional per user.
+> - Storing in the DB the user **mobile phone number** to implement **MFA by sending an SMS** (with a random authentication code). This feature could be optional per user.
 
 ### 3.8. AOP technologies
 
 > [!IMPORTANT]
 > The utility classes related to AOP are in the package [com.aliuken.jobvacanciesapp.util.spring.aop](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop).
 
-AOP (Aspect-Oriented Programming) is implemented (with **Spring AOP** and **AspectJ**) to deal with cross-cutting concerns in different layers of the app (controllers, services and DAOs/entities) and configured in [AopConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/AopConfig.java).
+AOP is implemented (with **Spring AOP** and **AspectJ**) to deal with cross-cutting concerns in different layers of the app (controllers, services and DAOs/entities) and configured in [AopConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/AopConfig.java).
 
 Specifically, the following AOP aspects (pkg: [com.aliuken.jobvacanciesapp.aop.aspect](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect)) were created:
 * **ControllerAspect** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java): For logging stats in controllers (pkg: [com.aliuken.jobvacanciesapp.controller](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/controller)). It works around methods annotated with @RequestMapping, @GetMapping or @PostMapping and uses:
