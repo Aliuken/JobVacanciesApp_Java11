@@ -33,6 +33,7 @@
 > | DAO          | Data Access Object                 |
 > | DI           | Dependency Injection               |
 > | DTO          | Data Transfer Object               |
+> | IoC          | Inversion of Control               |
 > | MVC          | Model-View-Controller              |
 > | OOP          | Object-Oriented Programming        |
 > | OSIV         | Open Session In View               |
@@ -218,7 +219,7 @@ The Jakarta EE technologies currently used are:
 > The utility classes related to Spring core are in the package [com.aliuken.jobvacanciesapp.util.spring](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring).
 
 The Spring core technologies currently used are:
-* **DI**: By using:
+* **DI** (**IoC**): By using:
     * Beans created with **@Component**, **@Controller**, **@Service** and **@Repository**.
     * Beans created with **@Bean** (inside of a class annotated with **@Configuration**).
     * **@Autowired** to get the reference to the beans created by the previous methods.
