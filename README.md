@@ -766,7 +766,7 @@ The ad-hoc overwritable properties are the following:
     * **A3H**: Meaning "Horizontal A3".
     * **A4V**: Meaning "Vertical A4".
     * **A4H**: Meaning "Horizontal A4".
-* **jobvacanciesapp.defaultInitialTableSortingDirectionCode**: Indicates the default initialTableSortingDirection. Initial value: "asc". Possible values (from [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java17/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)):
+* **jobvacanciesapp.defaultInitialTableSortingDirectionCode**: Indicates the default initialTableSortingDirection. Initial value: "asc". Possible values (from [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)):
     * **---**: Meaning "by default" and, in this property, is ignored and replaced by the value "asc".
     * **asc**: Meaning "ascending".
     * **desc**: Meaning "descending".
@@ -799,7 +799,7 @@ The ad-hoc overwriting properties are the following:
     * **A3H**: Meaning "Horizontal A3".
     * **A4V**: Meaning "Vertical A4".
     * **A4H**: Meaning "Horizontal A4".
-* **jobvacanciesapp.defaultInitialTableSortingDirectionCodeOverwritten**: Overwrites the default initialTableSortingDirection (defined in prop "jobvacanciesapp.defaultInitialTableSortingDirectionCode"). Possible values (from [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java17/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)):
+* **jobvacanciesapp.defaultInitialTableSortingDirectionCodeOverwritten**: Overwrites the default initialTableSortingDirection (defined in prop "jobvacanciesapp.defaultInitialTableSortingDirectionCode"). Possible values (from [TableSortingDirection](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java)):
     * **---**: The initial value. Meaning "by default", so that the configuration of the property **jobvacanciesapp.defaultInitialTableSortingDirectionCode** will be applied.
     * **asc**: Meaning "ascending".
     * **desc**: Meaning "descending".
