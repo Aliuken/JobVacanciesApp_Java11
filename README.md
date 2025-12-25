@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Glossary for basic computing terms:
+> Glossary for basic computing/programming terms:
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
@@ -10,8 +10,9 @@
 > | AuthZ        | Authorization                      |
 > | CLI          | Command-Line Interface             |
 > | config       | Configuration                      |
+> | DVCS         | Distributed VCS                    |
 > | GC           | Garbage Collector                  |
-> | GUI          | Graphical User Interface           |
+> | GUI          | Graphical UI                       |
 > | i18n         | Internationalization               |
 > | IDE          | Integrated Development Environment |
 > | L10n         | Localization                       |
@@ -22,7 +23,7 @@
 > | prop         | Property                           |
 > | regex        | Regular Expression                 |
 > | UI           | User Interface                     |
-> | UUID         | Universally Unique Identifier      |
+> | VCS          | Version Control System             |
 > ```
 >
 > Glossary for programming paradigms and design patterns:
@@ -70,11 +71,13 @@
 > | DBMS         | Database Management System         |
 > | ELK          | Elastic Stack                      |
 > | ERD          | Entity-Relationship Diagram        |
+> | ID           | Identifier                         |
 > | JDBC         | Java Database Connectivity         |
 > | JPQL         | Jakarta Persistence Query Language |
 > | ORM          | Object–Relational Mapping          |
 > | RDBMS        | Relational DBMS                    |
 > | SQL          | Structured Query Language          |
+> | UUID         | Universally Unique ID              |
 > ```
 >
 > Glossary for other terms:
@@ -151,7 +154,7 @@ The core technologies currently used are:
     * **Servlet** API, **Jakarta Persistence API** (**JPA**) and **Mail** API.
 * **Spring Boot 2.7.18** (**Spring Framework 5.3**): Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java), which is restartable through the method "MainClass.restartApp(...)". More details in section **[3.4. Spring core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#34-spring-core-technologies)**.
 * **Maven**: As the dependency manager and for building the application.
-* **Git**: As the version control system.
+* **Git**: As the DVCS.
 * **GitHub**: As the hosting service for the project (in <https://github.com/Aliuken/JobVacanciesApp_Java11>).
 * **JUnit 5**: For unit testing.
 * **Spring AOP** and **AspectJ** [[&#10138;]](https://mvnrepository.com/artifact/org.aspectj): To deal with cross-cutting concerns. Used in the classes [ControllerAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ControllerAspect.java), [ServiceAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/ServiceAspect.java) and [RepositoryAspect](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/aop/aspect/RepositoryAspect.java). Explained in section **[3.8. AOP technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#38-aop-technologies)**.
@@ -615,7 +618,7 @@ In the file [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/J
 The database of the application comes with 9 predefined users with the following credentials and roles:
 
 ```txt
-| Id | Email                 | Password | Role          | CreatedByUser |
+| ID | Email                 | Password | Role          | CreatedByUser |
 |----|-----------------------|----------|---------------|---------------|
 |  1 | anonymous@aliuken.com |          |               |               |
 |  2 | aliuken@aliuken.com   | qwerty1  | administrator |               |
