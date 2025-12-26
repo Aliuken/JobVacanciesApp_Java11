@@ -24,11 +24,11 @@ function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompany
               if (!response.ok) {
                 throw new Error(`HTTP error ${response.status}`);
               }
-              return response.text();
+              return response.text(); // HTML text (no XML nor JSON are used)
             })
             .then((result) => {
               if (jobCompanyLogoFragment !== null) {
-                jobCompanyLogoFragment.outerHTML = result;
+                jobCompanyLogoFragment.outerHTML = result; // The HTML text is inserted directly into the DOM
               }
               jobCompanyLogoFragment = getElementIfExists("jobCompanyLogoFragment");
             })

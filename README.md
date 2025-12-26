@@ -44,7 +44,7 @@
 > ```txt
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
-> | AJAX         | Asynchronous JavaScript And XML    |
+> | AJAX         | Asynchronous JS And XML            |
 > | DNS          | Domain Name System                 |
 > | DOM          | Document Object Model              |
 > | HTML         | Hypertext Markup Language          |
@@ -62,6 +62,7 @@
 > | UDP          | User Datagram Protocol             |
 > | URL          | Uniform Resource Locator           |
 > | W3 / WWW     | World Wide Web                     |
+> | XHTML        | Extensible HTML                    |
 > | XML          | Extensible Markup Language         |
 > ```
 >
@@ -252,7 +253,7 @@ The web technologies currently used are:
 * **Spring MVC**: Configured in [WebMvcConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebMvcConfig.java).
 * **HTTP/2 (over TCP)**: As the application-layer communication protocol (in the OSI model).
 * **Apache Tomcat**: As the HTTP/2 web server. It has a web container (for Servlets and JSPs), but not an EJB container. It is configured in [WebServerConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebServerConfig.java).
-* **HTML5** files: For the web pages. Located in [src/main/resources/templates](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates).
+* **HTML5**: For the web pages located in [src/main/resources/templates](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates). Their file format is **.html** (as using XHTML files with Thymeleaf is not recommended).
 * **Thymeleaf**: As the HTML5 template engine (configured in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)), using:
     * The decorator [template.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/mandatory/template.html) (which uses **thymeleaf-layout-dialect** [[&#10138;]](https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect) to create the layout template).
     * Other fragments in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments). More information about fragments at <https://www.thymeleaf.org/doc/articles/layouts.html>.
