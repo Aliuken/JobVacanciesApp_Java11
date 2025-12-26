@@ -56,6 +56,7 @@
 > | OSI          | Open Systems Interconnection       |
 > | QUIC         | Quick UDP Internet Connections     |
 > | REST         | Representational State Transfer    |
+> | SMTP         | Simple Mail Transfer Protocol      |
 > | TCP          | Transmission Control Protocol      |
 > | TS           | TypeScript                         |
 > | UDP          | User Datagram Protocol             |
