@@ -103,6 +103,7 @@
 > | SMS          | Short Message Service              |
 > | SpEL         | Spring EL                          |
 > | WSL          | Windows Subsystem for Linux        |
+> | YAML         | YAML Ain't Markup Language         |
 > ```
 
 # JobVacanciesApp_Java11
