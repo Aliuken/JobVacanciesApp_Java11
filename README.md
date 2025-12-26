@@ -220,9 +220,9 @@ The Jakarta EE technologies currently used are:
 * **@PostConstruct**: Annotation to initialize Spring beans after their constructor have been executed and all their dependency injections have been done.
 * **Bean Validation**: Annotations to validate data (@NotNull, @NotEmpty, @Size, @Digits and @Email) from the package **javax.validation...**.
 * The following Jakarta APIs:
-  * **Servlet**: Used in the classes with the package **javax.servlet...**
-  * **Persistence** (**JPA**): Used in the classes with the package **javax.persistence...**
-  * **Mail**: Used in the classes with the package **javax.mail...**
+  * **Servlet**: Used in the classes that contain the package **javax.servlet...**
+  * **Persistence** (**JPA**): Used in the classes that contain the package **javax.persistence...**
+  * **Mail**: Used in the classes that contain the package **javax.mail...**
 
 ### 3.4. Spring core technologies
 
