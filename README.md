@@ -49,6 +49,7 @@
 > | DOM          | Document Object Model              |
 > | HTML         | Hypertext Markup Language          |
 > | HTTP         | Hypertext Transfer Protocol        |
+> | IP           | Internet Protocol                  |
 > | JS           | JavaScript                         |
 > | JSON         | JavaScript Object Notation         |
 > | MDN          | Mozilla Developer Network          |
@@ -85,9 +86,11 @@
 > | Abbreviation | Term                               |
 > |---------------------------------------------------|
 > | CV           | Curriculum Vitae                   |
+> | EJB          | Enterprise JavaBeans               |
 > | G1           | Garbage-First collector            |
 > | GNU          | GNU's Not Unix!                    |
 > | JDK          | Java Development Kit               |
+> | JSP          | Jakarta Server Pages               |
 > | PDF          | Portable Document Format           |
 > | pkg          | Java package                       |
 > | PNG          | Portable Network Graphics          |
@@ -247,8 +250,8 @@ The web technologies currently used are:
 * **Thymeleaf**: As the HTML5 template engine (configured in [WebTemplateConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java)), using:
     * The decorator [template.html](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/templates/fragments/mandatory/template.html) (which uses **thymeleaf-layout-dialect** [[&#10138;]](https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect) to create the layout template).
     * Other fragments in [src/main/resources/templates/fragments](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/templates/fragments). More information about fragments at <https://www.thymeleaf.org/doc/articles/layouts.html>.
-* **JS**: As the frontend OOP language.
-* **TS**: Compiled to JS (version **ES2020**) using the [TypeScript Playground](https://www.typescriptlang.org/play/) (so that we didn't need to install "Node.js", "npm" and "TS").
+* **JavaScript**: As the frontend OOP language.
+* **TypeScript**: Compiled to JavaScript (version **ES2020**) using the [TypeScript Playground](https://www.typescriptlang.org/play/) (so that we didn't need to install "Node.js", "npm" and "TypeScript").
 * **Bootstrap 5.3.8** and **Material Design for Bootstrap 9.3.0**: For the look-and-feel.
 * **Font Awesome Free For The Web 7.1.0**: For the application icons.
 * **jQuery 3.7.1**: To make an easier use of **JavaScript**.
@@ -288,7 +291,7 @@ The web technologies currently used are:
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
 >
-> One to-do task would be to use a web hosting service with a DNS to make the app accessible on the W3.
+> One to-do task would be to use a web hosting service with a DNS (to make the app accessible on the W3 through a Domain Name instead of an IP address).
 
 ### 3.6. Data technologies
 
