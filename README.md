@@ -217,7 +217,7 @@ The Java SE core technologies currently used are:
 ### 3.3. Jakarta EE technologies
 
 The Jakarta EE technologies currently used are:
-* **@PostConstruct**: Annotation to initialize Spring beans after the constructor and all their dependency injections have been made.
+* **@PostConstruct**: Annotation to initialize Spring beans after their constructor have been executed and all their dependency injections have been done.
 * **Bean Validation**: Annotations to validate data (@NotNull, @NotEmpty, @Size, @Digits and @Email) from the package **javax.validation...**.
 * The following Jakarta APIs:
   * **Servlet**: Used in the classes with package **javax.servlet...**
