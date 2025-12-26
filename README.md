@@ -76,10 +76,12 @@
 > | ID           | Identifier                         |
 > | IMDB         | In-Memory DB                       |
 > | JDBC         | Java Database Connectivity         |
-> | JPQL         | Jakarta Persistence Query Language |
+> | JPA          | Jakarta Persistence API            |
+> | JPQL         | Jakarta Persistence QL             |
 > | ORM          | Object–Relational Mapping          |
+> | QL           | Query Language                     |
 > | RDBMS        | Relational DBMS                    |
-> | SQL          | Structured Query Language          |
+> | SQL          | Structured QL                      |
 > | UUID         | Universally Unique ID              |
 > ```
 >
@@ -89,6 +91,7 @@
 > |---------------------------------------------------|
 > | CV           | Curriculum Vitae                   |
 > | EJB          | Enterprise JavaBeans               |
+> | EL           | Expression Language                |
 > | G1           | Garbage-First collector            |
 > | GNU          | GNU's Not Unix!                    |
 > | JDK          | Java Development Kit               |
@@ -98,7 +101,7 @@
 > | PNG          | Portable Network Graphics          |
 > | SLF4J        | Simple Logging Facade for Java     |
 > | SMS          | Short Message Service              |
-> | SpEL         | Spring Expression Language         |
+> | SpEL         | Spring EL                          |
 > | WSL          | Windows Subsystem for Linux        |
 > ```
 
@@ -154,9 +157,7 @@ The following design patterns are used in the application:
 
 The core technologies currently used are:
 * **OpenJDK 11**: As the **Java SE** implementation (using Java as the backend OOP language with the default GC: **G1**). More details in section **[3.2. Java SE core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies)**.
-* **Jakarta EE 8** "javax" classes (detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**), including:
-    * **@PostConstruct** and **Bean Validation** annotations (@NotNull, @NotEmpty, @Size, @Digits and @Email).
-    * **Servlet** API, **Jakarta Persistence API** (**JPA**) and **Mail** API.
+* **Jakarta EE 8** "javax" classes (detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**).
 * **Spring Boot 2.7.18** (**Spring Framework 5.3**): Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java), which is restartable through the method "MainClass.restartApp(...)". More details in section **[3.4. Spring core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#34-spring-core-technologies)**.
 * **Maven**: As the dependency manager and for building the application.
 * **Git**: As the DVCS.
@@ -216,11 +217,12 @@ The Java SE core technologies currently used are:
 ### 3.3. Jakarta EE technologies
 
 The Jakarta EE technologies currently used are:
-* **@PostConstruct annotation**: To initialize Spring beans after the constructor and all their dependency injections have been made.
-* **Jakarta Servlet API**: Used in the classes with package **javax.servlet...**
-* **Jakarta Persistence API** (**JPA**): Used in the classes with package **javax.persistence...**
-* **Jakarta Mail API**: Used in the classes with package **javax.mail...**
-* **Jakarta Bean Validation**: Used in the classes with package **javax.validation...**
+* **@PostConstruct**: Annotation to initialize Spring beans after the constructor and all their dependency injections have been made.
+* **Bean Validation**: Annotations to validate data (@NotNull, @NotEmpty, @Size, @Digits and @Email) from the package **javax.validation...**.
+* The following Jakarta APIs:
+  * **Servlet**: Used in the classes with package **javax.servlet...**
+  * **Persistence** (**JPA**): Used in the classes with package **javax.persistence...**
+  * **Mail**: Used in the classes with package **javax.mail...**
 
 ### 3.4. Spring core technologies
 
