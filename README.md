@@ -94,6 +94,7 @@
 > | ELK          | Elastic Stack                      |
 > | G1           | Garbage-First collector            |
 > | GNU          | GNU's Not Unix!                    |
+> | JAR          | Java Archive                       |
 > | JDK          | Java Development Kit               |
 > | JSP          | Jakarta Server Pages               |
 > | PDF          | Portable Document Format           |
@@ -553,16 +554,16 @@ Steps:
 > * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/docker-compose.yaml), with the description of the containers **app-container** and **app-db-container**.
 > * The file [.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/.env), to override the **docker-compose.yaml** variables' default values.
 > * The files [docker-compose-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/docker-compose-start.sh) and [docker-compose-stop.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/docker-compose-stop.sh), to start and stop the containers respectively by using Docker Compose.
-> * The folder [lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/lib), which will contain the jar of the app after a compilation.
+> * The folder [lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/lib), which will contain the JAR of the app after a compilation.
 > * The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), used in **docker-compose.yaml** to create the **app-container** image.
 > * The file [Dockerfile-start.sh](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile-start.sh), with an example of how to create the image from the **Dockerfile** and run the container from the image without using Docker Compose.
-> * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the jar file generated inside the **lib** folder) when building the **Dockerfile** image.
+> * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the JAR file generated inside the **lib** folder) when building the **Dockerfile** image.
 
 In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/docker-compose.yaml):
 * **../../src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **/AppData_Java11/JobVacanciesApp** is the folder that has the **CVs**, **query PDFs**, **company logos** and **log files** used in the app.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the jar files inside the folder [build-context-app/lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/lib).
+* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the JAR files inside the folder [build-context-app/lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-linux/build-context-app/lib).
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
@@ -592,16 +593,16 @@ In the file [build-context-elk/docker-compose.yaml](https://github.com/Aliuken/J
 > * The file [docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/docker-compose.yaml), with the description of the containers **app-container** and **app-db-container**.
 > * The file [.env](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/.env), to override the **docker-compose.yaml** variables' default values.
 > * The files [docker-compose-start.bat](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/docker-compose-start.bat) and [docker-compose-stop.bat](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/docker-compose-stop.bat), to start and stop the containers respectively by using Docker Compose.
-> * The folder [lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/lib), which will contain the jar of the app after a compilation.
+> * The folder [lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/lib), which will contain the JAR of the app after a compilation.
 > * The file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), used in **docker-compose.yaml** to create the **app-container** image.
 > * The file [Dockerfile-start.bat](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile-start.bat), with an example of how to create the image from the **Dockerfile** and run the container from the image without using Docker Compose.
-> * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the jar file generated inside the **lib** folder) when building the **Dockerfile** image.
+> * The file [.dockerignore](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/.dockerignore), to ignore every file inside **build-context-app** (except the JAR file generated inside the **lib** folder) when building the **Dockerfile** image.
 
 In the file [build-context-app/docker-compose.yaml](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/docker-compose.yaml):
 * **//c/Programacion/git/JobVacanciesApp_Java11/src/main/resources/db_dumps** contains the database dump file: **mysql-dump.sql**.
 * **//c/AppData_Java11/JobVacanciesApp** is the folder that has the **CVs**, **query PDFs**, **company logos** and **log files** used in the app.
 * **healthcheck** and **service_healthy** are used to check when the **mysql-dump.sql** file was executed, to start the Spring Boot app after that.
-* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the jar files inside the folder [build-context-app/lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/lib).
+* The Spring Boot app is started through the file [Dockerfile](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/Dockerfile), that uses an Alpine Linux OS image (which reduces the size of the image) and reads the JAR files inside the folder [build-context-app/lib](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/docker-windows/build-context-app/lib).
 * **internal-net-app** is used to communicate the Spring Boot application with the database.
 * **external-net-app** is used to communicate the Spring Boot application with the end user.
 
