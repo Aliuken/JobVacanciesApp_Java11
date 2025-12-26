@@ -71,7 +71,6 @@
 > |---------------------------------------------------|
 > | DB           | Database                           |
 > | DBMS         | Database Management System         |
-> | ELK          | Elastic Stack                      |
 > | ERD          | Entity-Relationship Diagram        |
 > | ID           | Identifier                         |
 > | IMDB         | In-Memory DB                       |
@@ -92,6 +91,7 @@
 > | CV           | Curriculum Vitae                   |
 > | EJB          | Enterprise JavaBeans               |
 > | EL           | Expression Language                |
+> | ELK          | Elastic Stack                      |
 > | G1           | Garbage-First collector            |
 > | GNU          | GNU's Not Unix!                    |
 > | JDK          | Java Development Kit               |
