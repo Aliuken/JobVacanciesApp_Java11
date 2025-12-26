@@ -291,7 +291,7 @@ The web technologies currently used are:
 > * **pageSize**: Which is the size of each page (one of the values defined in [TablePageSize](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java)).
 > * **pageNumber**: Which is the number of the current page.
 >
-> One to-do task would be to use a web hosting service with a DNS (to make the app accessible on the W3 through a Domain Name instead of an IP address).
+> One to-do task would be to use a **web hosting service** with a DNS (to make the app accessible on the W3 through a Domain Name instead of an IP address).
 
 ### 3.6. Data technologies
 
