@@ -1,11 +1,12 @@
 package com.aliuken.jobvacanciesapp.model.comparator.superclass;
 
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Function;
 
 public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<T>, U extends Comparable<U>> extends AbstractEntityComparator<T> {
-	public abstract Function<T, U> getFirstCompareFieldFunction();
+	public abstract @NonNull Function<T, U> getFirstCompareFieldFunction();
 	public abstract boolean getIsDescendingOrder();
 
 	/**
@@ -33,8 +34,8 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 			return direction * classCompareResult;
 		}
 
-		final Integer firstCompareFieldResult = this.getFirstCompareFieldResult(entity1, entity2);
-		if(firstCompareFieldResult != null && firstCompareFieldResult != ENTITIES_EQUAL) {
+		final int firstCompareFieldResult = this.getFirstCompareFieldResult(entity1, entity2);
+		if(firstCompareFieldResult != ENTITIES_EQUAL) {
 			return direction * firstCompareFieldResult;
 		}
 
@@ -43,17 +44,12 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 	}
 
 	// Ascending order where entities are sorted by their first compare field (where null values are sorted last).
-	private Integer getFirstCompareFieldResult(final T entity1, final T entity2) {
+	private int getFirstCompareFieldResult(final @NonNull T entity1, final @NonNull T entity2) {
 		final Function<T, U> firstCompareFieldFunction = this.getFirstCompareFieldFunction();
+		final U firstCompareFieldValue1 = firstCompareFieldFunction.apply(entity1);
+		final U firstCompareFieldValue2 = firstCompareFieldFunction.apply(entity2);
 
-		final Integer firstCompareFieldResult;
-		if(firstCompareFieldFunction != null) {
-			final U firstCompareFieldValue1 = firstCompareFieldFunction.apply(entity1);
-			final U firstCompareFieldValue2 = firstCompareFieldFunction.apply(entity2);
-			firstCompareFieldResult = AbstractEntityComparator.getCompareResult(firstCompareFieldValue1, firstCompareFieldValue2); //CONTINUE IF ZERO
-		} else {
-			firstCompareFieldResult = null; //CONTINUE
-		}
+		final int firstCompareFieldResult = AbstractEntityComparator.getCompareResult(firstCompareFieldValue1, firstCompareFieldValue2); //CONTINUE IF ZERO
 		return firstCompareFieldResult;
 	}
 }

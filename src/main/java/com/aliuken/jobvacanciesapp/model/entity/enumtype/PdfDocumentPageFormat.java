@@ -6,8 +6,7 @@ import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import lombok.Getter;
-
-import javax.validation.constraints.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFormat> {
 	BY_DEFAULT   ("---", "pdfDocumentPageFormat.byDefault",    null),
@@ -17,17 +16,15 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 	A4_HORIZONTAL("A4H", "pdfDocumentPageFormat.horizontalA4", PageSize.A4.rotate());
 
 	@Getter
-	@NotNull
-    private final String code;
+    private final @NonNull String code;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
 	@Getter
 	private final Rectangle rectangle;
 
-	private PdfDocumentPageFormat(final String code, final String messageName, final Rectangle rectangle) {
+	private PdfDocumentPageFormat(final @NonNull String code, final @NonNull String messageName, final Rectangle rectangle) {
 		this.code = code;
 		this.messageName = messageName;
 		this.rectangle = rectangle;
@@ -48,20 +45,24 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 	}
 
 	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Class<PdfDocumentPageFormat> getEnumClass() {
+		return PdfDocumentPageFormat.class;
+	}
+
+	@Override
+	public ConfigurableEnum<PdfDocumentPageFormat> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final PdfDocumentPageFormat pdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormatOverwritten();
 		return pdfDocumentPageFormat;
 	}
 
-
 	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public ConfigurableEnum<PdfDocumentPageFormat> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final PdfDocumentPageFormat pdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormat();
 		return pdfDocumentPageFormat;
 	}
 
 	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat> getFinalDefaultEnumElement() {
+	public @NonNull ConfigurableEnum<PdfDocumentPageFormat> getFinalDefaultEnumElement() {
 		return PdfDocumentPageFormat.A4_VERTICAL;
 	}
 }

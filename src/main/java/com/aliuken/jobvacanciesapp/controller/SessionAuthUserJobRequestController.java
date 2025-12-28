@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -52,7 +51,7 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 		try {
 			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
 				if(log.isDebugEnabled()) {
-					final String tableSearchDtoString = Objects.toString(tableSearchDTO);
+					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
 				}
 

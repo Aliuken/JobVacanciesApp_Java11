@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocument {
@@ -63,7 +62,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 			result = authUserQueryReport;
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
-				final String authUserEntityQueryString = Objects.toString(authUserEntityQuery);
+				final String authUserEntityQueryString = String.valueOf(authUserEntityQuery);
 				final String stackTrace = ThrowableUtils.getStackTrace(exception);
 				log.error(StringUtils.getStringJoined("Error when saving an AuthUserQueryReport with authUserEntityQuery \"", authUserEntityQueryString, "\". Exception: ", stackTrace));
 			}

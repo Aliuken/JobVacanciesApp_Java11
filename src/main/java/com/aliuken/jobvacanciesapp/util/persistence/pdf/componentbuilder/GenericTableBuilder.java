@@ -33,16 +33,16 @@ public class GenericTableBuilder implements PdfPTableEvent {
 	private final boolean drawBorders;
 
 	//Single-text header constructor
-	public GenericTableBuilder(final Language queryLanguage, final String columnName, final String columnValue, final float columnWidth) throws DocumentException {
+	public GenericTableBuilder(final Language queryLanguage, final String columnName, final String columnValue, final float columnWidth) {
 		this(queryLanguage, new String[]{columnName}, new String[]{columnValue}, new float[]{columnWidth}, null);
 	}
 
 	//Single-text content constructor
-	public GenericTableBuilder(final Language queryLanguage, final Font cellFont, final String contentArrayValue) throws DocumentException {
+	public GenericTableBuilder(final Language queryLanguage, final Font cellFont, final String contentArrayValue) {
 		this(queryLanguage, null, null, NO_HEADER_WIDTH, new GenericTableContentDTO(Element.ALIGN_CENTER, cellFont, new String[][]{{contentArrayValue}}, false, false));
 	}
 
-	public GenericTableBuilder(final Language queryLanguage, final String[] columnNames, final String[] columnValues, final float[] columnWidths, final GenericTableContentDTO genericTableContentDTO) throws DocumentException {
+	public GenericTableBuilder(final Language queryLanguage, final String[] columnNames, final String[] columnValues, final float[] columnWidths, final GenericTableContentDTO genericTableContentDTO) {
 		this.queryLanguage = queryLanguage;
 
 		if(columnNames != null) {

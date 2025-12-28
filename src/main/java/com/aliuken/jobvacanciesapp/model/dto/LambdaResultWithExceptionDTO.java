@@ -29,7 +29,7 @@ public class LambdaResultWithExceptionDTO<T> implements Serializable {
 
 	@Override
 	public String toString() {
-		final String returnedValueString = Objects.toString(returnedValue);
+		final String returnedValueString = String.valueOf(returnedValue);
 		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(throwable);
 
 		final String result = StringUtils.getStringJoined("LambdaResultWithExceptionDTO [returnedValue=", returnedValueString, ", throwable=", rootCauseMessage, "]");

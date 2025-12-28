@@ -1,7 +1,9 @@
 package com.aliuken.jobvacanciesapp.model.entity.superinterface;
 
+import org.jspecify.annotations.NonNull;
+
 public interface AbstractEntityFieldsPrintable {
-	public default String[] getGroupedFields() {
+	public default @NonNull String[] getGroupedFields() {
 		final String[] result;
 		if(this.isPrintableEntity()) {
 			final String keyFields = this.getKeyFields();
@@ -10,14 +12,14 @@ public interface AbstractEntityFieldsPrintable {
 			final String otherFields = this.getOtherFields();
 			result = new String[]{keyFields, authUserFields, commonFields, otherFields};
 		} else {
-			result = null;
+			result = new String[0];
 		}
 		return result;
 	}
 
 	public abstract boolean isPrintableEntity();
-	public abstract String getKeyFields();
-	public abstract String getAuthUserFields();
-	public abstract String getCommonFields();
-	public abstract String getOtherFields();
+	public abstract @NonNull String getKeyFields();
+	public abstract @NonNull String getAuthUserFields();
+	public abstract @NonNull String getCommonFields();
+	public abstract @NonNull String getOtherFields();
 }

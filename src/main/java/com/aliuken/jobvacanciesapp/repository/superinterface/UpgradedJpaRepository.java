@@ -25,6 +25,7 @@ import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.core.internal.statistics.DefaultStatisticsService;
 import org.ehcache.core.spi.service.StatisticsService;
 import org.ehcache.core.statistics.CacheStatistics;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
@@ -68,7 +69,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityClass;
 	}
 
-	public default T getNewEntityInstance() {
+	public default @NotNull T getNewEntityInstance() {
 		final AbstractEntityFactory<T> entityFactory = this.getEntityFactory();
 		final T entityInstance = entityFactory.getObjectWithoutException();
 
@@ -82,10 +83,6 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		}
 
 		final SimpleJpaRepository<S, Long> jpaRepository = UpgradedJpaRepository.getJpaRepository(entityClass);
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Optional<S> optionalEntity = jpaRepository.findById(id);
 		final S entity = GenericsUtils.unpackOptional(optionalEntity);
 		return entity;
@@ -121,10 +118,6 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		}
 
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Optional<T> optionalEntity = jpaRepository.findById(id);
 		final T entity = GenericsUtils.unpackOptional(optionalEntity);
 		return entity;
@@ -387,14 +380,14 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return query;
 	}
 
-	private SimpleJpaRepository<T, Long> getJpaRepository() {
+	private @NonNull SimpleJpaRepository<T, Long> getJpaRepository() {
 		final Class<T> entityClass = this.getEntityClass();
 		final SimpleJpaRepository<T, Long> jpaRepository = UpgradedJpaRepository.getJpaRepository(entityClass);
 
 		return jpaRepository;
 	}
 
-	private static <S extends AbstractEntity<S>> SimpleJpaRepository<S, Long> getJpaRepository(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> @NonNull SimpleJpaRepository<S, Long> getJpaRepository(final Class<S> entityClass) {
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
 		final SimpleJpaRepository<S, Long> jpaRepository = new SimpleJpaRepository<>(entityClass, entityManager);
 

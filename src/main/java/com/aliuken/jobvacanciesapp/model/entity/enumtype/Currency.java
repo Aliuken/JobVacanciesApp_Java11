@@ -4,9 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import lombok.Getter;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import org.jspecify.annotations.NonNull;
 
 public enum Currency implements ConfigurableEnum<Currency> {
 	BY_DEFAULT("-", "currency.byDefault"),
@@ -14,14 +12,12 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	EURO      ("€", "currency.euro");
 
 	@Getter
-    @NotNull
-	private final String symbol;
+	private final @NonNull String symbol;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
-	private Currency(final String symbol, final String messageName) {
+	private Currency(final @NonNull String symbol, final @NonNull String messageName) {
 		this.symbol = symbol;
 		this.messageName = messageName;
 	}
@@ -40,24 +36,28 @@ public enum Currency implements ConfigurableEnum<Currency> {
 		return currency;
 	}
 
-	public static Currency[] valuesWithoutByDefault() {
-		final List<Currency> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(Currency.class);
-		final Currency[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new Currency[valuesWithoutByDefaultList.size()]);
-		return valuesWithoutByDefault;
+	public static @NonNull Currency[] getSpecificEnumElements() {
+		final Currency[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificEnumElements(Currency.class);
+		return enumElementsWithoutByDefault;
 	}
 
 	@Override
-	public ConfigurableEnum<Currency> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Class<Currency> getEnumClass() {
+		return Currency.class;
+	}
+
+	@Override
+	public @NonNull ConfigurableEnum<Currency> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		return Currency.BY_DEFAULT;
 	}
 
 	@Override
-	public ConfigurableEnum<Currency> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull ConfigurableEnum<Currency> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		return Currency.BY_DEFAULT;
 	}
 
 	@Override
-	public ConfigurableEnum<Currency> getFinalDefaultEnumElement() {
+	public @NonNull ConfigurableEnum<Currency> getFinalDefaultEnumElement() {
 		return Currency.US_DOLLAR;
 	}
 }

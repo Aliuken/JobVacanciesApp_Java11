@@ -11,7 +11,6 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class ApplicationDefaultConfigDTO implements Serializable {
@@ -43,18 +42,18 @@ public class ApplicationDefaultConfigDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		final String useAjaxToRefreshJobCompanyLogosString = Objects.toString(useAjaxToRefreshJobCompanyLogos);
-		final String useEntityManagerCacheString = Objects.toString(useEntityManagerCache);
-		final String useParallelStreamsString = Objects.toString(useParallelStreams);
-		final String signupConfirmationLinkExpirationHoursString = Objects.toString(signupConfirmationLinkExpirationHours);
-		final String resetPasswordLinkExpirationHoursString = Objects.toString(resetPasswordLinkExpirationHours);
-		final String defaultLanguageName = Objects.toString(defaultLanguage);
-		final String defaultAnonymousAccessPermissionName = Objects.toString(defaultAnonymousAccessPermission);
-		final String defaultInitialTableSortingDirectionName = Objects.toString(defaultInitialTableSortingDirection);
-		final String defaultInitialTablePageSizeName = Objects.toString(defaultInitialTablePageSize);
-		final String defaultColorModeName = Objects.toString(defaultColorMode);
-		final String defaultUserInterfaceFrameworkName = Objects.toString(defaultUserInterfaceFramework);
-		final String defaultPdfDocumentPageFormatName = Objects.toString(defaultPdfDocumentPageFormat);
+		final String useAjaxToRefreshJobCompanyLogosString = String.valueOf(useAjaxToRefreshJobCompanyLogos);
+		final String useEntityManagerCacheString = String.valueOf(useEntityManagerCache);
+		final String useParallelStreamsString = String.valueOf(useParallelStreams);
+		final String signupConfirmationLinkExpirationHoursString = String.valueOf(signupConfirmationLinkExpirationHours);
+		final String resetPasswordLinkExpirationHoursString = String.valueOf(resetPasswordLinkExpirationHours);
+		final String defaultLanguageName = String.valueOf(defaultLanguage);
+		final String defaultAnonymousAccessPermissionName = String.valueOf(defaultAnonymousAccessPermission);
+		final String defaultInitialTableSortingDirectionName = String.valueOf(defaultInitialTableSortingDirection);
+		final String defaultInitialTablePageSizeName = String.valueOf(defaultInitialTablePageSize);
+		final String defaultColorModeName = String.valueOf(defaultColorMode);
+		final String defaultUserInterfaceFrameworkName = String.valueOf(defaultUserInterfaceFramework);
+		final String defaultPdfDocumentPageFormatName = String.valueOf(defaultPdfDocumentPageFormat);
 
 		final String result = StringUtils.getStringJoined(
 			"ApplicationDefaultConfigDTO [authUserCurriculumFilesPath=", authUserCurriculumFilesPath,

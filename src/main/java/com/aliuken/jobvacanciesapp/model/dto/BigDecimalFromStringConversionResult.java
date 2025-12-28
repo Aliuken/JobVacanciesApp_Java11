@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Data
@@ -32,8 +31,8 @@ public class BigDecimalFromStringConversionResult implements Serializable {
 
 	@Override
 	public String toString() {
-		final String conversionErrorFunctionString = Objects.toString(conversionErrorFunction);
-		final String conversionResultString = Objects.toString(conversionResult);
+		final String conversionErrorFunctionString = String.valueOf(conversionErrorFunction);
+		final String conversionResultString = String.valueOf(conversionResult);
 
 		final String result = StringUtils.getStringJoined("BigDecimalFromStringConversionResult [conversionErrorFunction=", conversionErrorFunctionString, ", conversionResult=", conversionResultString, "]");
 		return result;

@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.comparator.superclass;
 
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Comparator;
 
@@ -25,7 +26,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 	}
 
 	// Ascending order where different classes are sorted by their names (including packages).
-	protected final Integer getClassCompareResult(final T entity1, final T entity2) {
+	protected final Integer getClassCompareResult(final @NonNull T entity1, final @NonNull T entity2) {
 		final Class<?> abstractEntityClass1 = entity1.getClass();
 		final Class<?> abstractEntityClass2 = entity2.getClass();
 
@@ -39,7 +40,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 	}
 
 	// Ascending order where entities are sorted by their ids (where null ids are sorted last).
-	protected final int getIdCompareResult(final T entity1, final T entity2) {
+	protected final int getIdCompareResult(final @NonNull T entity1, final @NonNull T entity2) {
 		final Long abstractEntityId1 = entity1.getId();
 		final Long abstractEntityId2 = entity2.getId();
 

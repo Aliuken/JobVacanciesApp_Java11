@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import org.jspecify.annotations.NonNull;
 
 import java.io.Serializable;
 
@@ -42,7 +43,7 @@ public interface AbstractEntityWithAuthUserInterface extends Serializable, Abstr
 	}
 
 	@Override
-	public default String getAuthUserFields() {
+	public default @NonNull String getAuthUserFields() {
 		final String email = this.getAuthUserEmail();
 		final String name = this.getAuthUserName();
 		final String surnames = this.getAuthUserSurnames();

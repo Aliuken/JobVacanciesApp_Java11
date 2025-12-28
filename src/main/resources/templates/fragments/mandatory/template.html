@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:with="currentUserInterfaceFrameworkCode=${currentDefaultUserInterfaceFrameworkCode}, refreshedSessionAuthUser=${@authUserService.refreshEntity(session.sessionAuthUser)}, refreshedSessionAuthUserColorModeValue=${refreshedSessionAuthUser?.colorMode?.value}, colorModeValue=(((${refreshedSessionAuthUserColorModeValue} != null and ${refreshedSessionAuthUserColorModeValue} != 'default') ? ${refreshedSessionAuthUserColorModeValue} : ${currentDefaultColorModeValue}) ?: 'light')" th:data-bs-theme="${colorModeValue}">
+<html th:data-bs-theme="${templateDataDTO.colorModeValue}">
 
   <head>
 
@@ -14,7 +14,7 @@
 
     <!-- Generic library styles -->
     <link id="bootstrapCSS" th:href="@{/bootstrap-5.3.8-dist/css/bootstrap.min.css}" rel="stylesheet"></link>
-    <link id="materialDesignCSS" th:if="${currentUserInterfaceFrameworkCode == 'M'}" th:href="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/css/mdb.min.css}" rel="stylesheet"></link>
+    <link id="materialDesignCSS" th:if="${templateDataDTO.userInterfaceFrameworkCode == 'M'}" th:href="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/css/mdb.min.css}" rel="stylesheet"></link>
     <link id="fontAwesomeCSS" th:href="@{/fontawesome-free-7.1.0-web/css/all.min.css}" rel="stylesheet"></link>
 
     <!-- Custom styles for this template -->
@@ -48,14 +48,14 @@
 
   </head>
 
-  <body th:with="currentDefaultLanguageCode=${currentDefaultLanguageCode}">
+  <body>
 
     <div class="container-fluid mx-0 px-0">
 
       <header th:replace="~{fragments/mandatory/menu :: menu}"></header>
 
       <main role="main" class="mx-1 px-1 my-1 py-1">
-        <input type="hidden" id="languageSessionAttributeElement" name="languageSessionAttributeElement" th:value="${refreshedSessionAuthUser?.language?.code}" />
+        <input type="hidden" id="languageCodeElement" name="languageCodeElement" th:value="${templateDataDTO.languageCode}" />
         <div layout:fragment="mainContent"></div>
       </main>
 
@@ -70,26 +70,19 @@
     <!-- Generic library scripts -->
     <script type="text/javascript" th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
     <script type="text/javascript" th:src="@{/bootstrap-5.3.8-dist/js/bootstrap.min.js}"></script>
-    <script id="materialDesignJS" th:if="${currentUserInterfaceFrameworkCode == 'M'}" type="text/javascript" th:src="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/js/mdb.min.js}"></script>
+    <script id="materialDesignJS" th:if="${templateDataDTO.userInterfaceFrameworkCode == 'M'}" type="text/javascript" th:src="@{/MDB5-STANDARD-UI-KIT-Free-9.3.0/js/mdb.min.js}"></script>
 
     <!-- Custom scripts for this template -->
     <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/page-url-and-dom-utils.js}"></script>
 
     <script type="text/javascript" th:inline="javascript">
       $(document).ready(function() {
-        let languageSessionAttributeElement = document.getElementById("languageSessionAttributeElement");
+        let languageCodeElement = document.getElementById("languageCodeElement");
 
-        let languageSessionAttribute = null;
-        if(languageSessionAttributeElement != null) {
-          languageSessionAttribute = languageSessionAttributeElement.value;
+        let languageCodeElementValue = null;
+        if(languageCodeElement != null) {
+          languageCodeElementValue = languageCodeElement.value;
         }
-
-        let languageModelAttribute;
-        let defaultLanguage;
-        /*<![CDATA[*/
-          languageModelAttribute = /*[[${language}]]*/ null;
-          defaultLanguage = /*[[${currentDefaultLanguageCode}]]*/ null;
-        /*]]>*/
 
         let descriptionModelAttribute;
         let jobCategoryIdModelAttribute;
@@ -102,7 +95,7 @@
         //alert("isSearchJobVacanciesFromHome: " + isSearchJobVacanciesFromHome);
 
         if(isSearchJobVacanciesFromHome) {
-            treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModelAttribute, defaultLanguage, descriptionModelAttribute, jobCategoryIdModelAttribute);
+            treatSearchJobVacanciesFromHome(languageCodeElementValue, descriptionModelAttribute, jobCategoryIdModelAttribute);
         } else {
           let isPageWithTable = getIsPageWithTable();
           //alert("isPageWithTable: " + isPageWithTable);
@@ -123,9 +116,9 @@
               pageNumberModelAttribute = /*[[${tableSearchDTO != null ? tableSearchDTO.pageNumber : null}]]*/ null;
             /*]]>*/
 
-            treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
+            treatFilterAndPaginationCombosAndUrlParameters(languageCodeElementValue, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute);
           } else {
-            treatLanguageComboAndUrlParameter(languageSessionAttribute, languageModelAttribute, defaultLanguage);
+            treatLanguageComboAndUrlParameter(languageCodeElementValue);
           }
         }
       });

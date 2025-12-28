@@ -70,12 +70,12 @@
     <label for="sortingDirectionCombo" class="form-label mt-2 mb-1" th:text="#{table.sortingText2} + ':'"></label>
     &nbsp;
     <select id="sortingDirectionCombo" name="sortingDirectionCombo" th:field="*{sortingDirection}" required>
-      <option th:each="sortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).valuesWithoutByDefault()}" th:value="${sortingDirection.code}" th:text="#{${sortingDirection.messageName}}"></option>    </select>
+      <option th:each="sortingDirection : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection).getSpecificEnumElements()}" th:value="${sortingDirection.code}" th:text="#{${sortingDirection.messageName}}"></option>    </select>
     &nbsp;&nbsp;-&nbsp;&nbsp;
     <label for="pageSizeCombo" class="form-label mt-2 mb-1" th:text="#{table.pageSize} + ':'"></label>
     &nbsp;
     <select id="pageSizeCombo" name="pageSizeCombo" th:field="*{pageSize}" required>
-      <option th:each="pageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).valuesWithoutByDefault()}" th:value="${pageSize.value}" th:text="#{${pageSize.messageName}}"></option>
+      <option th:each="pageSize : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize).getSpecificEnumElements()}" th:value="${pageSize.value}" th:text="#{${pageSize.messageName}}"></option>
     </select>
 
   </form>

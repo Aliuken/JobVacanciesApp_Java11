@@ -4,9 +4,8 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Locale;
 
 public enum Language implements ConfigurableEnum<Language> {
@@ -15,18 +14,15 @@ public enum Language implements ConfigurableEnum<Language> {
 	SPANISH   ("es", "language.español",   new Locale("es"));
 
 	@Getter
-    @NotNull
-	private final String code;
+	private final @NonNull String code;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
 	@Getter
-	@NotNull
 	private final Locale locale;
 
-	private Language(final String code, final String messageName, final Locale locale) {
+	private Language(final @NonNull String code, final @NonNull String messageName, final Locale locale) {
 		this.code = code;
 		this.messageName = messageName;
 		this.locale = locale;
@@ -46,26 +42,30 @@ public enum Language implements ConfigurableEnum<Language> {
 		return language;
 	}
 
-	public static Language[] valuesWithoutByDefault() {
-		final List<Language> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(Language.class);
-		final Language[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new Language[valuesWithoutByDefaultList.size()]);
-		return valuesWithoutByDefault;
+	public static @NonNull Language[] getSpecificEnumElements() {
+		final Language[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificEnumElements(Language.class);
+		return enumElementsWithoutByDefault;
 	}
 
 	@Override
-	public ConfigurableEnum<Language> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Class<Language> getEnumClass() {
+		return Language.class;
+	}
+
+	@Override
+	public ConfigurableEnum<Language> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final Language language = configPropertiesBean.getDefaultLanguageOverwritten();
 		return language;
 	}
 
 	@Override
-	public ConfigurableEnum<Language> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public ConfigurableEnum<Language> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final Language language = configPropertiesBean.getDefaultLanguage();
 		return language;
 	}
 
 	@Override
-	public ConfigurableEnum<Language> getFinalDefaultEnumElement() {
+	public @NonNull ConfigurableEnum<Language> getFinalDefaultEnumElement() {
 		return Language.ENGLISH;
 	}
 }

@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -136,7 +137,7 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 		final String authUserIdString = this.getAuthUserId();
 		final String jobVacancyIdString = (jobVacancy != null) ? jobVacancy.getIdString() : null;
@@ -148,7 +149,7 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String jobVacancyName = this.getJobVacancyName();
 
 		final String result = StringUtils.getStringJoined(
@@ -159,7 +160,7 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String authUserEmail = this.getAuthUserEmail();
 		final String jobVacancyName = this.getJobVacancyName();

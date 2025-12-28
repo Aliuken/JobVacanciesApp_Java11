@@ -4,8 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import lombok.Getter;
-
-import javax.validation.constraints.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	BY_DEFAULT("-", "default", "colorMode.byDefault"),
@@ -13,18 +12,15 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	DARK      ("D", "dark",    "colorMode.dark");
 
 	@Getter
-    @NotNull
-	private final String code;
+	private final @NonNull String code;
 
 	@Getter
-	@NotNull
-	private final String value;
+	private final @NonNull String value;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
-	private ColorMode(final String code, final String value, final String messageName) {
+	private ColorMode(final @NonNull String code, final @NonNull String value, final @NonNull String messageName) {
 		this.code = code;
 		this.value = value;
 		this.messageName = messageName;
@@ -59,19 +55,24 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	}
 
 	@Override
-	public ConfigurableEnum<ColorMode> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Class<ColorMode> getEnumClass() {
+		return ColorMode.class;
+	}
+
+	@Override
+	public ConfigurableEnum<ColorMode> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final ColorMode colorMode = configPropertiesBean.getDefaultColorModeOverwritten();
 		return colorMode;
 	}
 
 	@Override
-	public ConfigurableEnum<ColorMode> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public ConfigurableEnum<ColorMode> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final ColorMode colorMode = configPropertiesBean.getDefaultColorMode();
 		return colorMode;
 	}
 
 	@Override
-	public ConfigurableEnum<ColorMode> getFinalDefaultEnumElement() {
+	public @NonNull ConfigurableEnum<ColorMode> getFinalDefaultEnumElement() {
 		return ColorMode.LIGHT;
 	}
 }

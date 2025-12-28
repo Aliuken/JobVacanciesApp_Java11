@@ -44,7 +44,7 @@
                 <td th:text="${authUserCurriculum.description}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUserCurriculum.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${authUserCurriculum.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                   <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
                 </td>
                 <td>

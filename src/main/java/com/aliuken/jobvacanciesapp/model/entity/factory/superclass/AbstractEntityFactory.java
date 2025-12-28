@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.factory.superclass;
 
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public abstract class AbstractEntityFactory<T extends AbstractEntity<T>> extends AbstractFactoryBean<T> {
@@ -17,9 +18,9 @@ public abstract class AbstractEntityFactory<T extends AbstractEntity<T>> extends
 	}
 
 	@Override
-	protected abstract T createInstance();
+	protected abstract @NonNull T createInstance();
 
-	public final T getObjectWithoutException() {
+	public final @NonNull T getObjectWithoutException() {
 		try {
 			final T object = this.getObject();
 			return object;

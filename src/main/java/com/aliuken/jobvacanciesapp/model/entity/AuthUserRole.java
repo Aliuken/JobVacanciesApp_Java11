@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Index;
@@ -51,7 +52,7 @@ public class AuthUserRole extends AbstractEntityWithAuthUser<AuthUserRole> {
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 		final String authUserIdString = this.getAuthUserId();
 		final String authRoleIdString = (authRole != null) ? authRole.getIdString() : null;
@@ -63,7 +64,7 @@ public class AuthUserRole extends AbstractEntityWithAuthUser<AuthUserRole> {
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String authRoleName = this.getAuthRoleName();
 
 		final String result = StringUtils.getStringJoined(
@@ -72,7 +73,7 @@ public class AuthUserRole extends AbstractEntityWithAuthUser<AuthUserRole> {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String authUserEmail = this.getAuthUserEmail();
 		final String authRoleName = this.getAuthRoleName();

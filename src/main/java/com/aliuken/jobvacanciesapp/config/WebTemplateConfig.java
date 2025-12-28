@@ -92,15 +92,6 @@ public class WebTemplateConfig {
 		// Instead of:	${(localDateTimeVar != null) ? #temporals.format(localDateTimeVar, 'dd-MM-yyyy HH:mm:ss') : '-'}
 		thymeleafViewResolver.addStaticVariable("dateTimeUtils", Constants.DATE_TIME_UTILS);
 
-		final String currentDefaultColorModeValue = ConfigPropertiesBean.CURRENT_DEFAULT_COLOR_MODE.getValue();
-		thymeleafViewResolver.addStaticVariable("currentDefaultColorModeValue", currentDefaultColorModeValue);
-
-		final String currentDefaultLanguageCode = ConfigPropertiesBean.CURRENT_DEFAULT_LANGUAGE.getCode();
-		thymeleafViewResolver.addStaticVariable("currentDefaultLanguageCode", currentDefaultLanguageCode);
-
-		final String currentDefaultUserInterfaceFrameworkCode = ConfigPropertiesBean.CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK.getCode();
-		thymeleafViewResolver.addStaticVariable("currentDefaultUserInterfaceFrameworkCode", currentDefaultUserInterfaceFrameworkCode);
-
 		final GenericApplicationContext applicationContext = BeanFactoryUtils.getGenericApplicationContext();
 		thymeleafViewResolver.addStaticVariable("applicationContext", applicationContext);
 

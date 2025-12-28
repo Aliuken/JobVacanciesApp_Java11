@@ -26,7 +26,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -336,7 +335,7 @@ public class JobCompanyLogoRepositoryTest extends AbstractTransactionalJUnit4Spr
 		final String filePath = StringUtils.getStringJoined(jobCompanyIdString, "/", fileName);
 		Assertions.assertEquals(filePath, jobCompanyLogoDTO.getFilePath());
 
-		final String jobCompanyLogoIdString = Objects.toString(jobCompanyLogoDTO.getId());
+		final String jobCompanyLogoIdString = String.valueOf(jobCompanyLogoDTO.getId());
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
 		final String selectionName = StringUtils.getStringJoined("Logo ", jobCompanyLogoIdString, Constants.SPACE, firstRegistrationDateTimeString);
 		Assertions.assertEquals(selectionName, jobCompanyLogoDTO.getSelectionName());

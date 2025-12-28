@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import org.jspecify.annotations.NonNull;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,9 +17,9 @@ public class StringUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static String lowerCaseFirstCharacter(String string) {
-		if(LogicalUtils.isNullOrEmptyString(string)) {
-			return string;
+	public static @NonNull String lowerCaseFirstCharacter(@NonNull String string) {
+		if(string.isEmpty()) {
+			return Constants.EMPTY_STRING;
 		}
 
 		char c[] = string.toCharArray();
@@ -28,9 +29,9 @@ public class StringUtils {
 		return string;
 	}
 
-	public static String upperCaseFirstCharacter(String string) {
-		if(LogicalUtils.isNullOrEmptyString(string)) {
-			return string;
+	public static @NonNull String upperCaseFirstCharacter(@NonNull String string) {
+		if(string.isEmpty()) {
+			return Constants.EMPTY_STRING;
 		}
 
 		char c[] = string.toCharArray();
@@ -40,7 +41,7 @@ public class StringUtils {
 		return string;
 	}
 
-	public static String getStringJoined(final CharSequence... elementsVarargs) {
+	public static @NonNull String getStringJoined(final @NonNull CharSequence... elementsVarargs) {
 		final CharSequence delimiter = Constants.EMPTY_STRING;
 
 		final StringJoiner stringJoiner = new StringJoiner(delimiter);
@@ -54,7 +55,7 @@ public class StringUtils {
 		return stringJoined;
 	}
 
-	public static String getStringJoinedWithDelimiters(CharSequence delimiter, CharSequence prefix, CharSequence suffix, final Collection<String> elements) {
+	public static @NonNull String getStringJoinedWithDelimiters(CharSequence delimiter, CharSequence prefix, CharSequence suffix, final @NonNull Collection<String> elements) {
 		if(delimiter == null) {
 			delimiter = Constants.EMPTY_STRING;
 		}
@@ -78,7 +79,7 @@ public class StringUtils {
 		return stringJoined;
 	}
 
-	public static <K extends Comparable<K>,V> String getMapString(final Map<K,V> map) {
+	public static <K extends Comparable<K>,V> @NonNull String getMapString(final Map<K,V> map) {
 		Stream<Map.Entry<K,V>> mapEntryStream = Constants.SEQUENTIAL_STREAM_UTILS.ofNullableMap(map);
 		mapEntryStream = mapEntryStream.sorted(Map.Entry.comparingByKey());
 
@@ -90,21 +91,21 @@ public class StringUtils {
 		return stringJoined;
 	}
 
-	public static String getUrlWithoutParametersAndFragment(final URI initialURI) throws URISyntaxException {
+	public static @NonNull String getUrlWithoutParametersAndFragment(final @NonNull URI initialURI) throws URISyntaxException {
 		final URI finalURI = new URI(initialURI.getScheme(), initialURI.getAuthority(), initialURI.getPath(), null, null);
 
 		final String result = finalURI.toString();
 		return result;
 	}
 
-	public static String getUrlPath(final URI initialURI) throws URISyntaxException {
+	public static @NonNull String getUrlPath(final @NonNull URI initialURI) throws URISyntaxException {
 		final URI finalURI = new URI(null, null, initialURI.getPath(), null, null);
 
 		final String result = finalURI.toString();
 		return result;
 	}
 
-	public static String getUrlParameters(final URI initialURI) throws URISyntaxException {
+	public static @NonNull String getUrlParameters(final @NonNull URI initialURI) throws URISyntaxException {
 		final URI finalURI = new URI(null, null, null, initialURI.getQuery(), null);
 
 		final String result = finalURI.toString();

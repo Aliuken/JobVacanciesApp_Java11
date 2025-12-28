@@ -1,12 +1,16 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import org.jspecify.annotations.NonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConfigurableEnumUtils {
 	private static final ConfigurableEnumUtils SINGLETON_INSTANCE = new ConfigurableEnumUtils();
@@ -52,7 +56,7 @@ public class ConfigurableEnumUtils {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> ConfigurableEnum<T> getFinalConfigurableEnumElement(final ConfigurableEnum<T> configurableEnumElement, final Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T> getFinalConfigurableEnumElement(final ConfigurableEnum<T> configurableEnumElement, final Class<U> configurableEnumClass) {
 		final ConfigurableEnum<T> finalEnumElement;
 		if(this.hasASpecificValue(configurableEnumElement)) {
 			finalEnumElement = configurableEnumElement;
@@ -62,7 +66,7 @@ public class ConfigurableEnumUtils {
 		return finalEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> T getFinalEnumElement(final ConfigurableEnum<T> configurableEnumElement, final Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getFinalEnumElement(final ConfigurableEnum<T> configurableEnumElement, final Class<U> configurableEnumClass) {
 		final T finalEnumElement;
 		if(this.hasASpecificValue(configurableEnumElement)) {
 			finalEnumElement = GenericsUtils.cast(configurableEnumElement);
@@ -94,28 +98,28 @@ public class ConfigurableEnumUtils {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> T getCurrentDefaultEnumElement(final Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getCurrentDefaultEnumElement(final Class<U> configurableEnumClass) {
 		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
 
 		final T currentDefaultEnumElement = this.getCurrentDefaultEnumElement(configurableEnumClass, configPropertiesBean);
 		return currentDefaultEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> ConfigurableEnum<T> getCurrentDefaultConfigurableEnumElement(final Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T> getCurrentDefaultConfigurableEnumElement(final Class<U> configurableEnumClass) {
 		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
 
 		final ConfigurableEnum<T> currentDefaultConfigurableEnumElement = this.getCurrentDefaultConfigurableEnumElement(configurableEnumClass, configPropertiesBean);
 		return currentDefaultConfigurableEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> T getCurrentDefaultEnumElement(final Class<U> configurableEnumClass, final ConfigPropertiesBean configPropertiesBean) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getCurrentDefaultEnumElement(final Class<U> configurableEnumClass, final ConfigPropertiesBean configPropertiesBean) {
 		final ConfigurableEnum<T> currentDefaultConfigurableEnumElement = this.getCurrentDefaultConfigurableEnumElement(configurableEnumClass, configPropertiesBean);
 
 		final T currentDefaultEnumElement = GenericsUtils.cast(currentDefaultConfigurableEnumElement);
 		return currentDefaultEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> ConfigurableEnum<T> getCurrentDefaultConfigurableEnumElement(final Class<U> configurableEnumClass, final ConfigPropertiesBean configPropertiesBean) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T> getCurrentDefaultConfigurableEnumElement(final Class<U> configurableEnumClass, final ConfigPropertiesBean configPropertiesBean) {
 		final ConfigurableEnum<T> defaultConfigurableEnumElement = this.getDefaultConfigurableEnumElement(configurableEnumClass);
 
 		final ConfigurableEnum<T> overwrittenEnumElement = defaultConfigurableEnumElement.getOverwrittenEnumElement(configPropertiesBean);
@@ -173,32 +177,8 @@ public class ConfigurableEnumUtils {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> List<T> getSpecificEnumElements(final Class<U> configurableEnumClass) {
-		final List<ConfigurableEnum<T>> configurableEnumList = this.getSpecificConfigurableEnumElements(configurableEnumClass);
-
-		final List<T> enumList = GenericsUtils.cast(configurableEnumList);
-		return enumList;
-	}
-
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> List<ConfigurableEnum<T>> getSpecificConfigurableEnumElements(final Class<U> configurableEnumClass) {
-		final ConfigurableEnum<T> defaultConfigurableEnumElement = this.getDefaultConfigurableEnumElement(configurableEnumClass);
-		final ConfigurableEnum<T>[] configurableEnumElements = defaultConfigurableEnumElement.getEnumElements(configurableEnumClass);
-
-		final List<ConfigurableEnum<T>> configurableEnumList = new ArrayList<>();
-		for(final ConfigurableEnum<T> configurableEnumElement : configurableEnumElements) {
-			if(this.hasASpecificValue(configurableEnumElement)) {
-				configurableEnumList.add(configurableEnumElement);
-			}
-		}
-
-		return configurableEnumList;
-	}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 	public <T extends Enum<T>> boolean hasASpecificValue(final ConfigurableEnum<T> configurableEnumElement) {
-		final T enumElement = GenericsUtils.cast(configurableEnumElement);
-		final boolean result = (enumElement != null && !ConfigurableEnum.BY_DEFAULT_ELEMENT_NAME.equals(enumElement.name()));
+		final boolean result = (configurableEnumElement != null && configurableEnumElement.hasASpecificValue());
 		return result;
 	}
 
@@ -212,5 +192,49 @@ public class ConfigurableEnumUtils {
 		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
 		final T defaultEnumElement = Enum.valueOf(enumClass, ConfigurableEnum.BY_DEFAULT_ELEMENT_NAME);
 		return defaultEnumElement;
+	}
+
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T[] getSpecificEnumElements(final @NonNull Class<U> configurableEnumClass) {
+		final ConfigurableEnum<T>[] configurableEnumElementsWithoutByDefault = this.getSpecificConfigurableEnumElements(configurableEnumClass);
+		final T[] enumElementsWithoutByDefault = GenericsUtils.cast(configurableEnumElementsWithoutByDefault);
+		return enumElementsWithoutByDefault;
+	}
+
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T>[] getSpecificConfigurableEnumElements(final Class<U> configurableEnumClass) {
+		final ConfigurableEnum<T>[] configurableEnumElements = this.getConfigurableEnumElements(configurableEnumClass);
+
+		final List<ConfigurableEnum<T>> configurableEnumElementsWithoutByDefaultList = new ArrayList<>();
+		for(final ConfigurableEnum<T> configurableEnumElement : configurableEnumElements) {
+			if(this.hasASpecificValue(configurableEnumElement)) {
+				configurableEnumElementsWithoutByDefaultList.add(configurableEnumElement);
+			}
+		}
+
+		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
+		final List<T> enumElementsWithoutByDefaultList = GenericsUtils.cast(configurableEnumElementsWithoutByDefaultList);
+
+		@SuppressWarnings("unchecked")
+		T[] enumElementsWithoutByDefault = (T[]) Array.newInstance(enumClass, enumElementsWithoutByDefaultList.size());
+		enumElementsWithoutByDefault = enumElementsWithoutByDefaultList.toArray(enumElementsWithoutByDefault);
+
+		final ConfigurableEnum<T>[] configurableEnumElementsWithoutByDefault = GenericsUtils.cast(enumElementsWithoutByDefault);
+		return configurableEnumElementsWithoutByDefault;
+	}
+
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T>[] getConfigurableEnumElements(final Class<U> configurableEnumClass) {
+		final T[] enumElements = this.getEnumElements(configurableEnumClass);
+		final ConfigurableEnum<T>[] configurableEnumElements = GenericsUtils.cast(enumElements);
+		return configurableEnumElements;
+	}
+
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T[] getEnumElements(final Class<U> configurableEnumClass) {
+		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
+		final List<T> enumElementsList = Constants.PARALLEL_STREAM_UTILS.ofEnum(enumClass).collect(Collectors.toList());
+
+		@SuppressWarnings("unchecked")
+		T[] enumElements = (T[]) Array.newInstance(enumClass, enumElementsList.size());
+		enumElements = enumElementsList.toArray(enumElements);
+
+		return enumElements;
 	}
 }

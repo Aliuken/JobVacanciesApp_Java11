@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class TableSearchDTO implements Serializable {
@@ -99,11 +98,11 @@ public class TableSearchDTO implements Serializable {
 	@Override
 	public String toString() {
 		final TableField filterTableField = this.getFilterTableField();
-		final String filterTableFieldName = Objects.toString(filterTableField);
+		final String filterTableFieldName = String.valueOf(filterTableField);
 		final TableField tableSortingField = this.getTableSortingField();
-		final String tableSortingFieldName = Objects.toString(tableSortingField);
-		final String pageSizeString = Objects.toString(pageSize);
-		final String pageNumberString = Objects.toString(pageNumber);
+		final String tableSortingFieldName = String.valueOf(tableSortingField);
+		final String pageSizeString = String.valueOf(pageSize);
+		final String pageNumberString = String.valueOf(pageNumber);
 
 		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam,
 			", filterName=", filterName, ", filterTableFieldName=", filterTableFieldName, ", filterValue=", filterValue,

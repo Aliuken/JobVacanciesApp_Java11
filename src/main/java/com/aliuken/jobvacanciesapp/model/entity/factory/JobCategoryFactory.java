@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.factory;
 
 import com.aliuken.jobvacanciesapp.model.entity.JobCategory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
+import org.jspecify.annotations.NonNull;
 
 public class JobCategoryFactory extends AbstractEntityFactory<JobCategory> {
 	public JobCategoryFactory() {
@@ -9,7 +10,7 @@ public class JobCategoryFactory extends AbstractEntityFactory<JobCategory> {
 	}
 
 	@Override
-	protected JobCategory createInstance() {
+	protected @NonNull JobCategory createInstance() {
 		return new JobCategory();
 	}
 }

@@ -160,7 +160,7 @@ The following design patterns are used in the application:
 
 The core technologies currently used are:
 * **OpenJDK 11**: As the **Java SE** implementation (using Java as the backend OOP language with the default GC: **G1**). More details in section **[3.2. Java SE core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#32-java-se-core-technologies)**.
-* **Jakarta EE 8** "javax" classes (detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**).
+* **Jakarta EE 8** "javax" classes: Detailed in section **[3.3. Jakarta EE technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#33-jakarta-ee-technologies)**.
 * **Spring Boot 2.7.18** (**Spring Framework 5.3**): Starting in the class [MainClass](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/MainClass.java), which is restartable through the method "MainClass.restartApp(...)". More details in section **[3.4. Spring core technologies](https://github.com/Aliuken/JobVacanciesApp_Java11#34-spring-core-technologies)**.
 * **Maven**: As the dependency manager and for building the application.
 * **Git**: As the DVCS.
@@ -181,6 +181,7 @@ The core technologies currently used are:
     * The utility class [ControllerAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/ControllerAspectLoggingUtils.java): Used in "ControllerAspect" to log multiple stats.
     * The utility class [RepositoryAspectLoggingUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/aop/logging/RepositoryAspectLoggingUtils.java): Used in "RepositoryAspect" to log multiple stats.
 * **Utilities**: There are multiple utility classes in the package [com.aliuken.jobvacanciesapp.util](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/java/com/aliuken/jobvacanciesapp/util).
+* **JSpecify**: Using the @NonNull annotation to specify non-nullability in attributes, parameters and return types.
 
 ### 3.2. Java SE core technologies
 
@@ -446,7 +447,7 @@ Other technologies currently used are:
 * **MDN** [[&#10138;]](https://developer.mozilla.org/en-US/docs/Learn_web_development): This website was used to learn about **HTTP**, **HTML**, **DOM**, **JS**, **JSON**, **XML** and **CSS**.
 * **DeepSeek R1**: This AI LLM was used (from [deepinfra](https://deepinfra.com/deepseek-ai/DeepSeek-R1) with 16000 max new tokens) in collaboration with ourselves to create the TS file [jobvacanciesapp.ts](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/resources/static/jobvacanciesapp-utils/ts/jobvacanciesapp.ts).
 * **GenericControllerAdvice** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/controller/advice/GenericControllerAdvice.java): To be able to:
-    * Access the requestURI from Thymeleaf in any web page with "${requestURI}".
+    * Access the object with the data used in the Thymeleaf page template.html like "${templateDataDTO...}"
     * Handle the exception thrown when uploading a file (CV or logo) too big (more than 10 MB).
 * **AbstractEntityServiceSuperclass** [[&#10138;]](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/service/superclass/AbstractEntityServiceSuperclass.java): An abstract class that contains the default implementation for the most common service methods (by calling the [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java) repository methods).
 * **Ehcache**: Configured in [CacheConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/CacheConfig.java) and in the property **jobvacanciesapp.useEntityManagerCache**. It is used in [UpgradedJpaRepository](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/repository/superinterface/UpgradedJpaRepository.java) to create the **entityManagerCache** of type "Cache<Class<? extends AbstractEntity>, EntityManager>" to get the EntityManager of a JPA entity class. The execution flow starts by calling to "UpgradedJpaRepository.getEntityManagerConfigurable(entityClass)" and is the following:

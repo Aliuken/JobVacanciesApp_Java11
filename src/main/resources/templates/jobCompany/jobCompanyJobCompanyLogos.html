@@ -43,7 +43,7 @@
                 </td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCompanyLogo.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${jobCompanyLogo.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompanyLogo.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompanyLogo.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                   <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
                 </td>
                 <td>

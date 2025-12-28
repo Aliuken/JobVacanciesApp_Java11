@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.superinterface.AbstractEntityWit
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.MappedSuperclass;
 
@@ -19,7 +20,7 @@ public abstract class AbstractEntityWithAuthUserAndJobCompany<T extends Abstract
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String authUserEmail = this.getAuthUserEmail();
 		final String jobCompanyName = this.getJobCompanyName();

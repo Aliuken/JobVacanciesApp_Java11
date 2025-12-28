@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -74,7 +75,7 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser<AuthUserCurri
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 		final String authUserIdString = this.getAuthUserId();
 
@@ -85,14 +86,14 @@ public class AuthUserCurriculum extends AbstractEntityWithAuthUser<AuthUserCurri
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String result = StringUtils.getStringJoined(
 			StyleApplier.getBoldString("description: "), description);
 		return result;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String authUserEmail = this.getAuthUserEmail();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();

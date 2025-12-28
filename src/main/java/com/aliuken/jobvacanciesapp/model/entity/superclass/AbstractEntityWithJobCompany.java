@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.superinterface.AbstractEntityWit
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.MappedSuperclass;
 
@@ -18,7 +19,7 @@ public abstract class AbstractEntityWithJobCompany<T extends AbstractEntity<T>> 
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String jobCompanyName = this.getJobCompanyName();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();

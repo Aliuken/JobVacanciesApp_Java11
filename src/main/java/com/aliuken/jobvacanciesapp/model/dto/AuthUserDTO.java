@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -69,9 +68,9 @@ public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
-		final String enabledString = Objects.toString(enabled);
-		final String initialTablePageSizeValueString = Objects.toString(initialTablePageSizeValue);
+		final String idString = String.valueOf(id);
+		final String enabledString = String.valueOf(enabled);
+		final String initialTablePageSizeValueString = String.valueOf(initialTablePageSizeValue);
 		final String authRoleNamesString = authRoleNames.toString();
 
 		final String result = StringUtils.getStringJoined("AuthUserDTO [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", languageCode=", languageCode, ", enabled=", enabledString,

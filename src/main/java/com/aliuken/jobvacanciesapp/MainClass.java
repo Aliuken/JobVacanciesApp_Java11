@@ -1,5 +1,6 @@
 package com.aliuken.jobvacanciesapp;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,16 +17,16 @@ public class MainClass {
 	private static volatile String[] args;
 	private static volatile SpringApplication springApplication;
 	private static volatile GenericApplicationContext applicationContext;
-	private static volatile ExecutorService restartExecutorService = Executors.newFixedThreadPool(3, new ThreadFactory() {
+	private static volatile @NonNull ExecutorService restartExecutorService = Executors.newFixedThreadPool(3, new ThreadFactory() {
 		@Override
-		public Thread newThread(Runnable runnable) {
-			Thread restartThread = Executors.defaultThreadFactory().newThread(runnable);
+		public @NonNull Thread newThread(final @NonNull Runnable runnable) {
+			final Thread restartThread = Executors.defaultThreadFactory().newThread(runnable);
 			restartThread.setDaemon(false);
 			return restartThread;
 		}
 	});
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		MainClass.args = args;
 		MainClass.springApplication = new SpringApplicationBuilder(MainClass.class).application();
 		MainClass.applicationContext = (GenericApplicationContext) MainClass.springApplication.run(args);
@@ -36,7 +37,8 @@ public class MainClass {
 								  final String nextDefaultColorModeCode, final String nextDefaultUserInterfaceFrameworkCode, final String nextDefaultPdfDocumentPageFormatCode) {
 		if(nextDefaultLanguageCode != null || nextDefaultAnonymousAccessPermissionValue != null ||
 				nextDefaultInitialTableSortingDirectionCode != null || nextDefaultInitialTablePageSizeValue != null ||
-				nextDefaultColorModeCode != null || nextDefaultUserInterfaceFrameworkCode != null || nextDefaultPdfDocumentPageFormatCode != null) {			final Map<String, Object> additionalPropertiesMap = new HashMap<>();
+				nextDefaultColorModeCode != null || nextDefaultUserInterfaceFrameworkCode != null || nextDefaultPdfDocumentPageFormatCode != null) {
+			final Map<String, Object> additionalPropertiesMap = new HashMap<>();
 			if(nextDefaultLanguageCode != null) {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultLanguageCodeOverwritten", nextDefaultLanguageCode);
 			}

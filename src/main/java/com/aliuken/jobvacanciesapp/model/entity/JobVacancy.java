@@ -13,6 +13,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SortComparator;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,6 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -109,7 +109,7 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	public String getSalaryString() {
-		final String salaryString = Objects.toString(salary);
+		final String salaryString = String.valueOf(salary);
 		return salaryString;
 	}
 
@@ -119,12 +119,12 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	public String getStatusName() {
-		final String statusName = Objects.toString(status);
+		final String statusName = String.valueOf(status);
 		return statusName;
 	}
 
 	public String getHighlightedString() {
-		final String highlightedString = Objects.toString(highlighted);
+		final String highlightedString = String.valueOf(highlighted);
 		return highlightedString;
 	}
 
@@ -182,7 +182,7 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 
 		final String result = StringUtils.getStringJoined(
@@ -191,12 +191,12 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	@Override
-	public String getAuthUserFields() {
+	public @NonNull String getAuthUserFields() {
 		return Constants.EMPTY_STRING;
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String salaryString = this.getSalaryString();
 		final String currencySymbol = this.getCurrencySymbol();
 		final String statusName = this.getStatusName();
@@ -217,7 +217,7 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String salaryString = this.getSalaryString();
 		final String currencySymbol = this.getCurrencySymbol();

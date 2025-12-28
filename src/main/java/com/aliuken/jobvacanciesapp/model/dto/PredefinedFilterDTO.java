@@ -5,7 +5,6 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class PredefinedFilterDTO implements Serializable {
@@ -33,7 +32,7 @@ public class PredefinedFilterDTO implements Serializable {
 	@Override
 	public String toString() {
 		final PredefinedFilterEntity predefinedFilterEntity = this.getPredefinedFilterEntity();
-		final String predefinedFilterEntityName = Objects.toString(predefinedFilterEntity);
+		final String predefinedFilterEntityName = String.valueOf(predefinedFilterEntity);
 
 		final String result = StringUtils.getStringJoined("PredefinedFilterDTO [",
 			", predefinedFilterName=", predefinedFilterName, ", predefinedFilterEntityName=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue,

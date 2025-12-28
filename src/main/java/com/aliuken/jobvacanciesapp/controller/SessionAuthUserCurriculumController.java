@@ -47,7 +47,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -84,7 +83,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		try {
 			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
 				if(log.isDebugEnabled()) {
-					final String tableSearchDtoString = Objects.toString(tableSearchDTO);
+					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
 				}
 

@@ -44,7 +44,7 @@
                 <td th:text="${jobCategory.description}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCategory.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${jobCategory.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCategory.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCategory.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                   <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
                 </td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobCategory.lastModificationDateTime)}"></td>

@@ -5,8 +5,8 @@ import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.function.Predicate;
 
@@ -31,28 +31,24 @@ public enum TableField implements Serializable, Internationalizable {
 	private final static Predicate<TableField> VALUES_WITHOUT_AUTH_USER_AND_JOB_COMPANY_AND_LAST_MODIFICATION_PREDICATE = (tableField -> (!tableField.isAuthUserField() && !tableField.isJobCompanyField() && !tableField.isLastModificationField));
 
 	@Getter
-    @NotNull
-	private final String code;
+	private final @NonNull String code;
 
 	@Getter
     private final TableFieldEntity entity;
 
 	@Getter
-    @NotNull
-	private final String partialFieldPath;
+	private final @NonNull String partialFieldPath;
 
 	@Getter
-    @NotNull
-	private final String finalFieldPath;
+	private final @NonNull String finalFieldPath;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
 	@Getter
 	private final boolean isLastModificationField;
 
-	private TableField(final String code, final TableFieldEntity entity, final String partialFieldPath, final String messageName, final boolean isLastModificationField) {
+	private TableField(final @NonNull String code, final TableFieldEntity entity, final @NonNull String partialFieldPath, final @NonNull String messageName, final boolean isLastModificationField) {
 		this.code = code;
 		this.entity = entity;
 		this.partialFieldPath = partialFieldPath;
@@ -89,14 +85,14 @@ public enum TableField implements Serializable, Internationalizable {
 		return tableField;
 	}
 
-	public static TableField[] valuesForCombo(final boolean isAuthUserEntityOrContainsDifferentAuthUsers, final boolean isJobCompanyEntityOrContainsDifferentJobCompanies, final boolean isUnmodifiableEntity) {
+	public static @NonNull TableField[] valuesForCombo(final boolean isAuthUserEntityOrContainsDifferentAuthUsers, final boolean isJobCompanyEntityOrContainsDifferentJobCompanies, final boolean isUnmodifiableEntity) {
 		final TableField[] tableFields = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
 			.filter(TableField.valuesForComboPredicate(isAuthUserEntityOrContainsDifferentAuthUsers, isJobCompanyEntityOrContainsDifferentJobCompanies, isUnmodifiableEntity))
 			.toArray(TableField[]::new);
 		return tableFields;
 	}
 
-	private static Predicate<? super TableField> valuesForComboPredicate(final boolean isAuthUserEntityOrContainsDifferentAuthUsers, final boolean isJobCompanyEntityOrContainsDifferentJobCompanies, final boolean isUnmodifiableEntity) {
+	private static @NonNull Predicate<? super TableField> valuesForComboPredicate(final boolean isAuthUserEntityOrContainsDifferentAuthUsers, final boolean isJobCompanyEntityOrContainsDifferentJobCompanies, final boolean isUnmodifiableEntity) {
 		final Predicate<? super TableField> valuesForComboPredicate;
 		if(isAuthUserEntityOrContainsDifferentAuthUsers && isJobCompanyEntityOrContainsDifferentJobCompanies) {
 			if(isUnmodifiableEntity) {

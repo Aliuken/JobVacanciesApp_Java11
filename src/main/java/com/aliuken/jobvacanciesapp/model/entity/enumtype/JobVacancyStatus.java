@@ -4,8 +4,8 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public enum JobVacancyStatus implements Serializable, Internationalizable {
@@ -14,14 +14,12 @@ public enum JobVacancyStatus implements Serializable, Internationalizable {
 	DELETED ("D", "jobVacancyStatus.deleted");
 
 	@Getter
-    @NotNull
-	private final String code;
+	private final @NonNull String code;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
-	private JobVacancyStatus(final String code, @NotNull final String messageName) {
+	private JobVacancyStatus(final @NonNull String code, final @NonNull String messageName) {
 		this.code = code;
 		this.messageName = messageName;
 	}

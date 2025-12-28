@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -56,7 +57,7 @@ public enum AllowedViewsEnum implements Serializable {
 	};
 
 	@Getter
-    private final AnonymousAccessPermission anonymousAccessPermission;
+    private final @NonNull AnonymousAccessPermission anonymousAccessPermission;
 
 	@Getter
     @NotEmpty
@@ -74,7 +75,7 @@ public enum AllowedViewsEnum implements Serializable {
     @NotEmpty
 	private final String[] administratorViewsArray;
 
-	private static final Map<AnonymousAccessPermission, AllowedViewsEnum> ALLOWED_VIEWS_MAP = AllowedViewsEnum.getAllowedViewsMap();
+	private static final @NonNull Map<AnonymousAccessPermission, AllowedViewsEnum> ALLOWED_VIEWS_MAP = AllowedViewsEnum.getAllowedViewsMap();
 
 	private AllowedViewsEnum(final AnonymousAccessPermission anonymousAccessPermission) {
 		this.anonymousAccessPermission = Constants.ENUM_UTILS.getFinalEnumElement(anonymousAccessPermission, AnonymousAccessPermission.class);
@@ -96,7 +97,7 @@ public enum AllowedViewsEnum implements Serializable {
 		return allowedViewsEnum;
 	}
 
-	private static Map<AnonymousAccessPermission, AllowedViewsEnum> getAllowedViewsMap() {
+	private static @NonNull Map<AnonymousAccessPermission, AllowedViewsEnum> getAllowedViewsMap() {
 		final AllowedViewsEnum[] allowedViewsEnumElements = AllowedViewsEnum.values();
 
 		final Map<AnonymousAccessPermission, AllowedViewsEnum> allowedViewsMap = new HashMap<>();

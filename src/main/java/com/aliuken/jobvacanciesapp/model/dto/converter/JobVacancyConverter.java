@@ -7,8 +7,6 @@ import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 
-import java.util.Objects;
-
 public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVacancyDTO> {
 
 	private static final JobVacancyConverter SINGLETON_INSTANCE = new JobVacancyConverter();
@@ -26,7 +24,7 @@ public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVac
 		if(jobVacancy != null) {
 			final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobVacancy.getJobCategory());
 			final JobCompanyDTO jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobVacancy.getJobCompany());
-			final String salaryString = Objects.toString(jobVacancy.getSalary());
+			final String salaryString = String.valueOf(jobVacancy.getSalary());
 			final BigDecimalFromStringConversionResult salaryConversionResult = null;
 
 			jobVacancyDTO = new JobVacancyDTO(

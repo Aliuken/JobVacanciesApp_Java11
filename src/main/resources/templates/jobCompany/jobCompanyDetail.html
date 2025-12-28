@@ -33,7 +33,7 @@
               <h6 class="card-title"><strong th:text="#{abstractEntity.firstRegistrationDateTime} + ': '"></strong><span th:text="${dateTimeUtils.convertToStringForWebPageField(jobCompany.firstRegistrationDateTime)}"></span></h6>
               <h6 class="card-title" th:with="firstRegistrationAuthUserId=${jobCompany.getFirstRegistrationAuthUserId()}">
                 <strong th:text="#{abstractEntity.firstRegistrationAuthUserEmail} + ': '"></strong>
-                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompany.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobCompany.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                 <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
               </h6>
 

@@ -89,7 +89,7 @@
                 <div class="input-group">
                   <input type="text" id="salary" name="salary" class="form-control" th:field="*{salaryString}"></input>
                   <select id="currencyCombo" name="currencyCombo" class="input-group-text" th:field="*{currencySymbol}" required>
-                    <option th:each="currency : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency).valuesWithoutByDefault()}" th:value="${currency.symbol}" th:text="${currency.symbol}"></option>
+                    <option th:each="currency : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency).getSpecificEnumElements()}" th:value="${currency.symbol}" th:text="${currency.symbol}"></option>
                   </select>
                 </div>
               </div>

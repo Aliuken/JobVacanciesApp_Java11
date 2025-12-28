@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -101,9 +100,9 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
-		final String isSelectedLogoString = Objects.toString(isSelectedLogo);
-		final String selectedLogoIdString = Objects.toString(selectedLogoId);
+		final String idString = String.valueOf(id);
+		final String isSelectedLogoString = String.valueOf(isSelectedLogo);
+		final String selectedLogoIdString = String.valueOf(selectedLogoId);
 		final String jobCompanyLogoFilePaths = this.getJobCompanyLogoFilePaths().toString();
 
 		final String result = StringUtils.getStringJoined("JobCompanyDTO [id=", idString, ", name=", name, ", description=", description, ", isSelectedLogo=", isSelectedLogoString, ", selectedLogoId=", selectedLogoIdString, ", selectedLogoFilePath=", selectedLogoFilePath, ", jobCompanyLogos=", jobCompanyLogoFilePaths, "]");

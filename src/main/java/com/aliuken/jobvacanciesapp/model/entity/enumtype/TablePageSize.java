@@ -4,9 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import lombok.Getter;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import org.jspecify.annotations.NonNull;
 
 public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	BY_DEFAULT(0,   "tablePageSize.byDefault"),
@@ -22,10 +20,9 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
     private final int value;
 
 	@Getter
-	@NotNull
-	private final String messageName;
+	private final @NonNull String messageName;
 
-	private TablePageSize(final int value, final String messageName) {
+	private TablePageSize(final int value, final @NonNull String messageName) {
 		this.value = value;
 		this.messageName = messageName;
 	}
@@ -33,8 +30,9 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	public static TablePageSize findByValue(final Integer value) {
 		final TablePageSize tablePageSize;
 		if(value != null) {
+			final int intValue = value.intValue();
 			tablePageSize = Constants.PARALLEL_STREAM_UTILS.ofEnum(TablePageSize.class)
-				.filter(tablePageSizeAux -> tablePageSizeAux.value == value.intValue())
+				.filter(tablePageSizeAux -> tablePageSizeAux.value == intValue)
 				.findFirst()
 				.orElse(null);
 		} else {
@@ -44,26 +42,30 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 		return tablePageSize;
 	}
 
-	public static TablePageSize[] valuesWithoutByDefault() {
-		final List<TablePageSize> valuesWithoutByDefaultList = Constants.ENUM_UTILS.getSpecificEnumElements(TablePageSize.class);
-		final TablePageSize[] valuesWithoutByDefault = valuesWithoutByDefaultList.toArray(new TablePageSize[valuesWithoutByDefaultList.size()]);
-		return valuesWithoutByDefault;
+	public static @NonNull TablePageSize[] getSpecificEnumElements() {
+		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificEnumElements(TablePageSize.class);
+		return enumElementsWithoutByDefault;
 	}
 
 	@Override
-	public ConfigurableEnum<TablePageSize> getOverwrittenEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Class<TablePageSize> getEnumClass() {
+		return TablePageSize.class;
+	}
+
+	@Override
+	public ConfigurableEnum<TablePageSize> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final TablePageSize tablePageSize = configPropertiesBean.getDefaultInitialTablePageSizeOverwritten();
 		return tablePageSize;
 	}
 
 	@Override
-	public ConfigurableEnum<TablePageSize> getOverwritableEnumElement(ConfigPropertiesBean configPropertiesBean) {
+	public ConfigurableEnum<TablePageSize> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final TablePageSize tablePageSize = configPropertiesBean.getDefaultInitialTablePageSize();
 		return tablePageSize;
 	}
 
 	@Override
-	public ConfigurableEnum<TablePageSize> getFinalDefaultEnumElement() {
+	public @NonNull ConfigurableEnum<TablePageSize> getFinalDefaultEnumElement() {
 		return TablePageSize.SIZE_5;
 	}
 }

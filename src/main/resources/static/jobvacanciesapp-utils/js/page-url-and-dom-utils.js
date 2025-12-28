@@ -46,8 +46,8 @@ function getIsSearchJobVacanciesFromHome(descriptionModelAttribute, jobCategoryI
   return false;
 }
 
-function treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModelAttribute, defaultLanguage, descriptionModelAttribute, jobCategoryIdModelAttribute) {
-  //alert("treatSearchJobVacanciesFromHome(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + descriptionModelAttribute + ", " + jobCategoryIdModelAttribute + ")");
+function treatSearchJobVacanciesFromHome(languageCodeElementValue, descriptionModelAttribute, jobCategoryIdModelAttribute) {
+  //alert("treatSearchJobVacanciesFromHome(" + languageCodeElementValue + ", " + descriptionModelAttribute + ", " + jobCategoryIdModelAttribute + ")");
 
   const urlSearchParams = new URLSearchParams(window.location.search);
   let addOrReplaceNeeded = false;
@@ -55,7 +55,7 @@ function treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModel
   //Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE
   let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
   if (!isValidLanguageCode(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCode) ?? ENGLISH_LANGUAGE;
+    languageCode = isValidLanguageCode(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE;
     addOrReplaceNeeded = true;
   }
 
@@ -93,8 +93,8 @@ function treatSearchJobVacanciesFromHome(languageSessionAttribute, languageModel
   setCombosOnChangeCallback(comboOnChangeCallbackDataArray);
 }
 
-function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute, languageModelAttribute, defaultLanguage, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
-  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + sortingFieldModelAttribute + ", " + sortingDirectionModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
+function treatFilterAndPaginationCombosAndUrlParameters(languageCodeElementValue, filterNameModelAttribute, filterValueModelAttribute, sortingFieldModelAttribute, sortingDirectionModelAttribute, pageSizeModelAttribute, pageNumberModelAttribute) {
+  //alert("treatFilterAndPaginationCombosAndUrlParameters(" + languageCodeElementValue + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + sortingFieldModelAttribute + ", " + sortingDirectionModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
 
   const urlSearchParams = new URLSearchParams(window.location.search);
   let addOrReplaceNeeded = false;
@@ -102,7 +102,7 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
   //Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE
   let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
   if (!isValidLanguageCode(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCode) ?? ENGLISH_LANGUAGE;
+    languageCode = isValidLanguageCode(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE;
     addOrReplaceNeeded = true;
   }
 
@@ -183,15 +183,15 @@ function treatFilterAndPaginationCombosAndUrlParameters(languageSessionAttribute
   setCombosOnChangeCallback(comboOnChangeCallbackDataArray);
 }
 
-function treatLanguageComboAndUrlParameter(languageSessionAttribute, languageModelAttribute, defaultLanguage) {
-  //alert("treatLanguageComboAndUrlParameter(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ")");
+function treatLanguageComboAndUrlParameter(languageCodeElementValue) {
+  //alert("treatLanguageComboAndUrlParameter(" + languageCodeElementValue + ")");
 
   const urlSearchParams = new URLSearchParams(window.location.search);
 
   // Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE
   let languageCode = getParameterFromUrlSearchParams(urlSearchParams, "languageParam");
   if (!isValidLanguageCode(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCode) ?? ENGLISH_LANGUAGE;
+    languageCode = isValidLanguageCode(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE;
     addOrReplaceLanguageParamInUrl(languageCode);
   }
 

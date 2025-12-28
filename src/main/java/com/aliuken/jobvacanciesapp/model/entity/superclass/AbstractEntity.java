@@ -13,6 +13,7 @@ import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -40,14 +40,12 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	@Column(name="first_registration_date_time", nullable=false)
-	private LocalDateTime firstRegistrationDateTime;
+	private @NonNull LocalDateTime firstRegistrationDateTime;
 
-	//@NotNull
 	@ManyToOne
-	@JoinColumn(name="first_registration_auth_user_id")//, nullable=false)
-	private AuthUser firstRegistrationAuthUser;
+	@JoinColumn(name="first_registration_auth_user_id", nullable=false)
+	private @NonNull AuthUser firstRegistrationAuthUser;
 
 	@Column(name="last_modification_date_time")
 	private LocalDateTime lastModificationDateTime;
@@ -84,7 +82,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		lastModificationAuthUser = AbstractEntity.getSessionAuthUser();
 	}
 
-	public LocalDateTime getLastDateTime() {
+	public @NonNull LocalDateTime getLastDateTime() {
 		final LocalDateTime lastDateTime;
 		if(lastModificationDateTime != null) {
 			lastDateTime = lastModificationDateTime;
@@ -94,7 +92,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return lastDateTime;
 	}
 
-	public AuthUser getLastAuthUser() {
+	public @NonNull AuthUser getLastAuthUser() {
 		final AuthUser lastAuthUser;
 		if(lastModificationDateTime != null) {
 			lastAuthUser = lastModificationAuthUser;
@@ -104,8 +102,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return lastAuthUser;
 	}
 
-	public String getIdString() {
-		final String idString = Objects.toString(id);
+	public @NonNull String getIdString() {
+		final String idString = String.valueOf(id);
 		return idString;
 	}
 
@@ -115,17 +113,12 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	}
 
 	public Long getFirstRegistrationAuthUserId() {
-		final Long firstRegistrationAuthUserId = (firstRegistrationAuthUser != null) ? firstRegistrationAuthUser.getId() : null;
+		final Long firstRegistrationAuthUserId = firstRegistrationAuthUser.getId();
 		return firstRegistrationAuthUserId;
 	}
 
 	public String getFirstRegistrationAuthUserEmail() {
-		final String firstRegistrationAuthUserEmail = (firstRegistrationAuthUser != null) ? firstRegistrationAuthUser.getEmail() : null;
-		return firstRegistrationAuthUserEmail;
-	}
-
-	public String getFirstRegistrationAuthUserEmail(final String defaultValue) {
-		final String firstRegistrationAuthUserEmail = (firstRegistrationAuthUser != null) ? firstRegistrationAuthUser.getEmail() : defaultValue;
+		final String firstRegistrationAuthUserEmail = firstRegistrationAuthUser.getEmail();
 		return firstRegistrationAuthUserEmail;
 	}
 
@@ -144,13 +137,13 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return lastModificationAuthUserEmail;
 	}
 
-	public String getLastModificationAuthUserEmail(final String defaultValue) {
+	public @NonNull String getLastModificationAuthUserEmail(final @NonNull String defaultValue) {
 		final String lastModificationAuthUserEmail = (lastModificationAuthUser != null) ? lastModificationAuthUser.getEmail() : defaultValue;
 		return lastModificationAuthUserEmail;
 	}
 
 	@Override
-	public String getCommonFields() {
+	public @NonNull String getCommonFields() {
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
 		final String firstRegistrationAuthUserEmail = this.getFirstRegistrationAuthUserEmail();
 		final String lastModificationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(lastModificationDateTime);
@@ -164,7 +157,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return result;
 	}
 
-	public static AuthUser getSessionAuthUser() {
+	public static @NonNull AuthUser getSessionAuthUser() {
 		AuthUser sessionAuthUser;
 		try {
 			sessionAuthUser = SessionUtils.getSessionAuthUserFromRequestContextHolder();
@@ -188,7 +181,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
 		final String firstRegistrationAuthUserEmail = this.getFirstRegistrationAuthUserEmail();

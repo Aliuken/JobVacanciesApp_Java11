@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -67,7 +68,7 @@ public class JobCompanyLogo extends AbstractEntityWithJobCompany<JobCompanyLogo>
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 		final String jobCompanyIdString = (jobCompany != null) ? jobCompany.getIdString() : null;
 
@@ -78,12 +79,12 @@ public class JobCompanyLogo extends AbstractEntityWithJobCompany<JobCompanyLogo>
 	}
 
 	@Override
-	public String getAuthUserFields() {
+	public @NonNull String getAuthUserFields() {
 		return Constants.EMPTY_STRING;
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String jobCompanyName = this.getJobCompanyName();
 
 		final String result = StringUtils.getStringJoined(
@@ -92,7 +93,7 @@ public class JobCompanyLogo extends AbstractEntityWithJobCompany<JobCompanyLogo>
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String jobCompanyName = this.getJobCompanyName();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();

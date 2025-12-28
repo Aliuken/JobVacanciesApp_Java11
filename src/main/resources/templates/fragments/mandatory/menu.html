@@ -34,10 +34,10 @@
     </div>
 
     <div th:if="${maxPriorityAuthorityName == null}">
-      <span class="text-light align-middle" th:text="#{language.field} + ':'" th:if="${requestURI} != '/signup'"></span>
+      <span class="text-light align-middle" th:text="#{language.field} + ':'" th:if="${#httpServletRequest.requestURI} != '/signup'"></span>
       &nbsp;&nbsp;
-      <select id="languageCombo" name="languageCombo" class="align-middle" th:if="${requestURI} != '/signup'">
-        <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).valuesWithoutByDefault()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+      <select id="languageCombo" name="languageCombo" class="align-middle" th:if="${#httpServletRequest.requestURI} != '/signup'">
+        <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).getSpecificEnumElements()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
       </select>
       &nbsp;&nbsp;
       <a class="btn btn-primary align-middle" th:href="@{/login (languageParam=${param.languageParam})}" th:text="#{button.login}"></a>

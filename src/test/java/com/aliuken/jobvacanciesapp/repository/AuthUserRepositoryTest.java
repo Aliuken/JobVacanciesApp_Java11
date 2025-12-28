@@ -180,13 +180,9 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 				Assertions.assertNotNull(authUser.getFirstRegistrationDateTime());
 
 				final AuthUser firstRegistrationAuthUser = authUser.getFirstRegistrationAuthUser();
-				if(Long.valueOf(1L).equals(authUserId)) {
-					Assertions.assertNull(firstRegistrationAuthUser);
-				} else {
-					Assertions.assertNotNull(firstRegistrationAuthUser);
-					Assertions.assertNotNull(firstRegistrationAuthUser.getId());
-					Assertions.assertNotNull(firstRegistrationAuthUser.getEmail());
-				}
+				Assertions.assertNotNull(firstRegistrationAuthUser);
+				Assertions.assertNotNull(firstRegistrationAuthUser.getId());
+				Assertions.assertNotNull(firstRegistrationAuthUser.getEmail());
 			}
 		}
 	}
@@ -498,7 +494,53 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
 	@Test
 	public void testDeleteById_Ok() {
-		final AuthUser authUser = authUserRepository.findByIdNotOptional(2L);
+		this.deleteByIdFull(3L);
+	}
+
+	@Test
+	public void testDeleteById_NullId() {
+		final InvalidDataAccessApiUsageException exception = Assertions.assertThrows(
+			InvalidDataAccessApiUsageException.class, () -> {
+				authUserRepository.deleteByIdAndFlush(null);
+			}
+		);
+
+		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+
+		Assertions.assertNotNull(rootCauseMessage);
+		Assertions.assertEquals("The given id must not be null!", rootCauseMessage);
+	}
+
+	@Test
+	public void testDeleteById_ForeignKeyViolation() {
+		final DataIntegrityViolationException exception = Assertions.assertThrows(
+			DataIntegrityViolationException.class, () -> {
+				authUserRepository.deleteByIdAndFlush(2L);
+			}
+		);
+
+		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+
+		Assertions.assertNotNull(rootCauseMessage);
+//		Assertions.assertEquals("Cannot delete or update a parent row: a foreign key constraint fails (`job-vacancies-app-db`.`auth_user_curriculum`, CONSTRAINT `auth_user_curriculum_foreign_key_3` FOREIGN KEY (`auth_user_id`) REFERENCES `auth_user` (`id`))", rootCauseMessage);
+	}
+
+	@Test
+	public void testDeleteByIdFull_ForeignKeyViolation() {
+		final DataIntegrityViolationException exception = Assertions.assertThrows(
+				DataIntegrityViolationException.class, () -> {
+					this.deleteByIdFull(2L);
+				}
+		);
+
+		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
+
+		Assertions.assertNotNull(rootCauseMessage);
+//		Assertions.assertEquals("Cannot delete or update a parent row: a foreign key constraint fails (`job-vacancies-app-db`.`auth_user_curriculum`, CONSTRAINT `auth_user_curriculum_foreign_key_3` FOREIGN KEY (`auth_user_id`) REFERENCES `auth_user` (`id`))", rootCauseMessage);
+	}
+
+	private void deleteByIdFull(long id) {
+		final AuthUser authUser = authUserRepository.findByIdNotOptional(id);
 		Assertions.assertNotNull(authUser);
 		Assertions.assertNotNull(authUser.getEmail());
 
@@ -538,35 +580,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 			authUserRoleRepository.deleteByIdAndFlush(authUserRoleId);
 		}
 
-		authUserRepository.deleteByIdAndFlush(2L);
-	}
-
-	@Test
-	public void testDeleteById_NullId() {
-		final InvalidDataAccessApiUsageException exception = Assertions.assertThrows(
-			InvalidDataAccessApiUsageException.class, () -> {
-				authUserRepository.deleteByIdAndFlush(null);
-			}
-		);
-
-		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
-
-		Assertions.assertNotNull(rootCauseMessage);
-		Assertions.assertEquals("The given id must not be null!", rootCauseMessage);
-	}
-
-	@Test
-	public void testDeleteById_ForeignKeyViolation() {
-		final DataIntegrityViolationException exception = Assertions.assertThrows(
-			DataIntegrityViolationException.class, () -> {
-				authUserRepository.deleteByIdAndFlush(2L);
-			}
-		);
-
-		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
-
-		Assertions.assertNotNull(rootCauseMessage);
-//		Assertions.assertEquals("Cannot delete or update a parent row: a foreign key constraint fails (`job-vacancies-app-db`.`auth_user_curriculum`, CONSTRAINT `auth_user_curriculum_foreign_key_3` FOREIGN KEY (`auth_user_id`) REFERENCES `auth_user` (`id`))", rootCauseMessage);
+		authUserRepository.deleteByIdAndFlush(id);
 	}
 
 	@Test

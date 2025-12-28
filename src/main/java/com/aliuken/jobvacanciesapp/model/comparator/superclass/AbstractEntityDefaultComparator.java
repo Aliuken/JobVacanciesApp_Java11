@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,15 +15,15 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 
 	@Getter
 	public static class EntityComparators<U extends AbstractEntity<U>> {
-		private final AbstractEntityDefaultComparator<U> ascComparator;
-		private final AbstractEntityDefaultComparator<U> descComparator;
+		private final @NonNull AbstractEntityDefaultComparator<U> ascComparator;
+		private final @NonNull AbstractEntityDefaultComparator<U> descComparator;
 
 		private EntityComparators() {
 			this.ascComparator = new AbstractEntityDefaultComparator<>(false);
 			this.descComparator = new AbstractEntityDefaultComparator<>(true);
 		}
 
-		public AbstractEntityDefaultComparator<U> getCurrentDefaultComparator() {
+		public @NonNull AbstractEntityDefaultComparator<U> getCurrentDefaultComparator() {
 			final TableSortingDirection currentDefaultTableSortingDirection = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TableSortingDirection.class);
 
 			final AbstractEntityDefaultComparator<U> currentDefaultComparator;

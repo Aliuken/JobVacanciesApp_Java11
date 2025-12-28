@@ -19,7 +19,7 @@ CREATE TABLE `auth_user` (
   `initial_table_page_size` integer NOT NULL DEFAULT 0,
   `pdf_document_page_format` enum('---','A3V','A3H','A4V','A4H') NOT NULL DEFAULT '---',
   `first_registration_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `first_registration_auth_user_id` bigint,
+  `first_registration_auth_user_id` bigint NOT NULL,
   `last_modification_date_time` datetime,
   `last_modification_auth_user_id` bigint,
   PRIMARY KEY (`id`),
@@ -32,8 +32,8 @@ CREATE TABLE `auth_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `auth_user` WRITE;
-INSERT INTO `auth_user` VALUES (1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-','---',0,'---',CURRENT_TIMESTAMP,null,null,null);
-INSERT INTO `auth_user` VALUES (2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$','---',0,'A3H',CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO `auth_user` VALUES (1,'anonymous@aliuken.com','Anonymous','User','--',1,'-','-','---',0,'---',CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user` VALUES (2,'aliuken@aliuken.com','Aliuken','Master','es',1,'D','$','---',0,'A3H',CURRENT_TIMESTAMP,1,null,null);
 INSERT INTO `auth_user` VALUES (3,'luis@aliuken.com','Luis','Esparza Gomez','--',1,'D','€','asc',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user` VALUES (4,'marisol@aliuken.com','Marisol','Salinas Rodarte','--',1,'D','-','asc',10,'A4V',CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user` VALUES (5,'daniel@aliuken.com','Daniel','López García','en',1,'-','$','asc',0,'---',CURRENT_TIMESTAMP,1,null,null);

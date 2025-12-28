@@ -8,7 +8,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class AuthUserEmailDTO implements AbstractEntityDTO, Serializable {
@@ -29,7 +28,7 @@ public class AuthUserEmailDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
+		final String idString = String.valueOf(id);
 
 		final String result = StringUtils.getStringJoined("AuthUserEmailDTO [id=", idString, ", email=", email, "]");
 		return result;

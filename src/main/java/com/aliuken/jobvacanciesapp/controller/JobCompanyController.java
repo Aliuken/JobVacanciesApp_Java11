@@ -53,7 +53,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -95,7 +94,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 		try {
 			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
 				if(log.isDebugEnabled()) {
-					final String tableSearchDtoString = Objects.toString(tableSearchDTO);
+					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
 				}
 

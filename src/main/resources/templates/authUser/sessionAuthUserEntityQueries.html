@@ -49,7 +49,7 @@
                 <td th:text="${authUserEntityQuery.finalResultFileName}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUserEntityQuery.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${authUserEntityQuery.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.getFirstRegistrationAuthUserEmail('-')}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
+                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserEntityQuery.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                   <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
                 </td>
                 <td>

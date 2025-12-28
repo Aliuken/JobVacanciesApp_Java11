@@ -19,6 +19,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SortComparator;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +36,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -125,17 +125,17 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	public String getLanguageName() {
-		final String languageName = Objects.toString(language);
+		final String languageName = String.valueOf(language);
 		return languageName;
 	}
 
 	public String getEnabledString() {
-		final String enabledString = Objects.toString(enabled);
+		final String enabledString = String.valueOf(enabled);
 		return enabledString;
 	}
 
 	public String getColorModeName() {
-		final String colorModeName = Objects.toString(colorMode);
+		final String colorModeName = String.valueOf(colorMode);
 		return colorModeName;
 	}
 
@@ -145,17 +145,17 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	public String getInitialTableSortingDirectionName() {
-		final String initialTableSortingDirectionName = Objects.toString(initialTableSortingDirection);
+		final String initialTableSortingDirectionName = String.valueOf(initialTableSortingDirection);
 		return initialTableSortingDirectionName;
 	}
 
 	public String getInitialTablePageSizeName() {
-		final String initialTablePageSizeName = Objects.toString(initialTablePageSize);
+		final String initialTablePageSizeName = String.valueOf(initialTablePageSize);
 		return initialTablePageSizeName;
 	}
 
 	public String getPdfDocumentPageFormatName() {
-		final String pdfDocumentPageFormatName = Objects.toString(pdfDocumentPageFormat);
+		final String pdfDocumentPageFormatName = String.valueOf(pdfDocumentPageFormat);
 		return pdfDocumentPageFormatName;
 	}
 
@@ -332,7 +332,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 
 		final String result = StringUtils.getStringJoined(
@@ -342,7 +342,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	@Override
-	public String getAuthUserFields() {
+	public @NonNull String getAuthUserFields() {
 		final String result = StringUtils.getStringJoined(
 			StyleApplier.getBoldString("email: "), email, Constants.NEWLINE,
 			StyleApplier.getBoldString("name: "), name, Constants.NEWLINE,
@@ -351,7 +351,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String languageName = this.getLanguageName();
 		final String enabledString = this.getEnabledString();
 		final String initialCurencySymbol = this.getInitialCurrencySymbol();
@@ -369,7 +369,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String languageName = this.getLanguageName();
 		final String enabledString = this.getEnabledString();

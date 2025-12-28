@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Data
@@ -173,11 +172,11 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
-		final String jobCategoryIdString = (jobCategory != null) ? Objects.toString(jobCategory.getId()) : null;
-		final String jobCompanyIdString = (jobCompany != null) ? Objects.toString(jobCompany.getId()) : null;
+		final String idString = String.valueOf(id);
+		final String jobCategoryIdString = (jobCategory != null) ? String.valueOf(jobCategory.getId()) : null;
+		final String jobCompanyIdString = (jobCompany != null) ? String.valueOf(jobCompany.getId()) : null;
 		final String publicationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(publicationDateTime);
-		final String salaryConversionResultString  = Objects.toString(salaryConversionResult);
+		final String salaryConversionResultString  = String.valueOf(salaryConversionResult);
 		final String highlightedString = highlighted.toString();
 
 		final String result = StringUtils.getStringJoined("JobVacancyDTO [id=", idString, ", name=", name, ", description=", description,

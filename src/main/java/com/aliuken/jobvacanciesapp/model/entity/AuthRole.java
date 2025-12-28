@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SortComparator;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,10 +20,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,19 +41,16 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	public static final String SUPERVISOR = "SUPERVISOR";
 	public static final String ADMINISTRATOR = "ADMINISTRATOR";
 
-	@NotNull
 	@Size(max=20)
 	@Column(name="name", length=20, nullable=false, unique=true)
-	private String name;
+	private @NonNull String name;
 
-	@NotNull
 	@Size(max=30)
 	@Column(name="message_name", length=30, nullable=false, unique=true)
-	private String messageName;
+	private @NonNull String messageName;
 
-	@NotNull
 	@Column(name="priority", nullable=false, unique=true)
-	private Byte priority;
+	private @NonNull Byte priority;
 
 	@OneToMany(mappedBy="authRole", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -65,8 +61,8 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 		super();
 	}
 
-	public String getPriorityString() {
-		final String priorityString = Objects.toString(priority);
+	public @NonNull String getPriorityString() {
+		final String priorityString = String.valueOf(priority);
 		return priorityString;
 	}
 
@@ -76,7 +72,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserRoleIds() {
+	public @NonNull Set<Long> getAuthUserRoleIds() {
 		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.map(aur -> aur.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -85,7 +81,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUser> getAuthUsers() {
+	public @NonNull Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.map(aur -> aur.getAuthUser())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -94,7 +90,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserIds() {
+	public @NonNull Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.map(aur -> aur.getAuthUser())
 			.map(au -> au.getId())
@@ -104,7 +100,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getAuthUserEmails() {
+	public @NonNull Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.map(aur -> aur.getAuthUser())
 			.map(au -> au.getEmail())
@@ -119,7 +115,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 		final String priorityString = this.getPriorityString();
 
@@ -132,17 +128,17 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@Override
-	public String getAuthUserFields() {
+	public @NonNull String getAuthUserFields() {
 		return Constants.EMPTY_STRING;
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		return Constants.EMPTY_STRING;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String priorityString = this.getPriorityString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();

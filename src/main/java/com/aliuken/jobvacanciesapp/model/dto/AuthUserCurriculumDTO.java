@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class AuthUserCurriculumDTO implements AbstractEntityDTO, Serializable {
@@ -49,8 +48,8 @@ public class AuthUserCurriculumDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
-		final String authUserEmail = (authUser != null) ? Objects.toString(authUser.getEmail()) : null;
+		final String idString = String.valueOf(id);
+		final String authUserEmail = (authUser != null) ? String.valueOf(authUser.getEmail()) : null;
 
 		final String result = StringUtils.getStringJoined("AuthUserCurriculumDTO [id=", idString, ", authUserEmail=", authUserEmail, ", fileName=", fileName, ", description=", description, "]");
 		return result;

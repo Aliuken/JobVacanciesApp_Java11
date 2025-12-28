@@ -2,9 +2,10 @@ package com.aliuken.jobvacanciesapp.superinterface;
 
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
+import org.jspecify.annotations.NonNull;
 
 public interface Internationalizable {
-	public abstract String getMessageName();
+	public abstract @NonNull String getMessageName();
 
 	public default String getMessage(final String languageCode) {
 		final String messageName = this.getMessageName();

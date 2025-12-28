@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class AuthUserCredentialsDTO implements AbstractEntityDTO, Serializable {
@@ -43,7 +42,7 @@ public class AuthUserCredentialsDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
+		final String idString = String.valueOf(id);
 
 		final String result = StringUtils.getStringJoined("AuthUserCredentialsDTO [id=", idString, ", email=", email, "]");
 		return result;

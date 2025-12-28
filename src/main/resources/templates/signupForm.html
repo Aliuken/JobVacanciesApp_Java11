@@ -39,7 +39,7 @@
                 <label for="languageCombo" class="form-label mt-2 mb-1" th:text="#{authUser.language} + ':'"></label>
                 <br/>
                 <select id="languageCombo" name="languageCombo" th:field="*{languageCode}" required>
-                  <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).valuesWithoutByDefault()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+                  <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).getSpecificEnumElements()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
                 </select>
               </div>
 

@@ -111,13 +111,11 @@ function getIsSearchJobVacanciesFromHomeTS(
 }
 
 function treatSearchJobVacanciesFromHomeTS(
-  languageSessionAttribute: Undefinable<string>,
-  languageModelAttribute: Undefinable<string>,
-  defaultLanguage: Undefinable<string>,
+  languageCodeElementValue: Undefinable<string>,
   descriptionModelAttribute: Undefinable<string>,
   jobCategoryIdModelAttribute: Undefinable<number>
 ): void {
-  //alert("treatSearchJobVacanciesFromHomeTS(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + descriptionModelAttribute + ", " + jobCategoryIdModelAttribute + ")");
+  //alert("treatSearchJobVacanciesFromHomeTS(" + languageCodeElementValue + ", " + descriptionModelAttribute + ", " + jobCategoryIdModelAttribute + ")");
 
   const urlSearchParams: URLSearchParams = new URLSearchParams(window.location.search);
   let addOrReplaceNeeded = false;
@@ -125,7 +123,7 @@ function treatSearchJobVacanciesFromHomeTS(
   //Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE_TS
   let languageCode: Nullable<string> = getParameterFromUrlSearchParamsTS(urlSearchParams, "languageParam");
   if (!isValidLanguageCodeTS(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCodeTS) ?? ENGLISH_LANGUAGE_TS;
+    languageCode = isValidLanguageCodeTS(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE_TS;
     addOrReplaceNeeded = true;
   }
 
@@ -164,9 +162,7 @@ function treatSearchJobVacanciesFromHomeTS(
 }
 
 function treatFilterAndPaginationCombosAndUrlParametersTS(
-  languageSessionAttribute: Undefinable<string>,
-  languageModelAttribute: Undefinable<string>,
-  defaultLanguage: Undefinable<string>,
+  languageCodeElementValue: Undefinable<string>,
   filterNameModelAttribute: Undefinable<string>,
   filterValueModelAttribute: Undefinable<string>,
   sortingFieldModelAttribute: Undefinable<string>,
@@ -174,7 +170,7 @@ function treatFilterAndPaginationCombosAndUrlParametersTS(
   pageSizeModelAttribute: Undefinable<string>,
   pageNumberModelAttribute: Undefinable<string>
 ): void {
-  //alert("treatFilterAndPaginationCombosAndUrlParametersTS(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + sortingFieldModelAttribute + ", " + sortingDirectionModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
+  //alert("treatFilterAndPaginationCombosAndUrlParametersTS(" + languageCodeElementValue + ", " + filterNameModelAttribute + ", " + filterValueModelAttribute + ", " + sortingFieldModelAttribute + ", " + sortingDirectionModelAttribute + ", " + pageSizeModelAttribute + ", " + pageNumberModelAttribute + ")");
 
   const urlSearchParams: URLSearchParams = new URLSearchParams(window.location.search);
   let addOrReplaceNeeded = false;
@@ -182,7 +178,7 @@ function treatFilterAndPaginationCombosAndUrlParametersTS(
   //Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE_TS
   let languageCode: Nullable<string> = getParameterFromUrlSearchParamsTS(urlSearchParams, "languageParam");
   if (!isValidLanguageCodeTS(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCodeTS) ?? ENGLISH_LANGUAGE_TS;
+    languageCode = isValidLanguageCodeTS(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE_TS;
     addOrReplaceNeeded = true;
   }
 
@@ -264,18 +260,16 @@ function treatFilterAndPaginationCombosAndUrlParametersTS(
 }
 
 function treatLanguageComboAndUrlParameterTS(
-  languageSessionAttribute: Undefinable<string>,
-  languageModelAttribute: Undefinable<string>,
-  defaultLanguage: Undefinable<string>
+  languageCodeElementValue: Undefinable<string>
 ): void {
-  //alert("treatLanguageComboAndUrlParameterTS(" + languageSessionAttribute + ", " + languageModelAttribute + ", " + defaultLanguage + ")");
+  //alert("treatLanguageComboAndUrlParameterTS(" + languageCodeElementValue + ")");
 
   const urlSearchParams: URLSearchParams = new URLSearchParams(window.location.search);
 
   // Set the languageParam URL param to the value from the URL param or the session or the model attribute or the default language or ENGLISH_LANGUAGE_TS
   let languageCode: Nullable<string> = getParameterFromUrlSearchParamsTS(urlSearchParams, "languageParam");
   if (!isValidLanguageCodeTS(languageCode)) {
-    languageCode = [languageSessionAttribute, languageModelAttribute, defaultLanguage].find(isValidLanguageCodeTS) ?? ENGLISH_LANGUAGE_TS;
+    languageCode = isValidLanguageCodeTS(languageCodeElementValue) ? languageCodeElementValue : ENGLISH_LANGUAGE_TS;
     addOrReplaceLanguageParamInUrlTS(languageCode);
   }
 

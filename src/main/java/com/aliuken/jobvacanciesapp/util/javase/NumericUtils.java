@@ -6,7 +6,6 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.function.Function;
 
 public class NumericUtils {
@@ -42,13 +41,13 @@ public class NumericUtils {
 		final String minimumNumberString;
 		final String maximumNumberString;
 		if(fractionalPartSize == 0) {
-			final String integerPartSizeString = Objects.toString(integerPartSize);
+			final String integerPartSizeString = String.valueOf(integerPartSize);
 			decimalNumberRegex = StringUtils.getStringJoined("^\\d{1,", integerPartSizeString, "}$");
 			minimumNumberString = "1";
 			maximumNumberString = "9".repeat(integerPartSize);
 		} else {
-			final String integerPartSizeString = Objects.toString(integerPartSize);
-			final String fractionalPartSizeString = Objects.toString(fractionalPartSize);
+			final String integerPartSizeString = String.valueOf(integerPartSize);
+			final String fractionalPartSizeString = String.valueOf(fractionalPartSize);
 			decimalNumberRegex = StringUtils.getStringJoined("^\\d{1,", integerPartSizeString, "}\\.\\d{1,", fractionalPartSizeString, "}$");
 			minimumNumberString = StringUtils.getStringJoined("0.", "0".repeat(fractionalPartSize - 1), "1");
 			maximumNumberString = StringUtils.getStringJoined("9".repeat(integerPartSize), ".", "9".repeat(fractionalPartSize));

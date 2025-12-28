@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.factory;
 
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
+import org.jspecify.annotations.NonNull;
 
 public class AuthUserFactory extends AbstractEntityFactory<AuthUser> {
 	public AuthUserFactory() {
@@ -9,7 +10,7 @@ public class AuthUserFactory extends AbstractEntityFactory<AuthUser> {
 	}
 
 	@Override
-	protected AuthUser createInstance() {
+	protected @NonNull AuthUser createInstance() {
 		return new AuthUser();
 	}
 }

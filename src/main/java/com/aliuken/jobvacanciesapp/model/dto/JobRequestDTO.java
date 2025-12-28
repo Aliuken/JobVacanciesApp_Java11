@@ -8,7 +8,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class JobRequestDTO implements AbstractEntityDTO, Serializable {
@@ -87,9 +86,9 @@ public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 
 	@Override
 	public String toString() {
-		final String idString = Objects.toString(id);
-		final String authUserEmail = (authUser != null) ? Objects.toString(authUser.getEmail()) : null;
-		final String jobVacancyIdString = (jobVacancy != null) ? Objects.toString(jobVacancy.getId()) : null;
+		final String idString = String.valueOf(id);
+		final String authUserEmail = (authUser != null) ? String.valueOf(authUser.getEmail()) : null;
+		final String jobVacancyIdString = (jobVacancy != null) ? String.valueOf(jobVacancy.getId()) : null;
 
 		final String result = StringUtils.getStringJoined("JobRequestDTO [id=", idString, ", authUserEmail=", authUserEmail, ", jobVacancyId=", jobVacancyIdString, ", comments=", comments, ", curriculumFileName=", curriculumFileName, "]");
 		return result;

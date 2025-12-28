@@ -19,6 +19,7 @@ import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.persistence.Column;
@@ -31,7 +32,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
 
 @Entity
 @Table(name = "auth_user_entity_query", indexes = {
@@ -152,17 +152,17 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	}
 
 	public String getInitialPdfDocumentPageFormatName() {
-		final String initialPdfDocumentPageFormatName = Objects.toString(initialPdfDocumentPageFormat);
+		final String initialPdfDocumentPageFormatName = String.valueOf(initialPdfDocumentPageFormat);
 		return initialPdfDocumentPageFormatName;
 	}
 
 	public String getFinalPdfDocumentPageFormatName() {
-		final String finalPdfDocumentPageFormatName = Objects.toString(finalPdfDocumentPageFormat);
+		final String finalPdfDocumentPageFormatName = String.valueOf(finalPdfDocumentPageFormat);
 		return finalPdfDocumentPageFormatName;
 	}
 
 	public String getLanguageName() {
-		final String languageName = Objects.toString(language);
+		final String languageName = String.valueOf(language);
 		return languageName;
 	}
 
@@ -209,22 +209,22 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	}
 
 	public String getTableSortingFieldName() {
-		final String tableSortingFieldName = Objects.toString(tableSortingField);
+		final String tableSortingFieldName = String.valueOf(tableSortingField);
 		return tableSortingFieldName;
 	}
 
 	public String getTableSortingDirectionName() {
-		final String tableSortingDirectionName = Objects.toString(tableSortingDirection);
+		final String tableSortingDirectionName = String.valueOf(tableSortingDirection);
 		return tableSortingDirectionName;
 	}
 
 	public String getTablePageSizeName() {
-		final String tablePageSizeName = Objects.toString(tablePageSize);
+		final String tablePageSizeName = String.valueOf(tablePageSize);
 		return tablePageSizeName;
 	}
 
 	public String getPageNumberString() {
-		final String pageNumberString = Objects.toString(pageNumber);
+		final String pageNumberString = String.valueOf(pageNumber);
 		return pageNumberString;
 	}
 
@@ -240,7 +240,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 
 	public String getRealPageNumberString() {
 		Integer realPageNumber = this.getRealPageNumber();
-		final String pageNumberString = Objects.toString(realPageNumber);
+		final String pageNumberString = String.valueOf(realPageNumber);
 		return pageNumberString;
 	}
 
@@ -263,7 +263,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 
 		final String result = StringUtils.getStringJoined(
@@ -272,7 +272,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String initialPdfDocumentPageFormatName = this.getInitialPdfDocumentPageFormatName();
 		final String finalPdfDocumentPageFormatName = this.getFinalPdfDocumentPageFormatName();
 		final String languageName = this.getLanguageName();
@@ -301,7 +301,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String authUserEmail = this.getAuthUserEmail();
 		final String initialPdfDocumentPageFormatName = this.getInitialPdfDocumentPageFormatName();

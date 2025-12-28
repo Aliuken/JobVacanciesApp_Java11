@@ -41,7 +41,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -68,7 +67,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 		try {
 			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
 				if(log.isDebugEnabled()) {
-					final String tableSearchDtoString = Objects.toString(tableSearchDTO);
+					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
 				}
 

@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.jspecify.annotations.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,7 +82,7 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 	}
 
 	@Override
-	public String getKeyFields() {
+	public @NonNull String getKeyFields() {
 		final String idString = this.getIdString();
 
 		final String result = StringUtils.getStringJoined(
@@ -91,19 +92,19 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 	}
 
 	@Override
-	public String getAuthUserFields() {
+	public @NonNull String getAuthUserFields() {
 		return Constants.EMPTY_STRING;
 	}
 
 	@Override
-	public String getOtherFields() {
+	public @NonNull String getOtherFields() {
 		final String result = StringUtils.getStringJoined(
 			StyleApplier.getBoldString("description: "), description);
 		return result;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = this.getFirstRegistrationDateTimeString();
 		final String firstRegistrationAuthUserEmail = this.getFirstRegistrationAuthUserEmail();
