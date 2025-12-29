@@ -1,5 +1,6 @@
 package com.aliuken.jobvacanciesapp.util.spring.di;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -21,17 +22,17 @@ public class BeanFactoryUtils implements ApplicationContextAware {
 		return BeanFactoryUtils.genericApplicationContext;
 	}
 
-	public static <T> T getBean(final Class<T> beanClass) throws BeansException {
+	public static <T> @NonNull T getBean(final Class<T> beanClass) throws BeansException {
 		final T bean = BeanFactoryUtils.genericApplicationContext.getBean(beanClass);
 		return bean;
 	}
 
-	public static <T> T getBean(final String beanName, final Class<T> beanClass) throws BeansException {
+	public static <T> @NonNull T getBean(final String beanName, final Class<T> beanClass) throws BeansException {
 		final T bean = BeanFactoryUtils.genericApplicationContext.getBean(beanName, beanClass);
 		return bean;
 	}
 
-	public static <T> T getBean(final Class<T> beanClass, final Object... args) throws BeansException {
+	public static <T> @NonNull T getBean(final Class<T> beanClass, final Object... args) throws BeansException {
 		final T bean = BeanFactoryUtils.genericApplicationContext.getBean(beanClass, args);
 		return bean;
 	}

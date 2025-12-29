@@ -87,9 +87,7 @@ public class SessionUtils {
 		final AuthUserService authUserService = BeanFactoryUtils.getBean(AuthUserService.class);
 
 		AuthUser sessionAuthUser = (AuthUser) httpSession.getAttribute(Constants.SESSION_AUTH_USER);
-		if(authUserService != null) {
-			sessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
-		}
+		sessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
 		return sessionAuthUser;
 	}
 }
