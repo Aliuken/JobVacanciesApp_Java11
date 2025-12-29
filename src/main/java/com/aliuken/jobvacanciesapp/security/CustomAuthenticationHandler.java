@@ -166,6 +166,10 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
 		httpServletResponse.setStatus(LOGOUT_STATUS);
 
+		if(log.isInfoEnabled()) {
+			log.info(StringUtils.getStringJoined("3. restartApp - redirectUrl: ", redirectUrl));
+		}
+
 		try {
 			httpServletResponse.sendRedirect(redirectUrl);
 		} catch(final Exception exception) {

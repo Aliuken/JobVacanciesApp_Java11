@@ -10,6 +10,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,7 +28,7 @@ public class GenericControllerAdvice {
 
 	//To get the object with the data used in the Thymeleaf page template.html like "${templateDataDTO...}"
 	@ModelAttribute("templateDataDTO")
-	public TemplateDataDTO getTemplateDataDTO(final HttpSession httpSession) {
+	public TemplateDataDTO getTemplateDataDTO(final @NonNull HttpSession httpSession) {
 		final AuthUser refreshedSessionAuthUser = this.getRefreshedSessionAuthUser(httpSession);
 
 		final String colorModeValue;
@@ -54,10 +55,14 @@ public class GenericControllerAdvice {
 		final String userInterfaceFrameworkCode = ConfigPropertiesBean.CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK.getCode();
 
 		final TemplateDataDTO templateDataDTO = new TemplateDataDTO(colorModeValue, languageCode, userInterfaceFrameworkCode);
+		if(log.isInfoEnabled()) {
+			final String templateDataDtoString = String.valueOf(templateDataDTO);
+			log.info(StringUtils.getStringJoined("getTemplateDataDTO result:", templateDataDtoString));
+		}
 		return templateDataDTO;
 	}
 
-	private AuthUser getRefreshedSessionAuthUser(final HttpSession httpSession) {
+	private AuthUser getRefreshedSessionAuthUser(final @NonNull HttpSession httpSession) {
 		final AuthUser sessionAuthUser = (AuthUser) httpSession.getAttribute("sessionAuthUser");
 		final AuthUser refreshedSessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
 		return refreshedSessionAuthUser;
@@ -65,7 +70,7 @@ public class GenericControllerAdvice {
 
 	//To handle the exception when uploading files too big
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
-	public String handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception, RedirectAttributes redirectAttributes) {
+	public String handleMaxUploadSizeExceededException(final @NonNull MaxUploadSizeExceededException exception, final @NonNull RedirectAttributes redirectAttributes) {
 		if(log.isErrorEnabled()) {
 			final String stackTrace = ThrowableUtils.getStackTrace(exception);
 			log.error(StringUtils.getStringJoined("An exception happened when trying to upload a file. The maximum file size was exceeded. Exception: ", stackTrace));

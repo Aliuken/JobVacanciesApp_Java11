@@ -11,6 +11,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.ui.Model;
 
 @Slf4j
@@ -54,7 +55,7 @@ public class ControllerNavigationUtils {
 		return nextView;
 	}
 
-	public static String getNextRedirect(final String nextRedirectPath, String languageCode) {
+	public static @NonNull String getNextRedirect(final @NonNull String nextRedirectPath, String languageCode) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}
@@ -67,7 +68,7 @@ public class ControllerNavigationUtils {
 		return nextRedirect;
 	}
 
-	public static String getNextRedirect(final String nextRedirectPath, String languageCode, final String email, final String uuid) {
+	public static @NonNull String getNextRedirect(final @NonNull String nextRedirectPath, String languageCode, final String email, final String uuid) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}
@@ -82,8 +83,10 @@ public class ControllerNavigationUtils {
 		return nextRedirect;
 	}
 
-	public static String getNextRedirect(final String nextRedirectPath, String languageCode, Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission,
-										 TableSortingDirection nextDefaultInitialTableSortingDirection, TablePageSize nextDefaultInitialTablePageSize, ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
+	public static @NonNull String getNextRedirect(final @NonNull String nextRedirectPath, String languageCode,
+				Language nextDefaultLanguage, AnonymousAccessPermission nextDefaultAnonymousAccessPermission,
+				TableSortingDirection nextDefaultInitialTableSortingDirection, TablePageSize nextDefaultInitialTablePageSize,
+				ColorMode nextDefaultColorMode, UserInterfaceFramework nextDefaultUserInterfaceFramework, PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat) {
 		if(languageCode == null) {
 			languageCode = Constants.EMPTY_STRING;
 		}

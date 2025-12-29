@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,7 +39,7 @@ public class ThrowableUtils {
 
 	// Alternative "Exception getStackTrace expression / display / shell / terminal / inspect":
 	// java.io.StringWriter stringWriter = new java.io.StringWriter(); e.printStackTrace(new java.io.PrintWriter(stringWriter)); stringWriter.toString();
-	public static String getStackTrace(final Throwable throwable) {
+	public static String getStackTrace(final @NonNull Throwable throwable) {
 		try(
 			final StringWriter stringWriter = new StringWriter();
 			final PrintWriter printWriter = new PrintWriter(stringWriter);

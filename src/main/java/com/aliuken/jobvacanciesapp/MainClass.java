@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp;
 
+import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 @SpringBootApplication
+@Slf4j
 public class MainClass {
 	private static volatile String[] args;
 	private static volatile SpringApplication springApplication;
@@ -59,6 +62,11 @@ public class MainClass {
 			}
 			if(nextDefaultPdfDocumentPageFormatCode != null) {
 				additionalPropertiesMap.put("jobvacanciesapp.defaultPdfDocumentPageFormatCodeOverwritten", nextDefaultPdfDocumentPageFormatCode);
+			}
+
+			if(log.isInfoEnabled()) {
+				final String additionalPropertiesMapString = StringUtils.getMapString(additionalPropertiesMap);
+				log.info(StringUtils.getStringJoined("4. restartApp - additionalPropertiesMap: ", additionalPropertiesMapString));
 			}
 
 			MainClass.restartExecutorService.submit(() -> {

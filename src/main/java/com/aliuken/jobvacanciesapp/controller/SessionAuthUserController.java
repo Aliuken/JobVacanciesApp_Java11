@@ -328,6 +328,15 @@ public class SessionAuthUserController {
 		final ApplicationNextConfigDTO initialApplicationNextConfigDTO = this.getInitialApplicationNextConfigDTO();
 		model.addAttribute("applicationNextConfigDTO", initialApplicationNextConfigDTO);
 
+		if(log.isInfoEnabled()) {
+			final String applicationDefaultConfigDtoString = String.valueOf(applicationDefaultConfigDTO);
+			final String initialApplicationNextConfigDtoString = String.valueOf(initialApplicationNextConfigDTO);
+			log.info(StringUtils.getStringJoined(
+				"1. restartApp:",
+				"\n- applicationDefaultConfigDTO: ", applicationDefaultConfigDtoString,
+				"\n- applicationNextConfigDTO: ", initialApplicationNextConfigDtoString));
+		}
+
 		return ControllerNavigationUtils.getNextView("app/applicationConfigForm.html", model, operation, languageCode);
 	}
 
@@ -373,6 +382,18 @@ public class SessionAuthUserController {
 
 				final String nextDefaultPdfDocumentPageFormatCode = applicationNextConfigDTO.getNextDefaultPdfDocumentPageFormatCode();
 				final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(nextDefaultPdfDocumentPageFormatCode);
+
+				if(log.isInfoEnabled()) {
+					log.info(StringUtils.getStringJoined(
+						"2. restartApp:",
+						"\n- nextDefaultLanguage: ", nextDefaultLanguageCode,
+						"\n- nextAnonymousAccessPermission: ", nextDefaultAnonymousAccessPermissionValue,
+						"\n- nextDefaultInitialTableSortingDirection: ", nextDefaultInitialTableSortingDirectionCode,
+						"\n- nextDefaultInitialTablePageSize: ", nextDefaultInitialTablePageSizeValue,
+						"\n- nextDefaultColorMode: ", nextDefaultColorModeCode,
+						"\n- nextUserInterfaceFramework: ", nextDefaultUserInterfaceFrameworkCode,
+						"\n- nextDefaultPdfDocumentPageFormat: ", nextDefaultPdfDocumentPageFormatCode));
+				}
 
 				return ControllerNavigationUtils.getNextRedirect("/logout", languageCode, nextDefaultLanguage, nextAnonymousAccessPermission,
 						nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
