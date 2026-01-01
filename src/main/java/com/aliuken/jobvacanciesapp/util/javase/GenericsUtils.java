@@ -1,14 +1,11 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
-import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import org.jspecify.annotations.NonNull;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class GenericsUtils {
 
