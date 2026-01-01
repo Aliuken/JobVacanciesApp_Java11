@@ -9,6 +9,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -213,10 +214,7 @@ public class ConfigurableEnumUtils {
 		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
 		final List<T> enumElementsWithoutByDefaultList = GenericsUtils.cast(configurableEnumElementsWithoutByDefaultList);
 
-		@SuppressWarnings("unchecked")
-		T[] enumElementsWithoutByDefault = (T[]) Array.newInstance(enumClass, enumElementsWithoutByDefaultList.size());
-		enumElementsWithoutByDefault = enumElementsWithoutByDefaultList.toArray(enumElementsWithoutByDefault);
-
+		final T[] enumElementsWithoutByDefault = GenericsUtils.getCollectionAsArray(enumClass, enumElementsWithoutByDefaultList);
 		final ConfigurableEnum<T>[] configurableEnumElementsWithoutByDefault = GenericsUtils.cast(enumElementsWithoutByDefault);
 		return configurableEnumElementsWithoutByDefault;
 	}
@@ -231,10 +229,7 @@ public class ConfigurableEnumUtils {
 		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
 		final List<T> enumElementsList = Constants.PARALLEL_STREAM_UTILS.ofEnum(enumClass).collect(Collectors.toList());
 
-		@SuppressWarnings("unchecked")
-		T[] enumElements = (T[]) Array.newInstance(enumClass, enumElementsList.size());
-		enumElements = enumElementsList.toArray(enumElements);
-
+		final T[] enumElements = GenericsUtils.getCollectionAsArray(enumClass, enumElementsList);
 		return enumElements;
 	}
 }

@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/security/SessionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/security/SessionUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/di/BeanFactoryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/di/BeanFactoryUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/template.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/GenericsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/GenericsUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,44 +48,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.App11.executor": "Run",
-    "Application.Run App J11.executor": "Run",
-    "Application.RunCheckerFramework J11.executor": "Debug",
-    "Application.RunCheckerFramework.executor": "Run",
-    "JUnit.All in jobvacanciesapp (1).executor": "Run",
-    "JUnit.All in jobvacanciesapp.executor": "Run",
-    "JUnit.AuthUserRepositoryTest.testDeleteById_Ok.executor": "Run",
-    "JUnit.Run Tests J11.executor": "Run",
-    "Maven.Maven [checkNullability] J11.executor": "Run",
-    "Maven.Maven [clean,compile] J11.executor": "Run",
-    "Maven.Maven [clean,generate-sources] J11 Delombok (1).executor": "Run",
-    "Maven.Maven [clean,generate-sources] J11 Delombok.executor": "Run",
-    "Maven.Maven [clean,generate-sources] J11 Nulls.executor": "Run",
-    "Maven.Maven [clean,install] J11 Nulls.executor": "Run",
-    "Maven.Maven [clean,install] J11.executor": "Run",
-    "Maven.Maven [clean,install].executor": "Run",
-    "Maven.jobvacanciesapp [clean,install].executor": "Run",
-    "Maven.jobvacanciesapp [clean].executor": "Run",
-    "Maven.jobvacanciesapp [install].executor": "Run",
-    "Remote JVM Debug.Debug App J11.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Shell Script.Checker Framework on Delombok.executor": "Run",
-    "Shell Script.checkNullability.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Programacion/git/JobVacanciesApp_Java11/documentation",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.externalTools"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App11.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run App J11.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunCheckerFramework J11.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.RunCheckerFramework.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in jobvacanciesapp (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in jobvacanciesapp.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthUserRepositoryTest.testDeleteById_Ok.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Run Tests J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [checkNullability] J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,compile] J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,generate-sources] J11 Delombok (1).executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,generate-sources] J11 Delombok.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,generate-sources] J11 Nulls.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,install] J11 Nulls.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,install] J11.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Maven [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.jobvacanciesapp [install].executor&quot;: &quot;Run&quot;,
+    &quot;Remote JVM Debug.Debug App J11.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Shell Script.Checker Framework on Delombok.executor&quot;: &quot;Run&quot;,
+    &quot;Shell Script.checkNullability.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programacion/git/JobVacanciesApp_Java11/documentation&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Programacion\git\JobVacanciesApp_Java11\documentation" />

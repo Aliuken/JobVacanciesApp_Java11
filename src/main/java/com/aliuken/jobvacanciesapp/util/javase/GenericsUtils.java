@@ -1,8 +1,14 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import org.jspecify.annotations.NonNull;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GenericsUtils {
 
@@ -34,5 +40,13 @@ public class GenericsUtils {
 //			element = null;
 //		}
 //		return element;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> @NonNull T[] getCollectionAsArray(final Class<T> collectionElementClass, final Collection<T> collection) {
+		T[] collectionElementArray = (T[]) Array.newInstance(collectionElementClass, collection.size());
+		collectionElementArray = collection.toArray(collectionElementArray);
+
+		return collectionElementArray;
 	}
 }
