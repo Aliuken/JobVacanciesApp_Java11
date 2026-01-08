@@ -29,6 +29,7 @@ import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -69,7 +71,7 @@ public class SessionAuthUserController {
 	 */
 	@GetMapping("/my-user")
 	public String editUserForm(HttpServletRequest httpServletRequest, Model model,
-			@RequestParam(name="languageParam", required=false) String languageCode) {
+							   @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user";
 
 		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
@@ -83,6 +85,7 @@ public class SessionAuthUserController {
 
 		if(authUserDTO == null) {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
+			Objects.requireNonNull(sessionAuthUser, "sessionAuthUser cannot be null");
 			authUserDTO = AuthUserConverter.getInstance().convertEntityElement(sessionAuthUser);
 		}
 
@@ -96,8 +99,8 @@ public class SessionAuthUserController {
 	 */
 	@PostMapping("/my-user")
 	public String saveUser(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-			@Validated AuthUserDTO authUserDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+						   @Validated @NonNull AuthUserDTO authUserDTO, BindingResult bindingResult,
+						   @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -110,8 +113,11 @@ public class SessionAuthUserController {
 
 			final String name = authUserDTO.getName();
 			final String surnames = authUserDTO.getSurnames();
+
 			final String authUserLanguageCode = authUserDTO.getLanguageCode();
 			final Language authUserLanguage = Language.findByCode(authUserLanguageCode);
+			Objects.requireNonNull(authUserLanguage, "authUserLanguage cannot be null");
+
 			final Boolean enabled = authUserDTO.getEnabled();
 
 			final String colorModeCode = authUserDTO.getColorModeCode();
@@ -159,7 +165,7 @@ public class SessionAuthUserController {
 			final Language finalAuthUserLanguage = Constants.ENUM_UTILS.getFinalEnumElement(authUserLanguage, Language.class);
 			languageCode = finalAuthUserLanguage.getCode();
 
-			httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER, sessionAuthUser);
+			httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER_ID, sessionAuthUser.getId());
 
 			final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "saveUser.successMsg", null);
 			redirectAttributes.addFlashAttribute("successMsg", successMsg);
@@ -186,7 +192,7 @@ public class SessionAuthUserController {
 	 */
 	@GetMapping("/my-user/change-password")
 	public String changePasswordForm(HttpServletRequest httpServletRequest, Model model,
-			@RequestParam(name="languageParam", required=false) String languageCode) {
+									 @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user/change-password";
 
 		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
@@ -200,7 +206,9 @@ public class SessionAuthUserController {
 
 		if(authUserCredentialsDTO == null) {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
-			final AuthUserCredentials authUserCredentials = authUserCredentialsService.findByEmail(sessionAuthUser.getEmail());
+			final String sessionAuthUserEmail = sessionAuthUser.getEmail();
+			final AuthUserCredentials authUserCredentials = authUserCredentialsService.findByEmail(sessionAuthUserEmail);
+			Objects.requireNonNull(authUserCredentials, "authUserCredentials cannot be null");
 			authUserCredentialsDTO = AuthUserCredentialsConverter.getInstance().convertEntityElement(authUserCredentials);
 		}
 
@@ -214,8 +222,8 @@ public class SessionAuthUserController {
 	 */
 	@PostMapping("/my-user/change-password")
 	public String saveNewPassword(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-			@Validated AuthUserCredentialsDTO authUserCredentialsDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+								  @Validated @NonNull AuthUserCredentialsDTO authUserCredentialsDTO, BindingResult bindingResult,
+								  @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -297,7 +305,7 @@ public class SessionAuthUserController {
 	 */
 	@GetMapping("/my-user/delete")
 	public String deleteById(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-			@RequestParam(name="languageParam", required=false) String languageCode) {
+							 @RequestParam(name="languageParam", required=false) String languageCode) {
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 		final Long sessionAuthUserId = sessionAuthUser.getId();
@@ -319,7 +327,7 @@ public class SessionAuthUserController {
 	 */
 	@GetMapping("/my-user/app/config")
 	public String configureApplicationForm(HttpServletRequest httpServletRequest, Model model,
-			@RequestParam(name="languageParam", required=false) String languageCode) {
+										   @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user/app/config";
 
 		final ApplicationDefaultConfigDTO applicationDefaultConfigDTO = this.getApplicationDefaultConfigDTO();
@@ -345,8 +353,8 @@ public class SessionAuthUserController {
 	 */
 	@PostMapping("/my-user/app/config")
 	public String saveApplicationConfiguration(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-			@Validated ApplicationNextConfigDTO applicationNextConfigDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+											   @Validated @NonNull ApplicationNextConfigDTO applicationNextConfigDTO, BindingResult bindingResult,
+											   @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -434,11 +442,11 @@ public class SessionAuthUserController {
 		final PdfDocumentPageFormat defaultPdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormat();
 
 		final ApplicationDefaultConfigDTO applicationDefaultConfigDTO = new ApplicationDefaultConfigDTO(
-				authUserCurriculumFilesPath, authUserEntityQueryFilesPath, jobCompanyLogosPath,
-				useAjaxToRefreshJobCompanyLogos, useEntityManagerCache, useParallelStreams,
-				signupConfirmationLinkExpirationHours, resetPasswordLinkExpirationHours,
-				defaultLanguage, defaultAnonymousAccessPermission, defaultInitialTableSortingDirection, defaultInitialTablePageSize,
-				defaultColorMode, defaultUserInterfaceFramework, defaultPdfDocumentPageFormat);
+			authUserCurriculumFilesPath, authUserEntityQueryFilesPath, jobCompanyLogosPath,
+			useAjaxToRefreshJobCompanyLogos, useEntityManagerCache, useParallelStreams,
+			signupConfirmationLinkExpirationHours, resetPasswordLinkExpirationHours,
+			defaultLanguage, defaultAnonymousAccessPermission, defaultInitialTableSortingDirection, defaultInitialTablePageSize,
+			defaultColorMode, defaultUserInterfaceFramework, defaultPdfDocumentPageFormat);
 		return applicationDefaultConfigDTO;
 	}
 
@@ -452,7 +460,7 @@ public class SessionAuthUserController {
 		final String overwrittenPdfDocumentPageFormatCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT.getCode();
 
 		final ApplicationNextConfigDTO applicationNextConfigDTO = new ApplicationNextConfigDTO(overwrittenLanguageCode, overwrittenAnonymousAccessPermissionValue,
-				overwrittenInitialTableSortingDirectionCode, overwrittenInitialTablePageSizeValue, overwrittenColorModeCode, overwrittenUserInterfaceFrameworkCode, overwrittenPdfDocumentPageFormatCode);
+			overwrittenInitialTableSortingDirectionCode, overwrittenInitialTablePageSizeValue, overwrittenColorModeCode, overwrittenUserInterfaceFrameworkCode, overwrittenPdfDocumentPageFormatCode);
 		return applicationNextConfigDTO;
 	}
 }

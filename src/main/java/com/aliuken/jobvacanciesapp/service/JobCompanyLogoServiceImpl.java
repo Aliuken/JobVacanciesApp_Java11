@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.repository.JobCompanyLogoRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ public class JobCompanyLogoServiceImpl extends JobCompanyLogoService {
 	private JobCompanyLogoRepository jobCompanyLogoRepository;
 
 	@Override
-	public UpgradedJpaRepository<JobCompanyLogo> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<JobCompanyLogo> getEntityRepository() {
 		return jobCompanyLogoRepository;
 	}
 
@@ -30,7 +31,7 @@ public class JobCompanyLogoServiceImpl extends JobCompanyLogoService {
 	}
 
 	@Override
-	public JobCompanyLogo getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull JobCompanyLogo getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final JobCompanyLogo jobCompanyLogo = new JobCompanyLogo();
 		jobCompanyLogo.setId(id);
 		jobCompanyLogo.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

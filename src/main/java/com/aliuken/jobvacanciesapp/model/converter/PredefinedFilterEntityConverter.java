@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class PredefinedFilterEntityConverter implements AttributeConverter<PredefinedFilterEntity, String> {

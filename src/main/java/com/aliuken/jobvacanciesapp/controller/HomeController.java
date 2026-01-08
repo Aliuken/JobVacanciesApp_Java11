@@ -39,6 +39,7 @@ import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -61,6 +62,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -147,7 +149,7 @@ public class HomeController {
 	 */
 	@PostMapping("/signup")
 	public String signupSave(RedirectAttributes redirectAttributes,
-			@Validated AuthUserForSignupDTO authUserForSignupDTO, BindingResult bindingResult,
+			@Validated @NonNull AuthUserForSignupDTO authUserForSignupDTO, BindingResult bindingResult,
 			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
@@ -175,6 +177,7 @@ public class HomeController {
 			}
 
 			final Language language = Language.findByCode(languageCode);
+			Objects.requireNonNull(language, "language cannot be null");
 
 			AuthUser authUser = authUserService.findByEmail(email);
 			if(authUser != null) {
@@ -329,7 +332,7 @@ public class HomeController {
 	 */
 	@PostMapping("/forgotten-password")
 	public String forgottenPasswordSave(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-			@Validated AuthUserEmailDTO authUserEmailDTO, BindingResult bindingResult,
+			@Validated @NonNull AuthUserEmailDTO authUserEmailDTO, BindingResult bindingResult,
 			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
@@ -434,7 +437,7 @@ public class HomeController {
 	 */
 	@PostMapping("/reset-password")
 	public String resetPasswordSave(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-			@Validated AuthUserResetPasswordDTO authUserResetPasswordDTO, BindingResult bindingResult,
+			@Validated @NonNull AuthUserResetPasswordDTO authUserResetPasswordDTO, BindingResult bindingResult,
 			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
 
 		final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);

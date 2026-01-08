@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 import com.aliuken.jobvacanciesapp.model.entity.factory.JobVacancyFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public interface JobVacancyRepository extends UpgradedJpaRepository<JobVacancy> 
 //	public abstract List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(@Param("highlighted") Boolean highlighted, @Param("status") JobVacancyStatus status);
 
 	@RepositoryMethod
-	public default List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(final Boolean highlighted, final JobVacancyStatus status) {
+	public default @NonNull List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(final Boolean highlighted, final JobVacancyStatus status) {
 		if(highlighted == null || status == null) {
 			final List<JobVacancy> jobVacancies = new ArrayList<>();
 			return jobVacancies;
@@ -38,7 +39,7 @@ public interface JobVacancyRepository extends UpgradedJpaRepository<JobVacancy> 
 	}
 
 	@Override
-	public default AbstractEntityFactory<JobVacancy> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<JobVacancy> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

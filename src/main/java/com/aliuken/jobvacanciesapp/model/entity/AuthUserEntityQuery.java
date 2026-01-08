@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
@@ -28,10 +29,12 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "auth_user_entity_query", indexes = {
@@ -43,26 +46,21 @@ import java.net.URISyntaxException;
 public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEntityQuery> {
 	private static final long serialVersionUID = -2092511420655590241L;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="auth_user_id", nullable=false)
-	private AuthUser authUser;
+	private @NonNull AuthUser authUser;
 
-	@NotNull
 	@Column(name = "page_entity", nullable = false)
-	private PageEntityEnum pageEntity;
+	private @NonNull PageEntityEnum pageEntity;
 
-	@NotNull
 	@Column(name = "initial_pdf_document_page_format", nullable = false)
-	private PdfDocumentPageFormat initialPdfDocumentPageFormat;
+	private @NonNull PdfDocumentPageFormat initialPdfDocumentPageFormat;
 
-	@NotNull
 	@Column(name = "final_pdf_document_page_format", nullable = false)
-	private PdfDocumentPageFormat finalPdfDocumentPageFormat;
+	private @NonNull PdfDocumentPageFormat finalPdfDocumentPageFormat;
 
-	@NotNull
 	@Column(name = "language", nullable = false)
-	private Language language;
+	private @NonNull Language language;
 
 	@Column(name = "predefined_filter_name")
 	private PredefinedFilterEntity predefinedFilterEntity;
@@ -78,26 +76,21 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 	@Column(name = "filter_value", length = 255)
 	private String filterValue;
 
-	@NotNull
 	@Column(name = "sorting_field", nullable = false)
-	private TableField tableSortingField;
+	private @NonNull TableField sortingTableField;
 
-	@NotNull
 	@Column(name = "sorting_direction", nullable = false)
-	private TableSortingDirection tableSortingDirection;
+	private @NonNull TableSortingDirection tableSortingDirection;
 
-	@NotNull
 	@Column(name = "page_size", nullable = false)
-	private TablePageSize tablePageSize;
+	private @NonNull TablePageSize tablePageSize;
 
-	@NotNull
 	@Column(name = "page_number", nullable = false)
-	private Integer pageNumber;
+	private @NonNull Integer pageNumber;
 
-	@NotNull
 	@Size(max = 2048)
 	@Column(name = "query_url", length = 2048)
-	private String queryUrl;
+	private @NonNull String queryUrl;
 
 	@Size(max = 255)
 	@Column(name = "final_result_file_name", length = 255)
@@ -107,12 +100,13 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		super();
 	}
 
-	public AuthUserEntityQuery(final AuthUser authUser, final PredefinedFilterDTO predefinedFilterDTO, final TableSearchDTO tableSearchDTO, final PageEntityEnum pageEntity, final String queryUrl) {
+	public AuthUserEntityQuery(final AuthUser authUser, final PredefinedFilterDTO predefinedFilterDTO, final @NonNull TableSearchDTO tableSearchDTO, final @NonNull PageEntityEnum pageEntity, final @NonNull String queryUrl) {
 		this.setAuthUser(authUser);
 		this.pageEntity = pageEntity;
 		this.initialPdfDocumentPageFormat = authUser.getPdfDocumentPageFormat();
-		this.finalPdfDocumentPageFormat = Constants.ENUM_UTILS.getFinalEnumElement(initialPdfDocumentPageFormat, ConfigPropertiesBean.CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT);
-		this.language = Language.findByCode(tableSearchDTO.getLanguageParam());
+		final List<PdfDocumentPageFormat> possiblePdfDocumentPageFormats = Collections.singletonList(initialPdfDocumentPageFormat);
+		this.finalPdfDocumentPageFormat = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possiblePdfDocumentPageFormats, ConfigPropertiesBean.CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT);
+		this.language = this.getLanguage(tableSearchDTO);
 
 		if(predefinedFilterDTO != null) {
 			this.predefinedFilterEntity = predefinedFilterDTO.getPredefinedFilterEntity();
@@ -124,19 +118,25 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 
 		this.filterTableField = tableSearchDTO.getFilterTableField();
 		this.filterValue = tableSearchDTO.getFilterValue();
-		this.tableSortingField = tableSearchDTO.getTableSortingField();
+		this.sortingTableField = tableSearchDTO.getSortingTableField();
 		this.tableSortingDirection = tableSearchDTO.getTableSortingDirection();
 		this.tablePageSize = tableSearchDTO.getTablePageSize();
 		this.pageNumber = tableSearchDTO.getPageNumber();
 		this.queryUrl = queryUrl;
 	}
 
-	public String getOriginalResultFileName() {
+	private @NonNull Language getLanguage(final @NonNull TableSearchDTO tableSearchDTO) {
+		final Language language = Language.findByCode(tableSearchDTO.getLanguageParam());
+		Objects.requireNonNull(language, "language cannot be null");
+		return language;
+	}
+
+	public @NonNull String getOriginalResultFileName() {
 		final String originalResultFileName = StringUtils.getStringJoined(pageEntity.getValue(), Constants.HYPHEN, this.getIdString(), FileUtils.PDF_EXTENSION);
 		return originalResultFileName;
 	}
 
-	public String getFilePath() {
+	public @NonNull String getFilePath() {
 		final AuthUser authUser = this.getAuthUser();
 
 		final String authUserIdString;
@@ -151,17 +151,17 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		return filePath;
 	}
 
-	public String getInitialPdfDocumentPageFormatName() {
+	public @NonNull String getInitialPdfDocumentPageFormatName() {
 		final String initialPdfDocumentPageFormatName = String.valueOf(initialPdfDocumentPageFormat);
 		return initialPdfDocumentPageFormatName;
 	}
 
-	public String getFinalPdfDocumentPageFormatName() {
+	public @NonNull String getFinalPdfDocumentPageFormatName() {
 		final String finalPdfDocumentPageFormatName = String.valueOf(finalPdfDocumentPageFormat);
 		return finalPdfDocumentPageFormatName;
 	}
 
-	public String getLanguageName() {
+	public @NonNull String getLanguageName() {
 		final String languageName = String.valueOf(language);
 		return languageName;
 	}
@@ -176,7 +176,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		return predefinedFilterEntityName;
 	}
 
-	public String getPredefinedFilterStringForWebPageField() {
+	public @NonNull String getPredefinedFilterStringForWebPageField() {
 		final String predefinedFilterString;
 		if(predefinedFilterEntity != null && LogicalUtils.isNotNullNorEmptyString(predefinedFilterValue)) {
 			final String predefinedFilterEntityName = predefinedFilterEntity.getUpperCasedEntityName();
@@ -197,7 +197,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		return filterTableFieldName;
 	}
 
-	public String getFilterStringForWebPageField() {
+	public @NonNull String getFilterStringForWebPageField() {
 		final String filterString;
 		if(filterTableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			final String filterTableFieldName = filterTableField.getCode();
@@ -208,22 +208,22 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		return filterString;
 	}
 
-	public String getTableSortingFieldName() {
-		final String tableSortingFieldName = String.valueOf(tableSortingField);
-		return tableSortingFieldName;
+	public @NonNull String getSortingTableFieldName() {
+		final String sortingTableFieldName = String.valueOf(sortingTableField);
+		return sortingTableFieldName;
 	}
 
-	public String getTableSortingDirectionName() {
+	public @NonNull String getTableSortingDirectionName() {
 		final String tableSortingDirectionName = String.valueOf(tableSortingDirection);
 		return tableSortingDirectionName;
 	}
 
-	public String getTablePageSizeName() {
+	public @NonNull String getTablePageSizeName() {
 		final String tablePageSizeName = String.valueOf(tablePageSize);
 		return tablePageSizeName;
 	}
 
-	public String getPageNumberString() {
+	public @NonNull String getPageNumberString() {
 		final String pageNumberString = String.valueOf(pageNumber);
 		return pageNumberString;
 	}
@@ -238,7 +238,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		return realPageNumber;
 	}
 
-	public String getRealPageNumberString() {
+	public @NonNull String getRealPageNumberString() {
 		Integer realPageNumber = this.getRealPageNumber();
 		final String pageNumberString = String.valueOf(realPageNumber);
 		return pageNumberString;
@@ -278,7 +278,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		final String languageName = this.getLanguageName();
 		final String predefinedFilterEntityName = this.getPredefinedFilterEntityName();
 		final String filterTableFieldName = this.getFilterTableFieldName();
-		final String tableSortingFieldName = this.getTableSortingFieldName();
+		final String sortingTableFieldName = this.getSortingTableFieldName();
 		final String tableSortingDirectionName = this.getTableSortingDirectionName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
@@ -291,7 +291,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 			StyleApplier.getBoldString("predefinedFilterValue: "), predefinedFilterValue, Constants.NEWLINE,
 			StyleApplier.getBoldString("filterTableField: "), filterTableFieldName, Constants.NEWLINE,
 			StyleApplier.getBoldString("filterValue: "), filterValue, Constants.NEWLINE,
-			StyleApplier.getBoldString("tableSortingField: "), tableSortingFieldName, Constants.NEWLINE,
+			StyleApplier.getBoldString("sortingTableField: "), sortingTableFieldName, Constants.NEWLINE,
 			StyleApplier.getBoldString("tableSortingDirection: "), tableSortingDirectionName, Constants.NEWLINE,
 			StyleApplier.getBoldString("tablePageSize: "), tablePageSizeName, Constants.NEWLINE,
 			StyleApplier.getBoldString("pageNumber: "), pageNumberString, Constants.NEWLINE,
@@ -309,7 +309,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		final String languageName = this.getLanguageName();
 		final String predefinedFilterEntityName = this.getPredefinedFilterEntityName();
 		final String filterTableFieldName = this.getFilterTableFieldName();
-		final String tableSortingFieldName = this.getTableSortingFieldName();
+		final String sortingTableFieldName = this.getSortingTableFieldName();
 		final String tableSortingDirectionName = this.getTableSortingDirectionName();
 		final String tablePageSizeName = this.getTablePageSizeName();
 		final String pageNumberString = this.getPageNumberString();
@@ -322,7 +322,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 			", initialPdfDocumentPageFormat=", initialPdfDocumentPageFormatName, ", finalPdfDocumentPageFormat=", finalPdfDocumentPageFormatName, ", language=", languageName,
 			", predefinedFilterEntity=", predefinedFilterEntityName, ", predefinedFilterValue=", predefinedFilterValue,
 			", filterTableField=", filterTableFieldName, ", filterValue=", filterValue,
-			", tableSortingField=", tableSortingFieldName, ", tableSortingDirection=", tableSortingDirectionName,
+			", sortingTableField=", sortingTableFieldName, ", tableSortingDirection=", tableSortingDirectionName,
 			", tablePageSize=", tablePageSizeName, ", pageNumber=", pageNumberString,
 			", queryUrl=", queryUrl, ", finalResultFileName=", finalResultFileName,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail,

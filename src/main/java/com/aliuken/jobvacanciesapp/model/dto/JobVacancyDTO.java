@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.javase.NumericUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ import java.util.function.Function;
 public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -3670738813828834458L;
 
-	private static final JobVacancyDTO NO_ARGS_INSTANCE = new JobVacancyDTO(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+	private static final @NonNull JobVacancyDTO NO_ARGS_INSTANCE = new JobVacancyDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 	private final Long id;
 
@@ -65,7 +66,7 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	@Size(max=10000, message="{details.maxSize}")
 	private final String details;
 
-	public JobVacancyDTO(final Long id, final String name, final String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final String statusCode, final LocalDateTime publicationDateTime, final String salaryString, final BigDecimalFromStringConversionResult salaryConversionResult, final String currencySymbol, final Boolean highlighted, final String details) {
+	public JobVacancyDTO(final Long id, final String name, final String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final String statusCode, final LocalDateTime publicationDateTime, final String salaryString, final String currencySymbol, final Boolean highlighted, final String details) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -102,16 +103,16 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 		this.details = details;
 	}
 
-	public static JobVacancyDTO getNewInstance() {
+	public static @NonNull JobVacancyDTO getNewInstance() {
 		return NO_ARGS_INSTANCE;
 	}
 
-	public static JobVacancyDTO getNewInstance(final Long jobVacancyId) {
-		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(jobVacancyId, null, null, null, null, null, null, null, null, null, null, null, null, null);
+	public static @NonNull JobVacancyDTO getNewInstance(final Long jobVacancyId) {
+		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(jobVacancyId, null, null, null, null, null, null, null, null, null, null, null, null);
 		return jobVacancyDTO;
 	}
 
-	public static JobVacancyDTO getNewInstance(JobVacancyDTO jobVacancyDTO, final JobCompanyDTO jobCompanyDTO, final String initialCurrencySymbol) {
+	public static @NonNull JobVacancyDTO getNewInstance(JobVacancyDTO jobVacancyDTO, final JobCompanyDTO jobCompanyDTO, final String initialCurrencySymbol) {
 		if(jobVacancyDTO != null) {
 			jobVacancyDTO = new JobVacancyDTO(
 				jobVacancyDTO.getId(),
@@ -124,7 +125,6 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 				jobVacancyDTO.getStatusCode(),
 				jobVacancyDTO.getPublicationDateTime(),
 				jobVacancyDTO.getSalaryString(),
-				jobVacancyDTO.getSalaryConversionResult(),
 				initialCurrencySymbol,
 				jobVacancyDTO.getHighlighted(),
 				jobVacancyDTO.getDetails()
@@ -138,7 +138,6 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 				null,
 				jobCompanyDTO,
 				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
-				null,
 				null,
 				null,
 				null,
@@ -171,7 +170,7 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
 		final String jobCategoryIdString = (jobCategory != null) ? String.valueOf(jobCategory.getId()) : null;
 		final String jobCompanyIdString = (jobCompany != null) ? String.valueOf(jobCompany.getId()) : null;

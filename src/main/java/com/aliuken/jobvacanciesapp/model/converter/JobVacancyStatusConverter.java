@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class JobVacancyStatusConverter implements AttributeConverter<JobVacancyStatus, String> {
@@ -21,6 +22,7 @@ public class JobVacancyStatusConverter implements AttributeConverter<JobVacancyS
 	@Override
 	public JobVacancyStatus convertToEntityAttribute(final String jobVacancyStatusCode) {
 		final JobVacancyStatus jobVacancyStatus = JobVacancyStatus.findByCode(jobVacancyStatusCode);
+		Objects.requireNonNull(jobVacancyStatus, "jobVacancyStatus cannot be null");
 		return jobVacancyStatus;
 	}
 }

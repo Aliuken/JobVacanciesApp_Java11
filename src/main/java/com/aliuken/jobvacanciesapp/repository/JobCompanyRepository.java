@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobCompany;
 import com.aliuken.jobvacanciesapp.model.entity.factory.JobCompanyFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public interface JobCompanyRepository extends UpgradedJpaRepository<JobCompany> 
 	}
 
 	@Override
-	public default AbstractEntityFactory<JobCompany> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<JobCompany> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

@@ -1,5 +1,6 @@
 package com.aliuken.jobvacanciesapp.config;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,15 +13,17 @@ import java.util.List;
 @Configuration
 @EnableCaching
 public class CacheConfig {
+	public static final @NonNull String ENTITY_MANAGER_CACHE_NAME = "entityManagerCache";
+	public static final @NonNull String ENTITY_MANAGER_CACHE_ALTERNATIVE = "jpaContext";
 
 	@Bean
-	CacheManager cacheManager() {
+	@NonNull CacheManager cacheManager() {
 		final CacheManager cacheManager = new ConcurrentMapCacheManager("entityManagerCache");
 		return cacheManager;
 	}
 
 	@Bean
-	CacheManagerCustomizer<ConcurrentMapCacheManager> simpleCacheCustomizer() {
+	@NonNull CacheManagerCustomizer<ConcurrentMapCacheManager> simpleCacheCustomizer() {
 		final CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer = new CacheManagerCustomizer<>() {
 			@Override
 			public void customize(final ConcurrentMapCacheManager concurrentMapCacheManager) {
@@ -28,7 +31,6 @@ public class CacheConfig {
 				concurrentMapCacheManager.setCacheNames(cacheNames);
 			}
 		};
-
 		return cacheManagerCustomizer;
 	}
 }

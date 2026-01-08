@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
 
@@ -39,15 +40,14 @@ public enum PredefinedFilterEntity implements Serializable {
 	}
 
 	public static PredefinedFilterEntity findByEntityName(final String entityName) {
-		final PredefinedFilterEntity predefinedFilterEntity;
-		if(entityName != null) {
-			predefinedFilterEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PredefinedFilterEntity.class)
-				.filter(predefinedFilterEntityAux -> entityName.equals(predefinedFilterEntityAux.upperCasedEntityName))
-				.findFirst()
-				.orElse(null);
-		} else {
-			predefinedFilterEntity = null;
+		if(LogicalUtils.isNullOrEmptyString(entityName)) {
+			return null;
 		}
+
+		final PredefinedFilterEntity predefinedFilterEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PredefinedFilterEntity.class)
+			.filter(predefinedFilterEntityAux -> entityName.equals(predefinedFilterEntityAux.upperCasedEntityName))
+			.findFirst()
+			.orElse(null);
 		return predefinedFilterEntity;
 	}
 }

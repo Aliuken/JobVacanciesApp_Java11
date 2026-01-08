@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -26,12 +27,12 @@ public abstract class AbstractEntityController<T extends AbstractEntity<T>> {
 		authUserEntityQueryFilesPath = configPropertiesBean.getAuthUserEntityQueryFilesPath();
 	}
 
-	protected byte[] storeAndDownloadPdf(final PredefinedFilterDTO predefinedFilterDTO, final TableSearchDTO tableSearchDTO,
-			final Model model, final PageEntityEnum pageEntity,
+	protected byte[] storeAndDownloadPdf(final PredefinedFilterDTO predefinedFilterDTO, final @NonNull TableSearchDTO tableSearchDTO,
+			final Model model, final @NonNull PageEntityEnum pageEntity,
 			final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
 
 		final Object pageEntityModelAttribute;
-		if(model != null && pageEntity != null) {
+		if(model != null) {
 			final String pageEntityValue = pageEntity.getValue();
 			if(pageEntityValue != null) {
 				pageEntityModelAttribute = model.getAttribute(pageEntityValue);

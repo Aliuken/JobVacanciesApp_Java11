@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.factory.JobRequestFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public interface JobRequestRepository extends UpgradedJpaRepository<JobRequest> 
 	}
 
 	@RepositoryMethod
-	public default List<JobRequest> findByAuthUserAndCurriculumFileName(final AuthUser authUser, final String curriculumFileName) {
+	public default @NonNull List<JobRequest> findByAuthUserAndCurriculumFileName(final AuthUser authUser, final String curriculumFileName) {
 		if(authUser == null || curriculumFileName == null) {
 			final List<JobRequest> jobRequests = new ArrayList<>();
 			return jobRequests;
@@ -58,7 +59,7 @@ public interface JobRequestRepository extends UpgradedJpaRepository<JobRequest> 
 	}
 
 	@Override
-	public default AbstractEntityFactory<JobRequest> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<JobRequest> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

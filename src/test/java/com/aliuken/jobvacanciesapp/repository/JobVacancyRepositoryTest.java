@@ -342,6 +342,8 @@ public class JobVacancyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 
 	private void commonTestsJobVacancyDTO1(final JobVacancyDTO jobVacancyDTO, final String name) {
 		final JobCategory jobCategory = jobCategoryRepository.findByIdNotOptional(3L);
+		Assertions.assertNotNull(jobCategory);
+
 		final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobCategory);
 		Assertions.assertNotNull(jobCategoryDTO);
 		Assertions.assertNotNull(jobCategoryDTO.getId());

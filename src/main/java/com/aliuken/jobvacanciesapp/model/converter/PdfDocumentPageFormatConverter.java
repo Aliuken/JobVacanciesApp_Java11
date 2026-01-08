@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class PdfDocumentPageFormatConverter implements AttributeConverter<PdfDocumentPageFormat, String> {
@@ -20,13 +21,8 @@ public class PdfDocumentPageFormatConverter implements AttributeConverter<PdfDoc
 
 	@Override
 	public PdfDocumentPageFormat convertToEntityAttribute(final String pdfDocumentPageFormatCode) {
-		final PdfDocumentPageFormat pdfDocumentPageFormat;
-		if(pdfDocumentPageFormatCode != null) {
-			pdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(pdfDocumentPageFormatCode);
-		} else {
-			pdfDocumentPageFormat = PdfDocumentPageFormat.BY_DEFAULT;
-		}
-
+		final PdfDocumentPageFormat pdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(pdfDocumentPageFormatCode);
+		Objects.requireNonNull(pdfDocumentPageFormat, "pdfDocumentPageFormat cannot be null");
 		return pdfDocumentPageFormat;
 	}
 }

@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -26,16 +25,14 @@ import javax.validation.constraints.Size;
 public class AuthUserCredentials extends AbstractEntity<AuthUserCredentials> {
 	private static final long serialVersionUID = 1302984200214581263L;
 
-	@NotNull
 	@Size(max=255)
 	@Column(name="email", length=255, nullable=false, unique=true)
 	@Email(message="Email is not in a valid format")
-	private String email;
+	private @NonNull String email;
 
-	@NotNull
 	@Size(max=60)
 	@Column(name="encrypted_password", length=60, nullable=false)
-	private String encryptedPassword;
+	private @NonNull String encryptedPassword;
 
 	public AuthUserCredentials() {
 		super();

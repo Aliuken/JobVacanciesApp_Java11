@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
 import com.aliuken.jobvacanciesapp.repository.AuthUserCurriculumRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class AuthUserCurriculumServiceImpl extends AuthUserCurriculumService {
 	private AuthUserCurriculumRepository authUserCurriculumRepository;
 
 	@Override
-	public UpgradedJpaRepository<AuthUserCurriculum> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<AuthUserCurriculum> getEntityRepository() {
 		return authUserCurriculumRepository;
 	}
 
@@ -29,7 +30,7 @@ public class AuthUserCurriculumServiceImpl extends AuthUserCurriculumService {
 	}
 
 	@Override
-	public AuthUserCurriculum getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull AuthUserCurriculum getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final AuthUserCurriculum authUserCurriculum = new AuthUserCurriculum();
 		authUserCurriculum.setId(id);
 		authUserCurriculum.setFirstRegistrationAuthUser(firstRegistrationAuthUser);
@@ -39,7 +40,7 @@ public class AuthUserCurriculumServiceImpl extends AuthUserCurriculumService {
 	}
 
 	@Override
-	public AuthUserCurriculum getNewEntityWithAuthUserEmail(final String authUserEmail) {
+	public @NonNull AuthUserCurriculum getNewEntityWithAuthUserEmail(final String authUserEmail) {
 		final AuthUser authUser = new AuthUser();
 		authUser.setEmail(authUserEmail);
 
@@ -50,7 +51,7 @@ public class AuthUserCurriculumServiceImpl extends AuthUserCurriculumService {
 	}
 
 	@Override
-	public AuthUserCurriculum getNewEntityWithAuthUserName(final String authUserName) {
+	public @NonNull AuthUserCurriculum getNewEntityWithAuthUserName(final String authUserName) {
 		final AuthUser authUser = new AuthUser();
 		authUser.setName(authUserName);
 
@@ -61,7 +62,7 @@ public class AuthUserCurriculumServiceImpl extends AuthUserCurriculumService {
 	}
 
 	@Override
-	public AuthUserCurriculum getNewEntityWithAuthUserSurnames(String authUserSurnames) {
+	public @NonNull AuthUserCurriculum getNewEntityWithAuthUserSurnames(String authUserSurnames) {
 		final AuthUser authUser = new AuthUser();
 		authUser.setSurnames(authUserSurnames);
 

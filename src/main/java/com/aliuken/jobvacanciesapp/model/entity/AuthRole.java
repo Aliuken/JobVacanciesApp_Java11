@@ -55,7 +55,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@OneToMany(mappedBy="authRole", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@SortComparator(AuthUserRoleAuthUserFullNameComparator.class)
-	private Set<AuthUserRole> authUserRoles;
+	private @NonNull Set<AuthUserRole> authUserRoles = new LinkedHashSet<>();
 
 	public AuthRole() {
 		super();
@@ -67,14 +67,14 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUserRole> getAuthUserRoles() {
+	public @NonNull Set<AuthUserRole> getAuthUserRoles() {
 		return authUserRoles;
 	}
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserRoleIds() {
 		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getId())
+			.map(authUserRole -> authUserRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserRoleIds;
@@ -83,7 +83,7 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public @NonNull Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthUser())
+			.map(authUserRole -> authUserRole.getAuthUser())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUsers;
@@ -92,8 +92,8 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthUser())
-			.map(au -> au.getId())
+			.map(authUserRole -> authUserRole.getAuthUser())
+			.map(authUser -> authUser.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserIds;
@@ -102,8 +102,8 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthUser())
-			.map(au -> au.getEmail())
+			.map(authUserRole -> authUserRole.getAuthUser())
+			.map(authUser -> authUser.getEmail())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEmails;

@@ -63,7 +63,7 @@ CREATE TABLE `auth_user_credentials` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `auth_user_credentials` WRITE;
-INSERT INTO `auth_user_credentials` VALUES (1,'aliuken@aliuken.com','$2a$10$emZdB6.UCgKUSSP5XbtUUu3EJC90ORzvBGgmWLEcHxzd.rNwTTzWq',CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO `auth_user_credentials` VALUES (1,'aliuken@aliuken.com','$2a$10$emZdB6.UCgKUSSP5XbtUUu3EJC90ORzvBGgmWLEcHxzd.rNwTTzWq',CURRENT_TIMESTAMP,1,null,null);
 INSERT INTO `auth_user_credentials` VALUES (2,'luis@aliuken.com','$2a$10$3/Cf9LVNbfJ.nuotE4J7uO2COFCbBtPFjufVzkzKh2iR4EPlBaXna',CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user_credentials` VALUES (3,'marisol@aliuken.com','$2a$10$Xqjzg65MvjXfFZ8urRg09uPYvWTOZ2CW6TXqPtwBmiJYvFIoAnf.y',CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user_credentials` VALUES (4,'daniel@aliuken.com','$2a$10$j1i1tno1jwqAQxNxQLRT0OYxUQqs0dWGaZAlAWETjvcwWP1NCRChG',CURRENT_TIMESTAMP,1,null,null);
@@ -125,8 +125,8 @@ CREATE TABLE `auth_user_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `auth_user_role` WRITE;
-INSERT INTO `auth_user_role` VALUES (1,2,1,CURRENT_TIMESTAMP,null,null,null);
-INSERT INTO `auth_user_role` VALUES (2,2,3,CURRENT_TIMESTAMP,null,null,null);
+INSERT INTO `auth_user_role` VALUES (1,2,1,CURRENT_TIMESTAMP,1,null,null);
+INSERT INTO `auth_user_role` VALUES (2,2,3,CURRENT_TIMESTAMP,1,null,null);
 INSERT INTO `auth_user_role` VALUES (3,3,2,CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user_role` VALUES (4,4,2,CURRENT_TIMESTAMP,2,null,null);
 INSERT INTO `auth_user_role` VALUES (5,5,3,CURRENT_TIMESTAMP,1,null,null);

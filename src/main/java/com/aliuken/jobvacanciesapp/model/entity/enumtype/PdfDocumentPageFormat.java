@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import lombok.Getter;
@@ -31,16 +32,14 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 	}
 
 	public static PdfDocumentPageFormat findByCode(final String code) {
-		final PdfDocumentPageFormat pdfDocumentPageFormat;
-		if(code != null) {
-			pdfDocumentPageFormat = Constants.PARALLEL_STREAM_UTILS.ofEnum(PdfDocumentPageFormat.class)
-				.filter(pdfDocumentPageFormatAux -> code.equals(pdfDocumentPageFormatAux.code))
-				.findFirst()
-				.orElse(null);
-		} else {
-			pdfDocumentPageFormat = null;
+		if(LogicalUtils.isNullOrEmptyString(code)) {
+			return null;
 		}
 
+		final PdfDocumentPageFormat pdfDocumentPageFormat = Constants.PARALLEL_STREAM_UTILS.ofEnum(PdfDocumentPageFormat.class)
+			.filter(pdfDocumentPageFormatAux -> code.equals(pdfDocumentPageFormatAux.code))
+			.findFirst()
+			.orElse(null);
 		return pdfDocumentPageFormat;
 	}
 

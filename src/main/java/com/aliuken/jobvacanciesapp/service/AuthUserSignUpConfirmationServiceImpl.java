@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
 import com.aliuken.jobvacanciesapp.repository.AuthUserSignUpConfirmationRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class AuthUserSignUpConfirmationServiceImpl extends AuthUserSignUpConfirm
 	private AuthUserSignUpConfirmationRepository authUserSignUpConfirmationRepository;
 
 	@Override
-	public UpgradedJpaRepository<AuthUserSignUpConfirmation> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<AuthUserSignUpConfirmation> getEntityRepository() {
 		return authUserSignUpConfirmationRepository;
 	}
 
@@ -36,7 +37,7 @@ public class AuthUserSignUpConfirmationServiceImpl extends AuthUserSignUpConfirm
 	}
 
 	@Override
-	public AuthUserSignUpConfirmation getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull AuthUserSignUpConfirmation getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final AuthUserSignUpConfirmation authUserSignUpConfirmation = new AuthUserSignUpConfirmation();
 		authUserSignUpConfirmation.setId(id);
 		authUserSignUpConfirmation.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

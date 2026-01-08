@@ -44,8 +44,7 @@
                 <td th:text="${authUser.authRoleNames}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${authUser.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
-                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                  <a th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUser.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                 </td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUser.lastModificationDateTime)}"></td>
                 <td th:with="lastModificationAuthUserId=${authUser.getLastModificationAuthUserId()}">

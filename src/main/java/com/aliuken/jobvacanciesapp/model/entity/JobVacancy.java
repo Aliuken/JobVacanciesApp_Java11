@@ -24,7 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -44,55 +43,46 @@ import java.util.stream.Collectors;
 public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	private static final long serialVersionUID = 6062234886735475157L;
 
-	@NotNull
 	@Size(max=120)
 	@Column(name="name", length=120, nullable=false)
-	private String name;
+	private @NonNull String name;
 
-	@NotNull
 	@Size(max=500)
 	@Column(name="description", length=500, nullable=false)
-	private String description;
+	private @NonNull String description;
 
 	@Digits(integer=10, fraction=2)
 	@Column(name="salary", precision=10, scale=2)
 	private BigDecimal salary;
 
-	@NotNull
 	@Column(name="currency", nullable=false)
-	private Currency currency;
+	private @NonNull Currency currency;
 
-	@NotNull
 	@Column(name="status", nullable=false)
-	private JobVacancyStatus status;
+	private @NonNull JobVacancyStatus status;
 
-	@NotNull
 	@Column(name="highlighted", length=1, nullable=false)
-	private Boolean highlighted;
+	private @NonNull Boolean highlighted;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_company_id", nullable=false)
-	private JobCompany jobCompany;
+	private @NonNull JobCompany jobCompany;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_category_id", nullable=false)
-	private JobCategory jobCategory;
+	private @NonNull JobCategory jobCategory;
 
-	@NotNull
 	@Column(name="publication_date_time", nullable=false)
-	private LocalDateTime publicationDateTime;
+	private @NonNull LocalDateTime publicationDateTime;
 
-	@NotNull
 	@Size(max=10000)
 	@Column(name="details", length=10000, nullable=false)
-	private String details;
+	private @NonNull String details;
 
 	@OneToMany(mappedBy="jobVacancy", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@SortComparator(JobRequestAuthUserFullNameComparator.class)
-	private Set<JobRequest> jobRequests;
+	private @NonNull Set<JobRequest> jobRequests = new LinkedHashSet<>();
 
 	public JobVacancy() {
 		super();
@@ -134,43 +124,43 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 	}
 
 	@LazyEntityRelationGetter
-	public Set<JobRequest> getJobRequests() {
+	public @NonNull Set<JobRequest> getJobRequests() {
 		return jobRequests;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getJobRequestIds() {
+	public @NonNull Set<Long> getJobRequestIds() {
 		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getId())
+			.map(jobRequest -> jobRequest.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobRequestIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUser> getAuthUsers() {
+	public @NonNull Set<AuthUser> getAuthUsers() {
 		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getAuthUser())
+			.map(jobRequest -> jobRequest.getAuthUser())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUsers;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserIds() {
+	public @NonNull Set<Long> getAuthUserIds() {
 		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getAuthUser())
-			.map(jv -> jv.getId())
+			.map(jobRequest -> jobRequest.getAuthUser())
+			.map(authUser -> authUser.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getAuthUserEmails() {
+	public @NonNull Set<String> getAuthUserEmails() {
 		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getAuthUser())
-			.map(jv -> jv.getEmail())
+			.map(jobRequest -> jobRequest.getAuthUser())
+			.map(authUser -> authUser.getEmail())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEmails;

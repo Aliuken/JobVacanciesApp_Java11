@@ -29,12 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,94 +42,83 @@ import java.util.stream.Collectors;
 		@Index(name="auth_user_key_3", columnList="enabled")})
 @Getter
 @Setter
-public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable {
+public class AuthUser extends AbstractEntity<AuthUser> {
 	private static final long serialVersionUID = -2992782217868515621L;
 
-	@NotNull
 	@Size(max=255)
 	@Column(name="email", length=255, nullable=false, unique=true)
 	@Email(message="Email is not in a valid format")
-	private String email;
+	private @NonNull String email;
 
-	@NotNull
 	@Size(max=25)
 	@Column(name="name", length=25, nullable=false)
-	private String name;
+	private @NonNull String name;
 
-	@NotNull
 	@Size(max=35)
 	@Column(name="surnames", length=35, nullable=false)
-	private String surnames;
+	private @NonNull String surnames;
 
-	@NotNull
 	@Column(name="language", nullable=false)
-	private Language language;
+	private @NonNull Language language;
 
-	@NotNull
 	@Column(name="enabled", nullable=false)
-	private Boolean enabled;
+	private @NonNull Boolean enabled;
 
-	@NotNull
 	@Column(name="color_mode", nullable=false)
-	private ColorMode colorMode;
+	private @NonNull ColorMode colorMode;
 
-	@NotNull
 	@Column(name="initial_currency", nullable=false)
-	private Currency initialCurrency;
+	private @NonNull Currency initialCurrency;
 
-	@NotNull
 	@Column(name="initial_table_sorting_direction", nullable=false)
-	private TableSortingDirection initialTableSortingDirection;
+	private @NonNull TableSortingDirection initialTableSortingDirection;
 
-	@NotNull
 	@Column(name="initial_table_page_size", nullable=false)
-	private TablePageSize initialTablePageSize;
+	private @NonNull TablePageSize initialTablePageSize;
 
-	@NotNull
 	@Column(name = "pdf_document_page_format", nullable = false)
-	private PdfDocumentPageFormat pdfDocumentPageFormat;
+	private @NonNull PdfDocumentPageFormat pdfDocumentPageFormat;
 
 	@OneToMany(mappedBy="authUser", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@SortComparator(AuthUserRoleAuthRolePriorityComparator.class)
-	private Set<AuthUserRole> authUserRoles;
+	private @NonNull Set<AuthUserRole> authUserRoles = new LinkedHashSet<>();
 
 	@OneToMany(mappedBy="authUser", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@SortComparator(JobRequestJobVacancyPublicationDateTimeComparator.class)
-	private Set<JobRequest> jobRequests;
+	private @NonNull Set<JobRequest> jobRequests = new LinkedHashSet<>();
 
 	@OneToMany(mappedBy="authUser", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
-	private Set<AuthUserCurriculum> authUserCurriculums;
+	private @NonNull Set<AuthUserCurriculum> authUserCurriculums = new LinkedHashSet<>();
 
 	@OneToMany(mappedBy="authUser", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("firstRegistrationDateTime DESC")
-	private Set<AuthUserEntityQuery> authUserEntityQueries;
+	private @NonNull Set<AuthUserEntityQuery> authUserEntityQueries = new LinkedHashSet<>();
 
 	public AuthUser() {
 		super();
 	}
 
-	@NotNull
-	public String getFullName() {
+	public @NonNull String getFullName() {
 		String fullName = StringUtils.getStringJoined(name, Constants.SPACE, surnames);
 		return fullName;
 	}
 
-	public String getLanguageName() {
+	public @NonNull String getLanguageName() {
 		final String languageName = String.valueOf(language);
 		return languageName;
 	}
 
-	public String getEnabledString() {
+	public @NonNull String getEnabledString() {
 		final String enabledString = String.valueOf(enabled);
 		return enabledString;
 	}
 
-	public String getColorModeName() {
+	public @NonNull String getColorModeName() {
 		final String colorModeName = String.valueOf(colorMode);
 		return colorModeName;
 	}
@@ -144,139 +128,139 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 		return initialCurrencySymbol;
 	}
 
-	public String getInitialTableSortingDirectionName() {
+	public @NonNull String getInitialTableSortingDirectionName() {
 		final String initialTableSortingDirectionName = String.valueOf(initialTableSortingDirection);
 		return initialTableSortingDirectionName;
 	}
 
-	public String getInitialTablePageSizeName() {
+	public @NonNull String getInitialTablePageSizeName() {
 		final String initialTablePageSizeName = String.valueOf(initialTablePageSize);
 		return initialTablePageSizeName;
 	}
 
-	public String getPdfDocumentPageFormatName() {
+	public @NonNull String getPdfDocumentPageFormatName() {
 		final String pdfDocumentPageFormatName = String.valueOf(pdfDocumentPageFormat);
 		return pdfDocumentPageFormatName;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUserRole> getAuthUserRoles() {
+	public @NonNull Set<AuthUserRole> getAuthUserRoles() {
 		return authUserRoles;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<JobRequest> getJobRequests() {
+	public @NonNull Set<JobRequest> getJobRequests() {
 		return jobRequests;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUserCurriculum> getAuthUserCurriculums() {
+	public @NonNull Set<AuthUserCurriculum> getAuthUserCurriculums() {
 		return authUserCurriculums;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthUserEntityQuery> getAuthUserEntityQueries() {
+	public @NonNull Set<AuthUserEntityQuery> getAuthUserEntityQueries() {
 		return authUserEntityQueries;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserRoleIds() {
+	public @NonNull Set<Long> getAuthUserRoleIds() {
 		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getId())
+			.map(authUserRole -> authUserRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserRoleIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<AuthRole> getAuthRoles() {
+	public @NonNull Set<AuthRole> getAuthRoles() {
 		final Set<AuthRole> authRoles = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthRole())
+			.map(authUserRole -> authUserRole.getAuthRole())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoles;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthRoleIds() {
+	public @NonNull Set<Long> getAuthRoleIds() {
 		final Set<Long> authRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthRole())
-			.map(ar -> ar.getId())
+			.map(authUserRole -> authUserRole.getAuthRole())
+			.map(authRole -> authRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoleIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getAuthRoleNames() {
+	public @NonNull Set<String> getAuthRoleNames() {
 		final Set<String> authRoleNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
-			.map(aur -> aur.getAuthRole())
-			.map(ar -> ar.getName())
+			.map(authUserRole -> authUserRole.getAuthRole())
+			.map(authRole -> authRole.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authRoleNames;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getJobRequestIds() {
+	public @NonNull Set<Long> getJobRequestIds() {
 		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getId())
+			.map(jobRequest -> jobRequest.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobRequestIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<JobVacancy> getJobVacancies() {
+	public @NonNull Set<JobVacancy> getJobVacancies() {
 		final Set<JobVacancy> jobVacancies = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getJobVacancy())
+			.map(jobRequest -> jobRequest.getJobVacancy())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancies;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getJobVacancyIds() {
+	public @NonNull Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getJobVacancy())
-			.map(jv -> jv.getId())
+			.map(jobRequest -> jobRequest.getJobVacancy())
+			.map(jobVacancy -> jobVacancy.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getJobVacancyNames() {
+	public @NonNull Set<String> getJobVacancyNames() {
 		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
-			.map(jr -> jr.getJobVacancy())
-			.map(jv -> jv.getName())
+			.map(jobRequest -> jobRequest.getJobVacancy())
+			.map(jobVacancy -> jobVacancy.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyNames;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserCurriculumIds() {
+	public @NonNull Set<Long> getAuthUserCurriculumIds() {
 		final Set<Long> authUserCurriculumIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
-			.map(auc -> auc.getId())
+			.map(authUserCurriculum -> authUserCurriculum.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserCurriculumIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getAuthUserCurriculumSelectionNames() {
+	public @NonNull Set<String> getAuthUserCurriculumSelectionNames() {
 		final Set<String> authUserCurriculumSelectionNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
-			.map(auc -> auc.getSelectionName())
+			.map(authUserCurriculum -> authUserCurriculum.getSelectionName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserCurriculumSelectionNames;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getAuthUserEntityQueryIds() {
+	public @NonNull Set<Long> getAuthUserEntityQueryIds() {
 		final Set<Long> authUserEntityQueryIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserEntityQueries)
-			.map(aueq -> aueq.getId())
+			.map(authUserEntityQuery -> authUserEntityQuery.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return authUserEntityQueryIds;
@@ -290,7 +274,7 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 
 		final AuthRole authRole = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.findFirst()
-			.map(aur -> aur.getAuthRole())
+			.map(authUserRole -> authUserRole.getAuthRole())
 			.orElse(null);
 
 		return authRole;
@@ -304,8 +288,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 
 		final Long authRoleId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.findFirst()
-			.map(aur -> aur.getAuthRole())
-			.map(ar -> ar.getId())
+			.map(authUserRole -> authUserRole.getAuthRole())
+			.map(authRole -> authRole.getId())
 			.orElse(null);
 
 		return authRoleId;
@@ -319,8 +303,8 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 
 		final String authRoleName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
 			.findFirst()
-			.map(aur -> aur.getAuthRole())
-			.map(ar -> ar.getName())
+			.map(authUserRole -> authUserRole.getAuthRole())
+			.map(authRole -> authRole.getName())
 			.orElse(null);
 
 		return authRoleName;
@@ -386,88 +370,10 @@ public class AuthUser extends AbstractEntity<AuthUser> implements Externalizable
 		final String jobVacancies = this.getJobVacancyNames().toString();
 
 		final String result = StringUtils.getStringJoined("AuthUser [id=", idString, ", email=", email, ", name=", name, ", surnames=", surnames, ", language=", languageName, ", enabled=", enabledString, ", colorMode=", colorModeName,
-				", initialCurrency=", initialCurrencySymbol, ", initialTableSortingDirection=", initialTableSortingDirectionName, ", initialTablePageSize=", initialTablePageSizeName, ", pdfDocumentPageFormat=", pdfDocumentPageFormatName,
-				", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
-				", authRoles=", authRoles, ", jobVacancies=", jobVacancies, "]");
+			", initialCurrency=", initialCurrencySymbol, ", initialTableSortingDirection=", initialTableSortingDirectionName, ", initialTablePageSize=", initialTablePageSizeName, ", pdfDocumentPageFormat=", pdfDocumentPageFormatName,
+			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail,
+			", authRoles=", authRoles, ", jobVacancies=", jobVacancies, "]");
 
 		return result;
-	}
-
-	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(getId());
-
-		objectOutput.writeUTF(email);
-		objectOutput.writeUTF(name);
-		objectOutput.writeUTF(surnames);
-
-		final String languageCode = language.getCode();
-		objectOutput.writeUTF(languageCode);
-
-		objectOutput.writeBoolean(enabled);
-
-		final String colorModeCode = colorMode.getCode();
-		objectOutput.writeUTF(colorModeCode);
-
-		final String initialCurrencySymbol = initialCurrency.getSymbol();
-		objectOutput.writeUTF(initialCurrencySymbol);
-
-		final String initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
-		objectOutput.writeUTF(initialTableSortingDirectionCode);
-
-		final int initialTablePageSizeValue = initialTablePageSize.getValue();
-		objectOutput.writeInt(initialTablePageSizeValue);
-
-		final String pdfDocumentPageFormatCode = pdfDocumentPageFormat.getCode();
-		objectOutput.writeUTF(pdfDocumentPageFormatCode);
-
-		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToStringForSerialization(getFirstRegistrationDateTime());
-		objectOutput.writeUTF(firstRegistrationDateTimeString);
-
-		objectOutput.writeObject(getFirstRegistrationAuthUser());
-
-		final String lastModificationDateTimeString = Constants.DATE_TIME_UTILS.convertToStringForSerialization(getLastModificationDateTime());
-		objectOutput.writeUTF(lastModificationDateTimeString);
-
-		objectOutput.writeObject(getLastModificationAuthUser());
-	}
-
-	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-		setId(objectInput.readLong());
-
-		email = objectInput.readUTF();
-		name = objectInput.readUTF();
-		surnames = objectInput.readUTF();
-
-		final String languageCode = objectInput.readUTF();
-		language = Language.findByCode(languageCode);
-
-		enabled = objectInput.readBoolean();
-
-		final String colorModeCode = objectInput.readUTF();
-		colorMode = ColorMode.findByCode(colorModeCode);
-
-		final String initialCurrencySymbol = objectInput.readUTF();
-		initialCurrency = Currency.findBySymbol(initialCurrencySymbol);
-
-		final String initialTableSortingDirectionCode = objectInput.readUTF();
-		initialTableSortingDirection = TableSortingDirection.findByCode(initialTableSortingDirectionCode);
-
-		final int initialTablePageSizeValue = objectInput.readInt();
-		initialTablePageSize = TablePageSize.findByValue(initialTablePageSizeValue);
-
-		final String pdfDocumentPageFormatCode = objectInput.readUTF();
-		pdfDocumentPageFormat = PdfDocumentPageFormat.findByCode(pdfDocumentPageFormatCode);
-
-		final String firstRegistrationDateTimeString = objectInput.readUTF();
-		setFirstRegistrationDateTime(Constants.DATE_TIME_UTILS.convertFromStringForSerialization(firstRegistrationDateTimeString));
-
-		setFirstRegistrationAuthUser((AuthUser) objectInput.readObject());
-
-		final String lastModificationDateTimeString = objectInput.readUTF();
-		setLastModificationDateTime(Constants.DATE_TIME_UTILS.convertFromStringForSerialization(lastModificationDateTimeString));
-
-		setLastModificationAuthUser((AuthUser) objectInput.readObject());
 	}
 }

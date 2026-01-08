@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.repository.AuthUserRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.database.DatabaseUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -16,20 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("authUserService")
 @Transactional
 public class AuthUserServiceImpl extends AuthUserService {
-	private static final ExampleMatcher EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("email");
-	private static final ExampleMatcher NAME_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("name");
-	private static final ExampleMatcher SURNAMES_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("surnames");
+	private static final @NonNull ExampleMatcher EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("email");
+	private static final @NonNull ExampleMatcher NAME_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("name");
+	private static final @NonNull ExampleMatcher SURNAMES_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("surnames");
 
 	@Autowired
 	private AuthUserRepository authUserRepository;
 
 	@Override
-	public UpgradedJpaRepository<AuthUser> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<AuthUser> getEntityRepository() {
 		return authUserRepository;
 	}
 
 	@Override
-	protected Example<AuthUser> getDefaultEntityPageExample(final TableField filterTableField, final String filterValue) {
+	protected @NonNull Example<AuthUser> getDefaultEntityPageExample(final @NonNull TableField filterTableField, final String filterValue) {
 		final Example<AuthUser> example;
 		switch(filterTableField) {
 			case AUTH_USER_EMAIL: {
@@ -78,7 +79,7 @@ public class AuthUserServiceImpl extends AuthUserService {
 	}
 
 	@Override
-	public AuthUser getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull AuthUser getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final AuthUser authUser = new AuthUser();
 		authUser.setId(id);
 		authUser.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

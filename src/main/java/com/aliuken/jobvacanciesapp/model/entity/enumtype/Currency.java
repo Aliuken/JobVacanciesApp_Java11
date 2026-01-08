@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -23,16 +24,14 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	}
 
 	public static Currency findBySymbol(final String symbol) {
-		final Currency currency;
-		if(symbol != null) {
-			currency = Constants.PARALLEL_STREAM_UTILS.ofEnum(Currency.class)
-				.filter(currencyAux -> symbol.equals(currencyAux.symbol))
-				.findFirst()
-				.orElse(null);
-		} else {
-			currency = null;
+		if(LogicalUtils.isNullOrEmptyString(symbol)) {
+			return null;
 		}
 
+		final Currency currency = Constants.PARALLEL_STREAM_UTILS.ofEnum(Currency.class)
+			.filter(currencyAux -> symbol.equals(currencyAux.symbol))
+			.findFirst()
+			.orElse(null);
 		return currency;
 	}
 

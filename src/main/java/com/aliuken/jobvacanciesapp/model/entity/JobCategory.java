@@ -18,7 +18,6 @@ import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -34,43 +33,41 @@ import java.util.stream.Collectors;
 public class JobCategory extends AbstractEntity<JobCategory> {
 	private static final long serialVersionUID = -1716013269189038906L;
 
-	@NotNull
 	@Size(max=35)
 	@Column(name="name", length=35, nullable=false)
-	private String name;
+	private @NonNull String name;
 
-	@NotNull
 	@Size(max=500)
 	@Column(name="description", length=500, nullable=false)
-	private String description;
+	private @NonNull String description;
 
 	@OneToMany(mappedBy="jobCategory", fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
-	private Set<JobVacancy> jobVacancies;
+	private @NonNull Set<JobVacancy> jobVacancies = new LinkedHashSet<>();
 
 	public JobCategory() {
 		super();
 	}
 
 	@LazyEntityRelationGetter
-	public Set<JobVacancy> getJobVacancies() {
+	public @NonNull Set<JobVacancy> getJobVacancies() {
 		return jobVacancies;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<Long> getJobVacancyIds() {
+	public @NonNull Set<Long> getJobVacancyIds() {
 		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-			.map(jv -> jv.getId())
+			.map(jobVacancy -> jobVacancy.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyIds;
 	}
 
 	@LazyEntityRelationGetter
-	public Set<String> getJobVacancyNames() {
+	public @NonNull Set<String> getJobVacancyNames() {
 		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
-			.map(jv -> jv.getName())
+			.map(jobVacancy -> jobVacancy.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		return jobVacancyNames;

@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.dto;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -14,15 +15,13 @@ import java.io.Serializable;
 public class AuthUserCredentialsDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -5672637016876579368L;
 
-	private static final AuthUserCredentialsDTO NO_ARGS_INSTANCE = new AuthUserCredentialsDTO(null, null, null, null, null);
-
 	@NotNull(message="{id.notNull}")
-	private final Long id;
+	private final @NonNull Long id;
 
 	@NotEmpty(message="{email.notEmpty}")
 	@Size(max=255, message="{email.maxSize}")
 	@Email(message="{email.validFormat}")
-	private final String email;
+	private final @NonNull String email;
 
 	@NotEmpty(message="{password.notEmpty}")
 	@Size(min=7, max=20, message="{password.minAndMaxSize}")
@@ -36,12 +35,8 @@ public class AuthUserCredentialsDTO implements AbstractEntityDTO, Serializable {
 	@Size(min=7, max=20, message="{newPassword2.minAndMaxSize}")
 	private final String newPassword2;
 
-	public static AuthUserCredentialsDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
-
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
 
 		final String result = StringUtils.getStringJoined("AuthUserCredentialsDTO [id=", idString, ", email=", email, "]");

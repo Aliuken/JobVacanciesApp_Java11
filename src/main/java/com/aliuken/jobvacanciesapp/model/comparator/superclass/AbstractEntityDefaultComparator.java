@@ -59,7 +59,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 		}
 
 		final Integer classCompareResult = this.getClassCompareResult(entity1, entity2);
-		if(classCompareResult != null) {
+		if(classCompareResult != null && classCompareResult != ENTITIES_EQUAL) {
 			return direction * classCompareResult;
 		}
 

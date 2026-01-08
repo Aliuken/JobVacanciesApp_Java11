@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.repository.JobRequestRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class JobRequestServiceImpl extends JobRequestService {
 	private JobRequestRepository jobRequestRepository;
 
 	@Override
-	public UpgradedJpaRepository<JobRequest> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<JobRequest> getEntityRepository() {
 		return jobRequestRepository;
 	}
 
@@ -34,13 +35,13 @@ public class JobRequestServiceImpl extends JobRequestService {
 
 	@Override
 	@ServiceMethod
-	public List<JobRequest> findByAuthUserAndCurriculumFileName(final AuthUser authUser, final String curriculumFileName) {
+	public @NonNull List<JobRequest> findByAuthUserAndCurriculumFileName(final AuthUser authUser, final String curriculumFileName) {
 		final List<JobRequest> jobRequests = jobRequestRepository.findByAuthUserAndCurriculumFileName(authUser, curriculumFileName);
 		return jobRequests;
 	}
 
 	@Override
-	public JobRequest getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull JobRequest getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final JobRequest jobRequest = new JobRequest();
 		jobRequest.setId(id);
 		jobRequest.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

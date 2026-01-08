@@ -20,7 +20,7 @@ public abstract class AbstractEntityControllerWithPredefinedFilter<T extends Abs
 
 	protected String getExportToPdfUrl(final String predefinedFilterIdString) {
 		final String paginationUrl = this.getPaginationUrl(predefinedFilterIdString);
-		final String exportToPdfUrl = StringUtils.getStringJoined(paginationUrl, "/export-to-pdf");
+		final String exportToPdfUrl = StringUtils.getStringJoined(paginationUrl, "/exportToPdf");
 		return exportToPdfUrl;
 	}
 }

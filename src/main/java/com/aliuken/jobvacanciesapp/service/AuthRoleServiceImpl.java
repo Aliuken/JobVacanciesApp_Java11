@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.repository.AuthRoleRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class AuthRoleServiceImpl extends AuthRoleService {
 	private AuthRoleRepository authRoleRepository;
 
 	@Override
-	public UpgradedJpaRepository<AuthRole> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<AuthRole> getEntityRepository() {
 		return authRoleRepository;
 	}
 
@@ -29,7 +30,7 @@ public class AuthRoleServiceImpl extends AuthRoleService {
 	}
 
 	@Override
-	public AuthRole getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull AuthRole getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final AuthRole authRole = new AuthRole();
 		authRole.setId(id);
 		authRole.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

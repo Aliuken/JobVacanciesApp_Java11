@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.util.persistence.database;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 
@@ -19,7 +20,7 @@ public class DatabaseUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static ExampleMatcher getExampleMatcherWithExactOneField(final String tableFieldPath) {
+	public static @NonNull ExampleMatcher getExampleMatcherWithExactOneField(final String tableFieldPath) {
 		final GenericPropertyMatcher exactGenericPropertyMatcher = ExampleMatcher.GenericPropertyMatchers.exact();
 
 		final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
@@ -27,7 +28,7 @@ public class DatabaseUtils {
 		return exampleMatcher;
 	}
 
-	public static ExampleMatcher getExampleMatcherWithContainsOneField(final String tableFieldPath) {
+	public static @NonNull ExampleMatcher getExampleMatcherWithContainsOneField(final String tableFieldPath) {
 		final GenericPropertyMatcher containsGenericPropertyMatcher = ExampleMatcher.GenericPropertyMatchers.contains();
 
 		final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
@@ -35,7 +36,7 @@ public class DatabaseUtils {
 		return exampleMatcher;
 	}
 
-	public static ExampleMatcher getExampleMatcherWithExactTwoFields(final String tableFieldPath1, final String tableFieldPath2) {
+	public static @NonNull ExampleMatcher getExampleMatcherWithExactTwoFields(final String tableFieldPath1, final String tableFieldPath2) {
 		final GenericPropertyMatcher exactGenericPropertyMatcher = ExampleMatcher.GenericPropertyMatchers.exact();
 
 		final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
@@ -44,7 +45,7 @@ public class DatabaseUtils {
 		return exampleMatcher;
 	}
 
-	public static ExampleMatcher getExampleMatcherWithContainsTwoFields(final String tableFieldPath1, final String tableFieldPath2) {
+	public static @NonNull ExampleMatcher getExampleMatcherWithContainsTwoFields(final String tableFieldPath1, final String tableFieldPath2) {
 		final GenericPropertyMatcher exactGenericPropertyMatcher = ExampleMatcher.GenericPropertyMatchers.exact();
 		final GenericPropertyMatcher containsGenericPropertyMatcher = ExampleMatcher.GenericPropertyMatchers.contains();
 
@@ -54,7 +55,7 @@ public class DatabaseUtils {
 		return exampleMatcher;
 	}
 
-	public static Predicate getEqualsDateTimePredicate(final String dateTimeString, final String dateTimeFieldName, final Root<?> root, final CriteriaQuery<?> criteriaQuery, final CriteriaBuilder criteriaBuilder) {
+	public static @NonNull Predicate getEqualsDateTimePredicate(final String dateTimeString, final @NonNull String dateTimeFieldName, final @NonNull Root<?> root, final @NonNull CriteriaQuery<?> criteriaQuery, final @NonNull CriteriaBuilder criteriaBuilder) {
 		final Predicate predicate;
 		if(dateTimeString == null || Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD.equals(dateTimeString)) {
 			final Expression<LocalDateTime> localDateTimeExpression = root.get(dateTimeFieldName).as(LocalDateTime.class);
@@ -68,7 +69,7 @@ public class DatabaseUtils {
 		return predicate;
 	}
 
-	public static Predicate getEqualsEntityIdAndDateTimePredicate(final Long entityId, final String entityFieldName, final String dateTimeString, final String dateTimeFieldName, final Root<?> root, final CriteriaQuery<?> criteriaQuery, final CriteriaBuilder criteriaBuilder) {
+	public static @NonNull Predicate getEqualsEntityIdAndDateTimePredicate(final Long entityId, final @NonNull String entityFieldName, final String dateTimeString, final @NonNull String dateTimeFieldName, final @NonNull Root<?> root, final @NonNull CriteriaQuery<?> criteriaQuery, final @NonNull CriteriaBuilder criteriaBuilder) {
 		final Predicate predicate;
 		if(dateTimeString == null || Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD.equals(dateTimeString)) {
 			final Expression<Long> jobCompanyIdExpression = root.get(entityFieldName).get("id").as(Long.class);

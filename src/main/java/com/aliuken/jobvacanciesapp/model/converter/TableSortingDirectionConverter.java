@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class TableSortingDirectionConverter implements AttributeConverter<TableSortingDirection, String> {
@@ -20,12 +21,8 @@ public class TableSortingDirectionConverter implements AttributeConverter<TableS
 
 	@Override
 	public TableSortingDirection convertToEntityAttribute(final String tableSortingDirectionCode) {
-		final TableSortingDirection tableSortingDirection;
-		if(tableSortingDirectionCode != null) {
-			tableSortingDirection = TableSortingDirection.findByCode(tableSortingDirectionCode);
-		} else {
-			tableSortingDirection = TableSortingDirection.BY_DEFAULT;
-		}
+		final TableSortingDirection tableSortingDirection = TableSortingDirection.findByCode(tableSortingDirectionCode);
+		Objects.requireNonNull(tableSortingDirection, "tableSortingDirection cannot be null");
 		return tableSortingDirection;
 	}
 }

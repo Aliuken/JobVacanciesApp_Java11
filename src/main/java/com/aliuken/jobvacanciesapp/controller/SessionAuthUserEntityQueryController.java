@@ -15,6 +15,7 @@ import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,8 +56,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	 * Method to show the list of entity queries of the logged user with pagination
 	 */
 	@GetMapping("/my-user/auth-user-entity-queries")
-	public String getAuthUserEntityQueries(HttpServletRequest httpServletRequest, Model model, Pageable pageable,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getAuthUserEntityQueries(HttpServletRequest httpServletRequest, Model model, @NonNull Pageable pageable,
+			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /my-user/auth-user-entity-queries";
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -135,9 +136,9 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	/**
 	 * Method to export the list of user entity queries with pagination to pdf
 	 */
-	@GetMapping("/my-user/auth-user-entity-queries/export-to-pdf")
+	@GetMapping("/my-user/auth-user-entity-queries/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

@@ -35,6 +35,8 @@ import java.util.Objects;
 public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Serializable, Comparable<T>, AbstractEntityFieldsPrintable {
 	private static final long serialVersionUID = -1146558230499546161L;
 
+	private final @NonNull Class<T> entityClass;
+
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -56,6 +58,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	public AbstractEntity() {
 		super();
+		final Class<?> initialEntityClass = this.getClass();
+		entityClass = GenericsUtils.cast(initialEntityClass);
 	}
 
 	@PrePersist
@@ -68,8 +72,6 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	@PreUpdate
 	private void preUpdate() {
-		final Class<?> initialEntityClass = this.getClass();
-		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
 		final T currentEntity = UpgradedJpaRepository.getEntityStatically(id, entityClass);
 		if(currentEntity != null) {
 			firstRegistrationDateTime = currentEntity.getFirstRegistrationDateTime();
@@ -102,6 +104,11 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return lastAuthUser;
 	}
 
+	public @NonNull String getEntityClassName() {
+		final String entityClassName = entityClass.getName();
+		return entityClassName;
+	}
+
 	public @NonNull String getIdString() {
 		final String idString = String.valueOf(id);
 		return idString;
@@ -117,7 +124,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 		return firstRegistrationAuthUserId;
 	}
 
-	public String getFirstRegistrationAuthUserEmail() {
+	public @NonNull String getFirstRegistrationAuthUserEmail() {
 		final String firstRegistrationAuthUserEmail = firstRegistrationAuthUser.getEmail();
 		return firstRegistrationAuthUserEmail;
 	}
@@ -182,13 +189,14 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 
 	@Override
 	public @NonNull String toString() {
+		final String entityClassName = this.getEntityClassName();
 		final String idString = this.getIdString();
 		final String firstRegistrationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(firstRegistrationDateTime);
 		final String firstRegistrationAuthUserEmail = this.getFirstRegistrationAuthUserEmail();
 		final String lastModificationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(lastModificationDateTime);
 		final String lastModificationAuthUserEmail = this.getLastModificationAuthUserEmail();
 
-		final String result = StringUtils.getStringJoined("AbstractEntity [id=", idString,
+		final String result = StringUtils.getStringJoined("AbstractEntity [entityClass=", entityClassName, ", id=", idString,
 			", firstRegistrationDateTime=", firstRegistrationDateTimeString, ", firstRegistrationAuthUser=", firstRegistrationAuthUserEmail, ", lastModificationDateTime=", lastModificationDateTimeString, ", lastModificationAuthUser=", lastModificationAuthUserEmail, "]");
 
 		return result;
@@ -219,9 +227,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> implements Ser
 	}
 
 	@Override
-	public final int compareTo(T other) {
-		final Class<?> initialEntityClass = this.getClass();
-		final Class<T> entityClass = GenericsUtils.cast(initialEntityClass);
+	public final int compareTo(final @NonNull T other) {
+		Objects.requireNonNull(other, "other cannot be null");
 		final T thisEntity = GenericsUtils.cast(this);
 		final AbstractEntityDefaultComparator.EntityComparators<T> entityComparators = AbstractEntityDefaultComparator.getEntityComparators(entityClass);
 		final AbstractEntityDefaultComparator<T> currentDefaultComparator = entityComparators.getCurrentDefaultComparator();

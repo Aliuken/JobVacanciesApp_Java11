@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -27,30 +28,26 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 	}
 
 	public static ColorMode findByCode(final String code) {
-		final ColorMode colorMode;
-		if(code != null) {
-			colorMode = Constants.PARALLEL_STREAM_UTILS.ofEnum(ColorMode.class)
-				.filter(colorModeAux -> code.equals(colorModeAux.code))
-				.findFirst()
-				.orElse(null);
-		} else {
-			colorMode = null;
+		if(LogicalUtils.isNullOrEmptyString(code)) {
+			return null;
 		}
 
+		final ColorMode colorMode = Constants.PARALLEL_STREAM_UTILS.ofEnum(ColorMode.class)
+			.filter(colorModeAux -> code.equals(colorModeAux.code))
+			.findFirst()
+			.orElse(null);
 		return colorMode;
 	}
 
 	public static ColorMode findByValue(final String value) {
-		final ColorMode colorMode;
-		if(value != null) {
-			colorMode = Constants.PARALLEL_STREAM_UTILS.ofEnum(ColorMode.class)
-				.filter(colorModeAux -> value.equals(colorModeAux.value))
-				.findFirst()
-				.orElse(null);
-		} else {
-			colorMode = null;
+		if(LogicalUtils.isNullOrEmptyString(value)) {
+			return null;
 		}
 
+		final ColorMode colorMode = Constants.PARALLEL_STREAM_UTILS.ofEnum(ColorMode.class)
+			.filter(colorModeAux -> value.equals(colorModeAux.value))
+			.findFirst()
+			.orElse(null);
 		return colorMode;
 	}
 

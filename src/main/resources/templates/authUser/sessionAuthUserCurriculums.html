@@ -44,8 +44,7 @@
                 <td th:text="${authUserCurriculum.description}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(authUserCurriculum.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${authUserCurriculum.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
-                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                  <a th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${authUserCurriculum.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                 </td>
                 <td>
                   <a th:href="@{/my-user/auth-user-curriculums/delete/{id} (id=${authUserCurriculum.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteAuthUserCurriculum.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteAuthUserCurriculum}">

@@ -22,6 +22,7 @@ import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,8 +78,8 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to show the list of users with pagination
 	 */
 	@GetMapping("/auth-users/index")
-	public String index(Model model, Pageable pageable,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(Model model, @NonNull Pageable pageable,
+			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /auth-users/index";
 
 		try {
@@ -144,9 +145,9 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	/**
 	 * Method to export the list of users with pagination to pdf
 	 */
-	@GetMapping("/auth-users/index/export-to-pdf")
+	@GetMapping("/auth-users/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

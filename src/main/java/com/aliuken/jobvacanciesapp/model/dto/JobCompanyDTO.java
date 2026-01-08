@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -17,17 +18,17 @@ import java.util.stream.Collectors;
 public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = 5328929981541165382L;
 
-	private static final JobCompanyDTO NO_ARGS_INSTANCE = new JobCompanyDTO(null, null, null, Boolean.FALSE, null, null, null);
+	private static final @NonNull JobCompanyDTO NO_ARGS_INSTANCE = new JobCompanyDTO(null, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Boolean.FALSE, null, null, null);
 
 	private final Long id;
 
 	@NotEmpty(message="{name.notEmpty}")
 	@Size(max=35, message="{name.maxSize35}")
-	private final String name;
+	private final @NonNull String name;
 
 	@NotEmpty(message="{description.notEmpty}")
 	@Size(max=500, message="{description.maxSize}")
-	private final String description;
+	private final @NonNull String description;
 
 	@NotNull
 	private final Boolean isSelectedLogo;
@@ -35,11 +36,11 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 	private final Long selectedLogoId;
 
 	@NotEmpty(message="{selectedLogoFilePath.notEmpty}")
-	private final String selectedLogoFilePath;
+	private final @NonNull String selectedLogoFilePath;
 
 	private final Set<JobCompanyLogoDTO> jobCompanyLogos;
 
-	public JobCompanyDTO(final Long id, final String name, final String description, final Boolean isSelectedLogo, final Long selectedLogoId, final String selectedLogoFilePath, final Set<JobCompanyLogoDTO> jobCompanyLogos) {
+	public JobCompanyDTO(final Long id, final @NonNull String name, final @NonNull String description, final Boolean isSelectedLogo, final Long selectedLogoId, final String selectedLogoFilePath, final Set<JobCompanyLogoDTO> jobCompanyLogos) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,7 +48,7 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 		this.isSelectedLogo = isSelectedLogo;
 		this.selectedLogoId = selectedLogoId;
 
-		if(selectedLogoId == null || Constants.NO_SELECTED_LOGO_ID.equals(selectedLogoId)) {
+		if(selectedLogoId == null || Constants.NO_SELECTED_LOGO_ID.equals(selectedLogoId) || selectedLogoFilePath == null) {
 			this.selectedLogoFilePath = Constants.NO_SELECTED_LOGO_FILE_PATH;
 		} else {
 			this.selectedLogoFilePath = selectedLogoFilePath;
@@ -56,16 +57,16 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 		this.jobCompanyLogos = jobCompanyLogos;
 	}
 
-	public static JobCompanyDTO getNewInstance() {
+	public static @NonNull JobCompanyDTO getNewInstance() {
 		return NO_ARGS_INSTANCE;
 	}
 
-	public static JobCompanyDTO getNewInstance(final Long jobCompanyId) {
-		final JobCompanyDTO jobCompanyDTO = new JobCompanyDTO(jobCompanyId, null, null, Boolean.FALSE, null, null, null);
+	public static @NonNull JobCompanyDTO getNewInstance(final Long jobCompanyId) {
+		final JobCompanyDTO jobCompanyDTO = new JobCompanyDTO(jobCompanyId, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Boolean.FALSE, null, null, null);
 		return jobCompanyDTO;
 	}
 
-	public static JobCompanyDTO getNewInstance(JobCompanyDTO jobCompanyDTO, final Boolean isSelectedLogo, final Long selectedLogoId, final String selectedLogoFilePath) {
+	public static @NonNull JobCompanyDTO getNewInstance(JobCompanyDTO jobCompanyDTO, final Boolean isSelectedLogo, final Long selectedLogoId, final String selectedLogoFilePath) {
 		if(jobCompanyDTO != null) {
 			jobCompanyDTO = new JobCompanyDTO(
 				jobCompanyDTO.getId(),
@@ -79,8 +80,8 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 		} else {
 			jobCompanyDTO = new JobCompanyDTO(
 				null,
-				null,
-				null,
+				Constants.EMPTY_STRING,
+				Constants.EMPTY_STRING,
 				isSelectedLogo,
 				selectedLogoId,
 				selectedLogoFilePath,
@@ -92,14 +93,14 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 
 	public List<String> getJobCompanyLogoFilePaths() {
 		final List<String> jobCompanyLogoFilePaths = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
-				.map(jcl -> jcl.getFilePath())
-				.collect(Collectors.toList());
+			.map(jcl -> jcl.getFilePath())
+			.collect(Collectors.toList());
 
 		return jobCompanyLogoFilePaths;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
 		final String isSelectedLogoString = String.valueOf(isSelectedLogo);
 		final String selectedLogoIdString = String.valueOf(selectedLogoId);

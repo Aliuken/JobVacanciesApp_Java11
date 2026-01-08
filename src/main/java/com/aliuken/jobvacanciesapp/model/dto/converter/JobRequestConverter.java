@@ -5,36 +5,33 @@ import com.aliuken.jobvacanciesapp.model.dto.JobRequestDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
+import org.jspecify.annotations.NonNull;
 
 public class JobRequestConverter extends EntityToDtoConverter<JobRequest, JobRequestDTO> {
 
-	private static final JobRequestConverter SINGLETON_INSTANCE = new JobRequestConverter();
+	private static final @NonNull JobRequestConverter SINGLETON_INSTANCE = new JobRequestConverter();
 
 	private JobRequestConverter() {
-		super(JobRequestConverter::conversionFunction, JobRequest.class, JobRequestDTO.class, JobRequestDTO[]::new);
+		super(JobRequest.class, JobRequestDTO.class, JobRequestDTO[]::new);
 	}
 
-	public static JobRequestConverter getInstance() {
+	public static @NonNull JobRequestConverter getInstance() {
 		return SINGLETON_INSTANCE;
 	}
 
-	private static JobRequestDTO conversionFunction(final JobRequest jobRequest) {
-		final JobRequestDTO jobRequestDTO;
-		if(jobRequest != null) {
-			final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(jobRequest.getAuthUser());
-			final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobRequest.getJobVacancy());
+	@Override
+	protected @NonNull JobRequestDTO convert(final @NonNull JobRequest jobRequest) {
+		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(jobRequest.getAuthUser());
+		final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobRequest.getJobVacancy());
 
-			jobRequestDTO = new JobRequestDTO(
-				jobRequest.getId(),
-				authUserDTO,
-				jobVacancyDTO,
-				(jobVacancyDTO != null) ? jobVacancyDTO.getId() : null,
-				jobRequest.getComments(),
-				jobRequest.getCurriculumFileName()
-			);
-		} else {
-			jobRequestDTO = JobRequestDTO.getNewInstance();
-		}
+		final JobRequestDTO jobRequestDTO = new JobRequestDTO(
+			jobRequest.getId(),
+			authUserDTO,
+			jobVacancyDTO,
+			jobVacancyDTO.getId(),
+			jobRequest.getComments(),
+			jobRequest.getCurriculumFileName()
+		);
 		return jobRequestDTO;
 	}
 }

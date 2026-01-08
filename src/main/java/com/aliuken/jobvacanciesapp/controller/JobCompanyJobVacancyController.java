@@ -18,6 +18,7 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,8 +53,8 @@ public class JobCompanyJobVacancyController extends AbstractEntityControllerWith
 	 * Method to show the list of job vacancies of a company with pagination
 	 */
 	@GetMapping("/job-companies/job-vacancies/{jobCompanyId}")
-	public String getJobVacancies(Model model, Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobVacancies(Model model, @NonNull Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
+								  @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-companies/job-vacancies/{jobCompanyId}";
 
 		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
@@ -130,9 +131,9 @@ public class JobCompanyJobVacancyController extends AbstractEntityControllerWith
 	/**
 	 * Method to export the list of company job vacancies with pagination to pdf
 	 */
-	@GetMapping("/job-companies/job-vacancies/{jobCompanyId}/export-to-pdf")
+	@GetMapping("/job-companies/job-vacancies/{jobCompanyId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("jobCompanyId") long jobCompanyId,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

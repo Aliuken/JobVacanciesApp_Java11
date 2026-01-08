@@ -63,9 +63,10 @@ public class GenericControllerAdvice {
 	}
 
 	private AuthUser getRefreshedSessionAuthUser(final @NonNull HttpSession httpSession) {
-		final AuthUser sessionAuthUser = (AuthUser) httpSession.getAttribute("sessionAuthUser");
-		final AuthUser refreshedSessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
-		return refreshedSessionAuthUser;
+		final Long sessionAuthUserId = (Long) httpSession.getAttribute(Constants.SESSION_AUTH_USER_ID);
+		AuthUser sessionAuthUser = authUserService.findByIdNotOptional(sessionAuthUserId);
+		sessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
+		return sessionAuthUser;
 	}
 
 	//To handle the exception when uploading files too big

@@ -12,15 +12,9 @@ import java.util.Objects;
 public class LambdaResultWithExceptionDTO<T> implements Serializable {
 	private static final long serialVersionUID = 417055475888522040L;
 
-	private static final LambdaResultWithExceptionDTO<?> NO_ARGS_INSTANCE = new LambdaResultWithExceptionDTO<>(null, null);
-
 	private final T returnedValue;
 
 	private final Throwable throwable;
-
-	public static LambdaResultWithExceptionDTO<?> getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
 
 	public boolean hasException() {
 		final boolean result = (throwable != null);
@@ -28,7 +22,7 @@ public class LambdaResultWithExceptionDTO<T> implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String returnedValueString = String.valueOf(returnedValue);
 		final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(throwable);
 

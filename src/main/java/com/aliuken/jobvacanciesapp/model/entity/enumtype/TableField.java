@@ -80,8 +80,7 @@ public enum TableField implements Serializable, Internationalizable {
 		final TableField tableField = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
 			.filter(e -> code.equals(e.code))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("TableField code does not exist"));
-
+			.orElse(null);
 		return tableField;
 	}
 

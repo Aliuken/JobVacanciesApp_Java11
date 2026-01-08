@@ -15,9 +15,9 @@
       <li class="page-item disabled" th:if="${entitiesPageNumber} <= ${firstPageNumber}">
         <a th:href="@{${indexEndpoint} (languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=(${entitiesPageNumber} - 1))}" class="page-link" th:text="#{pagination.previousPage}"></a>
       </li>
-      &nbsp;&nbsp;&nbsp;
+
       <input type="text" disabled="true" th:value="${entitiesPageNumber} + 1" size="6"></input>
-      &nbsp;&nbsp;&nbsp;
+
       <li class="page-item" th:if="${entitiesPageNumber} < ${lastPageNumber}">
         <a th:href="@{${indexEndpoint} (languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=(${entitiesPageNumber} + 1))}" class="page-link" th:text="#{pagination.nextPage}"></a>
       </li>
@@ -30,7 +30,7 @@
       <li class="page-item disabled" th:if="${entitiesPageNumber} == ${lastPageNumber}">
         <a th:href="@{${indexEndpoint} (languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=${lastPageNumber})}" class="page-link" th:text="#{pagination.lastPage}"></a>
       </li>
-      &nbsp;&nbsp;&nbsp;
+
       <a id="exportToPdfButton" th:href="@{${exportToPdfEndpoint} (languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=${entitiesPageNumber})}" th:class="${(exportToPdfEndpoint != '') ? 'page-link' : 'page-link disabled'}" role="button" th:title="#{operationButton.exportToPdf}">
         <i class="fas fa-lg fa-file-pdf" aria-hidden="true"></i>
       </a>

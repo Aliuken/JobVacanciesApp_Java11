@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserCredentials;
 import com.aliuken.jobvacanciesapp.model.entity.factory.AuthUserCredentialsFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public interface AuthUserCredentialsRepository extends UpgradedJpaRepository<Aut
 	}
 
 	@Override
-	public default AbstractEntityFactory<AuthUserCredentials> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<AuthUserCredentials> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

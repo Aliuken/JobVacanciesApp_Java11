@@ -12,6 +12,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -417,7 +418,7 @@ public class JobCompanyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 		this.commonTestsJobCompanyDTO1(jobCompanyDTO, name, jobCompany.getSelectedJobCompanyLogoId(), jobCompany.getSelectedJobCompanyLogoFilePath(), jobCompany.getJobCompanyLogos());
 	}
 
-	private void commonTestsJobCompanyDTO1(final JobCompanyDTO jobCompanyDTO, final String name, final Long selectedJobCompanyLogoId, final String selectedJobCompanyLogoFilePath, final Set<JobCompanyLogo> jobCompanyLogos) {
+	private void commonTestsJobCompanyDTO1(final JobCompanyDTO jobCompanyDTO, final String name, final Long selectedJobCompanyLogoId, final String selectedJobCompanyLogoFilePath, final @NonNull Set<JobCompanyLogo> jobCompanyLogos) {
 		Assertions.assertNotNull(jobCompanyDTO);
 		Assertions.assertEquals(1L, jobCompanyDTO.getId());
 		Assertions.assertEquals(name, jobCompanyDTO.getName());

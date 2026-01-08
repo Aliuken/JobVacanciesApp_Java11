@@ -13,6 +13,7 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.database.DatabaseUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -29,22 +30,22 @@ import javax.persistence.criteria.Root;
 @Slf4j
 public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWithJobCompanyServiceSuperclass<JobCompanyLogo> {
 
-	private static final ExampleMatcher JOB_COMPANY_ID_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithExactOneField("jobCompany.id");
-	private static final ExampleMatcher JOB_COMPANY_ID_AND_ID_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithExactTwoFields("jobCompany.id", "id");
-	private static final ExampleMatcher JOB_COMPANY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsTwoFields("jobCompany.id", "firstRegistrationAuthUser.email");
+	private static final @NonNull ExampleMatcher JOB_COMPANY_ID_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithExactOneField("jobCompany.id");
+	private static final @NonNull ExampleMatcher JOB_COMPANY_ID_AND_ID_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithExactTwoFields("jobCompany.id", "id");
+	private static final @NonNull ExampleMatcher JOB_COMPANY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsTwoFields("jobCompany.id", "firstRegistrationAuthUser.email");
 
 	@ServiceMethod
-	public AbstractEntityPageWithExceptionDTO<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableSearchDTO tableSearchDTO, final Pageable pageable) {
+	public @NonNull AbstractEntityPageWithExceptionDTO<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableSearchDTO tableSearchDTO, final @NonNull Pageable pageable) {
 		Page<JobCompanyLogo> page;
 		Exception exception;
 		try {
 			if(tableSearchDTO != null) {
 				final TableField filterTableField = tableSearchDTO.getFilterTableField();
 				final String filterValue = tableSearchDTO.getFilterValue();
-				final TableField tableSortingField = tableSearchDTO.getTableSortingField();
+				final TableField sortingTableField = tableSearchDTO.getSortingTableField();
 				final TableSortingDirection tableSortingDirection = tableSearchDTO.getTableSortingDirection();
 
-				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, filterTableField, filterValue, tableSortingField, tableSortingDirection, pageable);
+				page = this.getJobCompanyJobCompanyLogosPage(jobCompanyId, filterTableField, filterValue, sortingTableField, tableSortingDirection, pageable);
 			} else {
 				final Example<JobCompanyLogo> example = this.getJobCompanyIdExample(jobCompanyId);
 				page = this.findAll(example, pageable);
@@ -63,7 +64,7 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWith
 		return pageWithExceptionDTO;
 	}
 
-	private Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField filterTableField, final String filterValue, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Pageable pageable) {
+	private @NonNull Page<JobCompanyLogo> getJobCompanyJobCompanyLogosPage(final long jobCompanyId, final TableField filterTableField, final String filterValue, final TableField sortingTableField, final TableSortingDirection tableSortingDirection, final @NonNull Pageable pageable) {
 		final Page<JobCompanyLogo> page;
 		if(filterTableField != null && LogicalUtils.isNotNullNorEmptyString(filterValue)) {
 			switch(filterTableField) {
@@ -87,12 +88,12 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWith
 					jobCompanyLogoSearch.setJobCompany(jobCompany);
 
 					final Example<JobCompanyLogo> example = Example.of(jobCompanyLogoSearch, JOB_COMPANY_ID_AND_ID_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
+					page = this.findAll(example, pageable, sortingTableField, tableSortingDirection);
 					break;
 				}
 				case FIRST_REGISTRATION_DATE_TIME: {
 					final Specification<JobCompanyLogo> specification = this.equalsJobCompanyIdAndFirstRegistrationDateTime(jobCompanyId, filterValue);
-					page = this.findAll(pageable, tableSortingField, tableSortingDirection, specification);
+					page = this.findAll(pageable, sortingTableField, tableSortingDirection, specification);
 					break;
 				}
 				case FIRST_REGISTRATION_AUTH_USER_EMAIL: {
@@ -107,7 +108,7 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWith
 					jobCompanyLogoSearch.setJobCompany(jobCompany);
 
 					final Example<JobCompanyLogo> example = Example.of(jobCompanyLogoSearch, JOB_COMPANY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER);
-					page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
+					page = this.findAll(example, pageable, sortingTableField, tableSortingDirection);
 					break;
 				}
 				default: {
@@ -116,13 +117,13 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWith
 			}
 		} else {
 			final Example<JobCompanyLogo> example = this.getJobCompanyIdExample(jobCompanyId);
-			page = this.findAll(example, pageable, tableSortingField, tableSortingDirection);
+			page = this.findAll(example, pageable, sortingTableField, tableSortingDirection);
 		}
 
 		return page;
 	}
 
-	private Example<JobCompanyLogo> getJobCompanyIdExample(long jobCompanyId) {
+	private @NonNull Example<JobCompanyLogo> getJobCompanyIdExample(long jobCompanyId) {
 		final JobCompany jobCompany = new JobCompany();
 		jobCompany.setId(jobCompanyId);
 
@@ -133,12 +134,12 @@ public abstract class JobCompanyLogoServiceSuperclass extends AbstractEntityWith
 		return example;
 	}
 
-	private Specification<JobCompanyLogo> equalsJobCompanyIdAndFirstRegistrationDateTime(final Long jobCompanyId, final String dateTimeString) {
+	private @NonNull Specification<JobCompanyLogo> equalsJobCompanyIdAndFirstRegistrationDateTime(final Long jobCompanyId, final String dateTimeString) {
 		return new Specification<JobCompanyLogo>() {
 			private static final long serialVersionUID = -2749244145790761484L;
 
 			@Override
-			public Predicate toPredicate(final Root<JobCompanyLogo> root, final CriteriaQuery<?> criteriaQuery, final CriteriaBuilder criteriaBuilder) {
+			public @NonNull Predicate toPredicate(final @NonNull Root<JobCompanyLogo> root, final @NonNull CriteriaQuery<?> criteriaQuery, final @NonNull CriteriaBuilder criteriaBuilder) {
 				final String entityFieldName = "jobCompany";
 				final String dateTimeFieldName = "firstRegistrationDateTime";
 				final Predicate predicate = DatabaseUtils.getEqualsEntityIdAndDateTimePredicate(jobCompanyId, entityFieldName, dateTimeString, dateTimeFieldName, root, criteriaQuery, criteriaBuilder);

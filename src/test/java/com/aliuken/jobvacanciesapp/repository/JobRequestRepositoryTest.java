@@ -423,6 +423,8 @@ public class JobRequestRepositoryTest extends AbstractTransactionalJUnit4SpringC
 		Assertions.assertNotNull(jobVacancy);
 
 		final AuthUser authUser = authUserRepository.findByIdNotOptional(2L);
+		Assertions.assertNotNull(authUser);
+
 		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUser);
 
 		final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobVacancy);

@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.dto;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = 6400290314757351128L;
 
-	private static final JobRequestDTO NO_ARGS_INSTANCE = new JobRequestDTO(null, null, null, null, null, null);
+	private static final @NonNull JobRequestDTO NO_ARGS_INSTANCE = new JobRequestDTO(null, null, null, null, null, null);
 
 	private final Long id;
 	private final AuthUserDTO authUser;
@@ -57,37 +58,26 @@ public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 		this.curriculumFileName = curriculumFileName;
 	}
 
-	public static JobRequestDTO getNewInstance() {
+	public static @NonNull JobRequestDTO getNewInstance() {
 		return NO_ARGS_INSTANCE;
 	}
 
-	public static JobRequestDTO getNewInstance(JobRequestDTO jobRequestDTO, final JobVacancyDTO jobVacancyDTO) {
-		if(jobRequestDTO != null) {
-			jobRequestDTO = new JobRequestDTO(
-				jobRequestDTO.getId(),
-				jobRequestDTO.getAuthUser(),
-				jobVacancyDTO,
-				(jobVacancyDTO != null) ? jobVacancyDTO.getId() : null,
-				jobRequestDTO.getComments(),
-				jobRequestDTO.getCurriculumFileName()
-			);
-		} else {
-			jobRequestDTO = new JobRequestDTO(
-				null,
-				null,
-				jobVacancyDTO,
-				(jobVacancyDTO != null) ? jobVacancyDTO.getId() : null,
-				null,
-				null
-			);
-		}
+	public static @NonNull JobRequestDTO getNewInstance(@NonNull JobRequestDTO jobRequestDTO, final @NonNull JobVacancyDTO jobVacancyDTO) {
+		jobRequestDTO = new JobRequestDTO(
+			jobRequestDTO.getId(),
+			jobRequestDTO.getAuthUser(),
+			jobVacancyDTO,
+			jobVacancyDTO.getId(),
+			jobRequestDTO.getComments(),
+			jobRequestDTO.getCurriculumFileName()
+		);
 		return jobRequestDTO;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
-		final String authUserEmail = (authUser != null) ? String.valueOf(authUser.getEmail()) : null;
+		final String authUserEmail = (authUser != null) ? authUser.getEmail() : null;
 		final String jobVacancyIdString = (jobVacancy != null) ? String.valueOf(jobVacancy.getId()) : null;
 
 		final String result = StringUtils.getStringJoined("JobRequestDTO [id=", idString, ", authUserEmail=", authUserEmail, ", jobVacancyId=", jobVacancyIdString, ", comments=", comments, ", curriculumFileName=", curriculumFileName, "]");

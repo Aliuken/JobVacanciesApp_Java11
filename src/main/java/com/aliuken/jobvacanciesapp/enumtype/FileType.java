@@ -35,10 +35,10 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 		}
 
 		final List<String> allowedLowerCaseFileExtensions = new ArrayList<>();
-		for(String allowedFileExtension : allowedFileExtensionsVarargs) {
+		for(final String allowedFileExtension : allowedFileExtensionsVarargs) {
 			if(allowedFileExtension != null) {
-				allowedFileExtension = allowedFileExtension.toLowerCase();
-				allowedLowerCaseFileExtensions.add(allowedFileExtension);
+				final String allowedLowerCaseFileExtension = allowedFileExtension.toLowerCase();
+				allowedLowerCaseFileExtensions.add(allowedLowerCaseFileExtension);
 			}
 		}
 

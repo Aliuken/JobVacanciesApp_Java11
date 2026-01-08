@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.dto;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 public class AuthUserForSignupDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -7781889193918523592L;
 
-	private static final AuthUserForSignupDTO NO_ARGS_INSTANCE = new AuthUserForSignupDTO(null, null, null, null, null, null);
+	private static final @NonNull AuthUserForSignupDTO NO_ARGS_INSTANCE = new AuthUserForSignupDTO(null, null, null, null, null, null);
 
 	@NotEmpty(message="{email.notEmpty}")
 	@Size(max=255, message="{email.maxSize}")
@@ -40,12 +41,12 @@ public class AuthUserForSignupDTO implements AbstractEntityDTO, Serializable {
 	@Size(min=2, max=2, message="{language.minAndMaxSize}")
 	private final String languageCode;
 
-	public static AuthUserForSignupDTO getNewInstance() {
+	public static @NonNull AuthUserForSignupDTO getNewInstance() {
 		return NO_ARGS_INSTANCE;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String result = StringUtils.getStringJoined("AuthUserForSignupDTO [email=", email, ", name=", name, ", surnames=", surnames, ", languageCode=", languageCode, "]");
 		return result;
 	}

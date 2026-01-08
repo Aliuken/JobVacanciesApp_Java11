@@ -3,35 +3,34 @@ package com.aliuken.jobvacanciesapp.model.dto.converter;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserCurriculumDTO;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
+import org.jspecify.annotations.NonNull;
 
 public class AuthUserCurriculumConverter extends EntityToDtoConverter<AuthUserCurriculum, AuthUserCurriculumDTO> {
 
-	private static final AuthUserCurriculumConverter SINGLETON_INSTANCE = new AuthUserCurriculumConverter();
+	private static final @NonNull AuthUserCurriculumConverter SINGLETON_INSTANCE = new AuthUserCurriculumConverter();
 
 	private AuthUserCurriculumConverter() {
-		super(AuthUserCurriculumConverter::conversionFunction, AuthUserCurriculum.class, AuthUserCurriculumDTO.class, AuthUserCurriculumDTO[]::new);
+		super(AuthUserCurriculum.class, AuthUserCurriculumDTO.class, AuthUserCurriculumDTO[]::new);
 	}
 
-	public static AuthUserCurriculumConverter getInstance() {
+	public static @NonNull AuthUserCurriculumConverter getInstance() {
 		return SINGLETON_INSTANCE;
 	}
 
-	private static AuthUserCurriculumDTO conversionFunction(final AuthUserCurriculum authUserCurriculum) {
-		final AuthUserCurriculumDTO authUserCurriculumDTO;
-		if((authUserCurriculum != null) ) {
-			final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUserCurriculum.getAuthUser());
+	@Override
+	protected @NonNull AuthUserCurriculumDTO convert(final @NonNull AuthUserCurriculum authUserCurriculum) {
+		final AuthUser authUser = authUserCurriculum.getAuthUser();
+		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUser);
 
-			authUserCurriculumDTO= new AuthUserCurriculumDTO(
-				authUserCurriculum.getId(),
-				authUserDTO,
-				null,
-				authUserCurriculum.getFileName(),
-				authUserCurriculum.getDescription()
-			);
-		} else {
-			authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance();
-		}
+		final AuthUserCurriculumDTO authUserCurriculumDTO = new AuthUserCurriculumDTO(
+			authUserCurriculum.getId(),
+			authUserDTO,
+			null,
+			authUserCurriculum.getFileName(),
+			authUserCurriculum.getDescription()
+		);
 		return authUserCurriculumDTO;
 	}
 }

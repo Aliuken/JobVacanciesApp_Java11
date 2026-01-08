@@ -1,9 +1,9 @@
-function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute) {
-  //alert("treatJobCompanyLogoComboWithAjax(" + jobCompanyIdModelAttribute + ", " + jobCompanyLogoModelAttribute + ", " + refreshUrlModelAttribute + ")");
+function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoIdModelAttribute, refreshUrlModelAttribute) {
+  //alert("treatJobCompanyLogoComboWithAjax(" + jobCompanyIdModelAttribute + ", " + jobCompanyLogoIdModelAttribute + ", " + refreshUrlModelAttribute + ")");
 
   const jobCompanyLogoCombo = getComboElementIfExists("jobCompanyLogoCombo");
   if (jobCompanyLogoCombo !== null) {
-    jobCompanyLogoCombo.value = jobCompanyLogoModelAttribute ?? EMPTY_STRING;
+    jobCompanyLogoCombo.value = jobCompanyLogoIdModelAttribute ?? EMPTY_STRING;
     if (isValidStringField(refreshUrlModelAttribute)) {
       let jobCompanyLogoFragment = getElementIfExists("jobCompanyLogoFragment");
       if (jobCompanyLogoFragment !== null) {
@@ -13,7 +13,7 @@ function treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompany
 
           const urlSearchParams = new URLSearchParams();
           urlSearchParams.append("jobCompanyId", jobCompanyIdModelAttribute?.toString() ?? EMPTY_STRING);
-          urlSearchParams.append("jobCompanyLogo", selectedOption);
+          urlSearchParams.append("jobCompanyLogoId", selectedOption);
 
           const url = new URL(refreshUrlModelAttribute, window.location.href);
           url.search = urlSearchParams.toString();

@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserResetPassword;
 import com.aliuken.jobvacanciesapp.repository.AuthUserResetPasswordRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class AuthUserResetPasswordServiceImpl extends AuthUserResetPasswordServi
 	private AuthUserResetPasswordRepository authUserResetPasswordRepository;
 
 	@Override
-	public UpgradedJpaRepository<AuthUserResetPassword> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<AuthUserResetPassword> getEntityRepository() {
 		return authUserResetPasswordRepository;
 	}
 
@@ -36,7 +37,7 @@ public class AuthUserResetPasswordServiceImpl extends AuthUserResetPasswordServi
 	}
 
 	@Override
-	public AuthUserResetPassword getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull AuthUserResetPassword getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final AuthUserResetPassword authUserResetPassword = new AuthUserResetPassword();
 		authUserResetPassword.setId(id);
 		authUserResetPassword.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

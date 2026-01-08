@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserResetPassword;
 import com.aliuken.jobvacanciesapp.model.entity.factory.AuthUserResetPasswordFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public interface AuthUserResetPasswordRepository extends UpgradedJpaRepository<A
 	}
 
 	@Override
-	public default AbstractEntityFactory<AuthUserResetPassword> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<AuthUserResetPassword> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

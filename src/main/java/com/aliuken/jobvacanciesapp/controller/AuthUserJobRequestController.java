@@ -16,6 +16,7 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +47,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 	 * Method to show the list of request of a user with pagination
 	 */
 	@GetMapping("/auth-users/job-requests/{authUserId}")
-	public String getJobRequests(Model model, Pageable pageable, @PathVariable("authUserId") long authUserId,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobRequests(Model model, @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
+								 @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /auth-users/job-requests/{authUserId}";
 
 		final AuthUser authUser = authUserService.findByIdNotOptional(authUserId);
@@ -124,9 +125,9 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 	/**
 	 * Method to export the list of user job requests with pagination to pdf
 	 */
-	@GetMapping("/auth-users/job-requests/{authUserId}/export-to-pdf")
+	@GetMapping("/auth-users/job-requests/{authUserId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable, @PathVariable("authUserId") long authUserId,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -28,17 +29,15 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	}
 
 	public static TablePageSize findByValue(final Integer value) {
-		final TablePageSize tablePageSize;
-		if(value != null) {
-			final int intValue = value.intValue();
-			tablePageSize = Constants.PARALLEL_STREAM_UTILS.ofEnum(TablePageSize.class)
-				.filter(tablePageSizeAux -> tablePageSizeAux.value == intValue)
-				.findFirst()
-				.orElse(null);
-		} else {
-			tablePageSize = null;
+		if(value == null) {
+			return null;
 		}
 
+		final int intValue = value.intValue();
+		final TablePageSize tablePageSize = Constants.PARALLEL_STREAM_UTILS.ofEnum(TablePageSize.class)
+			.filter(tablePageSizeAux -> tablePageSizeAux.value == intValue)
+			.findFirst()
+			.orElse(null);
 		return tablePageSize;
 	}
 

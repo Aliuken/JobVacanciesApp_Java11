@@ -13,8 +13,6 @@ import java.io.Serializable;
 public class JobCompanyLogoDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = 4433301684411887321L;
 
-	private static final JobCompanyLogoDTO NO_ARGS_INSTANCE = new JobCompanyLogoDTO(null, null, null, null);
-
 	@NotNull(message="{id.notNull}")
 	private final Long id;
 
@@ -28,12 +26,8 @@ public class JobCompanyLogoDTO implements AbstractEntityDTO, Serializable {
 	@NotEmpty(message="{selectionName.notEmpty}")
 	private final String selectionName;
 
-	public static JobCompanyLogoDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
-
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
 
 		final String result = StringUtils.getStringJoined("JobCompanyLogoDTO [id=", idString, ", fileName=", fileName, ", filePath=", filePath, ", selectionName=", selectionName, "]");

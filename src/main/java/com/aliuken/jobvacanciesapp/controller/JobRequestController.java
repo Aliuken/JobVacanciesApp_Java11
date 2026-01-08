@@ -22,6 +22,7 @@ import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -60,8 +62,8 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the list of job requests with pagination
 	 */
 	@GetMapping("/job-requests/index")
-	public String index(Model model, Pageable pageable,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(Model model, @NonNull Pageable pageable,
+			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-requests/index";
 
 		try {
@@ -127,9 +129,9 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	/**
 	 * Method to export the list of job requests with pagination to pdf
 	 */
-	@GetMapping("/job-requests/index/export-to-pdf")
+	@GetMapping("/job-requests/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
@@ -171,7 +173,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 		final String operation = "GET /job-requests/create/{jobVacancyId}";
 
 		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
-
+		Objects.requireNonNull(jobVacancy, "jobVacancy cannot be null");
 		final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobVacancy);
 
 		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
@@ -198,7 +200,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 */
 	@PostMapping("/job-requests/save")
 	public String save(RedirectAttributes redirectAttributes, Authentication authentication,
-			@Validated JobRequestDTO jobRequestDTO, BindingResult bindingResult,
+			@Validated @NonNull JobRequestDTO jobRequestDTO, BindingResult bindingResult,
 			@RequestParam(name="jobVacancyId", required=false) Long jobVacancyId, @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);

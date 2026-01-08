@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class LanguageConverter implements AttributeConverter<Language, String> {
@@ -21,6 +22,7 @@ public class LanguageConverter implements AttributeConverter<Language, String> {
 	@Override
 	public Language convertToEntityAttribute(final String languageCode) {
 		final Language language = Language.findByCode(languageCode);
+		Objects.requireNonNull(language, "language cannot be null");
 		return language;
 	}
 }

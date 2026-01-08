@@ -14,7 +14,7 @@ public class BeanFactoryUtils implements ApplicationContextAware {
 	private static GenericApplicationContext genericApplicationContext;
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
 		BeanFactoryUtils.genericApplicationContext = (GenericApplicationContext) applicationContext;
 	}
 
@@ -45,18 +45,14 @@ public class BeanFactoryUtils implements ApplicationContextAware {
 	public static Object refreshBean(final GenericApplicationContext genericApplicationContext, final String beanName) throws BeansException {
 		if(genericApplicationContext != null && beanName != null) {
 			final BeanDefinition beanDefinition = genericApplicationContext.getBeanDefinition(beanName);
-			if(beanDefinition != null) {
-				final Object beanObject = genericApplicationContext.getBean(beanName);
-				if(beanObject != null) {
-					final ConfigurableListableBeanFactory beanFactory = genericApplicationContext.getBeanFactory();
-					if(genericApplicationContext.containsBeanDefinition(beanName)) {
-						genericApplicationContext.removeBeanDefinition(beanName);
-					}
-					beanFactory.registerSingleton(beanName, beanObject);
-					genericApplicationContext.registerBeanDefinition(beanName, beanDefinition);
-					return beanObject;
-				}
+			final Object beanObject = genericApplicationContext.getBean(beanName);
+			final ConfigurableListableBeanFactory beanFactory = genericApplicationContext.getBeanFactory();
+			if(genericApplicationContext.containsBeanDefinition(beanName)) {
+				genericApplicationContext.removeBeanDefinition(beanName);
 			}
+			beanFactory.registerSingleton(beanName, beanObject);
+			genericApplicationContext.registerBeanDefinition(beanName, beanDefinition);
+			return beanObject;
 		}
 		return null;
 	}
@@ -69,18 +65,14 @@ public class BeanFactoryUtils implements ApplicationContextAware {
 	public static Object replaceBean(final GenericApplicationContext genericApplicationContext, final String beanName, final String newBeanName) throws BeansException {
 		if(genericApplicationContext != null && beanName != null && newBeanName != null) {
 			final BeanDefinition newBeanDefinition = genericApplicationContext.getBeanDefinition(newBeanName);
-			if(newBeanDefinition != null) {
-				final Object newBeanObject = genericApplicationContext.getBean(newBeanName);
-				if(newBeanObject != null) {
-					final ConfigurableListableBeanFactory beanFactory = genericApplicationContext.getBeanFactory();
-					if(genericApplicationContext.containsBeanDefinition(beanName)) {
-						genericApplicationContext.removeBeanDefinition(beanName);
-					}
-					beanFactory.registerSingleton(beanName, newBeanObject);
-					genericApplicationContext.registerBeanDefinition(beanName, newBeanDefinition);
-					return newBeanObject;
-				}
+			final Object newBeanObject = genericApplicationContext.getBean(newBeanName);
+			final ConfigurableListableBeanFactory beanFactory = genericApplicationContext.getBeanFactory();
+			if(genericApplicationContext.containsBeanDefinition(beanName)) {
+				genericApplicationContext.removeBeanDefinition(beanName);
 			}
+			beanFactory.registerSingleton(beanName, newBeanObject);
+			genericApplicationContext.registerBeanDefinition(beanName, newBeanDefinition);
+			return newBeanObject;
 		}
 		return null;
 	}

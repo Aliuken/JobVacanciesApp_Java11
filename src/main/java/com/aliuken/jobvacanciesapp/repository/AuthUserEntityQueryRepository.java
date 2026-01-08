@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
 import com.aliuken.jobvacanciesapp.model.entity.factory.AuthUserEntityQueryFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,7 +12,7 @@ public interface AuthUserEntityQueryRepository extends UpgradedJpaRepository<Aut
 	public static final AbstractEntityFactory<AuthUserEntityQuery> ENTITY_FACTORY = new AuthUserEntityQueryFactory();
 
 	@Override
-	public default AbstractEntityFactory<AuthUserEntityQuery> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<AuthUserEntityQuery> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

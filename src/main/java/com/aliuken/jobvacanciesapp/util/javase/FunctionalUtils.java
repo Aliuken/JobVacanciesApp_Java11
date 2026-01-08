@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
@@ -31,7 +32,7 @@ public class FunctionalUtils {
 	//------------------------------------------------------------------------------------------------------------------
 
 	//Converts a consumer to a function with Void output
-	public static <T> Function<T,Void> convertConsumerToFunction(final Consumer<T> consumer) {
+	public static <T> @NonNull Function<T,Void> convertConsumerToFunction(final Consumer<T> consumer) {
 		if(consumer == null) {
 			throw new IllegalArgumentException("The consumer must not be null");
 		}
@@ -43,7 +44,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a consumer to an identity function
-	public static <T> Function<T,T> convertConsumerToIdentityFunction(final Consumer<T> consumer) {
+	public static <T> @NonNull Function<T,T> convertConsumerToIdentityFunction(final Consumer<T> consumer) {
 		if(consumer == null) {
 			throw new IllegalArgumentException("The consumer must not be null");
 		}
@@ -55,7 +56,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a consumer to an identity unary operator
-	public static <T> UnaryOperator<T> convertConsumerToIdentityUnaryOperator(final Consumer<T> consumer) {
+	public static <T> @NonNull UnaryOperator<T> convertConsumerToIdentityUnaryOperator(final Consumer<T> consumer) {
 		if(consumer == null) {
 			throw new IllegalArgumentException("The consumer must not be null");
 		}
@@ -67,7 +68,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a runnable to an identity function of Void
-	public static Function<Void,Void> convertRunnableToIdentityFunction(final Runnable runnable) {
+	public static @NonNull Function<Void,Void> convertRunnableToIdentityFunction(final Runnable runnable) {
 		if(runnable == null) {
 			throw new IllegalArgumentException("The runnable must not be null");
 		}
@@ -79,7 +80,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a runnable to an identity unary operator of Void
-	public static UnaryOperator<Void> convertRunnableToIdentityUnaryOperator(final Runnable runnable) {
+	public static @NonNull UnaryOperator<Void> convertRunnableToIdentityUnaryOperator(final Runnable runnable) {
 		if(runnable == null) {
 			throw new IllegalArgumentException("The runnable must not be null");
 		}
@@ -91,7 +92,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to a function with Void input
-	public static <T> Function<Void,T> convertSupplierToFunction(final Supplier<T> supplier) {
+	public static <T> @NonNull Function<Void,T> convertSupplierToFunction(final Supplier<T> supplier) {
 		if(supplier == null) {
 			throw new IllegalArgumentException("The supplier must not be null");
 		}
@@ -100,7 +101,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to an identity function of Void
-	public static <T> Function<Void,Void> convertSupplierToIdentityFunction(final Supplier<T> supplier) {
+	public static <T> @NonNull Function<Void,Void> convertSupplierToIdentityFunction(final Supplier<T> supplier) {
 		if(supplier == null) {
 			throw new IllegalArgumentException("The supplier must not be null");
 		}
@@ -112,7 +113,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to an identity unary operator of Void
-	public static <T> UnaryOperator<Void> convertSupplierToIdentityUnaryOperator(final Supplier<T> supplier) {
+	public static <T> @NonNull UnaryOperator<Void> convertSupplierToIdentityUnaryOperator(final Supplier<T> supplier) {
 		if(supplier == null) {
 			throw new IllegalArgumentException("The supplier must not be null");
 		}
@@ -124,7 +125,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a callable to a function with Void input
-	public static <T> Function<Void,T> convertCallableToFunction(final Callable<T> callable) {
+	public static <T> @NonNull Function<Void,T> convertCallableToFunction(final Callable<T> callable) {
 		if(callable == null) {
 			throw new IllegalArgumentException("The callable must not be null");
 		}
@@ -139,7 +140,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a callable to an identity function of Void
-	public static <T> Function<Void,Void> convertCallableToIdentityFunction(final Callable<T> callable) {
+	public static <T> @NonNull Function<Void,Void> convertCallableToIdentityFunction(final Callable<T> callable) {
 		if(callable == null) {
 			throw new IllegalArgumentException("The callable must not be null");
 		}
@@ -155,7 +156,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a callable to an identity unary operator of Void
-	public static <T> UnaryOperator<Void> convertCallableToIdentityUnaryOperator(final Callable<T> callable) {
+	public static <T> @NonNull UnaryOperator<Void> convertCallableToIdentityUnaryOperator(final Callable<T> callable) {
 		if(callable == null) {
 			throw new IllegalArgumentException("The callable must not be null");
 		}
@@ -175,7 +176,7 @@ public class FunctionalUtils {
 	//------------------------------------------------------------------------------------------------------------------
 
 	//Converts a function to a consumer
-	public static <T,U> Consumer<T> convertFunctionToConsumer(final Function<T,U> function) {
+	public static <T,U> @NonNull Consumer<T> convertFunctionToConsumer(final Function<T,U> function) {
 		if(function == null) {
 			throw new IllegalArgumentException("The function must not be null");
 		}
@@ -186,7 +187,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a unary operator to a consumer
-	public static <T> Consumer<T> convertUnaryOperatorToConsumer(final UnaryOperator<T> unaryOperator) {
+	public static <T> @NonNull Consumer<T> convertUnaryOperatorToConsumer(final UnaryOperator<T> unaryOperator) {
 		if(unaryOperator == null) {
 			throw new IllegalArgumentException("The unaryOperator must not be null");
 		}
@@ -197,7 +198,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a unary operator to a function
-	public static <T> Function<T, T> convertUnaryOperatorToFunction(final UnaryOperator<T> unaryOperator) {
+	public static <T> @NonNull Function<T, T> convertUnaryOperatorToFunction(final UnaryOperator<T> unaryOperator) {
 		if(unaryOperator == null) {
 			throw new IllegalArgumentException("The unaryOperator must not be null");
 		}
@@ -206,7 +207,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a unary operator to an identity function
-	public static <T> Function<T, T> convertUnaryOperatorToIdentityFunction(final UnaryOperator<T> unaryOperator) {
+	public static <T> @NonNull Function<T, T> convertUnaryOperatorToIdentityFunction(final UnaryOperator<T> unaryOperator) {
 		if(unaryOperator == null) {
 			throw new IllegalArgumentException("The unaryOperator must not be null");
 		}
@@ -218,7 +219,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a function to a unary operator
-	public static <T> UnaryOperator<T> convertFunctionToUnaryOperator(final Function<T, T> function) {
+	public static <T> @NonNull UnaryOperator<T> convertFunctionToUnaryOperator(final Function<T, T> function) {
 		if(function == null) {
 			throw new IllegalArgumentException("The function must not be null");
 		}
@@ -227,7 +228,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a function to an identity unary operator
-	public static <T> UnaryOperator<T> convertFunctionToIdentityUnaryOperator(final Function<T, T> function) {
+	public static <T> @NonNull UnaryOperator<T> convertFunctionToIdentityUnaryOperator(final Function<T, T> function) {
 		if(function == null) {
 			throw new IllegalArgumentException("The function must not be null");
 		}
@@ -239,7 +240,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a predicate to a consumer
-	public static <T> Consumer<T> convertPredicateToConsumer(final Predicate<T> predicate) {
+	public static <T> @NonNull Consumer<T> convertPredicateToConsumer(final Predicate<T> predicate) {
 		if(predicate == null) {
 			throw new IllegalArgumentException("The predicate must not be null");
 		}
@@ -250,7 +251,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a predicate to a function
-	public static <T> Function<T, Boolean> convertPredicateToFunction(final Predicate<T> predicate) {
+	public static <T> @NonNull Function<T, Boolean> convertPredicateToFunction(final Predicate<T> predicate) {
 		if(predicate == null) {
 			throw new IllegalArgumentException("The predicate must not be null");
 		}
@@ -258,8 +259,17 @@ public class FunctionalUtils {
 		return function;
 	}
 
+	//Converts a predicate to a reverse function
+	public static <T> @NonNull Function<T, Boolean> convertPredicateToReverseFunction(final Predicate<T> predicate) {
+		if(predicate == null) {
+			throw new IllegalArgumentException("The predicate must not be null");
+		}
+		final Function<T, Boolean> function = input -> !predicate.test(input);
+		return function;
+	}
+
 	//Converts a predicate to an identity function
-	public static <T> Function<T, T> convertPredicateToIdentityFunction(final Predicate<T> predicate) {
+	public static <T> @NonNull Function<T, T> convertPredicateToIdentityFunction(final Predicate<T> predicate) {
 		if(predicate == null) {
 			throw new IllegalArgumentException("The predicate must not be null");
 		}
@@ -270,8 +280,36 @@ public class FunctionalUtils {
 		return function;
 	}
 
+	//Converts a predicate to an identity function with null on false
+	public static <T> @NonNull Function<T, T> convertPredicateToIdentityFunctionWithNullOnFalse(final Predicate<T> predicate) {
+		if(predicate == null) {
+			throw new IllegalArgumentException("The predicate must not be null");
+		}
+		final Function<T, T> function = input -> {
+			if(predicate.test(input)) {
+				return input;
+			}
+			return null;
+		};
+		return function;
+	}
+
+	//Converts a predicate to an identity function with null on true
+	public static <T> @NonNull Function<T, T> convertPredicateToIdentityFunctionWithNullOnTrue(final Predicate<T> predicate) {
+		if(predicate == null) {
+			throw new IllegalArgumentException("The predicate must not be null");
+		}
+		final Function<T, T> function = input -> {
+			if(predicate.test(input)) {
+				return null;
+			}
+			return input;
+		};
+		return function;
+	}
+
 	//Converts a function to a predicate
-	public static <T> Predicate<T> convertFunctionToPredicate(final Function<T, Boolean> function) {
+	public static <T> @NonNull Predicate<T> convertFunctionToPredicate(final Function<T, Boolean> function) {
 		if(function == null) {
 			throw new IllegalArgumentException("The function must not be null");
 		}
@@ -284,7 +322,7 @@ public class FunctionalUtils {
 	//------------------------------------------------------------------------------------------------------------------
 
 	//Converts a callable to a runnable
-	public static <T> Runnable convertCallableToRunnable(final Callable<T> callable) {
+	public static <T> @NonNull Runnable convertCallableToRunnable(final Callable<T> callable) {
 		if(callable == null) {
 			throw new IllegalArgumentException("The callable must not be null");
 		}
@@ -299,7 +337,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a runnable to a callable with Void output
-	public static Callable<Void> convertRunnableToCallable(final Runnable runnable) {
+	public static @NonNull Callable<Void> convertRunnableToCallable(final Runnable runnable) {
 		if(runnable == null) {
 			throw new IllegalArgumentException("The runnable must not be null");
 		}
@@ -311,7 +349,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to a callable
-	public static <T> Callable<T> convertSupplierToCallable(final Supplier<T> supplier) {
+	public static <T> @NonNull Callable<T> convertSupplierToCallable(final Supplier<T> supplier) {
 		if(supplier == null) {
 			throw new IllegalArgumentException("The supplier must not be null");
 		}
@@ -320,7 +358,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a callable to a supplier
-	public static <T> Supplier<T> convertCallableToSupplier(final Callable<T> callable) {
+	public static <T> @NonNull Supplier<T> convertCallableToSupplier(final Callable<T> callable) {
 		if(callable == null) {
 			throw new IllegalArgumentException("The callable must not be null");
 		}
@@ -335,7 +373,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a supplier to a runnable
-	public static <T> Runnable convertSupplierToRunnable(final Supplier<T> supplier) {
+	public static <T> @NonNull Runnable convertSupplierToRunnable(final Supplier<T> supplier) {
 		if(supplier == null) {
 			throw new IllegalArgumentException("The supplier must not be null");
 		}
@@ -344,7 +382,7 @@ public class FunctionalUtils {
 	}
 
 	//Converts a runnable to a supplier with Void output
-	public static Supplier<Void> convertRunnableToSupplier(final Runnable runnable) {
+	public static @NonNull Supplier<Void> convertRunnableToSupplier(final Runnable runnable) {
 		if(runnable == null) {
 			throw new IllegalArgumentException("The runnable must not be null");
 		}

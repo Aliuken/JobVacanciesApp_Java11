@@ -30,6 +30,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Transactional
@@ -61,7 +63,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		final String email = authentication.getName();
 		final AuthUser sessionAuthUser = authUserService.findByEmail(email);
 
-		httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER, sessionAuthUser);
+		httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER_ID, sessionAuthUser.getId());
 
 		super.onAuthenticationSuccess(httpServletRequest, httpServletResponse, authentication);
 	}
@@ -70,7 +72,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 	@ServiceMethod
 	public void logout(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final Authentication authentication) {
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
-		httpServletRequest.getSession().removeAttribute(Constants.SESSION_AUTH_USER);
+		httpServletRequest.getSession().removeAttribute(Constants.SESSION_AUTH_USER_ID);
 
 		final Boolean sessionAccountDeleted = (Boolean) httpServletRequest.getSession().getAttribute(Constants.SESSION_ACCOUNT_DELETED);
 		httpServletRequest.getSession().removeAttribute(Constants.SESSION_ACCOUNT_DELETED);
@@ -107,16 +109,14 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		final String redirectEndpoint = this.getRedirectEndpoint(nextDefaultLanguage, nextDefaultAnonymousAccessPermission,
 				nextDefaultInitialTableSortingDirection, nextDefaultInitialTablePageSize, nextDefaultColorMode, nextDefaultUserInterfaceFramework, nextDefaultPdfDocumentPageFormat);
 
-		final Language languageUrlParam;
-		if(Constants.ENUM_UTILS.hasASpecificValue(nextDefaultLanguage)) {
-			languageUrlParam = nextDefaultLanguage;
-		} else if(Constants.ENUM_UTILS.hasASpecificValue(language)) {
-			languageUrlParam = language;
-		} else if(sessionAuthUser != null && Constants.ENUM_UTILS.hasASpecificValue(sessionAuthUser.getLanguage())) {
-			languageUrlParam = sessionAuthUser.getLanguage();
-		} else {
-			languageUrlParam = Language.ENGLISH;
+		final List<Language> possibleLanguages = new ArrayList<>();
+		possibleLanguages.add(nextDefaultLanguage);
+		possibleLanguages.add(language);
+		if(sessionAuthUser != null) {
+			possibleLanguages.add(sessionAuthUser.getLanguage());
 		}
+
+		final Language languageUrlParam = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleLanguages, Language.ENGLISH);
 
 		final String languageUrlParamValue = languageUrlParam.getCode();
 

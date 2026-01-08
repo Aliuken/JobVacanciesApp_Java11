@@ -18,6 +18,7 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,8 +53,8 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	 * Method to show the list of job vacancies of a category with pagination
 	 */
 	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}")
-	public String getJobVacancies(Model model, Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobVacancies(Model model, @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
+								  @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-categories/job-vacancies/{jobCategoryId}";
 
 		final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
@@ -130,9 +131,9 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	/**
 	 * Method to export the list of job category vacancies with pagination to pdf
 	 */
-	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}/export-to-pdf")
+	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

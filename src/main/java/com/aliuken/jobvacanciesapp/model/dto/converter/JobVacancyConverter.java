@@ -6,46 +6,41 @@ import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;
 import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
+import org.jspecify.annotations.NonNull;
 
 public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVacancyDTO> {
 
-	private static final JobVacancyConverter SINGLETON_INSTANCE = new JobVacancyConverter();
+	private static final @NonNull JobVacancyConverter SINGLETON_INSTANCE = new JobVacancyConverter();
 
 	private JobVacancyConverter() {
-		super(JobVacancyConverter::conversionFunction, JobVacancy.class, JobVacancyDTO.class, JobVacancyDTO[]::new);
+		super(JobVacancy.class, JobVacancyDTO.class, JobVacancyDTO[]::new);
 	}
 
-	public static JobVacancyConverter getInstance() {
+	public static @NonNull JobVacancyConverter getInstance() {
 		return SINGLETON_INSTANCE;
 	}
 
-	private static JobVacancyDTO conversionFunction(final JobVacancy jobVacancy) {
-		final JobVacancyDTO jobVacancyDTO;
-		if(jobVacancy != null) {
-			final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobVacancy.getJobCategory());
-			final JobCompanyDTO jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobVacancy.getJobCompany());
-			final String salaryString = String.valueOf(jobVacancy.getSalary());
-			final BigDecimalFromStringConversionResult salaryConversionResult = null;
+	@Override
+	protected @NonNull JobVacancyDTO convert(final @NonNull JobVacancy jobVacancy) {
+		final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobVacancy.getJobCategory());
+		final JobCompanyDTO jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobVacancy.getJobCompany());
+		final String salaryString = String.valueOf(jobVacancy.getSalary());
 
-			jobVacancyDTO = new JobVacancyDTO(
-				jobVacancy.getId(),
-				jobVacancy.getName(),
-				jobVacancy.getDescription(),
-				jobCategoryDTO,
-				(jobCategoryDTO != null) ? jobCategoryDTO.getId() : null,
-				jobCompanyDTO,
-				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
-				(jobVacancy.getStatus() != null) ? jobVacancy.getStatus().getCode() : null,
-				jobVacancy.getPublicationDateTime(),
-				salaryString,
-				salaryConversionResult,
-				(jobVacancy.getCurrency() != null) ? jobVacancy.getCurrency().getSymbol() : null,
-				jobVacancy.getHighlighted(),
-				jobVacancy.getDetails()
-			);
-		} else {
-			jobVacancyDTO = JobVacancyDTO.getNewInstance();
-		}
+		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(
+			jobVacancy.getId(),
+			jobVacancy.getName(),
+			jobVacancy.getDescription(),
+			jobCategoryDTO,
+			jobCategoryDTO.getId(),
+			jobCompanyDTO,
+			jobCompanyDTO.getId(),
+			jobVacancy.getStatus().getCode(),
+			jobVacancy.getPublicationDateTime(),
+			salaryString,
+			jobVacancy.getCurrency().getSymbol(),
+			jobVacancy.getHighlighted(),
+			jobVacancy.getDetails()
+		);
 		return jobVacancyDTO;
 	}
 }

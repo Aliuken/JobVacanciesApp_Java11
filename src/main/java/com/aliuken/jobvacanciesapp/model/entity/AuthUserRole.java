@@ -13,7 +13,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="auth_user_role", indexes={
@@ -27,15 +26,13 @@ import javax.validation.constraints.NotNull;
 public class AuthUserRole extends AbstractEntityWithAuthUser<AuthUserRole> {
 	private static final long serialVersionUID = -7984070191950848318L;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="auth_user_id", nullable=false)
-	private AuthUser authUser;
+	private @NonNull AuthUser authUser;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="auth_role_id", nullable=false)
-	private AuthRole authRole;
+	private @NonNull AuthRole authRole;
 
 	public AuthUserRole() {
 		super();

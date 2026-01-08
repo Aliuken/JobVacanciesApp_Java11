@@ -32,7 +32,7 @@ public abstract class AbstractEntityComparator<T extends AbstractEntity<T>> impl
 
 		final Integer classCompareResult;
 		if(!abstractEntityClass1.equals(abstractEntityClass2)) {
-			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName());
+			classCompareResult = abstractEntityClass1.getName().compareTo(abstractEntityClass2.getName()); //CONTINUE IF ZERO
 		} else {
 			classCompareResult = null; //CONTINUE
 		}

@@ -14,7 +14,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -30,25 +29,21 @@ import javax.validation.constraints.Size;
 public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobRequest> {
 	private static final long serialVersionUID = 8508562505523280587L;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="auth_user_id", nullable=false)
-	private AuthUser authUser;
+	private @NonNull AuthUser authUser;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_vacancy_id", nullable=false)
-	private JobVacancy jobVacancy;
+	private @NonNull JobVacancy jobVacancy;
 
-	@NotNull
 	@Size(max=1000)
 	@Column(name="comments", length=1000, nullable=false)
-	private String comments;
+	private @NonNull String comments;
 
-	@NotNull
 	@Size(max=255)
 	@Column(name="curriculum_file_name", length=255, nullable=false)
-	private String curriculumFileName;
+	private @NonNull String curriculumFileName;
 
 	public JobRequest() {
 		super();
@@ -78,12 +73,12 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 			return null;
 		}
 
-		final AuthUserCurriculum authUserCurriculum = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
+		final AuthUserCurriculum authUserCurriculumOfJobRequest = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
+			.filter(authUserCurriculum -> curriculumFileName.equals(authUserCurriculum.getFileName()))
 			.findFirst()
 			.orElse(null);
 
-		return authUserCurriculum;
+		return authUserCurriculumOfJobRequest;
 	}
 
 	public Long getAuthUserCurriculumId() {
@@ -93,9 +88,9 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final Long authUserCurriculumId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-			.map(auc -> auc.getId())
+			.filter(authUserCurriculum -> curriculumFileName.equals(authUserCurriculum.getFileName()))
 			.findFirst()
+			.map(authUserCurriculum -> authUserCurriculum.getId())
 			.orElse(null);
 
 		return authUserCurriculumId;
@@ -108,9 +103,9 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final String authUserCurriculumFilePath = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-			.map(auc -> auc.getFilePath())
+			.filter(authUserCurriculum -> curriculumFileName.equals(authUserCurriculum.getFileName()))
 			.findFirst()
+			.map(authUserCurriculum -> authUserCurriculum.getFilePath())
 			.orElse(null);
 
 		return authUserCurriculumFilePath;
@@ -123,9 +118,9 @@ public class JobRequest extends AbstractEntityWithAuthUserAndJobCompany<JobReque
 		}
 
 		final String authUserCurriculumSelectionName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUser.getAuthUserCurriculums())
-			.filter(auc -> curriculumFileName.equals(auc.getFileName()))
-			.map(auc -> auc.getSelectionName())
+			.filter(authUserCurriculum -> curriculumFileName.equals(authUserCurriculum.getFileName()))
 			.findFirst()
+			.map(authUserCurriculum -> authUserCurriculum.getSelectionName())
 			.orElse(null);
 
 		return authUserCurriculumSelectionName;

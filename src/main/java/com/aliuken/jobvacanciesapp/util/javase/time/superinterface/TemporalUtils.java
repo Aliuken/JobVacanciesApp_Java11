@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.util.javase.time.superinterface;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+import org.jspecify.annotations.NonNull;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,18 +15,18 @@ import java.util.Date;
 
 public interface TemporalUtils<T extends Temporal> {
 
-	public abstract Class<T> getTemporalClass();
+	public abstract @NonNull Class<T> getTemporalClass();
 
-	public abstract String getTemporalPattern();
+	public abstract @NonNull String getTemporalPattern();
 
-	public abstract DateTimeFormatter getTemporalFormatter();
+	public abstract @NonNull DateTimeFormatter getTemporalFormatter();
 
-	public default String convertToStringForWebPageField(final T temporal) {
+	public default @NonNull String convertToStringForWebPageField(final T temporal) {
 		final String text = this.convertToStringWithDefaultValue(temporal, Constants.DEFAULT_VALUE_WHEN_SHOWING_NULL_TABLE_FIELD);
 		return text;
 	}
 
-	public default String convertToStringForSerialization(final T temporal) {
+	public default @NonNull String convertToStringForSerialization(final T temporal) {
 		final String text = this.convertToStringWithDefaultValue(temporal, Constants.DEFAULT_VALUE_WHEN_SERIALIZING_NULL_STRING);
 		return text;
 	}
@@ -36,12 +37,20 @@ public interface TemporalUtils<T extends Temporal> {
 	}
 
 	public default String convertToString(final T temporal) {
-		final String text = this.convertToStringWithDefaultValue(temporal, null);
+		if(temporal == null) {
+			return null;
+		}
+
+		final String text = this.convertToStringWithNonNullTemporal(temporal);
 		return text;
 	}
 
 	public default T convertFromString(final String dateString) {
-		final T temporal = this.convertFromStringWithDefaultValue(dateString, null);
+		if(dateString == null) {
+			return null;
+		}
+
+		final T temporal = this.convertFromStringWithNonDefaultDateString(dateString);
 		return temporal;
 	}
 
@@ -110,11 +119,16 @@ public interface TemporalUtils<T extends Temporal> {
 		return date;
 	}
 
-	private String convertToStringWithDefaultValue(final T temporal, final String defaultValue) {
+	private @NonNull String convertToStringWithDefaultValue(final T temporal, final @NonNull String defaultValue) {
 		if(temporal == null) {
 			return defaultValue;
 		}
 
+		final String text = this.convertToStringWithNonNullTemporal(temporal);
+		return text;
+	}
+
+	private @NonNull String convertToStringWithNonNullTemporal(final @NonNull T temporal) {
 		final DateTimeFormatter temporalFormatter = this.getTemporalFormatter();
 
 		final String text;
@@ -125,18 +139,21 @@ public interface TemporalUtils<T extends Temporal> {
 			final LocalDateTime localDateTime = (LocalDateTime) temporal;
 			text = localDateTime.format(temporalFormatter);
 		}
-
 		return text;
 	}
 
-	private T convertFromStringWithDefaultValue(final String dateString, final String defaultValue) {
+	private T convertFromStringWithDefaultValue(final String dateString, final @NonNull String defaultValue) {
 		if(dateString == null || dateString.equals(defaultValue)) {
 			return null;
 		}
 
-		final DateTimeFormatter temporalFormatter = this.getTemporalFormatter();
+		final T temporal = this.convertFromStringWithNonDefaultDateString(dateString);
+		return temporal;
+	}
 
+	private @NonNull T convertFromStringWithNonDefaultDateString(final @NonNull String dateString) {
 		final Class<T> temporalClass = this.getTemporalClass();
+		final DateTimeFormatter temporalFormatter = this.getTemporalFormatter();
 
 		final T temporal;
 		if(LocalDate.class.equals(temporalClass)) {

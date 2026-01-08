@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class TablePageSizeConverter implements AttributeConverter<TablePageSize, Integer> {
@@ -20,12 +21,8 @@ public class TablePageSizeConverter implements AttributeConverter<TablePageSize,
 
 	@Override
 	public TablePageSize convertToEntityAttribute(final Integer tablePageSizeValue) {
-		final TablePageSize tablePageSize;
-		if(tablePageSizeValue != null) {
-			tablePageSize = TablePageSize.findByValue(tablePageSizeValue);
-		} else {
-			tablePageSize = TablePageSize.BY_DEFAULT;
-		}
+		final TablePageSize tablePageSize = TablePageSize.findByValue(tablePageSizeValue);
+		Objects.requireNonNull(tablePageSize, "tablePageSize cannot be null");
 		return tablePageSize;
 	}
 }

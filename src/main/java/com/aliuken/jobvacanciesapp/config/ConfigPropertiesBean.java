@@ -15,17 +15,20 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 @Getter
 @Slf4j
 public class ConfigPropertiesBean {
-	private static final String BY_DEFAULT_SORTING_DIRECTION_CODE = TableSortingDirection.BY_DEFAULT.getCode();
-	private static final String BY_DEFAULT_PAGE_SIZE_VALUE_STRING = String.valueOf(TablePageSize.BY_DEFAULT.getValue());
+	private static final @NonNull String BY_DEFAULT_SORTING_DIRECTION_CODE = TableSortingDirection.BY_DEFAULT.getCode();
+	private static final @NonNull String BY_DEFAULT_PAGE_SIZE_VALUE_STRING = String.valueOf(TablePageSize.BY_DEFAULT.getValue());
 
 	//Non-overwritable properties
 	private final String authUserCurriculumFilesPath;
@@ -148,60 +151,52 @@ public class ConfigPropertiesBean {
 		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(UserInterfaceFramework.class, this);
 	}
 
-	public String getInitialCurrencySymbol() {
+	public @NonNull String getInitialCurrencySymbol() {
 		String initialCurrencySymbol;
 		try {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
-
-			final Currency initialCurrency = (sessionAuthUser != null) ? sessionAuthUser.getInitialCurrency() : null;
-
-			if(Constants.ENUM_UTILS.hasASpecificValue(initialCurrency)) {
-				initialCurrencySymbol = initialCurrency.getSymbol();
-			} else {
-				initialCurrencySymbol = Currency.US_DOLLAR.getSymbol();
-			}
+			Currency initialCurrency = (sessionAuthUser != null) ? sessionAuthUser.getInitialCurrency() : null;
+			final List<Currency> possibleCurrencies = Collections.singletonList(initialCurrency);
+			initialCurrency = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleCurrencies, Currency.US_DOLLAR);
+			initialCurrencySymbol = initialCurrency.getSymbol();
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
 				final String stackTrace = ThrowableUtils.getStackTrace(exception);
 				log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial currency. The default initial currency will be used. Exception: ", stackTrace));
 			}
-
 			initialCurrencySymbol = Currency.US_DOLLAR.getSymbol();
 		}
-
 		return initialCurrencySymbol;
 	}
 
-	public String getInitialTableSortingDirectionCode(final String sortingDirection) {
+	public @NonNull String getInitialTableSortingDirectionCode(final String sortingDirection) {
 		if(sortingDirection != null && !BY_DEFAULT_SORTING_DIRECTION_CODE.equals(sortingDirection)) {
 			return sortingDirection;
 		} else {
+			final TableSortingDirection currentDefaultInitialTableSortingDirection = ConfigPropertiesBean.getCurrentDefaultInitialTableSortingDirection();
+
 			String initialTableSortingDirectionCode;
 			try {
 				final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
 
-				final TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
-
-				if(Constants.ENUM_UTILS.hasASpecificValue(initialTableSortingDirection)) {
-					initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
-				} else {
-					initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
-				}
+				TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
+				final List<TableSortingDirection> possibleTableSortingDirections = Collections.singletonList(initialTableSortingDirection);
+				initialTableSortingDirection = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleTableSortingDirections, currentDefaultInitialTableSortingDirection);
+				initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {
 					final String stackTrace = ThrowableUtils.getStackTrace(exception);
 					log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial table sorting direction. The default initial table sorting direction will be used. Exception: ", stackTrace));
 				}
-
-				initialTableSortingDirectionCode = this.getCurrentDefaultInitialTableSortingDirectionCode();
+				initialTableSortingDirectionCode = currentDefaultInitialTableSortingDirection.getCode();
 			}
 			return initialTableSortingDirectionCode;
 		}
 	}
 
-	private String getCurrentDefaultInitialTableSortingDirectionCode() {
+	private static @NonNull TableSortingDirection getCurrentDefaultInitialTableSortingDirection() {
 		try {
-			final String currentDefaultInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION.getCode();
+			final TableSortingDirection currentDefaultInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION;
 			return currentDefaultInitialTableSortingDirectionCode;
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
@@ -209,33 +204,31 @@ public class ConfigPropertiesBean {
 				log.error(StringUtils.getStringJoined("An exception happened when trying to get the current default initial table sorting direction. The sorting direction 'asc' will be used. Exception: ", stackTrace));
 			}
 
-			final String currentDefaultInitialTableSortingDirectionCode = TableSortingDirection.ASC.getCode();
+			final TableSortingDirection currentDefaultInitialTableSortingDirectionCode = TableSortingDirection.ASC;
 			return currentDefaultInitialTableSortingDirectionCode;
 		}
 	}
 
-	public String getInitialTablePageSizeValue(final String pageSize) {
+	public @NonNull String getInitialTablePageSizeValue(final String pageSize) {
 		if(pageSize != null && !BY_DEFAULT_PAGE_SIZE_VALUE_STRING.equals(pageSize)) {
 			return pageSize;
 		} else {
+			final TablePageSize currentDefaultInitialTablePageSize = ConfigPropertiesBean.getCurrentDefaultInitialTablePageSize();
+
 			int initialTablePageSizeValue;
 			try {
 				final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
 
-				final TablePageSize initialTablePageSize = (sessionAuthUser != null) ? sessionAuthUser.getInitialTablePageSize() : null;
-
-				if(Constants.ENUM_UTILS.hasASpecificValue(initialTablePageSize)) {
-					initialTablePageSizeValue = initialTablePageSize.getValue();
-				} else {
-					initialTablePageSizeValue = this.getCurrentDefaultInitialTablePageSizeValue();
-				}
+				TablePageSize initialTablePageSize = (sessionAuthUser != null) ? sessionAuthUser.getInitialTablePageSize() : null;
+				final List<TablePageSize> possibleTablePageSizes = Collections.singletonList(initialTablePageSize);
+				initialTablePageSize = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleTablePageSizes, currentDefaultInitialTablePageSize);
+				initialTablePageSizeValue = initialTablePageSize.getValue();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {
 					final String stackTrace = ThrowableUtils.getStackTrace(exception);
 					log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial table page size. The default initial table page size will be used. Exception: ", stackTrace));
 				}
-
-				initialTablePageSizeValue = this.getCurrentDefaultInitialTablePageSizeValue();
+				initialTablePageSizeValue = currentDefaultInitialTablePageSize.getValue();
 			}
 
 			final String initialTablePageSizeValueString = String.valueOf(initialTablePageSizeValue);
@@ -243,18 +236,18 @@ public class ConfigPropertiesBean {
 		}
 	}
 
-	private int getCurrentDefaultInitialTablePageSizeValue() {
+	private static @NonNull TablePageSize getCurrentDefaultInitialTablePageSize() {
 		try {
-			final int currentDefaultInitialTablePageSizeValue = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE.getValue();
-			return currentDefaultInitialTablePageSizeValue;
+			final TablePageSize currentDefaultInitialTablePageSize = ConfigPropertiesBean.CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE;
+			return currentDefaultInitialTablePageSize;
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
 				final String stackTrace = ThrowableUtils.getStackTrace(exception);
 				log.error(StringUtils.getStringJoined("An exception happened when trying to get the current default initial table page size. The page size '5' will be used. Exception: ", stackTrace));
 			}
 
-			final int currentDefaultInitialTablePageSizeValue = TablePageSize.SIZE_5.getValue();
-			return currentDefaultInitialTablePageSizeValue;
+			final TablePageSize currentDefaultInitialTablePageSize = TablePageSize.SIZE_5;
+			return currentDefaultInitialTablePageSize;
 		}
 	}
 }

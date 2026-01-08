@@ -24,6 +24,7 @@ import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +48,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -72,8 +74,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to show the list of curriculums of the logged user with pagination
 	 */
 	@GetMapping("/my-user/auth-user-curriculums")
-	public String getAuthUserCurriculums(HttpServletRequest httpServletRequest, Model model, Pageable pageable,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getAuthUserCurriculums(HttpServletRequest httpServletRequest, Model model, @NonNull Pageable pageable,
+			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /my-user/auth-user-curriculums";
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -151,9 +153,9 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	/**
 	 * Method to export the list of user curriculums with pagination to pdf
 	 */
-	@GetMapping("/my-user/auth-user-curriculums/export-to-pdf")
+	@GetMapping("/my-user/auth-user-curriculums/exportToPdf")
 	@ResponseBody
-	public byte[] exportCurriculumsToPdf(Model model, Pageable pageable,
+	public byte[] exportCurriculumsToPdf(Model model, @NonNull Pageable pageable,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
@@ -203,10 +205,10 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		if(inputFlashMap != null) {
 			authUserCurriculumDTO = (AuthUserCurriculumDTO) inputFlashMap.get("authUserCurriculumDTO");
 			if(authUserCurriculumDTO == null) {
-				authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance();
+				authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance("New curriculum from web form");
 			}
 		} else {
-			authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance();
+			authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance("New curriculum from web form");
 		}
 
 		model.addAttribute("authUserCurriculumDTO", authUserCurriculumDTO);
@@ -219,7 +221,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 */
 	@PostMapping("/my-user/auth-user-curriculums/save")
 	public String save(RedirectAttributes redirectAttributes, Authentication authentication,
-			@Validated AuthUserCurriculumDTO authUserCurriculumDTO, BindingResult bindingResult,
+			@Validated @NonNull AuthUserCurriculumDTO authUserCurriculumDTO, BindingResult bindingResult,
 			@RequestParam(name = "languageParam", required = false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
@@ -239,38 +241,39 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 
 			final String sessionAuthUserIdString = Long.toString(sessionAuthUser.getId());
 			final String pathWithAuthUserId = StringUtils.getStringJoined(authUserCurriculumFilesPath, sessionAuthUserIdString, "/");
-			final List<String> savedFileNames = FileUtils.uploadAndOptionallyUnzipFile(multipartFile, pathWithAuthUserId, FileType.USER_CURRICULUM);
 
-			List<AuthUserCurriculum> authUserCurriculumList;
-			if(savedFileNames != null) {
-				authUserCurriculumList = new ArrayList<>();
-				if(savedFileNames.size() == 1) {
+			final List<String> savedFileNames = FileUtils.uploadAndOptionallyUnzipFile(multipartFile, pathWithAuthUserId, FileType.USER_CURRICULUM);
+			Objects.requireNonNull(savedFileNames, "savedFileNames cannot be null");
+
+			final List<AuthUserCurriculum> authUserCurriculumList = new ArrayList<>();
+			if(savedFileNames.size() == 1) {
+				AuthUserCurriculum authUserCurriculum = authUserCurriculumService.findByIdOrNewEntity(id);
+				authUserCurriculum.setAuthUser(sessionAuthUser);
+				authUserCurriculum.setFileName(savedFileNames.get(0));
+				authUserCurriculum.setDescription(description);
+				authUserCurriculum = authUserCurriculumService.saveAndFlush(authUserCurriculum);
+
+				authUserCurriculumList.add(authUserCurriculum);
+			} else {
+				int i = 1;
+				for(final String savedFileName : savedFileNames) {
+					id = null;
 					AuthUserCurriculum authUserCurriculum = authUserCurriculumService.findByIdOrNewEntity(id);
 					authUserCurriculum.setAuthUser(sessionAuthUser);
-					authUserCurriculum.setFileName(savedFileNames.get(0));
-					authUserCurriculum.setDescription(description);
+					authUserCurriculum.setFileName(savedFileName);
+					authUserCurriculum.setDescription(StringUtils.getStringJoined(description, " [", String.valueOf(i), "]"));
 					authUserCurriculum = authUserCurriculumService.saveAndFlush(authUserCurriculum);
 
 					authUserCurriculumList.add(authUserCurriculum);
-				} else {
-					int i = 1;
-					for(final String savedFileName : savedFileNames) {
-						id = null;
-						AuthUserCurriculum authUserCurriculum = authUserCurriculumService.findByIdOrNewEntity(id);
-						authUserCurriculum.setAuthUser(sessionAuthUser);
-						authUserCurriculum.setFileName(savedFileName);
-						authUserCurriculum.setDescription(StringUtils.getStringJoined(description, " [", String.valueOf(i), "]"));
-						authUserCurriculum = authUserCurriculumService.saveAndFlush(authUserCurriculum);
-
-						authUserCurriculumList.add(authUserCurriculum);
-						i++;
-					}
+					i++;
 				}
-			} else {
-				authUserCurriculumList = null;
 			}
 
-			final AuthUserCurriculum authUserCurriculum = (LogicalUtils.isNotNullNorEmpty(authUserCurriculumList)) ? authUserCurriculumList.get(0) : null;
+			if(authUserCurriculumList.isEmpty()) {
+				throw new IllegalStateException("authUserCurriculumList cannot be empty");
+			}
+
+			final AuthUserCurriculum authUserCurriculum = authUserCurriculumList.get(0);
 
 			final String successMsg = I18nUtils.getInternationalizedMessage(languageCode, "saveUserCurriculum.successMsg", null);
 			redirectAttributes.addFlashAttribute("successMsg", successMsg);
@@ -332,10 +335,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 
 		final String curriculumFileName = authUserCurriculum.getFileName();
 		final List<JobRequest> jobRequests = jobRequestService.findByAuthUserAndCurriculumFileName(authUser, curriculumFileName);
-		if(jobRequests != null) {
-			for(final JobRequest jobRequest : jobRequests) {
-				jobRequestService.deleteByIdAndFlush(jobRequest.getId());
-			}
+		for(final JobRequest jobRequest : jobRequests) {
+			jobRequestService.deleteByIdAndFlush(jobRequest.getId());
 		}
 
 		authUserCurriculumService.deleteByIdAndFlush(authUserCurriculumId);

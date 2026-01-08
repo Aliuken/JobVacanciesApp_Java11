@@ -36,8 +36,7 @@ public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirect
 		final TableSortingDirection tableSortingDirection = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableSortingDirection.class)
 			.filter(value -> value.code.equals(code))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("TableSortingDirection code does not exist"));
-
+			.orElse(null);
 		return tableSortingDirection;
 	}
 

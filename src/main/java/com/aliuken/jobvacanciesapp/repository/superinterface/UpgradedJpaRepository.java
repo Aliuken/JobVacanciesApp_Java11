@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.repository.superinterface;
 
 import com.aliuken.jobvacanciesapp.annotation.RepositoryMethod;
 import com.aliuken.jobvacanciesapp.aop.aspect.ControllerAspect;
+import com.aliuken.jobvacanciesapp.config.CacheConfig;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.ControllerDependentTraceType;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
@@ -47,22 +48,18 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @NoRepositoryBean
 public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaRepository<T, Long>, UpgradedJpaRepositoryInterface<T> {
-	public static final Logger log = LoggerFactory.getLogger(UpgradedJpaRepository.class);
+	public static final @NonNull Logger log = LoggerFactory.getLogger(UpgradedJpaRepository.class);
+	public static final @NonNull StatisticsService ENTITY_MANAGER_CACHE_STATISTICS_SERVICE = new DefaultStatisticsService();
+	public static final @NonNull Cache<Class<? extends AbstractEntity<?>>, EntityManager> ENTITY_MANAGER_CACHE_OBJECT = UpgradedJpaRepository.getEntityManagerCache();
 
-	public static final String ENTITY_MANAGER_CACHE_NAME = "entityManagerCache";
-	public static final String ENTITY_MANAGER_CACHE_ALTERNATIVE = "jpaContext";
-	public static final StatisticsService ENTITY_MANAGER_CACHE_STATISTICS_SERVICE = new DefaultStatisticsService();
+	public abstract @NonNull AbstractEntityFactory<T> getEntityFactory();
 
-	@NotNull
-	public static final Cache<Class<? extends AbstractEntity<?>>, EntityManager> ENTITY_MANAGER_CACHE_OBJECT = UpgradedJpaRepository.getEntityManagerCache();
-
-	public abstract AbstractEntityFactory<T> getEntityFactory();
-
-	public default Class<T> getEntityClass() {
+	public default @NonNull Class<T> getEntityClass() {
 		final AbstractEntityFactory<T> entityFactory = this.getEntityFactory();
 		final Class<T> entityClass = entityFactory.getObjectType();
 
@@ -72,12 +69,11 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 	public default @NotNull T getNewEntityInstance() {
 		final AbstractEntityFactory<T> entityFactory = this.getEntityFactory();
 		final T entityInstance = entityFactory.getObjectWithoutException();
-
 		return entityInstance;
 	}
 
 	@RepositoryMethod
-	public static <S extends AbstractEntity<S>> S getEntityStatically(final Long id, final Class<S> entityClass) {
+	public static <S extends AbstractEntity<S>> S getEntityStatically(final Long id, final @NonNull Class<S> entityClass) {
 		if(id == null) {
 			return null;
 		}
@@ -96,10 +92,6 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		}
 
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Optional<T> optionalEntity = jpaRepository.findById(id);
 		final T entity = GenericsUtils.unpackOptional(optionalEntity);
 		return entity;
@@ -127,162 +119,110 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 	@RepositoryMethod
 	public default void deleteByIdAndFlush(final Long id) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return;
-		}
-
 		jpaRepository.deleteById(id);
 		jpaRepository.flush();
 	}
 
 	@Override
 	@RepositoryMethod
-	public default <S extends T> S saveAndFlush(S entity) {
+	public default <S extends T> @NonNull S saveAndFlush(@NonNull S entity) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		entity = jpaRepository.saveAndFlush(entity);
 		return entity;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default List<T> findAll() {
+	public default @NonNull List<T> findAll() {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final List<T> result = jpaRepository.findAll();
-
 		return result;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Pageable pageable) {
+	public default @NonNull Page<T> findAll(final @NonNull Pageable pageable) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Page<T> page = jpaRepository.findAll(pageable);
-
 		return page;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
+	public default @NonNull Page<T> findAll(final @NonNull Pageable pageable, final TableField sortingTableField, final TableSortingDirection tableSortingDirection) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Class<T> entityClass = this.getEntityClass();
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, sortingTableField, tableSortingDirection, entityClass);
 		final Page<T> page = jpaRepository.findAll(finalPageable);
-
 		return page;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Specification<T> specification) {
+	public default @NonNull Page<T> findAll(final @NonNull Pageable pageable, final TableField sortingTableField, final TableSortingDirection tableSortingDirection, final Specification<T> specification) {
 		if(specification == null) {
 			throw new IllegalArgumentException("specification cannot be null");
 		}
 
 		final Class<T> entityClass = this.getEntityClass();
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, sortingTableField, tableSortingDirection, entityClass);
 		final Page<T> page = this.findAll(specification, finalPageable);
-
 		return page;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default Page<T> findAll(final Specification<T> specification, final Pageable pageable) {
+	public default @NonNull Page<T> findAll(final Specification<T> specification, final @NonNull Pageable pageable) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Page<T> page = jpaRepository.findAll(specification, pageable);
-
 		return page;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default <S extends T> List<S> findAll(final Example<S> example) {
+	public default <S extends T> @NonNull List<S> findAll(final @NonNull Example<S> example) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final List<S> result = jpaRepository.findAll(example);
-
 		return result;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable) {
+	public default <S extends T> @NonNull Page<S> findAll(final @NonNull Example<S> example, final @NonNull Pageable pageable) {
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
 		final Page<S> page = jpaRepository.findAll(example, pageable);
-
 		return page;
 	}
 
 	@Override
 	@RepositoryMethod
-	public default <S extends T> Page<S> findAll(final Example<S> example, final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection) {
-		if(example == null) {
-			throw new IllegalArgumentException("example cannot be null");
-		}
-
+	public default <S extends T> @NonNull Page<S> findAll(final @NonNull Example<S> example, final @NonNull Pageable pageable, final TableField sortingTableField, final TableSortingDirection tableSortingDirection) {
 		final Class<S> entityClass = example.getProbeType();
 		final SimpleJpaRepository<T, Long> jpaRepository = this.getJpaRepository();
-		if(jpaRepository == null) {
-			return null;
-		}
-
-		final Pageable finalPageable = this.getFinalPageable(pageable, tableSortingField, tableSortingDirection, entityClass);
+		final Pageable finalPageable = this.getFinalPageable(pageable, sortingTableField, tableSortingDirection, entityClass);
 		final Page<S> page = jpaRepository.findAll(example, finalPageable);
-
 		return page;
 	}
 
-	private <S extends T> Pageable getFinalPageable(final Pageable pageable, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final Class<S> entityClass) {
-		if(pageable == null) {
-			throw new IllegalArgumentException("pageable cannot be null");
-		}
-
+	private <S extends T> @NonNull Pageable getFinalPageable(final @NonNull Pageable pageable, final TableField sortingTableField, final TableSortingDirection tableSortingDirection, final Class<S> entityClass) {
 		final Pageable finalPageable;
-		if(tableSortingField == null) {
+		if(sortingTableField == null) {
 			finalPageable = pageable;
 		} else {
-			final boolean isAuthUserField = tableSortingField.isAuthUserField();
-			final boolean isJobCompanyField = tableSortingField.isJobCompanyField();
+			final boolean isAuthUserField = sortingTableField.isAuthUserField();
+			final boolean isJobCompanyField = sortingTableField.isJobCompanyField();
 
 			final String sortFieldPath;
 			if(isAuthUserField && !AuthUser.class.equals(entityClass)) {
-				sortFieldPath = tableSortingField.getFinalFieldPath();
+				sortFieldPath = sortingTableField.getFinalFieldPath();
 			} else if(isJobCompanyField && !JobCompany.class.equals(entityClass)) {
 				if(JobRequest.class.equals(entityClass)) {
-					sortFieldPath = StringUtils.getStringJoined("jobVacancy.", tableSortingField.getFinalFieldPath());
+					sortFieldPath = StringUtils.getStringJoined("jobVacancy.", sortingTableField.getFinalFieldPath());
 				} else {
-					sortFieldPath = tableSortingField.getFinalFieldPath();
+					sortFieldPath = sortingTableField.getFinalFieldPath();
 				}
 			} else {
-				sortFieldPath = tableSortingField.getPartialFieldPath();
+				sortFieldPath = sortingTableField.getPartialFieldPath();
 			}
 
 			final Sort.Direction sortDirection;
@@ -298,7 +238,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return finalPageable;
 	}
 
-	private static Pageable getFinalPageable(final Pageable pageable, final String sortFieldPath, final Sort.Direction sortDirection) {
+	private static @NonNull Pageable getFinalPageable(final @NonNull Pageable pageable, final @NonNull String sortFieldPath, final Sort.Direction sortDirection) {
 		final Sort sort = Sort.by(sortDirection, sortFieldPath);
 		final Pageable finalPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 		return finalPageable;
@@ -306,9 +246,8 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 
 	@Override
 	@RepositoryMethod
-	public default T executeQuerySingleResult(final String jpqlQuery, final Map<String, Object> parameterMap) {
+	public default T executeQuerySingleResult(final @NonNull String jpqlQuery, final Map<String, Object> parameterMap) {
 		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
-
 		try {
 			final T result = typedQuery.getSingleResult();
 			return result;
@@ -319,19 +258,21 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 
 	@Override
 	@RepositoryMethod
-	public default List<T> executeQueryResultList(final String jpqlQuery, final Map<String, Object> parameterMap) {
+	public default @NonNull List<T> executeQueryResultList(final @NonNull String jpqlQuery, final Map<String, Object> parameterMap) {
 		final TypedQuery<T> typedQuery = getTypedQuery(jpqlQuery, parameterMap);
 		final List<T> result = typedQuery.getResultList();
-
-		return result;
+		if(result != null) {
+			return result;
+		} else {
+			return List.of();
+		}
 	}
 
 	@Override
 	@RepositoryMethod
-	public default int executeUpdate(final String jpqlQuery, final Map<String, Object> parameterMap) {
+	public default int executeUpdate(final @NonNull String jpqlQuery, final Map<String, Object> parameterMap) {
 		final Query query = getQuery(jpqlQuery, parameterMap);
 		final int rowsUpdated = query.executeUpdate();
-
 		return rowsUpdated;
 	}
 
@@ -354,47 +295,45 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entity;
 	}
 
-	private TypedQuery<T> getTypedQuery(final String jpqlQuery, final Map<String, Object> parameterMap) {
+	private @NonNull TypedQuery<T> getTypedQuery(final @NonNull String jpqlQuery, final Map<String, Object> parameterMap) {
 		final Class<T> entityClass = this.getEntityClass();
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
+
 		final TypedQuery<T> typedQuery = entityManager.createQuery(jpqlQuery, entityClass);
 		if(parameterMap != null) {
 			for(final Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
 				typedQuery.setParameter(parameterMapEntry.getKey(), parameterMapEntry.getValue());
 			}
 		}
-
 		return typedQuery;
 	}
 
-	private Query getQuery(final String jpqlQuery, final Map<String, Object> parameterMap) {
+	private @NonNull Query getQuery(final @NonNull String jpqlQuery, final Map<String, Object> parameterMap) {
 		final Class<T> entityClass = this.getEntityClass();
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
+
 		final Query query = entityManager.createQuery(jpqlQuery);
 		if(parameterMap != null) {
 			for(final Map.Entry<String, Object> parameterMapEntry : parameterMap.entrySet()) {
 				query.setParameter(parameterMapEntry.getKey(), parameterMapEntry.getValue());
 			}
 		}
-
 		return query;
 	}
 
 	private @NonNull SimpleJpaRepository<T, Long> getJpaRepository() {
 		final Class<T> entityClass = this.getEntityClass();
 		final SimpleJpaRepository<T, Long> jpaRepository = UpgradedJpaRepository.getJpaRepository(entityClass);
-
 		return jpaRepository;
 	}
 
-	private static <S extends AbstractEntity<S>> @NonNull SimpleJpaRepository<S, Long> getJpaRepository(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> @NonNull SimpleJpaRepository<S, Long> getJpaRepository(final @NonNull Class<S> entityClass) {
 		final EntityManager entityManager = UpgradedJpaRepository.getEntityManagerConfigurable(entityClass);
 		final SimpleJpaRepository<S, Long> jpaRepository = new SimpleJpaRepository<>(entityClass, entityManager);
-
 		return jpaRepository;
 	}
 
-	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerConfigurable(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> @NonNull EntityManager getEntityManagerConfigurable(@NonNull final Class<S> entityClass) {
 		final boolean useEntityManagerCache = UpgradedJpaRepository.getUseEntityManagerCache();
 
 		final EntityManager entityManager;
@@ -403,12 +342,11 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		} else {
 			entityManager = UpgradedJpaRepository.getEntityManagerNotCached(entityClass);
 		}
-
 		return entityManager;
 	}
 
-	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerCacheable(final Class<S> entityClass) {
-		final String entityClassName = (entityClass != null) ? entityClass.getSimpleName() : null;
+	private static <S extends AbstractEntity<S>> @NonNull EntityManager getEntityManagerCacheable(@NonNull final Class<S> entityClass) {
+		final String entityClassName = entityClass.getSimpleName();
 
 		if(log.isInfoEnabled()) {
 			final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_INPUT_TRACE);
@@ -418,20 +356,22 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		EntityManager entityManager = ENTITY_MANAGER_CACHE_OBJECT.get(entityClass);
 
 		if(entityManager != null) {
-			logGetEntityManagerCacheableResponse(ENTITY_MANAGER_CACHE_NAME, entityClassName, entityManager);
+			logGetEntityManagerCacheableResponse(CacheConfig.ENTITY_MANAGER_CACHE_NAME, entityClassName, entityManager);
 		} else {
 			entityManager = UpgradedJpaRepository.getEntityManagerNotCached(entityClass);
-			logGetEntityManagerCacheableResponse(ENTITY_MANAGER_CACHE_ALTERNATIVE, entityClassName, entityManager);
+			logGetEntityManagerCacheableResponse(CacheConfig.ENTITY_MANAGER_CACHE_ALTERNATIVE, entityClassName, entityManager);
+			ENTITY_MANAGER_CACHE_OBJECT.put(entityClass, entityManager);
 
-			if(entityManager != null) {
-				ENTITY_MANAGER_CACHE_OBJECT.put(entityClass, entityManager);
-			} else {
-				ENTITY_MANAGER_CACHE_OBJECT.remove(entityClass);
-			}
+//          //Back when getEntityManagerNotCached wasn't yet @NonNull
+//			if(entityManager != null) {
+//				ENTITY_MANAGER_CACHE_OBJECT.put(entityClass, entityManager);
+//			} else {
+//				ENTITY_MANAGER_CACHE_OBJECT.remove(entityClass);
+//			}
 		}
 
 		if(log.isInfoEnabled()) {
-			final CacheStatistics entityManagerCacheStatistics = ENTITY_MANAGER_CACHE_STATISTICS_SERVICE.getCacheStatistics(ENTITY_MANAGER_CACHE_NAME);
+			final CacheStatistics entityManagerCacheStatistics = ENTITY_MANAGER_CACHE_STATISTICS_SERVICE.getCacheStatistics(CacheConfig.ENTITY_MANAGER_CACHE_NAME);
 
 			final long hits = entityManagerCacheStatistics.getCacheHits();
 			final long misses = entityManagerCacheStatistics.getCacheMisses();
@@ -446,23 +386,26 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityManager;
 	}
 
-	private static void logGetEntityManagerCacheableResponse(final String source, final String entityClassName, final EntityManager entityManager) {
+	private static void logGetEntityManagerCacheableResponse(final @NonNull String source, final @NonNull String entityClassName, final @NonNull EntityManager entityManager) {
 		if(log.isInfoEnabled()) {
 			final String traceType = ControllerAspect.getTraceType(ControllerDependentTraceType.ENTITY_MANAGER_CACHE_OUTPUT_TRACE);
-			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. entityManager obtained from ", source, " for entityClass ", entityClassName, " -> ", (entityManager != null) ? "NOT_NULL" : "NULL"));
+			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. entityManager obtained from ", source, " for entityClass ", entityClassName, " -> NOT_NULL"));
+//          //Back when entityManager wasn't yet @NonNull
+//			log.info(StringUtils.getStringJoined(traceType, "getEntityManagerCacheable. entityManager obtained from ", source, " for entityClass ", entityClassName, " -> ", (entityManager != null) ? "NOT_NULL" : "NULL"));
 		}
 	}
 
-	private static <S extends AbstractEntity<S>> EntityManager getEntityManagerNotCached(final Class<S> entityClass) {
+	private static <S extends AbstractEntity<S>> @NonNull EntityManager getEntityManagerNotCached(final @NonNull Class<S> entityClass) {
 		final long init_time = System.currentTimeMillis();
 
 		final JpaContext jpaContext = BeanFactoryUtils.getBean(JpaContext.class);
 
 		EntityManager entityManager = jpaContext.getEntityManagerByManagedType(entityClass);
-//		EntityManager entityManager = BeanUtils.getBean(EntityManager.class);
+//		EntityManager entityManager = BeanFactoryUtils.getBean(EntityManager.class);
 		if(!entityManager.isOpen()) {
 			final EntityManagerFactory entityManagerFactory = BeanFactoryUtils.getBean(EntityManagerFactory.class);
 			entityManager = entityManagerFactory.createEntityManager();
+			Objects.requireNonNull(entityManager, "entityManager cannot be null");
 		}
 
 		final long timeInside = System.currentTimeMillis() - init_time;
@@ -472,17 +415,20 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityManager;
 	}
 
-	private static Cache<Class<? extends AbstractEntity<?>>, EntityManager> getEntityManagerCache() {
-		final CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().using(ENTITY_MANAGER_CACHE_STATISTICS_SERVICE).build();
-		cacheManager.init();
+	private static @NonNull Cache<Class<? extends AbstractEntity<?>>, EntityManager> getEntityManagerCache() {
+        final Cache<Class<? extends AbstractEntity<?>>, EntityManager> entityManagerCache;
+        try (CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().using(ENTITY_MANAGER_CACHE_STATISTICS_SERVICE).build()) {
+            cacheManager.init();
 
-		final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfiguration = UpgradedJpaRepository.getCacheConfiguration();
-		final Cache<Class<? extends AbstractEntity<?>>, EntityManager> entityManagerCache = cacheManager.createCache(ENTITY_MANAGER_CACHE_NAME, cacheConfiguration);
-		return entityManagerCache;
+            final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfiguration = UpgradedJpaRepository.getCacheConfiguration();
+            entityManagerCache = cacheManager.createCache(CacheConfig.ENTITY_MANAGER_CACHE_NAME, cacheConfiguration);
+        }
+		Objects.requireNonNull(entityManagerCache, "entityManagerCache cannot be null");
+        return entityManagerCache;
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> getCacheConfiguration() {
+	private static @NonNull CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> getCacheConfiguration() {
 		final ResourcePools resourcePools = ResourcePoolsBuilder.heap(10).build();
 		final CacheConfiguration<Class, EntityManager> cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(Class.class, EntityManager.class, resourcePools).build();
 		final CacheConfiguration<Class<? extends AbstractEntity<?>>, EntityManager> cacheConfigurationWithGenerics = GenericsUtils.cast(cacheConfiguration);

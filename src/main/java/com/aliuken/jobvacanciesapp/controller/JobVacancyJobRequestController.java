@@ -16,6 +16,7 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +47,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 	 * Method to show the list of job requests of a job vacancy with pagination
 	 */
 	@GetMapping("/job-vacancies/job-requests/{jobVacancyId}")
-	public String getJobRequests(Model model, Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobRequests(Model model, @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
+								 @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-vacancies/job-requests/{jobVacancyId}";
 
 		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
@@ -124,9 +125,9 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 	/**
 	 * Method to export the list of job vacancy requests with pagination to pdf
 	 */
-	@GetMapping("/job-vacancies/job-requests/{jobVacancyId}/export-to-pdf")
+	@GetMapping("/job-vacancies/job-requests/{jobVacancyId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,

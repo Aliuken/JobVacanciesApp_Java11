@@ -14,7 +14,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -28,15 +27,13 @@ import javax.validation.constraints.Size;
 public class JobCompanyLogo extends AbstractEntityWithJobCompany<JobCompanyLogo> {
 	private static final long serialVersionUID = 3937298767687586305L;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="job_company_id", nullable=false)
-	private JobCompany jobCompany;
+	private @NonNull JobCompany jobCompany;
 
-	@NotNull
 	@Size(max=255)
 	@Column(name="file_name", length=255, nullable=false)
-	private String fileName;
+	private @NonNull String fileName;
 
 	public JobCompanyLogo() {
 		super();

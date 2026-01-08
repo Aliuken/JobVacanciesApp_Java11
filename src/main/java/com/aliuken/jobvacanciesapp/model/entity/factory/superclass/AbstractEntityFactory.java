@@ -6,14 +6,14 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public abstract class AbstractEntityFactory<T extends AbstractEntity<T>> extends AbstractFactoryBean<T> {
-	private final Class<T> objectType = GenericsUtils.cast(this.createInstance().getClass());
+	private final @NonNull Class<T> objectType = GenericsUtils.cast(this.createInstance().getClass());
 
 	protected AbstractEntityFactory() {
 		setSingleton(false);
 	}
 
 	@Override
-	public Class<T> getObjectType() {
+	public @NonNull Class<T> getObjectType() {
 		return objectType;
 	}
 

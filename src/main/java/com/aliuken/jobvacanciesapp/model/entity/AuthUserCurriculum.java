@@ -14,7 +14,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -28,26 +27,23 @@ import javax.validation.constraints.Size;
 public class AuthUserCurriculum extends AbstractEntityWithAuthUser<AuthUserCurriculum> {
 	private static final long serialVersionUID = -8095503029320669346L;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name="auth_user_id", nullable=false)
-	private AuthUser authUser;
+	private @NonNull AuthUser authUser;
 
-	@NotNull
 	@Size(max=255)
 	@Column(name="file_name", length=255, nullable=false)
-	private String fileName;
+	private @NonNull String fileName;
 
-	@NotNull
 	@Size(max=500)
 	@Column(name="description", length=500, nullable=false)
-	private String description;
+	private @NonNull String description;
 
 	public AuthUserCurriculum() {
 		super();
 	}
 
-	public String getFilePath() {
+	public @NonNull String getFilePath() {
 		final AuthUser authUser = this.getAuthUser();
 
 		final String authUserIdString;

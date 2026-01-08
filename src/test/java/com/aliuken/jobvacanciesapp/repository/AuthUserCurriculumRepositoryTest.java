@@ -22,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -316,13 +317,18 @@ public class AuthUserCurriculumRepositoryTest extends AbstractTransactionalJUnit
 
 	private void commonTestsAuthUserCurriculumDTO1(final AuthUserCurriculumDTO authUserCurriculumDTO, final String description) {
 		final AuthUser authUser = authUserRepository.findByIdNotOptional(2L);
-		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUser);
+		Assertions.assertNotNull(authUser);
 
+		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUser);
 		Assertions.assertNotNull(authUserCurriculumDTO);
 		Assertions.assertNotNull(authUserDTO);
 		Assertions.assertEquals(1L, authUserCurriculumDTO.getId());
 		Assertions.assertEquals(authUserDTO, authUserCurriculumDTO.getAuthUser());
-		Assertions.assertNull(authUserCurriculumDTO.getCurriculumFile());
+
+		final MultipartFile curriculumFile = authUserCurriculumDTO.getCurriculumFile();
+		Assertions.assertNotNull(curriculumFile);
+		Assertions.assertTrue(curriculumFile.isEmpty());
+
 		Assertions.assertEquals("EKFP0YBSmiguel.pdf", authUserCurriculumDTO.getFileName());
 		Assertions.assertEquals(description, authUserCurriculumDTO.getDescription());
 	}

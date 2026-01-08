@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -29,16 +30,14 @@ public enum Language implements ConfigurableEnum<Language> {
 	}
 
 	public static Language findByCode(final String code) {
-		final Language language;
-		if(code != null) {
-			language = Constants.PARALLEL_STREAM_UTILS.ofEnum(Language.class)
-				.filter(languageAux -> code.equals(languageAux.code))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("Language code does not exist"));
-		} else {
-			language = null;
+		if(LogicalUtils.isNullOrEmptyString(code)) {
+			return null;
 		}
 
+		final Language language = Constants.PARALLEL_STREAM_UTILS.ofEnum(Language.class)
+			.filter(languageAux -> code.equals(languageAux.code))
+			.findFirst()
+			.orElse(null);
 		return language;
 	}
 

@@ -265,12 +265,12 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		final List<PdfPCell> queryInfo;
 		if(authUserEntityQuery != null) {
 			final Language queryLanguage = authUserEntityQuery.getLanguage();
-			final TableField tableSortingField = authUserEntityQuery.getTableSortingField();
+			final TableField sortingTableField = authUserEntityQuery.getSortingTableField();
 			final TableSortingDirection tableSortingDirection = authUserEntityQuery.getTableSortingDirection();
 			final TablePageSize tablePageSize = authUserEntityQuery.getTablePageSize();
 
 			queryTitle = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query", null);
-			queryInfo = this.getQueryInfo(queryLanguage, tableSortingField, tableSortingDirection, tablePageSize);
+			queryInfo = this.getQueryInfo(queryLanguage, sortingTableField, tableSortingDirection, tablePageSize);
 		} else {
 			queryTitle = I18nUtils.getInternationalizedMessage(Language.ENGLISH, "queryReport.query", null);
 			queryInfo = new ArrayList<>();
@@ -280,7 +280,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		return queryTable;
 	}
 
-	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableField tableSortingField, final TableSortingDirection tableSortingDirection, final TablePageSize tablePageSize) {
+	private List<PdfPCell> getQueryInfo(final Language queryLanguage, final TableField sortingTableField, final TableSortingDirection tableSortingDirection, final TablePageSize tablePageSize) {
 		final List<PdfPCell> queryInfo = new ArrayList<>();
 
 		final String idField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.id", null);
@@ -293,7 +293,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		final String pageNumberField = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.pageNumber", null);
 		final String filterFields = I18nUtils.getInternationalizedMessage(queryLanguage, "queryReport.query.filters", null);
 
-		final String tableSortingFieldMessage = tableSortingField.getMessage(queryLanguage);
+		final String sortingTableFieldMessage = sortingTableField.getMessage(queryLanguage);
 		final String tableDirectionFieldMessage = tableSortingDirection.getMessage(queryLanguage);
 		final String tablePageSizeMessage = tablePageSize.getMessage(queryLanguage);
 		final String queryLanguageMessage = queryLanguage.getMessage(queryLanguage);
@@ -301,7 +301,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		PdfDocument.addCellWithPhrase(queryInfo, idField, authUserEntityQuery.getIdString());
 		PdfDocument.addCellWithPhrase(queryInfo, typeField, authUserEntityQuery.getEndpointTypeString());
 		PdfDocument.addCellWithPhrase(queryInfo, dateField, authUserEntityQuery.getFirstRegistrationDateTimeString());
-		PdfDocument.addCellWithPhrase(queryInfo, sortingFieldField, tableSortingFieldMessage);
+		PdfDocument.addCellWithPhrase(queryInfo, sortingFieldField, sortingTableFieldMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, sortingDirectionField, tableDirectionFieldMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, pageSizeField, tablePageSizeMessage);
 		PdfDocument.addCellWithPhrase(queryInfo, languageField, queryLanguageMessage);

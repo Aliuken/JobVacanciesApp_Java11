@@ -31,7 +31,7 @@ public class Constants {
 	public static final StreamUtils SEQUENTIAL_STREAM_UTILS = SequentialStreamUtils.getInstance();
 	public static final StreamUtils PARALLEL_STREAM_UTILS = ParallelStreamUtils.getInstance();
 
-	public static final String SESSION_AUTH_USER = "sessionAuthUser";
+	public static final String SESSION_AUTH_USER_ID = "sessionAuthUserId";
 	public static final String SESSION_ACCOUNT_DELETED = "sessionAccountDeleted";
 
 	public static final String DELETE_ACCOUNT_SUCCESS_MESSAGE_NAME = "deleteAuthUser.successMsg";

@@ -1,9 +1,11 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class ColorModeConverter implements AttributeConverter<ColorMode, String> {
@@ -20,13 +22,8 @@ public class ColorModeConverter implements AttributeConverter<ColorMode, String>
 
 	@Override
 	public ColorMode convertToEntityAttribute(final String colorModeCode) {
-		final ColorMode colorMode;
-		if(colorModeCode != null) {
-			colorMode = ColorMode.findByCode(colorModeCode);
-		} else {
-			colorMode = ColorMode.BY_DEFAULT;
-		}
-
+		ColorMode colorMode = ColorMode.findByCode(colorModeCode);
+		Objects.requireNonNull(colorMode, "colorMode cannot be null");
 		return colorMode;
 	}
 }

@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUserSignUpConfirmation;
 import com.aliuken.jobvacanciesapp.model.entity.factory.AuthUserSignUpConfirmationFactory;
 import com.aliuken.jobvacanciesapp.model.entity.factory.superclass.AbstractEntityFactory;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public interface AuthUserSignUpConfirmationRepository extends UpgradedJpaReposit
 	}
 
 	@Override
-	public default AbstractEntityFactory<AuthUserSignUpConfirmation> getEntityFactory() {
+	public default @NonNull AbstractEntityFactory<AuthUserSignUpConfirmation> getEntityFactory() {
 		return ENTITY_FACTORY;
 	}
 }

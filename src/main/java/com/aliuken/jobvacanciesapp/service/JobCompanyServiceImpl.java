@@ -8,6 +8,7 @@ import com.aliuken.jobvacanciesapp.repository.JobCompanyRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.database.DatabaseUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -17,18 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class JobCompanyServiceImpl extends JobCompanyService {
-	private static final ExampleMatcher NAME_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("name");
+	private static final @NonNull ExampleMatcher NAME_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsOneField("name");
 
 	@Autowired
 	private JobCompanyRepository jobCompanyRepository;
 
 	@Override
-	public UpgradedJpaRepository<JobCompany> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<JobCompany> getEntityRepository() {
 		return jobCompanyRepository;
 	}
 
 	@Override
-	protected Example<JobCompany> getDefaultEntityPageExample(final TableField filterTableField, final String filterValue) {
+	protected @NonNull Example<JobCompany> getDefaultEntityPageExample(final @NonNull TableField filterTableField, final String filterValue) {
 		final Example<JobCompany> example;
 		switch(filterTableField) {
 			case JOB_COMPANY_NAME: {
@@ -53,7 +54,7 @@ public class JobCompanyServiceImpl extends JobCompanyService {
 	}
 
 	@Override
-	public JobCompany getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull JobCompany getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final JobCompany jobCompany = new JobCompany();
 		jobCompany.setId(id);
 		jobCompany.setFirstRegistrationAuthUser(firstRegistrationAuthUser);

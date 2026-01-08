@@ -30,7 +30,7 @@ public abstract class AbstractEntitySpecificComparator<T extends AbstractEntity<
 		}
 
 		final Integer classCompareResult = this.getClassCompareResult(entity1, entity2);
-		if(classCompareResult != null) {
+		if(classCompareResult != null && classCompareResult != ENTITIES_EQUAL) {
 			return direction * classCompareResult;
 		}
 

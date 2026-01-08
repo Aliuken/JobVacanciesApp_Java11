@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.service.AuthUserService;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,7 +33,7 @@ public class SessionUtils {
 		return sessionAuthUser;
 	}
 
-	public static String getSessionAuthUserIdStringFromSecurityContext(final SecurityContext securityContext) {
+	public static String getSessionAuthUserIdStringFromSecurityContext(final @NonNull SecurityContext securityContext) {
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContext(securityContext);
 		final Long sessionAuthUserId = sessionAuthUser.getId();
 
@@ -40,14 +41,14 @@ public class SessionUtils {
 		return sessionAuthUserIdString;
 	}
 
-	public static AuthUser getSessionAuthUserFromSecurityContext(final SecurityContext securityContext) {
+	public static AuthUser getSessionAuthUserFromSecurityContext(final @NonNull SecurityContext securityContext) {
 		final Authentication authentication = securityContext.getAuthentication();
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromAuthentication(authentication);
 		return sessionAuthUser;
 	}
 
-	public static AuthUser getSessionAuthUserFromAuthentication(final Authentication authentication) {
+	public static AuthUser getSessionAuthUserFromAuthentication(final @NonNull Authentication authentication) {
 		final AuthUserService authUserService = BeanFactoryUtils.getBean(AuthUserService.class);
 		final String sessionAuthUserEmail = authentication.getName();
 
@@ -68,7 +69,7 @@ public class SessionUtils {
 		return sessionAuthUser;
 	}
 
-	public static String getSessionAuthUserIdStringFromHttpServletRequest(final HttpServletRequest httpServletRequest) {
+	public static String getSessionAuthUserIdStringFromHttpServletRequest(final @NonNull HttpServletRequest httpServletRequest) {
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 		final Long sessionAuthUserId = sessionAuthUser.getId();
 
@@ -76,17 +77,18 @@ public class SessionUtils {
 		return sessionAuthUserIdString;
 	}
 
-	public static AuthUser getSessionAuthUserFromHttpServletRequest(final HttpServletRequest httpServletRequest) {
+	public static AuthUser getSessionAuthUserFromHttpServletRequest(final @NonNull HttpServletRequest httpServletRequest) {
 		final HttpSession httpSession = httpServletRequest.getSession();
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpSession(httpSession);
 		return sessionAuthUser;
 	}
 
-	public static AuthUser getSessionAuthUserFromHttpSession(final HttpSession httpSession) {
+	public static AuthUser getSessionAuthUserFromHttpSession(final @NonNull HttpSession httpSession) {
 		final AuthUserService authUserService = BeanFactoryUtils.getBean(AuthUserService.class);
 
-		AuthUser sessionAuthUser = (AuthUser) httpSession.getAttribute(Constants.SESSION_AUTH_USER);
+		final Long sessionAuthUserId = (Long) httpSession.getAttribute(Constants.SESSION_AUTH_USER_ID);
+		AuthUser sessionAuthUser = authUserService.findByIdNotOptional(sessionAuthUserId);
 		sessionAuthUser = authUserService.refreshEntity(sessionAuthUser);
 		return sessionAuthUser;
 	}

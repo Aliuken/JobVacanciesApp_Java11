@@ -9,6 +9,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import java.io.Serializable;
 
@@ -16,32 +17,27 @@ import java.io.Serializable;
 public class ApplicationDefaultConfigDTO implements Serializable {
 	private static final long serialVersionUID = 7326190421458078482L;
 
-	private static final ApplicationDefaultConfigDTO NO_ARGS_INSTANCE = new ApplicationDefaultConfigDTO(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	//Non-overwritable properties
-	private final String authUserCurriculumFilesPath;
-	private final String authUserEntityQueryFilesPath;
-	private final String jobCompanyLogosPath;
-	private final Boolean useAjaxToRefreshJobCompanyLogos;
-	private final Boolean useEntityManagerCache;
-	private final Boolean useParallelStreams;
-	private final Long signupConfirmationLinkExpirationHours;
-	private final Long resetPasswordLinkExpirationHours;
+	private final @NonNull String authUserCurriculumFilesPath;
+	private final @NonNull String authUserEntityQueryFilesPath;
+	private final @NonNull String jobCompanyLogosPath;
+	private final @NonNull Boolean useAjaxToRefreshJobCompanyLogos;
+	private final @NonNull Boolean useEntityManagerCache;
+	private final @NonNull Boolean useParallelStreams;
+	private final @NonNull Long signupConfirmationLinkExpirationHours;
+	private final @NonNull Long resetPasswordLinkExpirationHours;
 
 	//Overwritable properties
-	private final Language defaultLanguage;
-	private final AnonymousAccessPermission defaultAnonymousAccessPermission;
-	private final TableSortingDirection defaultInitialTableSortingDirection;
-	private final TablePageSize defaultInitialTablePageSize;
-	private final ColorMode defaultColorMode;
-	private final UserInterfaceFramework defaultUserInterfaceFramework;
-	private final PdfDocumentPageFormat defaultPdfDocumentPageFormat;
-
-	public static ApplicationDefaultConfigDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
+	private final @NonNull Language defaultLanguage;
+	private final @NonNull AnonymousAccessPermission defaultAnonymousAccessPermission;
+	private final @NonNull TableSortingDirection defaultInitialTableSortingDirection;
+	private final @NonNull TablePageSize defaultInitialTablePageSize;
+	private final @NonNull ColorMode defaultColorMode;
+	private final @NonNull UserInterfaceFramework defaultUserInterfaceFramework;
+	private final @NonNull PdfDocumentPageFormat defaultPdfDocumentPageFormat;
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String useAjaxToRefreshJobCompanyLogosString = String.valueOf(useAjaxToRefreshJobCompanyLogos);
 		final String useEntityManagerCacheString = String.valueOf(useEntityManagerCache);
 		final String useParallelStreamsString = String.valueOf(useParallelStreams);

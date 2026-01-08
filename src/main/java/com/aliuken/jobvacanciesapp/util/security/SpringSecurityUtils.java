@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.util.security;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +17,11 @@ import java.util.stream.Collectors;
 
 public class SpringSecurityUtils {
 
-	private static final SpringSecurityUtils SINGLETON_INSTANCE = new SpringSecurityUtils();
+	private static final @NonNull SpringSecurityUtils SINGLETON_INSTANCE = new SpringSecurityUtils();
 
 	private SpringSecurityUtils(){}
 
-	public static SpringSecurityUtils getInstance() {
+	public static @NonNull SpringSecurityUtils getInstance() {
 		return SINGLETON_INSTANCE;
 	}
 
@@ -55,16 +56,12 @@ public class SpringSecurityUtils {
 	public boolean hasAnyAuthority(final String... authorityNamesVarargs) {
 		if(LogicalUtils.isNotNullNorEmpty(authorityNamesVarargs)) {
 			final Set<String> grantedAuthorityNames = this.getAuthorityNames();
-
-			if(LogicalUtils.isNotNullNorEmpty(grantedAuthorityNames)) {
-				for(final String authorityName : authorityNamesVarargs) {
-					if(grantedAuthorityNames.contains(authorityName)) {
-						return true;
-					}
+			for(final String authorityName : authorityNamesVarargs) {
+				if(grantedAuthorityNames.contains(authorityName)) {
+					return true;
 				}
 			}
 		}
-
 		return false;
 	}
 
@@ -100,7 +97,7 @@ public class SpringSecurityUtils {
 		}
 	}
 
-	public Set<String> getAuthorityNames() {
+	public @NonNull Set<String> getAuthorityNames() {
 		final Authentication authentication = this.getAuthentication();
 
 		final Collection<? extends GrantedAuthority> grantedAuthorities;

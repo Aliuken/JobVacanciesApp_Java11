@@ -13,8 +13,6 @@ import java.io.Serializable;
 public class AuthUserResetPasswordDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -3316162707082805827L;
 
-	private static final AuthUserResetPasswordDTO NO_ARGS_INSTANCE = new AuthUserResetPasswordDTO(null, null, null, null, null);
-
 	private final Long id;
 
 	@NotEmpty(message="{email.notEmpty}")
@@ -34,12 +32,8 @@ public class AuthUserResetPasswordDTO implements AbstractEntityDTO, Serializable
 	@Size(min=7, max=20, message="{newPassword2.minAndMaxSize}")
 	private final String newPassword2;
 
-	public static AuthUserResetPasswordDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
-
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
 
 		final String result = StringUtils.getStringJoined("AuthUserResetPasswordDTO [id=", idString, ", email=", email, "]");

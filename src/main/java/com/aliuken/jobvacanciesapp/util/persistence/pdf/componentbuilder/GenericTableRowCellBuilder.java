@@ -66,10 +66,12 @@ public class GenericTableRowCellBuilder implements PdfPCellEvent {
 	private static int getMaxNumberOfLinesInRow(final String[] row) {
 		int maxNumberOfLinesInRow = 0;
 		for(final String cellContent : row) {
-			final String[] cellTextLines = cellContent != null ? cellContent.split(Constants.NEWLINE) : null;
-			final int numberOfCellTextLines = cellTextLines.length;
-			if(numberOfCellTextLines > maxNumberOfLinesInRow) {
-				maxNumberOfLinesInRow = numberOfCellTextLines;
+			if(cellContent != null) {
+				final String[] cellTextLines = cellContent.split(Constants.NEWLINE);
+				final int numberOfCellTextLines = cellTextLines.length;
+				if (numberOfCellTextLines > maxNumberOfLinesInRow) {
+					maxNumberOfLinesInRow = numberOfCellTextLines;
+				}
 			}
 		}
 		return maxNumberOfLinesInRow;
@@ -78,7 +80,7 @@ public class GenericTableRowCellBuilder implements PdfPCellEvent {
 	private static PdfPTable getCellTable(final PdfPCell defaultCell, final int maxNumberOfLinesInRow, final PdfPCellEvent cellEvent,
 			final String cellContent, final int cellHorizontalAlignment, final Font cellFont) {
 
-		final String[] cellTextLines = cellContent != null ? cellContent.split(Constants.NEWLINE) : null;
+		final String[] cellTextLines = cellContent != null ? cellContent.split(Constants.NEWLINE) : new String[0];
 
 		final PdfPTable innerTable = new PdfPTable(1);
 		innerTable.setWidthPercentage(100f);

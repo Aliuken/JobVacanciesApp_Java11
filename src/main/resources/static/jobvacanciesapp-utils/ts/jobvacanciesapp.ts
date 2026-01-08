@@ -27,14 +27,14 @@ const ENGLISH_LANGUAGE_TS: string = "en";
 
 function treatJobCompanyLogoComboWithAjaxTS(
   jobCompanyIdModelAttribute: Undefinable<number>,
-  jobCompanyLogoModelAttribute: Undefinable<string>,
+  jobCompanyLogoIdModelAttribute: Undefinable<string>,
   refreshUrlModelAttribute: Undefinable<string>
 ): void {
-  //alert("treatJobCompanyLogoComboWithAjaxTS(" + jobCompanyIdModelAttribute + ", " + jobCompanyLogoModelAttribute + ", " + refreshUrlModelAttribute + ")");
+  //alert("treatJobCompanyLogoComboWithAjaxTS(" + jobCompanyIdModelAttribute + ", " + jobCompanyLogoIdModelAttribute + ", " + refreshUrlModelAttribute + ")");
 
   const jobCompanyLogoCombo: Nullable<HTMLSelectElement> = getComboElementIfExistsTS("jobCompanyLogoCombo");
   if (jobCompanyLogoCombo !== null) {
-    jobCompanyLogoCombo.value = jobCompanyLogoModelAttribute ?? EMPTY_STRING_TS;
+    jobCompanyLogoCombo.value = jobCompanyLogoIdModelAttribute ?? EMPTY_STRING_TS;
     if (isValidStringFieldTS(refreshUrlModelAttribute)) {
       let jobCompanyLogoFragment: Nullable<HTMLElement> = getElementIfExistsTS("jobCompanyLogoFragment");
       if (jobCompanyLogoFragment !== null) {
@@ -44,7 +44,7 @@ function treatJobCompanyLogoComboWithAjaxTS(
 
           const urlSearchParams: URLSearchParams = new URLSearchParams();
           urlSearchParams.append("jobCompanyId", jobCompanyIdModelAttribute?.toString() ?? EMPTY_STRING_TS);
-          urlSearchParams.append("jobCompanyLogo", selectedOption);
+          urlSearchParams.append("jobCompanyLogoId", selectedOption);
 
           const url: URL = new URL(refreshUrlModelAttribute!, window.location.href);
           url.search = urlSearchParams.toString();
@@ -284,23 +284,23 @@ function treatLanguageComboAndUrlParameterTS(
   setCombosOnChangeCallbackTS(comboOnChangeCallbackDataArray);
 }
 
-function treatJobCompanyLogoComboAndUrlParameterTS(jobCompanyLogoModelAttribute: Undefinable<string>): void {
-  //alert("treatJobCompanyLogoComboAndUrlParameterTS(" + jobCompanyLogoModelAttribute + ")");
+function treatJobCompanyLogoComboAndUrlParameterTS(jobCompanyLogoIdModelAttribute: Undefinable<string>): void {
+  //alert("treatJobCompanyLogoComboAndUrlParameterTS(" + jobCompanyLogoIdModelAttribute + ")");
 
   const urlSearchParams: URLSearchParams = new URLSearchParams(window.location.search);
 
-  // Set the jobCompanyLogo URL param if it does not exist to the jobCompanyLogo model attribute
-  let jobCompanyLogo: Undefinable<string> = getParameterFromUrlSearchParamsTS(urlSearchParams, "jobCompanyLogo");
-  if (jobCompanyLogo === null) {
-    jobCompanyLogo = jobCompanyLogoModelAttribute;
-    addOrReplaceJobCompanyLogoParameterInUrlTS(jobCompanyLogo);
+  // Set the jobCompanyLogoId URL param if it does not exist to the jobCompanyLogoId model attribute
+  let jobCompanyLogoId: Undefinable<string> = getParameterFromUrlSearchParamsTS(urlSearchParams, "jobCompanyLogoId");
+  if (jobCompanyLogoId === null) {
+    jobCompanyLogoId = jobCompanyLogoIdModelAttribute;
+    addOrReplaceJobCompanyLogoParameterInUrlTS(jobCompanyLogoId);
   }
 
   //Set the combos onChange callback to replace the corresponding URL param with the selected value
   const comboOnChangeCallbackDataArray: ComboOnChangeCallbackData[] = [
     {
       comboElementId: "jobCompanyLogoCombo",
-      urlParamValue: jobCompanyLogo!,
+      urlParamValue: jobCompanyLogoId!,
       onChangeReplaceUrlParamCallback: (selectedOption) => addOrReplaceJobCompanyLogoParameterInUrlTS(selectedOption)
     }
   ];
@@ -393,9 +393,9 @@ function addOrReplaceLanguageParamInUrlTS(languageCode: Undefinable<string>): vo
   reloadPageTS(urlSearchParams);
 }
 
-function addOrReplaceJobCompanyLogoParameterInUrlTS(jobCompanyLogo: Undefinable<string>): void {
+function addOrReplaceJobCompanyLogoParameterInUrlTS(jobCompanyLogoId: Undefinable<string>): void {
   const urlSearchParams: URLSearchParams = new URLSearchParams(window.location.search);
-  addOrReplaceParameterInUrlSearchParamsTS(urlSearchParams, "jobCompanyLogo", jobCompanyLogo);
+  addOrReplaceParameterInUrlSearchParamsTS(urlSearchParams, "jobCompanyLogoId", jobCompanyLogoId);
   reloadPageTS(urlSearchParams);
 }
 

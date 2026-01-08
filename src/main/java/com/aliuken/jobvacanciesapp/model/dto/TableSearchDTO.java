@@ -17,8 +17,6 @@ import java.io.Serializable;
 public class TableSearchDTO implements Serializable {
 	private static final long serialVersionUID = -4084683709653433040L;
 
-	private static final TableSearchDTO NO_ARGS_INSTANCE = new TableSearchDTO(null, null, null, null, null, null, null);
-
 	@NotEmpty(message="{language.notEmpty}")
 	@Size(min=2, max=2, message="{language.minAndMaxSize}")
 	private final String languageParam;
@@ -61,18 +59,14 @@ public class TableSearchDTO implements Serializable {
 		}
 	}
 
-	public static TableSearchDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
-
 	public TableField getFilterTableField() {
 		final TableField filterTableField = TableField.findByCode(filterName);
 		return filterTableField;
 	}
 
-	public TableField getTableSortingField() {
-		final TableField tableSortingField = TableField.findByCode(sortingField);
-		return tableSortingField;
+	public TableField getSortingTableField() {
+		final TableField sortingTableField = TableField.findByCode(sortingField);
+		return sortingTableField;
 	}
 
 	public TableSortingDirection getTableSortingDirection() {
@@ -96,17 +90,17 @@ public class TableSearchDTO implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final TableField filterTableField = this.getFilterTableField();
 		final String filterTableFieldName = String.valueOf(filterTableField);
-		final TableField tableSortingField = this.getTableSortingField();
-		final String tableSortingFieldName = String.valueOf(tableSortingField);
+		final TableField sortingTableField = this.getSortingTableField();
+		final String sortingTableFieldName = String.valueOf(sortingTableField);
 		final String pageSizeString = String.valueOf(pageSize);
 		final String pageNumberString = String.valueOf(pageNumber);
 
 		final String result = StringUtils.getStringJoined("TableSearchDTO [languageParam=", languageParam,
 			", filterName=", filterName, ", filterTableFieldName=", filterTableFieldName, ", filterValue=", filterValue,
-			", sortingField=", sortingField, ", tableSortingFieldName=", tableSortingFieldName, ", sortingDirection=", sortingDirection,
+			", sortingField=", sortingField, ", sortingTableFieldName=", sortingTableFieldName, ", sortingDirection=", sortingDirection,
 			", pageSize=", pageSizeString, ", pageNumber=", pageNumberString, "]");
 		return result;
 	}

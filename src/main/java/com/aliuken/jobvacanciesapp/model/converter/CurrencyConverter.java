@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Converter(autoApply=true)
 public class CurrencyConverter implements AttributeConverter<Currency, String> {
@@ -20,13 +21,8 @@ public class CurrencyConverter implements AttributeConverter<Currency, String> {
 
 	@Override
 	public Currency convertToEntityAttribute(final String currencySymbol) {
-		final Currency currency;
-		if(currencySymbol != null) {
-			currency = Currency.findBySymbol(currencySymbol);
-		} else {
-			currency = Currency.BY_DEFAULT;
-		}
-
+		Currency currency = Currency.findBySymbol(currencySymbol);
+		Objects.requireNonNull(currency, "currency cannot be null");
 		return currency;
 	}
 }

@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
@@ -24,16 +25,14 @@ public enum PageEntityEnum implements Serializable {
 	}
 
 	public static PageEntityEnum findByValue(final String value) {
-		final PageEntityEnum pageEntity;
-		if(value != null) {
-			pageEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PageEntityEnum.class)
-				.filter(pageEntityAux -> value.equals(pageEntityAux.value))
-				.findFirst()
-				.orElse(null);
-		} else {
-			pageEntity = null;
+		if(LogicalUtils.isNullOrEmptyString(value)) {
+			return null;
 		}
 
+		final PageEntityEnum pageEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PageEntityEnum.class)
+			.filter(pageEntityAux -> value.equals(pageEntityAux.value))
+			.findFirst()
+			.orElse(null);
 		return pageEntity;
 	}
 }

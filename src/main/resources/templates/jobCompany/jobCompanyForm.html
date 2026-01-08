@@ -120,10 +120,10 @@
       <script type="text/javascript" th:src="@{/jobvacanciesapp-utils/js/ajax-utils.js}"></script>
       <script type="text/javascript" th:inline="javascript">
         $(document).ready(function() {
-          let jobCompanyLogoModelAttribute;
+          let jobCompanyLogoIdModelAttribute;
           let useAjaxToRefreshJobCompanyLogosModelAttribute;
           /*<![CDATA[*/
-            jobCompanyLogoModelAttribute = /*[[${jobCompanyLogo}]]*/ null;
+            jobCompanyLogoIdModelAttribute = /*[[${jobCompanyLogoId}]]*/ null;
             useAjaxToRefreshJobCompanyLogosModelAttribute = /*[[${useAjaxToRefreshJobCompanyLogos}]]*/ true;
           /*]]>*/
 
@@ -137,9 +137,9 @@
 
             let jobCompanyIdModelAttribute = (jobCompanyDTOModelAttribute != null) ? jobCompanyDTOModelAttribute.id : null;
 
-            treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoModelAttribute, refreshUrlModelAttribute);
+            treatJobCompanyLogoComboWithAjax(jobCompanyIdModelAttribute, jobCompanyLogoIdModelAttribute, refreshUrlModelAttribute);
           } else {
-            treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoModelAttribute);
+            treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoIdModelAttribute);
           }
         });
       </script>

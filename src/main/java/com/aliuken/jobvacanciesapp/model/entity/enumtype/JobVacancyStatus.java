@@ -32,8 +32,7 @@ public enum JobVacancyStatus implements Serializable, Internationalizable {
 		final JobVacancyStatus jobVacancyStatus = Constants.PARALLEL_STREAM_UTILS.ofEnum(JobVacancyStatus.class)
 			.filter(value -> value.code.equals(code))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("JobVacancyStatus code does not exist"));
-
+			.orElse(null);
 		return jobVacancyStatus;
 	}
 }

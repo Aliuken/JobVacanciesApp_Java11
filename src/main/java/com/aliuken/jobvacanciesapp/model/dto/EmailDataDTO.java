@@ -13,8 +13,6 @@ import java.util.List;
 public class EmailDataDTO implements Serializable {
 	private static final long serialVersionUID = 5897938866031322763L;
 
-	private static final EmailDataDTO NO_ARGS_INSTANCE = new EmailDataDTO(null, null, null, null, null, null, null);
-
 	@NotEmpty(message="{destinationEmailAddress.notEmpty}")
 	private final String destinationEmailAddress;
 
@@ -34,12 +32,8 @@ public class EmailDataDTO implements Serializable {
 
 	private final List<EmailAttachmentDTO> attachments;
 
-	public static EmailDataDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
-
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		final String languageName = language.name();
 		final String attachmentsString = attachments.toString();
 		final String isHtmlString = String.valueOf(isHtml);

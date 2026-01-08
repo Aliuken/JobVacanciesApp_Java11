@@ -19,6 +19,7 @@ import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -56,8 +58,8 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to show the list of job categories with pagination
 	 */
 	@GetMapping("/job-categories/index")
-	public String index(Model model, Pageable pageable,
-			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(Model model, @NonNull Pageable pageable,
+			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-categories/index";
 
 		try {
@@ -123,9 +125,9 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	/**
 	 * Method to export the list of job categories with pagination to pdf
 	 */
-	@GetMapping("/job-categories/index/export-to-pdf")
+	@GetMapping("/job-categories/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, Pageable pageable,
+	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
@@ -202,6 +204,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 
 		if(jobCategoryDTO == null) {
 			final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
+			Objects.requireNonNull(jobCategory, "jobCategory cannot be null");
 			jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobCategory);
 		}
 
@@ -215,7 +218,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 */
 	@PostMapping("/job-categories/save")
 	public String save(RedirectAttributes redirectAttributes,
-			@Validated JobCategoryDTO jobCategoryDTO, BindingResult bindingResult,
+			@Validated @NonNull JobCategoryDTO jobCategoryDTO, BindingResult bindingResult,
 			@RequestParam(name="id", required=false) Long id, @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);

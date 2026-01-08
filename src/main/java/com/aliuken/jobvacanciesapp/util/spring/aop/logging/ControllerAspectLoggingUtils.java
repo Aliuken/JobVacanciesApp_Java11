@@ -46,13 +46,30 @@ public class ControllerAspectLoggingUtils {
 	public static String getRequestURI() {
 //		String requestURI;
 //		try {
-//			final String requestURL = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getRequestURL().toString();
+//			final ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//
+//			final String requestURL;
+//			if(servletRequestAttributes != null) {
+//				requestURL = servletRequestAttributes.getRequest().getRequestURL().toString();
+//			} else {
+//				requestURL = null;
+//			}
+//
 //			final URI uri = new URI(requestURL);
 //			requestURI = StringUtils.getUrlPath(uri);
 //		} catch (final URISyntaxException e) {
 //			requestURI = null;
 //		}
-		final String requestURI = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getRequestURI();
+
+		final ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+		final String requestURI;
+		if(servletRequestAttributes != null) {
+			requestURI = servletRequestAttributes.getRequest().getRequestURI();
+		} else {
+			requestURI = null;
+		}
+
 		return requestURI;
 	}
 

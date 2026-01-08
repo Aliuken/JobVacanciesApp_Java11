@@ -206,23 +206,23 @@ function treatLanguageComboAndUrlParameter(languageCodeElementValue) {
   setCombosOnChangeCallback(comboOnChangeCallbackDataArray);
 }
 
-function treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoModelAttribute) {
-  //alert("treatJobCompanyLogoComboAndUrlParameter(" + jobCompanyLogoModelAttribute + ")");
+function treatJobCompanyLogoComboAndUrlParameter(jobCompanyLogoIdModelAttribute) {
+  //alert("treatJobCompanyLogoComboAndUrlParameter(" + jobCompanyLogoIdModelAttribute + ")");
 
   const urlSearchParams = new URLSearchParams(window.location.search);
 
-  // Set the jobCompanyLogo URL param if it does not exist to the jobCompanyLogo model attribute
-  let jobCompanyLogo = getParameterFromUrlSearchParams(urlSearchParams, "jobCompanyLogo");
-  if (jobCompanyLogo === null) {
-    jobCompanyLogo = jobCompanyLogoModelAttribute;
-    addOrReplaceJobCompanyLogoParameterInUrl(jobCompanyLogo);
+  // Set the jobCompanyLogoId URL param if it does not exist to the jobCompanyLogoId model attribute
+  let jobCompanyLogoId = getParameterFromUrlSearchParams(urlSearchParams, "jobCompanyLogoId");
+  if (jobCompanyLogoId === null) {
+    jobCompanyLogoId = jobCompanyLogoIdModelAttribute;
+    addOrReplaceJobCompanyLogoParameterInUrl(jobCompanyLogoId);
   }
 
   //Set the combos onChange callback to replace the corresponding URL param with the selected value
   const comboOnChangeCallbackDataArray = [
     {
       comboElementId: "jobCompanyLogoCombo",
-      urlParamValue: jobCompanyLogo,
+      urlParamValue: jobCompanyLogoId,
       onChangeReplaceUrlParamCallback: (selectedOption) => addOrReplaceJobCompanyLogoParameterInUrl(selectedOption)
     }
   ];
@@ -315,9 +315,9 @@ function addOrReplaceLanguageParamInUrl(languageCode) {
   reloadPage(urlSearchParams);
 }
 
-function addOrReplaceJobCompanyLogoParameterInUrl(jobCompanyLogo) {
+function addOrReplaceJobCompanyLogoParameterInUrl(jobCompanyLogoId) {
   const urlSearchParams = new URLSearchParams(window.location.search);
-  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "jobCompanyLogo", jobCompanyLogo);
+  addOrReplaceParameterInUrlSearchParams(urlSearchParams, "jobCompanyLogoId", jobCompanyLogoId);
   reloadPage(urlSearchParams);
 }
 

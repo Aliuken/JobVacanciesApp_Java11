@@ -52,8 +52,7 @@
                 <td th:text="${jobRequest.authUser.surnames}"></td>
                 <td th:text="${dateTimeUtils.convertToStringForWebPageField(jobRequest.firstRegistrationDateTime)}"></td>
                 <td th:with="firstRegistrationAuthUserId=${jobRequest.getFirstRegistrationAuthUserId()}">
-                  <a th:if="${firstRegistrationAuthUserId} != null" th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobRequest.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
-                  <span th:if="${firstRegistrationAuthUserId} == null" th:text="'-'"></span>
+                  <a th:href="@{/auth-users/view/{id} (id=${firstRegistrationAuthUserId}, languageParam=${param.languageParam})}" th:text="${jobRequest.getFirstRegistrationAuthUserEmail()}" th:title="#{firstRegistrationAuthUserDetail.main.title}"></a>
                 </td>
                 <td>
                   <a th:href="@{/job-requests/delete/{id} (id=${jobRequest.id}, languageParam=${param.languageParam}, filterName=${param.filterName}, filterValue=${param.filterValue}, sortingField=${param.sortingField}, sortingDirection=${param.sortingDirection}, pageSize=${param.pageSize}, pageNumber=0)}" th:attr="onclick='return confirm(\'' + #{operationButton.deleteJobRequest.confirm} + '\');'" class="btn btn-success btn-sm" role="button" th:title="#{operationButton.deleteJobRequest}">

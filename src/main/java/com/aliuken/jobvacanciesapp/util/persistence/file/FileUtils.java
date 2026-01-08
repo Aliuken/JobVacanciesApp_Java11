@@ -18,6 +18,7 @@ import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.ZipFile;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 public class FileUtils {
@@ -55,8 +57,8 @@ public class FileUtils {
 	 * Method to store and download a query pdf file
 	 */
 	public static <T extends AbstractEntity> byte[] storeAndDownloadPdf(
-			final PredefinedFilterDTO predefinedFilterDTO, final TableSearchDTO tableSearchDTO,
-			final PageEntityEnum pageEntity, final Page<T> entityPage, final String destinationFolderPathString,
+			final PredefinedFilterDTO predefinedFilterDTO, final @NonNull TableSearchDTO tableSearchDTO,
+			final @NonNull PageEntityEnum pageEntity, final Page<T> entityPage, final String destinationFolderPathString,
 			final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -81,7 +83,7 @@ public class FileUtils {
 			final AuthUserEntityQuery authUserEntityQuery;
 			try {
 				final String requestUrl = ControllerServletUtils.getUrlFromHttpServletRequest(httpServletRequest);
-				final String queryUrl = requestUrl.replaceFirst("/export-to-pdf", Constants.EMPTY_STRING);
+				final String queryUrl = requestUrl.replaceFirst("/exportToPdf", Constants.EMPTY_STRING);
 				authUserEntityQuery = new AuthUserEntityQuery(sessionAuthUser, predefinedFilterDTO, tableSearchDTO, pageEntity, queryUrl);
 				authUserEntityQueryService.saveAndFlush(authUserEntityQuery);
 			} catch(final Exception exception) {
@@ -102,7 +104,7 @@ public class FileUtils {
 					final String originalResultFileName = authUserEntityQuery.getOriginalResultFileName();
 
 					// Store the pdf content in a file in the server file system
-					final CustomMultipartFile customMultipartFile = new CustomMultipartFile(null, originalResultFileName, null, pdfByteArray);
+					final CustomMultipartFile customMultipartFile = new CustomMultipartFile("exportToPdfButton", originalResultFileName, null, pdfByteArray);
 					List<String> finalResultFileNameList = uploadAndOptionallyUnzipFile(customMultipartFile, destinationFolderPathWithAuthUserId, FileType.ENTITY_QUERY);
 
 					// Store the final pdf file name in the database
@@ -184,6 +186,7 @@ public class FileUtils {
 		}
 
 		final String originalFileName = multipartFile.getOriginalFilename();
+		Objects.requireNonNull(originalFileName, "originalFileName cannot be null");
 
 		final List<String> finalFileNameList;
 		if(originalFileName.endsWith(ZIP_EXTENSION)) {
@@ -233,6 +236,8 @@ public class FileUtils {
 	 */
 	private static Path uploadFileInternal(final MultipartFile multipartFile, final String destinationFolderPathString, final FileType fileType) throws IOException {
 		final String originalFileName = multipartFile.getOriginalFilename();
+		Objects.requireNonNull(originalFileName, "originalFileName cannot be null");
+
 		final String finalFileName = FileNameUtils.getFinalFileName(originalFileName, fileType);
 		final Path finalFilePath = Path.of(destinationFolderPathString, finalFileName);
 

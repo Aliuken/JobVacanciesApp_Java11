@@ -7,6 +7,7 @@ import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 import com.aliuken.jobvacanciesapp.repository.JobVacancyRepository;
 import com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,26 +22,26 @@ public class JobVacancyServiceImpl extends JobVacancyService {
 	private JobVacancyRepository jobVacancyRepository;
 
 	@Override
-	public UpgradedJpaRepository<JobVacancy> getEntityRepository() {
+	public @NonNull UpgradedJpaRepository<JobVacancy> getEntityRepository() {
 		return jobVacancyRepository;
 	}
 
 	@Override
 	@ServiceMethod
-	public List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(final Boolean highlighted, final JobVacancyStatus status) {
+	public @NonNull List<JobVacancy> findByHighlightedAndStatusOrderByIdDesc(final Boolean highlighted, final JobVacancyStatus status) {
 		final List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(highlighted, status);
 		return jobVacancies;
 	}
 
 	@Override
 	@ServiceMethod
-	public List<JobVacancy> findAllHighlighted() {
+	public @NonNull List<JobVacancy> findAllHighlighted() {
 		final List<JobVacancy> jobVacancies = jobVacancyRepository.findByHighlightedAndStatusOrderByIdDesc(Boolean.TRUE, JobVacancyStatus.APPROVED);
 		return jobVacancies;
 	}
 
 	@Override
-	public JobVacancy getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
+	public @NonNull JobVacancy getNewEntityForSearchByExample(final Long id, final AuthUser firstRegistrationAuthUser, final AuthUser lastModificationAuthUser) {
 		final JobVacancy jobVacancy = new JobVacancy();
 		jobVacancy.setId(id);
 		jobVacancy.setFirstRegistrationAuthUser(firstRegistrationAuthUser);
