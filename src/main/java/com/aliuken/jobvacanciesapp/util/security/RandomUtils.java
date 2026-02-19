@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.RandomCharactersEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,7 +44,7 @@ public class RandomUtils {
 		return result;
 	}
 
-	public static <T extends Enum<T>> T getRandomValue(final Class<T> enumClass) {
+	public static <T extends Enum<T>> T getRandomValue(final @NonNull Class<T> enumClass) {
 		final T[] possibleValues = enumClass.getEnumConstants();
 		final T randomValue = RandomUtils.getRandomValue(possibleValues);
 		return randomValue;
