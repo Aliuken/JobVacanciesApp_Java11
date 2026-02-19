@@ -2,8 +2,8 @@ package com.aliuken.jobvacanciesapp.enumtype;
 
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public enum ControllerDependentTraceType implements Serializable {
@@ -13,14 +13,12 @@ public enum ControllerDependentTraceType implements Serializable {
 	ENTITY_MANAGER_CACHE_SUMMARY_TRACE("-- ");
 
 	@Getter
-	@NotNull
-	private final String traceInsideController;
+	private final @NonNull String traceInsideController;
 
 	@Getter
-	@NotNull
-	private final String traceOutsideController;
+	private final @NonNull String traceOutsideController;
 
-	private ControllerDependentTraceType(@NotNull final String initialTrace) {
+	private ControllerDependentTraceType(final @NonNull String initialTrace) {
 		this.traceInsideController = StringUtils.getStringJoined("  ", initialTrace);
 		this.traceOutsideController = StringUtils.getStringJoined(initialTrace, "  ");
 	}

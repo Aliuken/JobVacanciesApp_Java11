@@ -41,8 +41,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 	 * Method to show the list of job requests of the logged user with pagination
 	 */
 	@GetMapping("/my-user/job-requests")
-	public String getJobRequests(HttpServletRequest httpServletRequest, Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobRequests(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /my-user/job-requests";
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -50,7 +50,7 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 		final String sessionAuthUserEmail = sessionAuthUser.getEmail();
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -122,8 +122,8 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 	 */
 	@GetMapping("/my-user/job-requests/exportToPdf")
 	@ResponseBody
-	public byte[] exportJobRequestsToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportJobRequestsToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -136,7 +136,7 @@ public class SessionAuthUserJobRequestController extends AbstractEntityControlle
 		final String sessionAuthUserIdString = SessionUtils.getSessionAuthUserIdStringFromHttpServletRequest(httpServletRequest);
 
 		final PredefinedFilterDTO predefinedFilterDTO = new PredefinedFilterDTO(predefinedFilterEntityName, sessionAuthUserIdString);
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.getJobRequests(httpServletRequest, model, pageable, tableSearchDTO, bindingResult);

@@ -13,7 +13,7 @@ public abstract class AbstractEntityControllerWithTable<T extends AbstractEntity
 		if(this instanceof SessionAuthUserEntityQueryController) {
 			result = false;
 		} else {
-			result = (tableSearchDTO != null && tableSearchDTO.hasAllParameters());
+			result = tableSearchDTO != null && tableSearchDTO.hasAllParameters();
 		}
 		return result;
 	}

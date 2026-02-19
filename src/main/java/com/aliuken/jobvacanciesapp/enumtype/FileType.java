@@ -4,9 +4,8 @@ import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileNameUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.DirectoryStream;
@@ -22,24 +21,20 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 	USER_CURRICULUM("pdf", "doc", "docx"),
 	ZIP("zip");
 
-	@NotEmpty
-	private final List<String> allowedLowerCaseFileExtensions;
+	private final @NonNull List<String> allowedLowerCaseFileExtensions;
 
 	@Getter
-	@NotNull
-	private final String allowedLowerCaseFileExtensionsString;
+	private final @NonNull String allowedLowerCaseFileExtensionsString;
 
-	private FileType(final String... allowedFileExtensionsVarargs) {
-		if(LogicalUtils.isNullOrEmpty(allowedFileExtensionsVarargs)) {
-			throw new IllegalArgumentException("FileType allowedFileExtensions must not be null nor empty");
+	private FileType(final @NonNull String @NonNull ... allowedFileExtensionsVarargs) {
+		if(allowedFileExtensionsVarargs.length == 0) {
+			throw new IllegalArgumentException("FileType allowedFileExtensions must not be empty");
 		}
 
 		final List<String> allowedLowerCaseFileExtensions = new ArrayList<>();
 		for(final String allowedFileExtension : allowedFileExtensionsVarargs) {
-			if(allowedFileExtension != null) {
-				final String allowedLowerCaseFileExtension = allowedFileExtension.toLowerCase();
-				allowedLowerCaseFileExtensions.add(allowedLowerCaseFileExtension);
-			}
+			final String allowedLowerCaseFileExtension = allowedFileExtension.toLowerCase();
+			allowedLowerCaseFileExtensions.add(allowedLowerCaseFileExtension);
 		}
 
 		this.allowedLowerCaseFileExtensions = allowedLowerCaseFileExtensions;
@@ -47,7 +42,7 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 	}
 
 	@Override
-	public boolean accept(final Path path) throws IOException {
+	public boolean accept(final @NonNull Path path) throws IOException {
 		if(Files.isDirectory(path)) {
 			return true;
 		} else if(Files.isRegularFile(path)) {
@@ -64,7 +59,7 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 	 * Method to check if the given extension is an allowed extension without throwing exceptions
 	 */
 	public boolean isAllowedFileExtension(final String lowerCaseFileExtension) {
-		final boolean result = (lowerCaseFileExtension != null && allowedLowerCaseFileExtensions != null && allowedLowerCaseFileExtensions.contains(lowerCaseFileExtension));
+		final boolean result = (lowerCaseFileExtension != null && allowedLowerCaseFileExtensions.contains(lowerCaseFileExtension));
 		return result;
 	}
 
@@ -76,7 +71,7 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 			throw new IllegalArgumentException(StringUtils.getStringJoined("The file does not have an extension. The allowed file extensions are ", allowedLowerCaseFileExtensionsString, " and zip."));
 		}
 
-		if(allowedLowerCaseFileExtensions == null || !allowedLowerCaseFileExtensions.contains(lowerCaseFileExtension)) {
+		if(!allowedLowerCaseFileExtensions.contains(lowerCaseFileExtension)) {
 			throw new IllegalArgumentException(StringUtils.getStringJoined("File extension ", lowerCaseFileExtension, " not allowed. The allowed file extensions are ", allowedLowerCaseFileExtensionsString, " and zip."));
 		}
 	}
@@ -84,7 +79,7 @@ public enum FileType implements Serializable, DirectoryStream.Filter<Path> {
 	/**
 	 * Recursive method to get the allowed files in a folder path
 	 */
-	public List<String> getFolderAllowedFilesRecursive(final Path originFolderPath, final String destinationFolderPathString) throws IOException {
+	public @NonNull List<String> getFolderAllowedFilesRecursive(final @NonNull Path originFolderPath, final @NonNull String destinationFolderPathString) throws IOException {
 		final List<String> finalFileNameList = new ArrayList<>();
 		try(final DirectoryStream<Path> pathDirectoryStream = Files.newDirectoryStream(originFolderPath, this)) {
 			for(final Path path : pathDirectoryStream) {

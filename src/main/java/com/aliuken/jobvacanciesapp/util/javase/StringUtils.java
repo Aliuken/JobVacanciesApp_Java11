@@ -42,9 +42,9 @@ public class StringUtils {
 		return string;
 	}
 
-	public static @NonNull String getStringJoined(final CharSequence... elementsVarargs) {
+	public static @NonNull String getStringJoined(final CharSequence @NonNull ... elementsVarargs) {
 		final String stringJoined;
-		if(LogicalUtils.isNotNullNorEmpty(elementsVarargs)) {
+		if(elementsVarargs.length > 0) {
 			final CharSequence delimiter = Constants.EMPTY_STRING;
 			final StringJoiner stringJoiner = new StringJoiner(delimiter);
 			for(final CharSequence element : elementsVarargs) {

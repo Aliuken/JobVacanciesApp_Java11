@@ -59,7 +59,7 @@ public class FileUtils {
 	public static <T extends AbstractEntity> byte[] storeAndDownloadPdf(
 			final PredefinedFilterDTO predefinedFilterDTO, final @NonNull TableSearchDTO tableSearchDTO,
 			final @NonNull PageEntityEnum pageEntity, final Page<T> entityPage, final String destinationFolderPathString,
-			final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse) {
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 
@@ -104,7 +104,7 @@ public class FileUtils {
 					final String originalResultFileName = authUserEntityQuery.getOriginalResultFileName();
 
 					// Store the pdf content in a file in the server file system
-					final CustomMultipartFile customMultipartFile = new CustomMultipartFile("exportToPdfButton", originalResultFileName, null, pdfByteArray);
+					final CustomMultipartFile customMultipartFile = new CustomMultipartFile("exportToPdfButton", originalResultFileName, "application/pdf", pdfByteArray);
 					List<String> finalResultFileNameList = uploadAndOptionallyUnzipFile(customMultipartFile, destinationFolderPathWithAuthUserId, FileType.ENTITY_QUERY);
 
 					// Store the final pdf file name in the database
@@ -201,7 +201,7 @@ public class FileUtils {
 	/**
 	 * Method to upload a MultipartFile (from a HTML form) in the hard drive
 	 */
-	private static String uploadFile(final MultipartFile multipartFile, final String destinationFolderPathString, final FileType fileType) throws IOException {
+	private static @NonNull String uploadFile(final @NonNull MultipartFile multipartFile, final @NonNull String destinationFolderPathString, final @NonNull FileType fileType) throws IOException {
 		final Path finalFilePath = FileUtils.uploadFileInternal(multipartFile, destinationFolderPathString, fileType);
 		final String finalFileName = finalFilePath.getFileName().toString();
 
@@ -211,7 +211,7 @@ public class FileUtils {
 	/**
 	 * Method to upload and unzip a MultipartFile (from a HTML form) in the hard drive
 	 */
-	private static List<String> uploadAndUnzipFile(final MultipartFile multipartFile, final String destinationFolderPathString, final FileType fileType) throws IOException {
+	private static @NonNull List<String> uploadAndUnzipFile(final @NonNull MultipartFile multipartFile, final @NonNull String destinationFolderPathString, final @NonNull FileType fileType) throws IOException {
 		final Path finalFilePath = FileUtils.uploadFileInternal(multipartFile, destinationFolderPathString, FileType.ZIP);
 		final String finalFilePathString = finalFilePath.toAbsolutePath().toString();
 
@@ -234,7 +234,7 @@ public class FileUtils {
 	/**
 	 * Method to upload a file in a given path (if its extension is allowed)
 	 */
-	private static Path uploadFileInternal(final MultipartFile multipartFile, final String destinationFolderPathString, final FileType fileType) throws IOException {
+	private static @NonNull Path uploadFileInternal(final @NonNull MultipartFile multipartFile, final String destinationFolderPathString, final @NonNull FileType fileType) throws IOException {
 		final String originalFileName = multipartFile.getOriginalFilename();
 		Objects.requireNonNull(originalFileName, "originalFileName cannot be null");
 
@@ -265,7 +265,7 @@ public class FileUtils {
 	/**
 	 * Method to unzip a file (given its path) in the hard drive
 	 */
-	private static void unzipFile(final String originFilePathString, final String destinationFolderPathString) throws IOException {
+	private static void unzipFile(final @NonNull String originFilePathString, final @NonNull String destinationFolderPathString) throws IOException {
 		try(final ZipFile zipFile = new ZipFile(originFilePathString)) {
 			if(zipFile.isEncrypted()) {
 //				zipFile.setPassword(originFilePassword);

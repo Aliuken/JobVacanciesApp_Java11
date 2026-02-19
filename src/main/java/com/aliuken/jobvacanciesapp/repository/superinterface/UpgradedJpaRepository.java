@@ -45,7 +45,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -66,7 +65,7 @@ public interface UpgradedJpaRepository<T extends AbstractEntity<T>> extends JpaR
 		return entityClass;
 	}
 
-	public default @NotNull T getNewEntityInstance() {
+	public default @NonNull T getNewEntityInstance() {
 		final AbstractEntityFactory<T> entityFactory = this.getEntityFactory();
 		final T entityInstance = entityFactory.getObjectWithoutException();
 		return entityInstance;

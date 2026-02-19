@@ -3,7 +3,6 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 

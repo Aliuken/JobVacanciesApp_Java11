@@ -78,12 +78,12 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to show the list of users with pagination
 	 */
 	@GetMapping("/auth-users/index")
-	public String index(Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /auth-users/index";
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -147,8 +147,8 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 */
 	@GetMapping("/auth-users/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -158,7 +158,7 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final PredefinedFilterDTO predefinedFilterDTO = null;
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
@@ -170,7 +170,7 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to show the detail of a user
 	 */
 	@GetMapping("/auth-users/view/{authUserId}")
-	public String view(Model model, @PathVariable("authUserId") long authUserId,
+	public String view(final @NonNull Model model, @PathVariable("authUserId") long authUserId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /auth-users/view/{authUserId}";
 
@@ -184,7 +184,7 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to delete a user
 	 */
 	@GetMapping("/auth-users/delete/{authUserId}")
-	public String deleteById(RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
+	public String deleteById(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -240,7 +240,7 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to lock a user
 	 */
 	@GetMapping("/auth-users/lock/{authUserId}")
-	public String lock(RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
+	public String lock(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -260,7 +260,7 @@ public class AuthUserController extends AbstractEntityControllerWithoutPredefine
 	 * Method to unlock a user
 	 */
 	@GetMapping("/auth-users/unlock/{authUserId}")
-	public String unlock(RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
+	public String unlock(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

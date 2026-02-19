@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpMethod;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +107,6 @@ public enum EndpointType implements Serializable {
 	APPLICATION_CONFIG_SAVE_FORM(POST, "/my-user/app/config", "Save application configuration form");
 
 	@Getter
-	@NotNull
 	private final @NonNull EndpointRegexPatternDTO endpointRegexPatternDTO;
 
 	private static final @NonNull Map<EndpointRegexPatternDTO, EndpointType> ENDPOINT_TYPE_MAP = EndpointType.getEndpointTypeMap();

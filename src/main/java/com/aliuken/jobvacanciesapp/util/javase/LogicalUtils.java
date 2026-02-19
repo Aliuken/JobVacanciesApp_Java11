@@ -58,7 +58,7 @@ public class LogicalUtils {
 	// Array methods
 
 	public static boolean isNullOrEmpty(final byte[] array) {
-		final boolean result = (array == null || array.length <= 0);
+		final boolean result = (array == null || array.length == 0);
 		return result;
 	}
 
@@ -68,7 +68,7 @@ public class LogicalUtils {
 	}
 
 	public static <E> boolean isNullOrEmpty(final E[] array) {
-		final boolean result = (array == null || array.length <= 0);
+		final boolean result = (array == null || array.length == 0);
 		return result;
 	}
 

@@ -20,36 +20,34 @@ import java.util.function.Function;
 public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -3670738813828834458L;
 
-	private static final @NonNull JobVacancyDTO NO_ARGS_INSTANCE = new JobVacancyDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
-
 	private final Long id;
 
 	@NotEmpty(message="{name.notEmpty}")
 	@Size(max=120, message="{name.maxSize120}")
-	private final String name;
+	private final @NonNull String name;
 
 	@NotEmpty(message="{description.notEmpty}")
 	@Size(max=500, message="{description.maxSize}")
-	private final String description;
+	private final @NonNull String description;
 
 	@NotNull(message="{jobCategory.notNull}")
-	private final JobCategoryDTO jobCategory;
+	private final @NonNull JobCategoryDTO jobCategory;
 
 	//In jobVacancyForm.html we cannot use *{jobCategory.id} because JobCategoryDTO is a Java record, so we use *{jobCategoryId} instead
 	private final Long jobCategoryId;
 
 	@NotNull(message="{jobCompany.notNull}")
-	private final JobCompanyDTO jobCompany;
+	private final @NonNull JobCompanyDTO jobCompany;
 
 	//In jobVacancyForm.html we cannot use *{jobCompany.id} because JobCompanyDTO is a Java record, so we use *{jobCompanyId} instead
 	private final Long jobCompanyId;
 
 	@NotEmpty(message="{statusCode.notEmpty}")
 	@Size(max=1, message="{statusCode.maxSize}")
-	private final String statusCode;
+	private final @NonNull String statusCode;
 
 	@NotNull(message="{publicationDateTime.notNull}")
-	private final LocalDateTime publicationDateTime;
+	private final @NonNull LocalDateTime publicationDateTime;
 
 	private final String salaryString;
 
@@ -57,16 +55,16 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 
 	@NotEmpty(message="{currencySymbol.notEmpty}")
 	@Size(max=1, message="{currencySymbol.maxSize}")
-	private final String currencySymbol;
+	private final @NonNull String currencySymbol;
 
 	@NotNull(message="{highlighted.notNull}")
-	private final Boolean highlighted;
+	private final @NonNull Boolean highlighted;
 
 	@NotEmpty(message="{details.notEmpty}")
 	@Size(max=10000, message="{details.maxSize}")
-	private final String details;
+	private final @NonNull String details;
 
-	public JobVacancyDTO(final Long id, final String name, final String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final String statusCode, final LocalDateTime publicationDateTime, final String salaryString, final String currencySymbol, final Boolean highlighted, final String details) {
+	public JobVacancyDTO(final Long id, final @NonNull String name, final @NonNull String description, final JobCategoryDTO jobCategory, final Long jobCategoryId, final JobCompanyDTO jobCompany, Long jobCompanyId, final @NonNull String statusCode, final @NonNull LocalDateTime publicationDateTime, final String salaryString, final @NonNull String currencySymbol, final @NonNull Boolean highlighted, final @NonNull String details) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -103,49 +101,43 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 		this.details = details;
 	}
 
-	public static @NonNull JobVacancyDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
+	public static @NonNull JobVacancyDTO getNewInstance(@NonNull JobVacancyDTO jobVacancyDTO, final @NonNull JobCompanyDTO jobCompanyDTO, final @NonNull String currencySymbol) {
+		jobVacancyDTO = new JobVacancyDTO(
+			jobVacancyDTO.getId(),
+			jobVacancyDTO.getName(),
+			jobVacancyDTO.getDescription(),
+			jobVacancyDTO.getJobCategory(),
+			jobVacancyDTO.getJobCategory().getId(),
+			jobCompanyDTO,
+			jobCompanyDTO.getId(),
+			jobVacancyDTO.getStatusCode(),
+			jobVacancyDTO.getPublicationDateTime(),
+			jobVacancyDTO.getSalaryString(),
+			currencySymbol,
+			jobVacancyDTO.getHighlighted(),
+			jobVacancyDTO.getDetails()
+		);
 
-	public static @NonNull JobVacancyDTO getNewInstance(final Long jobVacancyId) {
-		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(jobVacancyId, null, null, null, null, null, null, null, null, null, null, null, null);
 		return jobVacancyDTO;
 	}
 
-	public static @NonNull JobVacancyDTO getNewInstance(JobVacancyDTO jobVacancyDTO, final JobCompanyDTO jobCompanyDTO, final String initialCurrencySymbol) {
-		if(jobVacancyDTO != null) {
-			jobVacancyDTO = new JobVacancyDTO(
-				jobVacancyDTO.getId(),
-				jobVacancyDTO.getName(),
-				jobVacancyDTO.getDescription(),
-				jobVacancyDTO.getJobCategory(),
-				(jobVacancyDTO.getJobCategory() != null) ? jobVacancyDTO.getJobCategory().getId() : null,
-				jobCompanyDTO,
-				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
-				jobVacancyDTO.getStatusCode(),
-				jobVacancyDTO.getPublicationDateTime(),
-				jobVacancyDTO.getSalaryString(),
-				initialCurrencySymbol,
-				jobVacancyDTO.getHighlighted(),
-				jobVacancyDTO.getDetails()
-			);
-		} else {
-			jobVacancyDTO = new JobVacancyDTO(
-				null,
-				null,
-				null,
-				null,
-				null,
-				jobCompanyDTO,
-				(jobCompanyDTO != null) ? jobCompanyDTO.getId() : null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null
-			);
-		}
+	public static @NonNull JobVacancyDTO getNewInstance(final @NonNull JobCompanyDTO jobCompanyDTO, final @NonNull String currencySymbol) {
+		final JobVacancyDTO jobVacancyDTO = new JobVacancyDTO(
+			null,
+			Constants.EMPTY_STRING,
+			Constants.EMPTY_STRING,
+			null,
+			null,
+			jobCompanyDTO,
+			jobCompanyDTO.getId(),
+			Constants.EMPTY_STRING,
+			LocalDateTime.now(),
+			null,
+			currencySymbol,
+			Boolean.FALSE,
+			Constants.EMPTY_STRING
+		);
+
 		return jobVacancyDTO;
 	}
 
@@ -172,8 +164,8 @@ public class JobVacancyDTO implements AbstractEntityDTO, Serializable {
 	@Override
 	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
-		final String jobCategoryIdString = (jobCategory != null) ? String.valueOf(jobCategory.getId()) : null;
-		final String jobCompanyIdString = (jobCompany != null) ? String.valueOf(jobCompany.getId()) : null;
+		final String jobCategoryIdString = String.valueOf(jobCategory.getId());
+		final String jobCompanyIdString = String.valueOf(jobCompany.getId());
 		final String publicationDateTimeString = Constants.DATE_TIME_UTILS.convertToString(publicationDateTime);
 		final String salaryConversionResultString  = String.valueOf(salaryConversionResult);
 		final String highlightedString = highlighted.toString();

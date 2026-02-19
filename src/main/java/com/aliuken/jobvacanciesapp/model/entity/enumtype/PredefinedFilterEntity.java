@@ -4,8 +4,8 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public enum PredefinedFilterEntity implements Serializable {
@@ -15,14 +15,12 @@ public enum PredefinedFilterEntity implements Serializable {
 	JOB_VACANCY ("JobVacancy");
 
 	@Getter
-	@NotNull
-	private final String upperCasedEntityName;
+	private final @NonNull String upperCasedEntityName;
 
 	@Getter
-	@NotNull
-	private final String lowerCasedEntityName;
+	private final @NonNull String lowerCasedEntityName;
 
-	private PredefinedFilterEntity(@NotNull final String upperCasedEntityName) {
+	private PredefinedFilterEntity(final @NonNull String upperCasedEntityName) {
 		this.upperCasedEntityName = upperCasedEntityName;
 		this.lowerCasedEntityName = StringUtils.lowerCaseFirstCharacter(upperCasedEntityName);
 	}

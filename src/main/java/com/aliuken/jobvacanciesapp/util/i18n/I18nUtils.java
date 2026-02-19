@@ -1,9 +1,11 @@
 package com.aliuken.jobvacanciesapp.util.i18n;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.MessageSource;
@@ -71,5 +73,21 @@ public class I18nUtils {
 		final Locale locale = Locale.forLanguageTag(languageCode);
 		Objects.requireNonNull(locale, "locale cannot be null");
 		return locale;
+	}
+
+	public static @NonNull String getFinalLanguageCode(final @NonNull HttpServletRequest httpServletRequest, final String languageCode) {
+		final String finalLanguageCode;
+		if (languageCode != null) {
+			finalLanguageCode = languageCode;
+		} else {
+			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
+			if (sessionAuthUser != null) {
+				final Language language = sessionAuthUser.getLanguage();
+				finalLanguageCode = language.getCode();
+			} else {
+				finalLanguageCode = Language.ENGLISH.getCode();
+			}
+		}
+		return finalLanguageCode;
 	}
 }

@@ -2,11 +2,14 @@ package com.aliuken.jobvacanciesapp.controller;
 
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserCurriculumDTO;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
 import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
@@ -15,13 +18,11 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PredefinedFilterEntity;
 import com.aliuken.jobvacanciesapp.service.AuthUserCurriculumService;
 import com.aliuken.jobvacanciesapp.service.JobRequestService;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -47,12 +48,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 @Controller
 @Slf4j
-public class SessionAuthUserCurriculumController extends AbstractEntityControllerWithoutPredefinedFilter<AuthUserCurriculum> {
+public class SessionAuthUserCurriculumController extends AbstractEntityControllerWithoutPredefinedFilter<AuthUserCurriculum> implements InputFlashMapManager {
 
 	@Autowired
 	private ConfigPropertiesBean configPropertiesBean;
@@ -74,8 +75,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to show the list of curriculums of the logged user with pagination
 	 */
 	@GetMapping("/my-user/auth-user-curriculums")
-	public String getAuthUserCurriculums(HttpServletRequest httpServletRequest, Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getAuthUserCurriculums(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /my-user/auth-user-curriculums";
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -83,7 +84,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		final String sessionAuthUserEmail = sessionAuthUser.getEmail();
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -155,8 +156,8 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 */
 	@GetMapping("/my-user/auth-user-curriculums/exportToPdf")
 	@ResponseBody
-	public byte[] exportCurriculumsToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportCurriculumsToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -169,7 +170,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		final String sessionAuthUserIdString = SessionUtils.getSessionAuthUserIdStringFromHttpServletRequest(httpServletRequest);
 
 		final PredefinedFilterDTO predefinedFilterDTO = new PredefinedFilterDTO(predefinedFilterEntityName, sessionAuthUserIdString);
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.getAuthUserCurriculums(httpServletRequest, model, pageable, tableSearchDTO, bindingResult);
@@ -181,7 +182,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to show the detail of a curriculum
 	 */
 	@GetMapping("/my-user/auth-user-curriculums/view/{authUserCurriculumId}")
-	public String view(Model model, @PathVariable("authUserCurriculumId") long authUserCurriculumId,
+	public String view(final @NonNull Model model, @PathVariable("authUserCurriculumId") long authUserCurriculumId,
 			@RequestParam(name = "languageParam", required = false) String languageCode) {
 		final String operation = "GET /my-user/auth-user-curriculums/view/{authUserCurriculumId}";
 
@@ -195,23 +196,18 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to show the creation form of a curriculum
 	 */
 	@GetMapping("/my-user/auth-user-curriculums/create")
-	public String create(HttpServletRequest httpServletRequest, Model model, Authentication authentication,
+	public String create(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, final @NonNull Authentication authentication,
 			@RequestParam(name = "languageParam", required = false) String languageCode) {
 		final String operation = "GET /my-user/auth-user-curriculums/create";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
+		final Supplier<AuthUserCurriculumDTO> nullEntityDtoSupplier = () -> {
+			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromAuthentication(authentication);
+			final AuthUserDTO sessionAuthUserDTO = AuthUserConverter.getInstance().convertEntityElement(sessionAuthUser);
+			final AuthUserCurriculumDTO authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance(null, sessionAuthUserDTO, null, "New curriculum from web form");
+			return authUserCurriculumDTO;
+		};
 
-		AuthUserCurriculumDTO authUserCurriculumDTO;
-		if(inputFlashMap != null) {
-			authUserCurriculumDTO = (AuthUserCurriculumDTO) inputFlashMap.get("authUserCurriculumDTO");
-			if(authUserCurriculumDTO == null) {
-				authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance("New curriculum from web form");
-			}
-		} else {
-			authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance("New curriculum from web form");
-		}
-
-		model.addAttribute("authUserCurriculumDTO", authUserCurriculumDTO);
+		this.manageInputFlashMap(httpServletRequest, model, "authUserCurriculumDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("authUserCurriculum/sessionAuthUserCurriculumForm.html", model, operation, languageCode);
 	}
@@ -220,7 +216,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to save a curriculum in the database
 	 */
 	@PostMapping("/my-user/auth-user-curriculums/save")
-	public String save(RedirectAttributes redirectAttributes, Authentication authentication,
+	public String save(final @NonNull RedirectAttributes redirectAttributes, final @NonNull Authentication authentication,
 			@Validated @NonNull AuthUserCurriculumDTO authUserCurriculumDTO, BindingResult bindingResult,
 			@RequestParam(name = "languageParam", required = false) String languageCode) {
 		try {
@@ -299,7 +295,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 	 * Method to delete a curriculum
 	 */
 	@GetMapping("/my-user/auth-user-curriculums/delete/{authUserCurriculumId}")
-	public String delete(RedirectAttributes redirectAttributes, Authentication authentication,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, final @NonNull Authentication authentication,
 			@PathVariable("authUserCurriculumId") long authUserCurriculumId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
@@ -326,7 +322,7 @@ public class SessionAuthUserCurriculumController extends AbstractEntityControlle
 		}
 
 		final AuthUser authUser = authUserCurriculum.getAuthUser();
-		if(authUser == null || !sessionAuthUserEmail.equals(authUser.getEmail())) {
+		if(!sessionAuthUserEmail.equals(authUser.getEmail())) {
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserCurriculum.curriculumDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 

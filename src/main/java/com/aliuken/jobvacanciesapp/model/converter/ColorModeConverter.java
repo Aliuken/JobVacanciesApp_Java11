@@ -1,7 +1,6 @@
 package com.aliuken.jobvacanciesapp.model.converter;
 
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

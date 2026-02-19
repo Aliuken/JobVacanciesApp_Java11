@@ -1,7 +1,5 @@
 package com.aliuken.jobvacanciesapp.util.javase.stream.superclass;
 
-import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
-import com.aliuken.jobvacanciesapp.util.javase.stream.SequentialStreamUtils;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Collection;
@@ -10,27 +8,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public abstract class StreamUtils {
-
-	public static @NonNull StreamUtils getInstance(final boolean isParallel) {
-		final StreamUtils streamUtils;
-		if(isParallel) {
-			streamUtils = ParallelStreamUtils.getInstance();
-		} else {
-			streamUtils = SequentialStreamUtils.getInstance();
-		}
-		return streamUtils;
-	}
-
-	public abstract <T> @NonNull Stream<T> ofNullableArray(final T[] array);
-
-	public abstract <T> @NonNull Stream<T> ofNullableCollection(final Collection<T> collection);
-
-	public abstract <K,V> @NonNull Stream<Map.Entry<K,V>> ofNullableMap(Map<K,V> map);
-
-	public abstract <T extends Enum<T>> @NonNull Stream<T> ofEnum(final Class<T> enumClass);
+public interface StreamUtils {
 
 	public abstract <T> @NonNull T[] joinArrays(final @NonNull IntFunction<T[]> generator, final T[] array1, final T[] array2);
 
@@ -50,4 +32,19 @@ public abstract class StreamUtils {
 
 	public abstract <T,U> @NonNull Set<U> convertSet(final Set<T> initialSet, final @NonNull Function<T,U> conversionFunction, final @NonNull Class<T> inputClass, final @NonNull Class<U> outputClass);
 
+	public abstract <T> @NonNull T getFirstElementFilteredByCondition(@NonNull Collection<T> initialElements, @NonNull Predicate<T> elementCondition);
+
+	public abstract <T> @NonNull T getFirstElementFilteredByCondition(@NonNull Collection<T> initialElements, @NonNull Predicate<T> elementCondition, @NonNull T fallbackElement);
+
+	public abstract <T> @NonNull T getFirstElementFilteredByConditionLazily(@NonNull Collection<Supplier<T>> initialElementSuppliers, @NonNull Predicate<T> elementCondition);
+
+	public abstract <T> @NonNull T getFirstElementFilteredByConditionLazily(@NonNull Collection<Supplier<T>> initialElementSuppliers, @NonNull Predicate<T> elementCondition, @NonNull Supplier<@NonNull T> fallbackElementSupplier);
+
+	public abstract <T> @NonNull Stream<T> ofNullableArray(final T[] array);
+
+	public abstract <T> @NonNull Stream<T> ofNullableCollection(final Collection<T> collection);
+
+	public abstract <K,V> @NonNull Stream<Map.Entry<K,V>> ofNullableMap(Map<K,V> map);
+
+	public abstract <T extends Enum<T>> @NonNull Stream<T> ofEnum(final Class<T> enumClass);
 }

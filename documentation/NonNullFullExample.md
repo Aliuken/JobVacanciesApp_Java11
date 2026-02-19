@@ -1,4 +1,4 @@
-# Non-null example with JSpecify's @NonNull, Spring's Assert.notNull and Java's Objects.requireNonNull
+# Non-null examples with JSpecify's @NonNull, Spring's Assert.notNull and Java's Objects.requireNonNull
 
 Given the following imports:
 
@@ -32,3 +32,35 @@ We could have some code like:
     return localeResolver;
 }
 ```
+
+Another example in a constructor:
+
+```java
+private PageEntityEnum(final String value) {
+    this.value = Objects.requireNonNull(value);
+}
+```
+
+Another example with varargs:
+
+```java
+private FileType(final @NonNull String @NonNull ... allowedFileExtensionsVarargs) {
+    if(allowedFileExtensionsVarargs.length == 0) {
+        throw new IllegalArgumentException("FileType allowedFileExtensions must not be empty");
+    }
+
+    final List<String> allowedLowerCaseFileExtensions = new ArrayList<>();
+    for(final String allowedFileExtension : allowedFileExtensionsVarargs) {
+        final String allowedLowerCaseFileExtension = allowedFileExtension.toLowerCase();
+        allowedLowerCaseFileExtensions.add(allowedLowerCaseFileExtension);
+    }
+
+    this.allowedLowerCaseFileExtensions = allowedLowerCaseFileExtensions;
+    this.allowedLowerCaseFileExtensionsString = StringUtils.getStringJoinedWithDelimiters(", ", null, null, allowedLowerCaseFileExtensions);
+}
+```
+
+NOTES:
+- allowedFileExtensionsVarargs cannot be null because of "@NonNull ..." or "@NonNull []"
+- every allowedFileExtension in allowedFileExtensionsVarargs cannot be null because of "@NonNull String"
+- To search occurrences, use the regex "\@NonNull.*\[\]" and "\@NonNull.*\.\.\."

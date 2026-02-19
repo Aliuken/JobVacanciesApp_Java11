@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.controller;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.enumtype.FileType;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
@@ -25,7 +26,6 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -53,13 +53,14 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 @Controller
 @Slf4j
-public class JobCompanyController extends AbstractEntityControllerWithoutPredefinedFilter<JobCompany> {
+public class JobCompanyController extends AbstractEntityControllerWithoutPredefinedFilter<JobCompany> implements InputFlashMapManager {
 
 	@Autowired
 	private ConfigPropertiesBean configPropertiesBean;
@@ -89,12 +90,12 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the list of companies with pagination
 	 */
 	@GetMapping("/job-companies/index")
-	public String index(Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-companies/index";
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -158,8 +159,8 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 */
 	@GetMapping("/job-companies/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -169,7 +170,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final PredefinedFilterDTO predefinedFilterDTO = null;
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
@@ -181,7 +182,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the detail of a company
 	 */
 	@GetMapping("/job-companies/view/{jobCompanyId}")
-	public String view(Model model, @PathVariable("jobCompanyId") long jobCompanyId,
+	public String view(final @NonNull Model model, @PathVariable("jobCompanyId") long jobCompanyId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-companies/view/{jobCompanyId}";
 
@@ -195,27 +196,21 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the creation form of a company
 	 */
 	@GetMapping("/job-companies/create")
-	public String create(HttpServletRequest httpServletRequest, Model model,
+	public String create(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final String operation = "GET /job-companies/create";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
+		final Supplier<JobCompanyDTO> nullEntityDtoSupplier = () -> JobCompanyDTO.getNewInstance();
 
-		JobCompanyDTO jobCompanyDTO;
-		if(inputFlashMap != null) {
-			jobCompanyDTO = (JobCompanyDTO) inputFlashMap.get("jobCompanyDTO");
-			if(jobCompanyDTO == null) {
-				jobCompanyDTO = JobCompanyDTO.getNewInstance();
+		final UnaryOperator<JobCompanyDTO> commonEntityDtoFunction = jobCompanyDTO -> {
+			if(!useAjaxToRefreshJobCompanyLogos) {
+				jobCompanyDTO = JobCompanyController.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, true);
 			}
-		} else {
-			jobCompanyDTO = JobCompanyDTO.getNewInstance();
-		}
+			return jobCompanyDTO;
+		};
 
-		if(!useAjaxToRefreshJobCompanyLogos) {
-			jobCompanyDTO = JobCompanyController.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, true);
-		}
+		final JobCompanyDTO jobCompanyDTO = this.manageInputFlashMap(httpServletRequest, model, "jobCompanyDTO", nullEntityDtoSupplier, commonEntityDtoFunction);
 
-		model.addAttribute("jobCompanyDTO", jobCompanyDTO);
 		model.addAttribute("jobCompanyLogoId", jobCompanyDTO.getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 
@@ -226,30 +221,26 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the edition form of a company
 	 */
 	@GetMapping("/job-companies/edit/{jobCompanyId}")
-	public String edit(HttpServletRequest httpServletRequest, Model model, @PathVariable("jobCompanyId") long jobCompanyId,
+	public String edit(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, @PathVariable("jobCompanyId") long jobCompanyId,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final String operation = "GET /job-companies/edit/{jobCompanyId}";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		JobCompanyDTO jobCompanyDTO;
-		if(inputFlashMap != null) {
-			jobCompanyDTO = (JobCompanyDTO) inputFlashMap.get("jobCompanyDTO");
-		} else {
-			jobCompanyDTO = null;
-		}
-
-		if(jobCompanyDTO == null) {
+		final Supplier<JobCompanyDTO> nullEntityDtoSupplier = () -> {
 			final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 			Objects.requireNonNull(jobCompany, "jobCompany cannot be null");
-			jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobCompany);
-		}
+			final JobCompanyDTO jobCompanyDTO = JobCompanyConverter.getInstance().convertEntityElement(jobCompany);
+			return jobCompanyDTO;
+		};
 
-		if(!useAjaxToRefreshJobCompanyLogos) {
-			jobCompanyDTO = JobCompanyController.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, false);
-		}
+		final UnaryOperator<JobCompanyDTO> commonEntityDtoFunction = jobCompanyDTO -> {
+			if(!useAjaxToRefreshJobCompanyLogos) {
+				jobCompanyDTO = JobCompanyController.setSelectedJobCompanyLogoForJobCompanyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, false);
+			}
+			return jobCompanyDTO;
+		};
 
-		model.addAttribute("jobCompanyDTO", jobCompanyDTO);
+		final JobCompanyDTO jobCompanyDTO = this.manageInputFlashMap(httpServletRequest, model, "jobCompanyDTO", nullEntityDtoSupplier, commonEntityDtoFunction);
+
 		model.addAttribute("jobCompanyLogoId", jobCompanyDTO.getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 
@@ -260,7 +251,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to refresh the logo of a company
 	 */
 	@GetMapping("/job-companies/refresh-logo")
-	public String refreshLogo(Model model,
+	public String refreshLogo(final @NonNull Model model,
 			@RequestParam(name="jobCompanyId", required=true) @NonNull Long jobCompanyId, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 		Objects.requireNonNull(jobCompany, "jobCompany cannot be null");
@@ -278,7 +269,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to save a company in the database
 	 */
 	@PostMapping("/job-companies/save")
-	public String save(RedirectAttributes redirectAttributes,
+	public String save(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull JobCompanyDTO jobCompanyDTO, BindingResult bindingResult,
 			@RequestParam(name="jobCompanySelectedLogoFile", required=false) MultipartFile multipartFile, @RequestParam(name="id", required=false) Long id, @RequestParam(name="languageParam", required=false) String languageCode) {
 		final Long selectedJobCompanyLogoId = jobCompanyDTO.getSelectedLogoId();
@@ -436,7 +427,7 @@ public class JobCompanyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to delete a company
 	 */
 	@GetMapping("/job-companies/delete/{jobCompanyId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCompanyId") long jobCompanyId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobCompanyId") long jobCompanyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

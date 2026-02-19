@@ -4,8 +4,10 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,7 @@ public class ControllerAspectRestUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static RequestMapping getRequestMapping(final JoinPoint joinPoint) {
+	public static RequestMapping getRequestMapping(final @NonNull JoinPoint joinPoint) {
 		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 
@@ -27,7 +29,7 @@ public class ControllerAspectRestUtils {
 		return requestMapping;
 	}
 
-	public static GetMapping getGetMapping(final JoinPoint joinPoint) {
+	public static GetMapping getGetMapping(final @NonNull JoinPoint joinPoint) {
 		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 
@@ -35,7 +37,7 @@ public class ControllerAspectRestUtils {
 		return getMapping;
 	}
 
-	public static PostMapping getPostMapping(final JoinPoint joinPoint) {
+	public static PostMapping getPostMapping(final @NonNull JoinPoint joinPoint) {
 		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 
@@ -43,7 +45,7 @@ public class ControllerAspectRestUtils {
 		return postMapping;
 	}
 
-	public static PutMapping getPutMapping(final JoinPoint joinPoint) {
+	public static PutMapping getPutMapping(final @NonNull JoinPoint joinPoint) {
 		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 
@@ -51,7 +53,15 @@ public class ControllerAspectRestUtils {
 		return putMapping;
 	}
 
-	public static DeleteMapping getDeleteMapping(final JoinPoint joinPoint) {
+	public static PatchMapping getPatchMapping(final @NonNull JoinPoint joinPoint) {
+		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+		final Method method = methodSignature.getMethod();
+
+		final PatchMapping patchMapping = method.getAnnotation(PatchMapping.class);
+		return patchMapping;
+	}
+
+	public static DeleteMapping getDeleteMapping(final @NonNull JoinPoint joinPoint) {
 		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 

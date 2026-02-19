@@ -1,5 +1,6 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
@@ -14,12 +15,10 @@ import java.io.Serializable;
 public class AuthUserForSignupDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -7781889193918523592L;
 
-	private static final @NonNull AuthUserForSignupDTO NO_ARGS_INSTANCE = new AuthUserForSignupDTO(null, null, null, null, null, null);
-
 	@NotEmpty(message="{email.notEmpty}")
 	@Size(max=255, message="{email.maxSize}")
 	@Email(message="{email.validFormat}")
-	private final String email;
+	private final @NonNull String email;
 
 	@NotEmpty(message="{password1.notEmpty}")
 	@Size(min=7, max=20, message="{password1.minAndMaxSize}")
@@ -31,18 +30,19 @@ public class AuthUserForSignupDTO implements AbstractEntityDTO, Serializable {
 
 	@NotEmpty(message="{name.notEmpty}")
 	@Size(max=25, message="{name.maxSize25}")
-	private final String name;
+	private final @NonNull String name;
 
 	@NotEmpty(message="{surnames.notEmpty}")
 	@Size(max=35, message="{surnames.maxSize}")
-	private final String surnames;
+	private final @NonNull String surnames;
 
 	@NotEmpty(message="{language.notEmpty}")
 	@Size(min=2, max=2, message="{language.minAndMaxSize}")
-	private final String languageCode;
+	private final @NonNull String languageCode;
 
-	public static @NonNull AuthUserForSignupDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
+	public static @NonNull AuthUserForSignupDTO getNewInstance(final @NonNull String languageCode) {
+		final AuthUserForSignupDTO authUserForSignupDTO = new AuthUserForSignupDTO(Constants.EMPTY_STRING, null, null, Constants.EMPTY_STRING, Constants.EMPTY_STRING, languageCode);
+		return authUserForSignupDTO;
 	}
 
 	@Override

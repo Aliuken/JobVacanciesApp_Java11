@@ -1,11 +1,14 @@
 package com.aliuken.jobvacanciesapp.controller;
 
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
+import com.aliuken.jobvacanciesapp.model.dto.AuthUserDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobRequestDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
+import com.aliuken.jobvacanciesapp.model.dto.converter.AuthUserConverter;
 import com.aliuken.jobvacanciesapp.model.dto.converter.JobVacancyConverter;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
@@ -18,8 +21,8 @@ import com.aliuken.jobvacanciesapp.service.JobVacancyService;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -41,13 +44,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 @Controller
 @Slf4j
-public class JobRequestController extends AbstractEntityControllerWithoutPredefinedFilter<JobRequest> {
+public class JobRequestController extends AbstractEntityControllerWithoutPredefinedFilter<JobRequest> implements InputFlashMapManager {
 
 	@Autowired
 	private JobRequestService jobRequestService;
@@ -62,12 +66,12 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the list of job requests with pagination
 	 */
 	@GetMapping("/job-requests/index")
-	public String index(Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-requests/index";
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -131,8 +135,8 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 */
 	@GetMapping("/job-requests/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -142,7 +146,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final PredefinedFilterDTO predefinedFilterDTO = null;
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
@@ -154,7 +158,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the detail of a job request
 	 */
 	@GetMapping("/job-requests/view/{jobRequestId}")
-	public String view(Model model, @PathVariable("jobRequestId") long jobRequestId,
+	public String view(final @NonNull Model model, @PathVariable("jobRequestId") long jobRequestId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-requests/view/{jobRequestId}";
 
@@ -168,29 +172,24 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the creation form of a job request
 	 */
 	@GetMapping("/job-requests/create/{jobVacancyId}")
-	public String create(HttpServletRequest httpServletRequest, Model model, @PathVariable long jobVacancyId,
-			@RequestParam(name="languageParam", required=false) String languageCode) {
+	public String create(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, final @NonNull Authentication authentication,
+			@PathVariable long jobVacancyId, @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-requests/create/{jobVacancyId}";
 
 		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 		Objects.requireNonNull(jobVacancy, "jobVacancy cannot be null");
 		final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobVacancy);
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
+		final UnaryOperator<JobRequestDTO> nonNullEntityDtoFunction = jobRequestDTO -> JobRequestDTO.getNewInstance(jobRequestDTO, jobVacancyDTO);
 
-		JobRequestDTO jobRequestDTO;
-		if(inputFlashMap != null) {
-			jobRequestDTO = (JobRequestDTO) inputFlashMap.get("jobRequestDTO");
-			if(jobRequestDTO == null) {
-				jobRequestDTO = JobRequestDTO.getNewInstance();
-			}
-		} else {
-			jobRequestDTO = JobRequestDTO.getNewInstance();
-		}
+		final Supplier<JobRequestDTO> nullEntityDtoSupplier = () -> {
+			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromAuthentication(authentication);
+			final AuthUserDTO sessionAuthUserDTO = AuthUserConverter.getInstance().convertEntityElement(sessionAuthUser);
+			final JobRequestDTO jobRequestDTO = JobRequestDTO.getNewInstance(sessionAuthUserDTO, jobVacancyDTO);
+			return jobRequestDTO;
+		};
 
-		jobRequestDTO = JobRequestDTO.getNewInstance(jobRequestDTO, jobVacancyDTO);
-
-		model.addAttribute("jobRequestDTO", jobRequestDTO);
+		this.manageInputFlashMap(httpServletRequest, model, "jobRequestDTO", nonNullEntityDtoFunction, nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("jobRequest/jobRequestForm.html", model, operation, languageCode);
 	}
@@ -199,7 +198,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to save a job request in the database
 	 */
 	@PostMapping("/job-requests/save")
-	public String save(RedirectAttributes redirectAttributes, Authentication authentication,
+	public String save(final @NonNull RedirectAttributes redirectAttributes, final @NonNull Authentication authentication,
 			@Validated @NonNull JobRequestDTO jobRequestDTO, BindingResult bindingResult,
 			@RequestParam(name="jobVacancyId", required=false) Long jobVacancyId, @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
@@ -218,9 +217,8 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 
 			JobRequest jobRequest = jobRequestService.findByIdOrNewEntity(id);
 
-			final String email = authentication.getName();
-			final AuthUser authUser = authUserService.findByEmail(email);
-			jobRequest.setAuthUser(authUser);
+			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromAuthentication(authentication);
+			jobRequest.setAuthUser(sessionAuthUser);
 
 			final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 			jobRequest.setJobVacancy(jobVacancy);
@@ -254,7 +252,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Method to delete a job request
 	 */
 	@GetMapping("/job-requests/delete/{jobRequestId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobRequestId") long jobRequestId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobRequestId") long jobRequestId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -275,7 +273,7 @@ public class JobRequestController extends AbstractEntityControllerWithoutPredefi
 	 * Metodo que agrega al modelo datos genéricos para todo el controlador
 	 */
 	@ModelAttribute
-	public void setGenerics(Model model, Authentication authentication) {
+	public void setGenerics(final @NonNull Model model, Authentication authentication) {
 		final Set<AuthUserCurriculum> authUserCurriculums;
 		if(authentication != null) {
 			final String email = authentication.getName();

@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.controller;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserEmailDTO;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserForSignupDTO;
 import com.aliuken.jobvacanciesapp.model.dto.AuthUserResetPasswordDTO;
@@ -36,7 +37,6 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.security.RandomUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -57,18 +57,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 
 @Controller
 @Slf4j
-public class HomeController {
+public class HomeController implements InputFlashMapManager {
 
 	@Autowired
 	private JobCategoryService jobCategoryService;
@@ -107,7 +106,7 @@ public class HomeController {
 	 * Method to show the first page of the application
 	 */
 	@GetMapping("/")
-	public String home(Model model,
+	public String home(final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="accountDeleted", required=false) Boolean accountDeleted) {
 		final String operation = "GET /";
 
@@ -123,23 +122,13 @@ public class HomeController {
 	 * Method to show the signup form
 	 */
 	@GetMapping("/signup")
-	public String signupForm(HttpServletRequest httpServletRequest, Model model,
+	public String signupForm(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /signup";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		AuthUserForSignupDTO authUserForSignupDTO;
-		if(inputFlashMap != null) {
-			authUserForSignupDTO = (AuthUserForSignupDTO) inputFlashMap.get("authUserForSignupDTO");
-			if(authUserForSignupDTO == null) {
-				authUserForSignupDTO = AuthUserForSignupDTO.getNewInstance();
-			}
-		} else {
-			authUserForSignupDTO = AuthUserForSignupDTO.getNewInstance();
-		}
-
-		model.addAttribute("authUserForSignupDTO", authUserForSignupDTO);
+		final String finalLanguageCode = I18nUtils.getFinalLanguageCode(httpServletRequest, languageCode);
+		final Supplier<AuthUserForSignupDTO> nullEntityDtoSupplier = () -> AuthUserForSignupDTO.getNewInstance(finalLanguageCode);
+		this.manageInputFlashMap(httpServletRequest, model, "authUserForSignupDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("signupForm.html", model, operation, languageCode);
 	}
@@ -148,9 +137,9 @@ public class HomeController {
 	 * Method to send an email to signup in the application
 	 */
 	@PostMapping("/signup")
-	public String signupSave(RedirectAttributes redirectAttributes,
+	public String signupSave(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull AuthUserForSignupDTO authUserForSignupDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+			@RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -270,7 +259,7 @@ public class HomeController {
 	 * Method to confirm the signup in the application
 	 */
 	@GetMapping("/signup-confirmed")
-	public String signupConfirmed(RedirectAttributes redirectAttributes,
+	public String signupConfirmed(final @NonNull RedirectAttributes redirectAttributes,
 			@RequestParam("email") String email, @RequestParam("uuid") String uuid, @RequestParam(name="languageParam", required=false) String languageCode) {
 
 		final AuthUserSignUpConfirmation authUserSignUpConfirmation = authUserSignUpConfirmationService.findByEmailAndUuid(email, uuid);
@@ -316,7 +305,7 @@ public class HomeController {
 	 * Method to show the forgotten-password form
 	 */
 	@GetMapping("/forgotten-password")
-	public String forgottenPasswordForm(HttpServletRequest httpServletRequest, Model model,
+	public String forgottenPasswordForm(final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /forgotten-password";
 
@@ -331,9 +320,9 @@ public class HomeController {
 	 * Method to send an email to reset the password
 	 */
 	@PostMapping("/forgotten-password")
-	public String forgottenPasswordSave(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+	public String forgottenPasswordSave(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull AuthUserEmailDTO authUserEmailDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+			@RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -397,7 +386,7 @@ public class HomeController {
 	 * Method to show the reset-password form
 	 */
 	@GetMapping("/reset-password")
-	public String resetPasswordForm(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+	public String resetPasswordForm(final @NonNull Model model, final @NonNull RedirectAttributes redirectAttributes,
 			@RequestParam("email") String email, @RequestParam("uuid") String uuid, @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /reset-password";
 
@@ -436,9 +425,9 @@ public class HomeController {
 	 * Method to reset the password
 	 */
 	@PostMapping("/reset-password")
-	public String resetPasswordSave(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+	public String resetPasswordSave(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull AuthUserResetPasswordDTO authUserResetPasswordDTO, BindingResult bindingResult,
-			@RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+			@RequestParam(name="languageParam", required=false) String languageCode) {
 
 		final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 		if(firstBindingErrorString != null) {
@@ -507,7 +496,7 @@ public class HomeController {
 	 * Method to search job vacancies in the home page
 	 */
 	@GetMapping("/search")
-	public String search(Model model,
+	public String search(final @NonNull Model model,
 			@RequestParam(name="description", required=false) String description, @RequestParam(name="jobCategoryId", required=false) Long jobCategoryId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /search";
@@ -550,7 +539,7 @@ public class HomeController {
 	 * Method to show information about the application
 	 */
 	@GetMapping("/about")
-	public String about(Model model,
+	public String about(final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /about";
 
@@ -561,7 +550,7 @@ public class HomeController {
 	 * Method to show the login form
 	 */
 	@GetMapping("/login")
-	public String login(Model model,
+	public String login(final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="accountDeleted", required=false) Boolean accountDeleted) {
 		final String operation = "GET /login";
 
@@ -574,7 +563,7 @@ public class HomeController {
 	}
 
 	@ModelAttribute
-	public void setGenerics(Model model) {
+	public void setGenerics(final @NonNull Model model) {
 		final List<JobVacancy> approvedJobVacancies = jobVacancyService.findAllHighlighted();
 		final List<JobVacancyDTO> approvedJobVacancyDTOs = JobVacancyConverter.getInstance().convertEntityList(approvedJobVacancies);
 		model.addAttribute("approvedJobVacancyDTOs", approvedJobVacancyDTOs);

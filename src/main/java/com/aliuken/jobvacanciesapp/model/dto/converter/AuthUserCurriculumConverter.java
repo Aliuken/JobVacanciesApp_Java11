@@ -24,13 +24,7 @@ public class AuthUserCurriculumConverter extends EntityToDtoConverter<AuthUserCu
 		final AuthUser authUser = authUserCurriculum.getAuthUser();
 		final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(authUser);
 
-		final AuthUserCurriculumDTO authUserCurriculumDTO = new AuthUserCurriculumDTO(
-			authUserCurriculum.getId(),
-			authUserDTO,
-			null,
-			authUserCurriculum.getFileName(),
-			authUserCurriculum.getDescription()
-		);
+		final AuthUserCurriculumDTO authUserCurriculumDTO = AuthUserCurriculumDTO.getNewInstance(authUserCurriculum.getId(), authUserDTO, authUserCurriculum.getFileName(), authUserCurriculum.getDescription());
 		return authUserCurriculumDTO;
 	}
 }

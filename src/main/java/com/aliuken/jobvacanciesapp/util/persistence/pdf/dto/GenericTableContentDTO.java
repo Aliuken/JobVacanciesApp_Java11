@@ -1,6 +1,5 @@
 package com.aliuken.jobvacanciesapp.util.persistence.pdf.dto;
 
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import lombok.Data;
 

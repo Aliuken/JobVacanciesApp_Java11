@@ -20,7 +20,7 @@ public class ControllerServletUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static @NonNull String getUrlFromHttpServletRequest(final HttpServletRequest httpServletRequest) {
+	public static @NonNull String getUrlFromHttpServletRequest(final @NonNull HttpServletRequest httpServletRequest) {
 		final ServletServerHttpRequest servletServerHttpRequest = new ServletServerHttpRequest(httpServletRequest);
 		final UriComponents uriComponents = UriComponentsBuilder.fromHttpRequest(servletServerHttpRequest).build();
 		final String url = uriComponents.toUriString();

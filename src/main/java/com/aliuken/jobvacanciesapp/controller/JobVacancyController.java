@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.controller;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
@@ -32,7 +33,6 @@ import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -58,14 +58,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 @Controller
 @Slf4j
-public class JobVacancyController extends AbstractEntityControllerWithoutPredefinedFilter<JobVacancy> {
+public class JobVacancyController extends AbstractEntityControllerWithoutPredefinedFilter<JobVacancy> implements InputFlashMapManager {
 
 	@Autowired
 	private ConfigPropertiesBean configPropertiesBean;
@@ -96,12 +97,12 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the list of job vacancies with pagination
 	 */
 	@GetMapping("/job-vacancies/index")
-	public String index(Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-vacancies/index";
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -165,8 +166,8 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 */
 	@GetMapping("/job-vacancies/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -176,7 +177,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final PredefinedFilterDTO predefinedFilterDTO = null;
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
@@ -188,7 +189,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the detail of a job vacancy
 	 */
 	@GetMapping("/job-vacancies/view/{jobVacancyId}")
-	public String view(Model model, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String view(final @NonNull Model model, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-vacancies/view/{jobVacancyId}";
 
@@ -202,72 +203,59 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to show the creation form of a job vacancy
 	 */
 	@GetMapping("/job-vacancies/create")
-	public String create(HttpServletRequest httpServletRequest, Model model,
+	public String create(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final String operation = "GET /job-vacancies/create";
 
-		JobCompanyDTO jobCompanyDTO = JobCompanyDTO.getNewInstance();
-
-		if(!useAjaxToRefreshJobCompanyLogos) {
-			jobCompanyDTO = JobVacancyController.setSelectedJobCompanyLogoForJobVacancyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, true);
+		final JobCompanyDTO jobCompanyDTO;
+		if(useAjaxToRefreshJobCompanyLogos) {
+			jobCompanyDTO = JobCompanyDTO.getNewInstance();
+		} else {
+			final JobCompanyDTO jobCompanyDtoTemp = JobCompanyDTO.getNewInstance();
+			jobCompanyDTO = JobVacancyController.setSelectedJobCompanyLogoForJobVacancyForm(jobCompanyDtoTemp, jobCompanyLogoIdUrlParam, true);
 		}
 
 		final String initialCurrencySymbol = configPropertiesBean.getInitialCurrencySymbol();
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
+		final UnaryOperator<JobVacancyDTO> nonNullEntityDtoFunction = jobVacancyDTO -> JobVacancyDTO.getNewInstance(jobVacancyDTO, jobCompanyDTO, initialCurrencySymbol);
+		final Supplier<JobVacancyDTO> nullEntityDtoSupplier = () -> JobVacancyDTO.getNewInstance(jobCompanyDTO, initialCurrencySymbol);;
+		final JobVacancyDTO jobVacancyDTO = this.manageInputFlashMap(httpServletRequest, model, "jobVacancyDTO", nonNullEntityDtoFunction, nullEntityDtoSupplier, null);
 
-		JobVacancyDTO jobVacancyDTO;
-		if(inputFlashMap != null) {
-			jobVacancyDTO = (JobVacancyDTO) inputFlashMap.get("jobVacancyDTO");
-			if(jobVacancyDTO == null) {
-				jobVacancyDTO = JobVacancyDTO.getNewInstance();
-			}
-		} else {
-			jobVacancyDTO = JobVacancyDTO.getNewInstance();
-		}
-
-		jobVacancyDTO = JobVacancyDTO.getNewInstance(jobVacancyDTO, jobCompanyDTO, initialCurrencySymbol);
-
-		model.addAttribute("jobVacancyDTO", jobVacancyDTO);
 		model.addAttribute("jobCompanyLogoId", jobVacancyDTO.getJobCompany().getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 
 		return ControllerNavigationUtils.getNextView("jobVacancy/jobVacancyForm.html", model, operation, languageCode);
 	}
 
-
 	/**
 	 * Method to show the edition form of a job vacancy
 	 */
 	@GetMapping("/job-vacancies/edit/{jobVacancyId}")
-	public String edit(HttpServletRequest httpServletRequest, Model model, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String edit(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final String operation = "GET /job-vacancies/edit/{jobVacancyId}";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		JobVacancyDTO jobVacancyDTO;
-		if(inputFlashMap != null) {
-			jobVacancyDTO = (JobVacancyDTO) inputFlashMap.get("jobVacancyDTO");
-		} else {
-			jobVacancyDTO = null;
-		}
-
-		if(jobVacancyDTO == null) {
+		final Supplier<JobVacancyDTO> nullEntityDtoSupplier = () -> {
 			final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 			Objects.requireNonNull(jobVacancy, "jobVacancy cannot be null");
-			jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobVacancy);
-		}
+			final JobVacancyDTO jobVacancyDTO = JobVacancyConverter.getInstance().convertEntityElement(jobVacancy);
+			return jobVacancyDTO;
+		};
 
-		JobCompanyDTO jobCompanyDTO = jobVacancyDTO.getJobCompany();
+		final UnaryOperator<JobVacancyDTO> commonEntityDtoFunction = jobVacancyDTO -> {
+			JobCompanyDTO jobCompanyDTO = jobVacancyDTO.getJobCompany();
 
-		if(!useAjaxToRefreshJobCompanyLogos) {
-			jobCompanyDTO = JobVacancyController.setSelectedJobCompanyLogoForJobVacancyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, false);
-		}
+			if(!useAjaxToRefreshJobCompanyLogos) {
+				jobCompanyDTO = JobVacancyController.setSelectedJobCompanyLogoForJobVacancyForm(jobCompanyDTO, jobCompanyLogoIdUrlParam, false);
+			}
 
-		final String currencySymbol = jobVacancyDTO.getCurrencySymbol();
+			final String currencySymbol = jobVacancyDTO.getCurrencySymbol();
 
-		jobVacancyDTO = JobVacancyDTO.getNewInstance(jobVacancyDTO, jobCompanyDTO, currencySymbol);
+			jobVacancyDTO = JobVacancyDTO.getNewInstance(jobVacancyDTO, jobCompanyDTO, currencySymbol);
+			return jobVacancyDTO;
+		};
+
+		final JobVacancyDTO jobVacancyDTO = this.manageInputFlashMap(httpServletRequest, model, "jobVacancyDTO", nullEntityDtoSupplier, commonEntityDtoFunction);
 
 		final Function<Language, String> conversionErrorFunction = jobVacancyDTO.getConversionErrorFunction();
 		if(conversionErrorFunction != null) {
@@ -276,7 +264,6 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 			model.addAttribute("errorMsg", conversionError);
 		}
 
-		model.addAttribute("jobVacancyDTO", jobVacancyDTO);
 		model.addAttribute("jobCompanyLogoId", jobVacancyDTO.getJobCompany().getSelectedLogoId());
 		model.addAttribute("useAjaxToRefreshJobCompanyLogos", useAjaxToRefreshJobCompanyLogos);
 
@@ -287,7 +274,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to refresh the logo of the company of a job vacancy
 	 */
 	@GetMapping("/job-vacancies/refresh-logo")
-	public String refreshLogo(Model model,
+	public String refreshLogo(final @NonNull Model model,
 			@RequestParam(name="jobCompanyId", required=true) @NonNull Long jobCompanyId, @RequestParam(name="jobCompanyLogoId", required=true) @NonNull String jobCompanyLogoIdUrlParam) {
 		final JobCompany jobCompany = jobCompanyService.findByIdNotOptional(jobCompanyId);
 		Objects.requireNonNull(jobCompany, "jobCompany cannot be null");
@@ -305,7 +292,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to save a job vacancy in the database
 	 */
 	@PostMapping("/job-vacancies/save")
-	public String save(RedirectAttributes redirectAttributes,
+	public String save(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull JobVacancyDTO jobVacancyDTO, BindingResult bindingResult,
 			@RequestParam(name="id", required=false) Long id, @RequestParam(name="languageParam", required=false) String languageCode) {
 		final JobCompanyDTO jobCompanyDTO = jobVacancyDTO.getJobCompany();
@@ -417,7 +404,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to delete a job vacancy
 	 */
 	@GetMapping("/job-vacancies/delete/{jobVacancyId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -445,7 +432,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * Method to verify a job vacancy
 	 */
 	@GetMapping("/job-vacancies/verify/{jobVacancyId}")
-	public String verify(RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String verify(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -477,7 +464,7 @@ public class JobVacancyController extends AbstractEntityControllerWithoutPredefi
 	 * agregarlos en los metodos crear y editar.
 	 */
 	@ModelAttribute
-	public void setGenerics(Model model, Authentication authentication) {
+	public void setGenerics(final @NonNull Model model, Authentication authentication) {
 		final List<JobCategory> jobCategories = jobCategoryService.findAll();
 		model.addAttribute("jobCategories", jobCategories);
 

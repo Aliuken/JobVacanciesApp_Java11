@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.controller;
 
 import com.aliuken.jobvacanciesapp.controller.superclass.AbstractEntityControllerWithoutPredefinedFilter;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.model.dto.AbstractEntityPageWithExceptionDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
@@ -16,7 +17,6 @@ import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -37,13 +37,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 @Controller
 @Slf4j
-public class JobCategoryController extends AbstractEntityControllerWithoutPredefinedFilter<JobCategory> {
+public class JobCategoryController extends AbstractEntityControllerWithoutPredefinedFilter<JobCategory> implements InputFlashMapManager {
 
 	@Autowired
 	private JobCategoryService jobCategoryService;
@@ -58,12 +58,12 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to show the list of job categories with pagination
 	 */
 	@GetMapping("/job-categories/index")
-	public String index(Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String index(final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-categories/index";
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -127,8 +127,8 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 */
 	@GetMapping("/job-categories/index/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -138,7 +138,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 			@RequestParam(name="pageNumber", required=false) Integer pageNumber) {
 
 		final PredefinedFilterDTO predefinedFilterDTO = null;
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.index(model, pageable, tableSearchDTO, bindingResult);
@@ -150,7 +150,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to show the detail of a job category
 	 */
 	@GetMapping("/job-categories/view/{jobCategoryId}")
-	public String view(Model model, @PathVariable("jobCategoryId") long jobCategoryId,
+	public String view(final @NonNull Model model, @PathVariable("jobCategoryId") long jobCategoryId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-categories/view/{jobCategoryId}";
 
@@ -164,23 +164,12 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to show the creation form of a job category
 	 */
 	@GetMapping("/job-categories/create")
-	public String create(HttpServletRequest httpServletRequest, Model model,
+	public String create(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-categories/create";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		JobCategoryDTO jobCategoryDTO;
-		if(inputFlashMap != null) {
-			jobCategoryDTO = (JobCategoryDTO) inputFlashMap.get("jobCategoryDTO");
-			if(jobCategoryDTO == null) {
-				jobCategoryDTO = JobCategoryDTO.getNewInstance();
-			}
-		} else {
-			jobCategoryDTO = JobCategoryDTO.getNewInstance();
-		}
-
-		model.addAttribute("jobCategoryDTO", jobCategoryDTO);
+		final Supplier<JobCategoryDTO> nullEntityDtoSupplier = () -> JobCategoryDTO.getNewInstance();
+		this.manageInputFlashMap(httpServletRequest, model, "jobCategoryDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("jobCategory/jobCategoryForm.html", model, operation, languageCode);
 	}
@@ -189,26 +178,17 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to show the edition form of a job category
 	 */
 	@GetMapping("/job-categories/edit/{jobCategoryId}")
-	public String edit(HttpServletRequest httpServletRequest, Model model, @PathVariable("jobCategoryId") long jobCategoryId,
+	public String edit(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, @PathVariable("jobCategoryId") long jobCategoryId,
 			@RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /job-categories/edit/{jobCategoryId}";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		JobCategoryDTO jobCategoryDTO;
-		if(inputFlashMap != null) {
-			jobCategoryDTO = (JobCategoryDTO) inputFlashMap.get("jobCategoryDTO");
-		} else {
-			jobCategoryDTO = null;
-		}
-
-		if(jobCategoryDTO == null) {
+		final Supplier<JobCategoryDTO> nullEntityDtoSupplier = () -> {
 			final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
 			Objects.requireNonNull(jobCategory, "jobCategory cannot be null");
-			jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobCategory);
-		}
-
-		model.addAttribute("jobCategoryDTO", jobCategoryDTO);
+			final JobCategoryDTO jobCategoryDTO = JobCategoryConverter.getInstance().convertEntityElement(jobCategory);
+			return jobCategoryDTO;
+		};
+		this.manageInputFlashMap(httpServletRequest, model, "jobCategoryDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("jobCategory/jobCategoryForm.html", model, operation, languageCode);
 	}
@@ -217,7 +197,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to save a job category in the database
 	 */
 	@PostMapping("/job-categories/save")
-	public String save(RedirectAttributes redirectAttributes,
+	public String save(final @NonNull RedirectAttributes redirectAttributes,
 			@Validated @NonNull JobCategoryDTO jobCategoryDTO, BindingResult bindingResult,
 			@RequestParam(name="id", required=false) Long id, @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
@@ -282,7 +262,7 @@ public class JobCategoryController extends AbstractEntityControllerWithoutPredef
 	 * Method to delete a job category
 	 */
 	@GetMapping("/job-categories/delete/{jobCategoryId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

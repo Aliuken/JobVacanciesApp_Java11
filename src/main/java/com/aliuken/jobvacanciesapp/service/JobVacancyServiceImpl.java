@@ -51,7 +51,7 @@ public class JobVacancyServiceImpl extends JobVacancyService {
 	}
 
 	@Override
-	public JobVacancy getNewEntityWithJobCompanyName(String jobCompanyName) {
+	public @NonNull JobVacancy getNewEntityWithJobCompanyName(final @NonNull String jobCompanyName) {
 		final JobCompany jobCompany = new JobCompany();
 		jobCompany.setName(jobCompanyName);
 

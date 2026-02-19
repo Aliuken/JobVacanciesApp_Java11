@@ -245,6 +245,90 @@ The Spring core technologies currently used are:
 * **Spring MessageSource interface**: In [I18nUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/i18n/I18nUtils.java), to deal with i18n and L10n. Configured in [I18nConfig](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/config/I18nConfig.java).
 * **Spring Validation**: In [ControllerValidationUtils](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/src/main/java/com/aliuken/jobvacanciesapp/util/spring/mvc/ControllerValidationUtils.java), to deal with controller binding validation.
 
+> [!NOTE]
+> **SpEL** can be used:
+> - In Spring annotations for value injection like:
+>   ```txt
+>   * @Value("${server.port}")
+>   * @Value("#{systemProperties['user.home'] + '/files'}")
+>   * @Value("#{myBean.name}")
+>   * @Value("#{applicationContext.getBean('myBean')}")
+>   * @Value("#{T(java.time.LocalDate).now()}")
+>   * @Value("#{environment['mode'] == 'prod' ? '/prod' : '/dev'}")
+>   ```
+> - In Spring Security annotations like:
+>   ```txt
+>   * @PreAuthorize("hasRole('ADMIN')")
+>   * @PreAuthorize("#id == authentication.principal.id")
+>   ```
+> - In Spring Cache annotations like:
+>   ```txt
+>   * @Cacheable(value = "users", key = "#id", condition = "#id > 0")
+>   ```
+> - In @Conditional and @Profile annotations like:
+>   ```txt
+>   * @ConditionalOnExpression("#{environment['spring.profiles.active'] == 'prod'}")
+>   ```
+> - In Spring Data annotations like:
+>   ```txt
+>   * @Query("select u from User u where u.name = :#{#myFilter.name}")
+>   ```
+> - In Spring Events annotations like:
+>   ```txt
+>   * @EventListener(condition = "#myEvent.active")
+>   ```
+> - In Spring Integration / Batch annotations like:
+>   ```txt
+>   * @Filter(inputChannel="myChannel", condition="payload.total > 100")
+>   ```
+>
+> **Jakarta EL** is mainly used:
+> - In JSF / Facelets (.xhtml) like:
+>   ```txt
+>   * <h:outputText value="#{user.name}" />
+>   * <h:panelGroup rendered="#{user.admin}" />
+>   * <h:commandButton value="Delete" action="#{userBean.delete(id)}" />
+>   * <ui:repeat value="#{bean.items}" var="currentItem">#{currentItem.name}</ui:repeat>
+>   ```
+> - In CDI / Beans like:
+>   ```txt
+>   * #{userBean.save}
+>   ```
+> - In Bean Validation (messages) like:
+>   ```txt
+>   * @NotNull(message = "The field #{propertyPath} is mandatory")
+>   ```
+>
+> **Thymeleaf** uses the following ELs:
+> - SpEL in Variable Expression (**${...}**) like:
+>   ```txt
+>   * <span th:text="${authUser.fullName}"></span>
+>   * ${param.languageParam}
+>   * <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>...</div>
+>   * <div th:if="${springSecurityUtils.isAuthenticatedAndHasAnyAuthority('USER','SUPERVISOR','ADMINISTRATOR')}" th:with="applyDisabled=${#sets.contains(authUserJobVacancyIds, jobVacancy.id)}">...</div>
+>   * <option th:each="defaultAnonymousAccessPermission : ${T(com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission).values()}" th:value="${defaultAnonymousAccessPermission.value}" th:text="#{${defaultAnonymousAccessPermission.messageName}}"></option>
+>   * <form th:object="${form}">
+>   * refreshedSessionAuthUser=${@authUserService.refreshEntity(session.sessionAuthUser)}
+>   * refreshedSessionAuthUserColorModeValue=${refreshedSessionAuthUser?.colorMode?.value}
+>   ```
+> - SpEL (with selected object) in Selection Expression (**\*{...}**) like:
+>   ```txt
+>   * <select id="nextDefaultAnonymousAccessPermissionCombo" name="nextDefaultAnonymousAccessPermissionCombo" th:field="*{nextDefaultAnonymousAccessPermissionValue}" required>...</select>
+>   * <input th:field="*{name}"></input>
+>   ```
+> - Thymeleaf's Message Expression for i18n (**#{...}**) like:
+>   ```txt
+>   * <title th:text="#{about.head.title}"></title>
+>   ```
+> - Thymeleaf's URL Expression (**@{...}**, with optionally SpEL variables ${...}) like:
+>   ```txt
+>   * th:href="@{/ (languageParam=${param.languageParam})}"
+>   ```
+> - Thymeleaf's Fragment Expression (**~{...}**) like:
+>   ```txt
+>   * <div th:replace="${#lists.size(data) > 0} ? ~{fragments/menus.html :: dataPresent} : ~{fragments/menus.html :: noData}"></div>
+>   ```
+
 ### 3.5. Web technologies
 
 > [!IMPORTANT]
@@ -437,6 +521,7 @@ The PCs used to develop and execute the application were two:
 
 Other technologies currently used are:
 * **IntelliJ IDEA 2025.3.1**: As the IDE.
+* **SonarQube for IDE**: As the static program analysis tool (actually, it is a plugin for IntelliJ IDEA).
 * **Mozilla Firefox**: As the main web browser.
 * **PNG**: As the file format (**.png**) of the [ERD image](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png), the [images in JobVacanciesApp_Java11](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static/images) and the [images in JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/job-company-logos).
 * **draw.io**: As the file format (**.drawio**) of the [ERD](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.drawio).

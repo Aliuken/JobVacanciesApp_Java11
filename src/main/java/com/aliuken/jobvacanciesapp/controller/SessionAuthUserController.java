@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.controller;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
+import com.aliuken.jobvacanciesapp.controller.superinterface.InputFlashMapManager;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
 import com.aliuken.jobvacanciesapp.model.dto.ApplicationDefaultConfigDTO;
@@ -26,7 +27,6 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerNavigationUtils;
-import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerServletUtils;
 import com.aliuken.jobvacanciesapp.util.spring.mvc.ControllerValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -41,15 +41,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 @Controller
 @Slf4j
-public class SessionAuthUserController {
+public class SessionAuthUserController implements InputFlashMapManager {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -70,26 +69,18 @@ public class SessionAuthUserController {
 	 * Method to show the edition form of the logged user
 	 */
 	@GetMapping("/my-user")
-	public String editUserForm(HttpServletRequest httpServletRequest, Model model,
+	public String editUserForm(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 							   @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		AuthUserDTO authUserDTO;
-		if(inputFlashMap != null) {
-			authUserDTO = (AuthUserDTO) inputFlashMap.get("authUserDTO");
-		} else {
-			authUserDTO = null;
-		}
-
-		if(authUserDTO == null) {
+		final Supplier<AuthUserDTO> nullEntityDtoSupplier = () -> {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 			Objects.requireNonNull(sessionAuthUser, "sessionAuthUser cannot be null");
-			authUserDTO = AuthUserConverter.getInstance().convertEntityElement(sessionAuthUser);
-		}
+			final AuthUserDTO authUserDTO = AuthUserConverter.getInstance().convertEntityElement(sessionAuthUser);
+			return authUserDTO;
+		};
 
-		model.addAttribute("authUserDTO", authUserDTO);
+		this.manageInputFlashMap(httpServletRequest, model, "authUserDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("authUser/sessionAuthUserForm.html", model, operation, languageCode);
 	}
@@ -98,9 +89,9 @@ public class SessionAuthUserController {
 	 * Method to save the logged user in the database
 	 */
 	@PostMapping("/my-user")
-	public String saveUser(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+	public String saveUser(final @NonNull HttpServletRequest httpServletRequest, final @NonNull RedirectAttributes redirectAttributes,
 						   @Validated @NonNull AuthUserDTO authUserDTO, BindingResult bindingResult,
-						   @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+						   @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -191,28 +182,20 @@ public class SessionAuthUserController {
 	 * Method to show the change-password form of the logged user
 	 */
 	@GetMapping("/my-user/change-password")
-	public String changePasswordForm(HttpServletRequest httpServletRequest, Model model,
+	public String changePasswordForm(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model,
 									 @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user/change-password";
 
-		final Map<String, ?> inputFlashMap = ControllerServletUtils.getInputFlashMap(httpServletRequest);
-
-		AuthUserCredentialsDTO authUserCredentialsDTO;
-		if(inputFlashMap != null) {
-			authUserCredentialsDTO = (AuthUserCredentialsDTO) inputFlashMap.get("authUserCredentialsDTO");
-		} else {
-			authUserCredentialsDTO = null;
-		}
-
-		if(authUserCredentialsDTO == null) {
+		final Supplier<AuthUserCredentialsDTO> nullEntityDtoSupplier = () -> {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 			final String sessionAuthUserEmail = sessionAuthUser.getEmail();
 			final AuthUserCredentials authUserCredentials = authUserCredentialsService.findByEmail(sessionAuthUserEmail);
 			Objects.requireNonNull(authUserCredentials, "authUserCredentials cannot be null");
-			authUserCredentialsDTO = AuthUserCredentialsConverter.getInstance().convertEntityElement(authUserCredentials);
-		}
+			final AuthUserCredentialsDTO authUserCredentialsDTO = AuthUserCredentialsConverter.getInstance().convertEntityElement(authUserCredentials);
+			return authUserCredentialsDTO;
+		};
 
-		model.addAttribute("authUserCredentialsDTO", authUserCredentialsDTO);
+		this.manageInputFlashMap(httpServletRequest, model, "authUserCredentialsDTO", nullEntityDtoSupplier, null);
 
 		return ControllerNavigationUtils.getNextView("authUser/sessionAuthUserChangePasswordForm.html", model, operation, languageCode);
 	}
@@ -221,9 +204,9 @@ public class SessionAuthUserController {
 	 * Method to save the changed password of the logged user in the database
 	 */
 	@PostMapping("/my-user/change-password")
-	public String saveNewPassword(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+	public String saveNewPassword(final @NonNull HttpServletRequest httpServletRequest, final @NonNull RedirectAttributes redirectAttributes,
 								  @Validated @NonNull AuthUserCredentialsDTO authUserCredentialsDTO, BindingResult bindingResult,
-								  @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+								  @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {
@@ -304,7 +287,7 @@ public class SessionAuthUserController {
 	 * Method to delete a user
 	 */
 	@GetMapping("/my-user/delete")
-	public String deleteById(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+	public String deleteById(final @NonNull HttpServletRequest httpServletRequest,
 							 @RequestParam(name="languageParam", required=false) String languageCode) {
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -326,7 +309,7 @@ public class SessionAuthUserController {
 	 * Method to show the configure-application form
 	 */
 	@GetMapping("/my-user/app/config")
-	public String configureApplicationForm(HttpServletRequest httpServletRequest, Model model,
+	public String configureApplicationForm(final @NonNull Model model,
 										   @RequestParam(name="languageParam", required=false) String languageCode) {
 		final String operation = "GET /my-user/app/config";
 
@@ -352,9 +335,9 @@ public class SessionAuthUserController {
 	 * Method to save the application configuration by restarting the application
 	 */
 	@PostMapping("/my-user/app/config")
-	public String saveApplicationConfiguration(HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+	public String saveApplicationConfiguration(final @NonNull RedirectAttributes redirectAttributes,
 											   @Validated @NonNull ApplicationNextConfigDTO applicationNextConfigDTO, BindingResult bindingResult,
-											   @RequestParam(name="languageParam", required=false) String languageCode) throws MessagingException {
+											   @RequestParam(name="languageParam", required=false) String languageCode) {
 		try {
 			final String firstBindingErrorString = ControllerValidationUtils.getFirstBindingErrorString(bindingResult);
 			if(firstBindingErrorString != null) {

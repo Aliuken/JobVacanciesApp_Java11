@@ -18,6 +18,7 @@ import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import com.aliuken.jobvacanciesapp.util.security.SpringSecurityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -59,7 +60,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
 	@Override
 	@ServiceMethod
-	public void onAuthenticationSuccess(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final Authentication authentication) throws IOException, ServletException {
+	public void onAuthenticationSuccess(final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse, final @NonNull Authentication authentication) throws IOException, ServletException {
 		final String email = authentication.getName();
 		final AuthUser sessionAuthUser = authUserService.findByEmail(email);
 
@@ -70,7 +71,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 
 	@Override
 	@ServiceMethod
-	public void logout(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final Authentication authentication) {
+	public void logout(final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse, final @NonNull Authentication authentication) {
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
 		httpServletRequest.getSession().removeAttribute(Constants.SESSION_AUTH_USER_ID);
 
@@ -180,7 +181,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		}
 	}
 
-	private Language getLanguage(final HttpServletRequest httpServletRequest) {
+	private Language getLanguage(final @NonNull HttpServletRequest httpServletRequest) {
 		final String languageCode = httpServletRequest.getParameter("languageParam");
 
 		final Language language;
@@ -192,7 +193,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return language;
 	}
 
-	private Language getNextDefaultLanguage(final HttpServletRequest httpServletRequest) {
+	private Language getNextDefaultLanguage(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultLanguageCode = httpServletRequest.getParameter("nextDefaultLanguageCode");
 
 		final Language nextDefaultLanguage;
@@ -204,7 +205,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultLanguage;
 	}
 
-	private AnonymousAccessPermission getNextDefaultAnonymousAccessPermission(final HttpServletRequest httpServletRequest) {
+	private AnonymousAccessPermission getNextDefaultAnonymousAccessPermission(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultAnonymousAccessPermissionValue = httpServletRequest.getParameter("nextDefaultAnonymousAccessPermissionValue");
 
 		final AnonymousAccessPermission nextDefaultAnonymousAccessPermission;
@@ -216,7 +217,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultAnonymousAccessPermission;
 	}
 
-	private TableSortingDirection getNextDefaultInitialTableSortingDirection(final HttpServletRequest httpServletRequest) {
+	private TableSortingDirection getNextDefaultInitialTableSortingDirection(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultInitialTableSortingDirectionCode = httpServletRequest.getParameter("nextDefaultInitialTableSortingDirectionCode");
 
 		final TableSortingDirection nextDefaultInitialTableSortingDirection;
@@ -228,7 +229,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultInitialTableSortingDirection;
 	}
 
-	private TablePageSize getNextDefaultInitialTablePageSize(final HttpServletRequest httpServletRequest) {
+	private TablePageSize getNextDefaultInitialTablePageSize(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultInitialTablePageSizeValue = httpServletRequest.getParameter("nextDefaultInitialTablePageSizeValue");
 
 		final TablePageSize nextDefaultInitialTablePageSize;
@@ -240,7 +241,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultInitialTablePageSize;
 	}
 
-	private ColorMode getNextDefaultColorMode(final HttpServletRequest httpServletRequest) {
+	private ColorMode getNextDefaultColorMode(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultColorModeCode = httpServletRequest.getParameter("nextDefaultColorModeCode");
 
 		final ColorMode nextDefaultColorMode;
@@ -252,7 +253,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultColorMode;
 	}
 
-	private UserInterfaceFramework getNextDefaultUserInterfaceFramework(final HttpServletRequest httpServletRequest) {
+	private UserInterfaceFramework getNextDefaultUserInterfaceFramework(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultUserInterfaceFrameworkCode = httpServletRequest.getParameter("nextDefaultUserInterfaceFrameworkCode");
 
 		final UserInterfaceFramework nextDefaultUserInterfaceFramework;
@@ -264,7 +265,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		return nextDefaultUserInterfaceFramework;
 	}
 
-	private PdfDocumentPageFormat getNextDefaultPdfDocumentPageFormat(final HttpServletRequest httpServletRequest) {
+	private PdfDocumentPageFormat getNextDefaultPdfDocumentPageFormat(final @NonNull HttpServletRequest httpServletRequest) {
 		final String nextDefaultPdfDocumentPageFormatCode = httpServletRequest.getParameter("nextDefaultPdfDocumentPageFormatCode");
 
 		final PdfDocumentPageFormat nextDefaultPdfDocumentPageFormat;

@@ -1,6 +1,5 @@
 package com.aliuken.jobvacanciesapp.model.dto.converter;
 
-import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
 import com.aliuken.jobvacanciesapp.model.dto.converter.superclass.EntityToDtoConverter;

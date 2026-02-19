@@ -53,15 +53,15 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	 * Method to show the list of job vacancies of a category with pagination
 	 */
 	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}")
-	public String getJobVacancies(Model model, @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
-								  @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobVacancies(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
+								  @Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-categories/job-vacancies/{jobCategoryId}";
 
 		final JobCategory jobCategory = jobCategoryService.findByIdNotOptional(jobCategoryId);
 		final String jobCategoryName = (jobCategory != null) ? jobCategory.getName() : null;
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -133,8 +133,8 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	 */
 	@GetMapping("/job-categories/job-vacancies/{jobCategoryId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("jobCategoryId") long jobCategoryId,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -147,7 +147,7 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 		final String jobCategoryIdString = String.valueOf(jobCategoryId);
 
 		final PredefinedFilterDTO predefinedFilterDTO = new PredefinedFilterDTO(predefinedFilterEntityName, jobCategoryIdString);
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.getJobVacancies(model, pageable, jobCategoryId, tableSearchDTO, bindingResult);
@@ -159,7 +159,7 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	 * Method to delete a job vacancy of a job category
 	 */
 	@GetMapping("/job-categories/job-vacancies/delete/{jobCategoryId}/{jobVacancyId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -187,7 +187,7 @@ public class JobCategoryJobVacancyController extends AbstractEntityControllerWit
 	 * Method to verify a job vacancy of a job category
 	 */
 	@GetMapping("/job-categories/job-vacancies/verify/{jobCategoryId}/{jobVacancyId}")
-	public String verify(RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId, @PathVariable("jobVacancyId") long jobVacancyId,
+	public String verify(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobCategoryId") long jobCategoryId, @PathVariable("jobVacancyId") long jobVacancyId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

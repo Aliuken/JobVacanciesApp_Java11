@@ -28,7 +28,6 @@ public class JobRequestConverter extends EntityToDtoConverter<JobRequest, JobReq
 			jobRequest.getId(),
 			authUserDTO,
 			jobVacancyDTO,
-			jobVacancyDTO.getId(),
 			jobRequest.getComments(),
 			jobRequest.getCurriculumFileName()
 		);

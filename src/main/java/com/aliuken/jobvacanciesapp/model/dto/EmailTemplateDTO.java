@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.dto;
 
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;

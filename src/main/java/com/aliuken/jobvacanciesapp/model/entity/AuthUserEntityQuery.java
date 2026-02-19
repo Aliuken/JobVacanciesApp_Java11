@@ -5,7 +5,6 @@ import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.model.dto.PredefinedFilterDTO;
 import com.aliuken.jobvacanciesapp.model.dto.TableSearchDTO;
-import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PageEntityEnum;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
@@ -34,7 +33,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "auth_user_entity_query", indexes = {
@@ -106,7 +104,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		this.initialPdfDocumentPageFormat = authUser.getPdfDocumentPageFormat();
 		final List<PdfDocumentPageFormat> possiblePdfDocumentPageFormats = Collections.singletonList(initialPdfDocumentPageFormat);
 		this.finalPdfDocumentPageFormat = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possiblePdfDocumentPageFormats, ConfigPropertiesBean.CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT);
-		this.language = this.getLanguage(tableSearchDTO);
+		this.language = tableSearchDTO.getLanguage();
 
 		if(predefinedFilterDTO != null) {
 			this.predefinedFilterEntity = predefinedFilterDTO.getPredefinedFilterEntity();
@@ -123,12 +121,6 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		this.tablePageSize = tableSearchDTO.getTablePageSize();
 		this.pageNumber = tableSearchDTO.getPageNumber();
 		this.queryUrl = queryUrl;
-	}
-
-	private @NonNull Language getLanguage(final @NonNull TableSearchDTO tableSearchDTO) {
-		final Language language = Language.findByCode(tableSearchDTO.getLanguageParam());
-		Objects.requireNonNull(language, "language cannot be null");
-		return language;
 	}
 
 	public @NonNull String getOriginalResultFileName() {

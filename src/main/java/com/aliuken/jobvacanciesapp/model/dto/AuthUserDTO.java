@@ -16,8 +16,6 @@ import java.util.Set;
 public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = -7781889193918523592L;
 
-	private static final @NonNull AuthUserDTO NO_ARGS_INSTANCE = new AuthUserDTO(null, null, null, null, null, null, null, null, null, null, null, null, null);
-
 	@NotNull(message="{id.notNull}")
 	private final @NonNull Long id;
 
@@ -62,10 +60,6 @@ public class AuthUserDTO implements AbstractEntityDTO, Serializable {
 
 	@NotEmpty(message="{authRoleNames.notEmpty}")
 	private final @NonNull Set<String> authRoleNames;
-
-	public static @NonNull AuthUserDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
-	}
 
 	@Override
 	public @NonNull String toString() {

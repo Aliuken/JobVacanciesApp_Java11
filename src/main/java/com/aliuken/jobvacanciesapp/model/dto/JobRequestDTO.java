@@ -1,5 +1,6 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
@@ -14,52 +15,43 @@ import java.io.Serializable;
 public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = 6400290314757351128L;
 
-	private static final @NonNull JobRequestDTO NO_ARGS_INSTANCE = new JobRequestDTO(null, null, null, null, null, null);
-
 	private final Long id;
-	private final AuthUserDTO authUser;
+
+	@NotNull(message="{authUser.notNull}")
+	private final @NonNull AuthUserDTO authUser;
 
 	@NotNull(message="{jobVacancy.notNull}")
-	private final JobVacancyDTO jobVacancy;
+	private final @NonNull JobVacancyDTO jobVacancy;
 
 	//In jobRequestForm.html we cannot use *{jobVacancy.id} because JobVacancyDTO is a Java record, so we use *{jobVacancyId} instead
 	private final Long jobVacancyId;
 
 	@NotEmpty(message="{comments.notEmpty}")
 	@Size(max=1000, message="{comments.maxSize}")
-	private final String comments;
+	private final @NonNull String comments;
 
 	@NotEmpty(message="{curriculumFileName.notEmpty}")
 	@Size(max=255, message="{curriculumFileName.maxSize}")
-	private final String curriculumFileName;
+	private final @NonNull String curriculumFileName;
 
-	public JobRequestDTO(final Long id, final AuthUserDTO authUser, final JobVacancyDTO jobVacancy, final Long jobVacancyId, final String comments, final String curriculumFileName) {
+	public JobRequestDTO(final Long id, final @NonNull AuthUserDTO authUser, final @NonNull JobVacancyDTO jobVacancy, final @NonNull String comments, final @NonNull String curriculumFileName) {
 		super();
 		this.id = id;
-
-		if(authUser != null) {
-			this.authUser = authUser;
-		} else {
-			this.authUser = AuthUserDTO.getNewInstance();
-		}
-
-		if(jobVacancy == null) {
-			this.jobVacancy = JobVacancyDTO.getNewInstance(jobVacancyId);
-			this.jobVacancyId = jobVacancyId;
-		} else if(jobVacancyId == null) {
-			this.jobVacancy = jobVacancy;
-			this.jobVacancyId = jobVacancy.getId();
-		} else {
-			this.jobVacancy = jobVacancy;
-			this.jobVacancyId = jobVacancyId;
-		}
-
+		this.authUser = authUser;
+		this.jobVacancy = jobVacancy;
+		this.jobVacancyId = jobVacancy.getId();
 		this.comments = comments;
 		this.curriculumFileName = curriculumFileName;
 	}
 
-	public static @NonNull JobRequestDTO getNewInstance() {
-		return NO_ARGS_INSTANCE;
+	public static @NonNull JobRequestDTO getNewInstance(final @NonNull AuthUserDTO authUserDTO, final @NonNull JobVacancyDTO jobVacancyDTO) {
+		final JobRequestDTO jobRequestDTO = new JobRequestDTO(
+			null,
+			authUserDTO,
+			jobVacancyDTO,
+			Constants.EMPTY_STRING,
+			Constants.EMPTY_STRING);
+		return jobRequestDTO;
 	}
 
 	public static @NonNull JobRequestDTO getNewInstance(@NonNull JobRequestDTO jobRequestDTO, final @NonNull JobVacancyDTO jobVacancyDTO) {
@@ -67,7 +59,6 @@ public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 			jobRequestDTO.getId(),
 			jobRequestDTO.getAuthUser(),
 			jobVacancyDTO,
-			jobVacancyDTO.getId(),
 			jobRequestDTO.getComments(),
 			jobRequestDTO.getCurriculumFileName()
 		);
@@ -77,8 +68,8 @@ public class JobRequestDTO implements AbstractEntityDTO, Serializable {
 	@Override
 	public @NonNull String toString() {
 		final String idString = String.valueOf(id);
-		final String authUserEmail = (authUser != null) ? authUser.getEmail() : null;
-		final String jobVacancyIdString = (jobVacancy != null) ? String.valueOf(jobVacancy.getId()) : null;
+		final String authUserEmail = authUser.getEmail();
+		final String jobVacancyIdString = String.valueOf(jobVacancy.getId());
 
 		final String result = StringUtils.getStringJoined("JobRequestDTO [id=", idString, ", authUserEmail=", authUserEmail, ", jobVacancyId=", jobVacancyIdString, ", comments=", comments, ", curriculumFileName=", curriculumFileName, "]");
 		return result;

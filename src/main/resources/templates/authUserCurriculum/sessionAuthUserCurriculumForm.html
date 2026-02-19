@@ -39,6 +39,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <input type="hidden" th:field="*{id}"></input>
+                  <input type="hidden" th:field="*{authUser}"></input>
                   <label for="description" class="form-label mt-2 mb-1" th:text="#{authUserCurriculum.description} + ': '"></label>
                   <textarea class="form-control" name="description" th:field="*{description}" id="description" rows="3" required></textarea>
                 </div>

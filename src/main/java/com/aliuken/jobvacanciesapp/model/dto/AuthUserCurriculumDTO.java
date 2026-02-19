@@ -17,7 +17,9 @@ public class AuthUserCurriculumDTO implements AbstractEntityDTO, Serializable {
 	private static final long serialVersionUID = 8027584650213205654L;
 
 	private final Long id;
-	private final AuthUserDTO authUser;
+
+	@NotNull(message="{authUser.notNull}")
+	private final @NonNull AuthUserDTO authUser;
 
 	@NotNull(message="{curriculumFile.notNull}")
 	private final @NonNull MultipartFile curriculumFile;
@@ -28,27 +30,17 @@ public class AuthUserCurriculumDTO implements AbstractEntityDTO, Serializable {
 	@Size(max=500, message="{description.maxSize}")
 	private final @NonNull String description;
 
-	public AuthUserCurriculumDTO(final Long id, final AuthUserDTO authUser, final MultipartFile curriculumFile, final String fileName, final @NonNull String description) {
+	public AuthUserCurriculumDTO(final Long id, final @NonNull AuthUserDTO authUser, final @NonNull MultipartFile curriculumFile, final String fileName, final @NonNull String description) {
 		this.id = id;
-
-		if(authUser != null) {
-			this.authUser = authUser;
-		} else {
-			this.authUser = AuthUserDTO.getNewInstance();
-		}
-
-		if(curriculumFile != null) {
-			this.curriculumFile = curriculumFile;
-		} else {
-			this.curriculumFile = new CustomMultipartFile("curriculumFile", null, null, null);
-		}
-
+		this.authUser = authUser;
+		this.curriculumFile = curriculumFile;
 		this.fileName = fileName;
 		this.description = description;
 	}
 
-	public static @NonNull AuthUserCurriculumDTO getNewInstance(final String description) {
-		final AuthUserCurriculumDTO authUserCurriculumDTO = new AuthUserCurriculumDTO(null, null, null, null, description);
+	public static @NonNull AuthUserCurriculumDTO getNewInstance(final Long id, final @NonNull AuthUserDTO authUserDTO, final String fileName, final @NonNull String description) {
+		final MultipartFile curriculumFile = new CustomMultipartFile("curriculumFile", null, null, null);
+		final AuthUserCurriculumDTO authUserCurriculumDTO = new AuthUserCurriculumDTO(id, authUserDTO, curriculumFile, fileName, description);
 		return authUserCurriculumDTO;
 	}
 

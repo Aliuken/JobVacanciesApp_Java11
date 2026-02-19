@@ -47,15 +47,15 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 	 * Method to show the list of request of a user with pagination
 	 */
 	@GetMapping("/auth-users/job-requests/{authUserId}")
-	public String getJobRequests(Model model, @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
-								 @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobRequests(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
+								 @Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /auth-users/job-requests/{authUserId}";
 
 		final AuthUser authUser = authUserService.findByIdNotOptional(authUserId);
 		final String authUserEmail = (authUser != null) ? authUser.getEmail() : null;
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -127,8 +127,8 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 	 */
 	@GetMapping("/auth-users/job-requests/{authUserId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("authUserId") long authUserId,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -141,7 +141,7 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 		final String authUserIdString = String.valueOf(authUserId);
 
 		final PredefinedFilterDTO predefinedFilterDTO = new PredefinedFilterDTO(predefinedFilterEntityName, authUserIdString);
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.getJobRequests(model, pageable, authUserId, tableSearchDTO, bindingResult);
@@ -153,7 +153,7 @@ public class AuthUserJobRequestController extends AbstractEntityControllerWithPr
 	 * Method to delete a job request of a user
 	 */
 	@GetMapping("/auth-users/job-requests/delete/{authUserId}/{jobRequestId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId, @PathVariable("jobRequestId") long jobRequestId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("authUserId") long authUserId, @PathVariable("jobRequestId") long jobRequestId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

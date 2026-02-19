@@ -32,7 +32,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Path;
 
 @Controller
@@ -56,8 +55,8 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	 * Method to show the list of entity queries of the logged user with pagination
 	 */
 	@GetMapping("/my-user/auth-user-entity-queries")
-	public String getAuthUserEntityQueries(HttpServletRequest httpServletRequest, Model model, @NonNull Pageable pageable,
-			@Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getAuthUserEntityQueries(final @NonNull HttpServletRequest httpServletRequest, final @NonNull Model model, final @NonNull Pageable pageable,
+			@Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /my-user/auth-user-entity-queries";
 
 		final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromHttpServletRequest(httpServletRequest);
@@ -65,7 +64,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 		final String sessionAuthUserEmail = sessionAuthUser.getEmail();
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -138,8 +137,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	 */
 	@GetMapping("/my-user/auth-user-entity-queries/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -156,7 +154,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	 * Method to show the detail of a entity query
 	 */
 	@GetMapping("/my-user/auth-user-entity-queries/view/{authUserEntityQueryId}")
-	public String view(Model model, @PathVariable("authUserEntityQueryId") long authUserEntityQueryId,
+	public String view(final @NonNull Model model, @PathVariable("authUserEntityQueryId") long authUserEntityQueryId,
 			@RequestParam(name = "languageParam", required = false) String languageCode) {
 		final String operation = "GET /my-user/auth-user-entity-queries/view/{authUserEntityQueryId}";
 
@@ -170,7 +168,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 	 * Method to delete an entity query
 	 */
 	@GetMapping("/my-user/auth-user-entity-queries/delete/{authUserEntityQueryId}")
-	public String delete(RedirectAttributes redirectAttributes, Authentication authentication,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, final @NonNull Authentication authentication,
 			@PathVariable("authUserEntityQueryId") long authUserEntityQueryId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
@@ -197,7 +195,7 @@ public class SessionAuthUserEntityQueryController extends AbstractEntityControll
 		}
 
 		final AuthUser authUser = authUserEntityQuery.getAuthUser();
-		if(authUser == null || !sessionAuthUserEmail.equals(authUser.getEmail())) {
+		if(!sessionAuthUserEmail.equals(authUser.getEmail())) {
 			final String errorMsg = I18nUtils.getInternationalizedMessage(languageCode, "deleteUserEntityQuery.entityQueryDoesNotBelongToUser", null);
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
 

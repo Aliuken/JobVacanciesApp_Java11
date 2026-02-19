@@ -41,7 +41,7 @@ public class JobCompanyLogoServiceImpl extends JobCompanyLogoService {
 	}
 
 	@Override
-	public JobCompanyLogo getNewEntityWithJobCompanyName(String jobCompanyName) {
+	public @NonNull JobCompanyLogo getNewEntityWithJobCompanyName(final @NonNull String jobCompanyName) {
 		final JobCompany jobCompany = new JobCompany();
 		jobCompany.setName(jobCompanyName);
 

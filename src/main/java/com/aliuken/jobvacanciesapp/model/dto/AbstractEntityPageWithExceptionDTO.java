@@ -1,7 +1,6 @@
 package com.aliuken.jobvacanciesapp.model.dto;
 
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
-import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import lombok.Data;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class AbstractEntityPageWithExceptionDTO<T extends AbstractEntity<T>> implements Serializable {

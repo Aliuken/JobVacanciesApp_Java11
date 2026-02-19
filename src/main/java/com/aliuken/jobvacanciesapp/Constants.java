@@ -1,8 +1,7 @@
 package com.aliuken.jobvacanciesapp;
 
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
-import com.aliuken.jobvacanciesapp.util.javase.stream.ParallelStreamUtils;
-import com.aliuken.jobvacanciesapp.util.javase.stream.SequentialStreamUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
 import com.aliuken.jobvacanciesapp.util.javase.stream.superclass.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateTimeUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateUtils;
@@ -28,8 +27,8 @@ public class Constants {
 	public static final TemporalUtils<LocalDate> DATE_UTILS = DateUtils.getInstance();
 	public static final TemporalUtils<LocalDateTime> DATE_TIME_UTILS = DateTimeUtils.getInstance();
 
-	public static final StreamUtils SEQUENTIAL_STREAM_UTILS = SequentialStreamUtils.getInstance();
-	public static final StreamUtils PARALLEL_STREAM_UTILS = ParallelStreamUtils.getInstance();
+	public static final StreamUtils SEQUENTIAL_STREAM_UTILS = StreamUtilsImpl.sequential();
+	public static final StreamUtils PARALLEL_STREAM_UTILS = StreamUtilsImpl.parallel();
 
 	public static final String SESSION_AUTH_USER_ID = "sessionAuthUserId";
 	public static final String SESSION_ACCOUNT_DELETED = "sessionAccountDeleted";

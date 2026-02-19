@@ -22,7 +22,7 @@ public class ControllerNavigationUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static String getNextView(final String nextView, final Model model, final String operation, final String languageCode) {
+	public static String getNextView(final String nextView, final @NonNull Model model, final String operation, final String languageCode) {
 		model.addAttribute("operation", operation);
 		model.addAttribute("language", languageCode);
 
@@ -32,7 +32,7 @@ public class ControllerNavigationUtils {
 		return nextView;
 	}
 
-	public static String getNextViewWithTable(final String nextView, final Model model, final String operation, final TableSearchDTO tableSearchDTO, final boolean showBindingResultErrors) {
+	public static String getNextViewWithTable(final String nextView, final @NonNull Model model, final String operation, final TableSearchDTO tableSearchDTO, final boolean showBindingResultErrors) {
 		model.addAttribute("operation", operation);
 		model.addAttribute("tableSearchDTO", tableSearchDTO);
 		model.addAttribute("showBindingResultErrors", showBindingResultErrors);
@@ -43,7 +43,7 @@ public class ControllerNavigationUtils {
 		return nextView;
 	}
 
-	public static String getNextViewWithHomeSearch(final String nextView, final Model model, final String operation, final String description, final Long jobCategoryId, final String languageCode) {
+	public static String getNextViewWithHomeSearch(final String nextView, final @NonNull Model model, final String operation, final String description, final Long jobCategoryId, final String languageCode) {
 		model.addAttribute("operation", operation);
 		model.addAttribute("description", description);
 		model.addAttribute("jobCategoryId", jobCategoryId);

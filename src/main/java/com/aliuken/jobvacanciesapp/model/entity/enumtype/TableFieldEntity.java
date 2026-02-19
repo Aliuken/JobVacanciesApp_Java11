@@ -3,8 +3,8 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public enum TableFieldEntity implements Serializable {
@@ -12,14 +12,12 @@ public enum TableFieldEntity implements Serializable {
 	JOB_COMPANY ("JobCompany");
 
 	@Getter
-	@NotNull
-	private final String upperCasedEntityName;
+	private final @NonNull String upperCasedEntityName;
 
 	@Getter
-    @NotNull
-	private final String lowerCasedEntityName;
+	private final @NonNull String lowerCasedEntityName;
 
-	private TableFieldEntity(@NotNull final String upperCasedEntityName) {
+	private TableFieldEntity(final @NonNull String upperCasedEntityName) {
 		this.upperCasedEntityName = upperCasedEntityName;
 		this.lowerCasedEntityName = StringUtils.lowerCaseFirstCharacter(upperCasedEntityName);
 	}

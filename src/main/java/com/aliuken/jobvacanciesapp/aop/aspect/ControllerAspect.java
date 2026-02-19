@@ -48,6 +48,9 @@ public class ControllerAspect {
 //	@Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
 //	private static final void putMapping(){}
 
+//	@Pointcut("@annotation(org.springframework.web.bind.annotation.PatchMapping)")
+//	private static final void patchMapping(){}
+
 //	@Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
 //	private static final void deleteMapping(){}
 

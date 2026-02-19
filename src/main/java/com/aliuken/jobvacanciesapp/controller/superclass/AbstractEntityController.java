@@ -28,27 +28,22 @@ public abstract class AbstractEntityController<T extends AbstractEntity<T>> {
 	}
 
 	protected byte[] storeAndDownloadPdf(final PredefinedFilterDTO predefinedFilterDTO, final @NonNull TableSearchDTO tableSearchDTO,
-			final Model model, final @NonNull PageEntityEnum pageEntity,
-			final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+			final @NonNull Model model, final @NonNull PageEntityEnum pageEntity,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse) {
 
-		final Object pageEntityModelAttribute;
-		if(model != null) {
-			final String pageEntityValue = pageEntity.getValue();
-			if(pageEntityValue != null) {
-				pageEntityModelAttribute = model.getAttribute(pageEntityValue);
-			} else {
-				pageEntityModelAttribute = null;
-			}
-		} else {
-			pageEntityModelAttribute = null;
-		}
+		final String pageEntityValue = pageEntity.getValue();
 
 		final byte[] pdfByteArray;
-		if(pageEntityModelAttribute != null) {
-			final Page<T> entityPage = GenericsUtils.cast(pageEntityModelAttribute);
+		if(pageEntityValue != null) {
+			final Object pageEntityModelAttribute = model.getAttribute(pageEntityValue);
+			if(pageEntityModelAttribute != null) {
+				final Page<T> entityPage = GenericsUtils.cast(pageEntityModelAttribute);
 
-			pdfByteArray = FileUtils.storeAndDownloadPdf(predefinedFilterDTO, tableSearchDTO, pageEntity, entityPage,
-					authUserEntityQueryFilesPath, httpServletRequest, httpServletResponse);
+				pdfByteArray = FileUtils.storeAndDownloadPdf(predefinedFilterDTO, tableSearchDTO, pageEntity, entityPage,
+						authUserEntityQueryFilesPath, httpServletRequest, httpServletResponse);
+			} else {
+				pdfByteArray = new byte[0];
+			}
 		} else {
 			pdfByteArray = new byte[0];
 		}

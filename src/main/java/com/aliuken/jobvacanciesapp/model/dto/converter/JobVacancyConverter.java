@@ -1,6 +1,5 @@
 package com.aliuken.jobvacanciesapp.model.dto.converter;
 
-import com.aliuken.jobvacanciesapp.model.dto.BigDecimalFromStringConversionResult;
 import com.aliuken.jobvacanciesapp.model.dto.JobCategoryDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobCompanyDTO;
 import com.aliuken.jobvacanciesapp.model.dto.JobVacancyDTO;

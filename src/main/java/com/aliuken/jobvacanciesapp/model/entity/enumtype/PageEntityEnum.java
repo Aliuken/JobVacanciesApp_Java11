@@ -3,8 +3,8 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public enum PageEntityEnum implements Serializable {
@@ -17,10 +17,9 @@ public enum PageEntityEnum implements Serializable {
 	JOB_VACANCY         ("jobVacancies");
 
 	@Getter
-	@NotNull
-	private final String value;
+	private final @NonNull String value;
 
-	private PageEntityEnum(final String value) {
+	private PageEntityEnum(final @NonNull String value) {
 		this.value = value;
 	}
 

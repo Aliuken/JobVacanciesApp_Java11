@@ -54,6 +54,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <input type="hidden" th:field="*{id}"></input>
+                  <input type="hidden" th:field="*{authUser}"></input>
                   <input type="hidden" th:field="*{jobVacancyId}"></input>
                   <label for="comments" class="form-label mt-2 mb-1" th:text="#{jobRequest.comments} + ': '"></label>
                   <textarea class="form-control" name="comments" th:field="*{comments}" id="comments" rows="3" required></textarea>

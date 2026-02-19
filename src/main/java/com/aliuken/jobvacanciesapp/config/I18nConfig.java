@@ -1,20 +1,17 @@
 package com.aliuken.jobvacanciesapp.config;
 
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
-import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.util.Assert;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
-import java.util.Objects;
 
 @Configuration
 public class I18nConfig {
@@ -23,7 +20,7 @@ public class I18nConfig {
 	@NonNull SessionLocaleResolver localeResolver() {
 		final SessionLocaleResolver localeResolver = new SessionLocaleResolver() {
 			@Override
-			public @NonNull Locale resolveLocale(@NonNull HttpServletRequest httpServletRequest) {
+			public @NonNull Locale resolveLocale(final @NonNull HttpServletRequest httpServletRequest) {
 				final String languageCode = httpServletRequest.getParameter("languageParam");
 				final Locale locale = I18nUtils.getLocale(languageCode);
 				return locale;

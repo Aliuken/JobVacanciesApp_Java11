@@ -47,15 +47,15 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 	 * Method to show the list of job requests of a job vacancy with pagination
 	 */
 	@GetMapping("/job-vacancies/job-requests/{jobVacancyId}")
-	public String getJobRequests(Model model, @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
-								 @Validated @NonNull TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
+	public String getJobRequests(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
+								 @Validated TableSearchDTO tableSearchDTO, BindingResult bindingResult) {
 		final String operation = "GET /job-vacancies/job-requests/{jobVacancyId}";
 
 		final JobVacancy jobVacancy = jobVacancyService.findByIdNotOptional(jobVacancyId);
 		final String jobVacancyName = (jobVacancy != null) ? jobVacancy.getName() : null;
 
 		try {
-			if(tableSearchDTO == null || !tableSearchDTO.hasAllParameters()) {
+			if(!this.hasExportToPdfEnabled(tableSearchDTO)) {
 				if(log.isDebugEnabled()) {
 					final String tableSearchDtoString = String.valueOf(tableSearchDTO);
 					log.debug(StringUtils.getStringJoined("Some table search parameters were empty: ", tableSearchDtoString));
@@ -127,8 +127,8 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 	 */
 	@GetMapping("/job-vacancies/job-requests/{jobVacancyId}/exportToPdf")
 	@ResponseBody
-	public byte[] exportToPdf(Model model, @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public byte[] exportToPdf(final @NonNull Model model, final @NonNull Pageable pageable, @PathVariable("jobVacancyId") long jobVacancyId,
+			final @NonNull HttpServletRequest httpServletRequest, final @NonNull HttpServletResponse httpServletResponse,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,
@@ -141,7 +141,7 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 		final String jobVacancyIdString = String.valueOf(jobVacancyId);
 
 		final PredefinedFilterDTO predefinedFilterDTO = new PredefinedFilterDTO(predefinedFilterEntityName, jobVacancyIdString);
-		final TableSearchDTO tableSearchDTO = new TableSearchDTO(languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
+		final TableSearchDTO tableSearchDTO = new TableSearchDTO(httpServletRequest, languageCode, filterName, filterValue, sortingField, sortingDirection, pageSize, pageNumber);
 		final BindingResult bindingResult = null;
 
 		this.getJobRequests(model, pageable, jobVacancyId, tableSearchDTO, bindingResult);
@@ -153,7 +153,7 @@ public class JobVacancyJobRequestController extends AbstractEntityControllerWith
 	 * Method to delete a job request of a job vacancy
 	 */
 	@GetMapping("/job-vacancies/job-requests/delete/{jobVacancyId}/{jobRequestId}")
-	public String delete(RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId, @PathVariable("jobRequestId") long jobRequestId,
+	public String delete(final @NonNull RedirectAttributes redirectAttributes, @PathVariable("jobVacancyId") long jobVacancyId, @PathVariable("jobRequestId") long jobRequestId,
 			@RequestParam(name="languageParam", required=false) String languageCode,
 			@RequestParam(name="filterName", required=false) String filterName,
 			@RequestParam(name="filterValue", required=false) String filterValue,

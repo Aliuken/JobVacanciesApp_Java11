@@ -37,7 +37,7 @@ public abstract class AbstractEntityWithJobCompanyServiceSuperclass<T extends Ab
 	private static final @NonNull ExampleMatcher JOB_COMPANY_ID_AND_FIRST_REGISTRATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsTwoFields("jobCompany.id", "firstRegistrationAuthUser.email");
 	private static final @NonNull ExampleMatcher JOB_COMPANY_ID_AND_LAST_MODIFICATION_AUTH_USER_EMAIL_EXAMPLE_MATCHER = DatabaseUtils.getExampleMatcherWithContainsTwoFields("jobCompany.id", "lastModificationAuthUser.email");
 
-	public abstract T getNewEntityWithJobCompanyName(String jobCompanyName);
+	public abstract @NonNull T getNewEntityWithJobCompanyName(final @NonNull String jobCompanyName);
 
 	@Override
 	@ServiceMethod

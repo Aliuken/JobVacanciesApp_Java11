@@ -29,13 +29,13 @@ public interface UpgradedJpaRepositoryInterface<T extends AbstractEntity<T>> {
 
 	public abstract @NonNull Page<T> findAll(@NonNull Pageable pageable, TableField sortingTableField, TableSortingDirection tableSortingDirection, Specification<T> specification);
 
-	public abstract @NonNull Page<T> findAll(Specification<T> specification, @NonNull Pageable pageable);
+	public abstract @NonNull Page<T> findAll(Specification<T> specification, final @NonNull Pageable pageable);
 
 	public abstract <S extends T> @NonNull List<S> findAll(@NonNull Example<S> example);
 
-	public abstract <S extends T> @NonNull Page<S> findAll(@NonNull Example<S> example, @NonNull Pageable pageable);
+	public abstract <S extends T> @NonNull Page<S> findAll(@NonNull Example<S> example, final @NonNull Pageable pageable);
 
-	public abstract <S extends T> @NonNull Page<S> findAll(@NonNull Example<S> example, @NonNull Pageable pageable, TableField sortingTableField, TableSortingDirection tableSortingDirection);
+	public abstract <S extends T> @NonNull Page<S> findAll(@NonNull Example<S> example, final @NonNull Pageable pageable, TableField sortingTableField, TableSortingDirection tableSortingDirection);
 
 	public abstract T refreshEntity(T entity);
 
