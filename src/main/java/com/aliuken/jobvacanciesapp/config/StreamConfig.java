@@ -1,7 +1,7 @@
 package com.aliuken.jobvacanciesapp.config;
 
 import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
-import com.aliuken.jobvacanciesapp.util.javase.stream.superclass.StreamUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -14,7 +14,7 @@ public class JobCompanyConverter extends EntityToDtoConverter<JobCompany, JobCom
 	private static final @NonNull JobCompanyConverter SINGLETON_INSTANCE = new JobCompanyConverter();
 
 	private JobCompanyConverter() {
-		super(JobCompany.class, JobCompanyDTO.class, JobCompanyDTO[]::new);
+		super(JobCompany.class, JobCompanyDTO.class, size -> new JobCompanyDTO[size]);
 	}
 
 	public static @NonNull JobCompanyConverter getInstance() {

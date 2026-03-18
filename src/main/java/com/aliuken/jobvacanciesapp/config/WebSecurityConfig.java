@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.enumtype.AllowedViewsEnum;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.security.CustomAuthenticationHandler;
 import com.aliuken.jobvacanciesapp.service.JdbcTokenByEmailService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,18 +42,18 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	private CustomAuthenticationHandler customAuthenticationHandler;
 
 	private static final int BCRYPT_LOG_ROUNDS = 12;
-	private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(WebSecurityConfig.BCRYPT_LOG_ROUNDS);
+	private static final @NonNull PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(WebSecurityConfig.BCRYPT_LOG_ROUNDS);
 
 	/**
 	 * Spring Security password encoder implementation using BCrypt algorithm
 	 */
 	@Bean
-	PasswordEncoder passwordEncoder() {
+	@NonNull PasswordEncoder passwordEncoder() {
 		return WebSecurityConfig.PASSWORD_ENCODER;
 	}
 
 	@Bean
-	AuthenticationManager authenticationManager(final AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	@NonNull AuthenticationManager authenticationManager(final @NonNull AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		final AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		return authenticationManager;
 	}
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	 * Configuration of the authentication via JDBC
 	 */
 	@Override
-	public void init(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+	public void init(final @NonNull AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		final JdbcUserDetailsManagerConfigurer<AuthenticationManagerBuilder> jdbcUserDetailsManagerConfigurer = authenticationManagerBuilder.jdbcAuthentication();
 
 		jdbcUserDetailsManagerConfigurer
@@ -71,16 +72,16 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			.authoritiesByUsernameQuery(WebSecurityConfig.AUTHORITIES_BY_USERNAME_QUERY);
 	}
 
-	private static final String getUsersByUsernameQuery() {
+	private static final @NonNull String getUsersByUsernameQuery() {
 		return "select au.email, auc.encrypted_password, au.enabled from auth_user au, auth_user_credentials auc where au.email = ? and au.email = auc.email";
 	}
 
-	private static final String getAuthoritiesByUsernameQuery() {
+	private static final @NonNull String getAuthoritiesByUsernameQuery() {
 		return "select au.email, ar.name from auth_user_role aur inner join auth_user au on au.id = aur.auth_user_id inner join auth_role ar on ar.id = aur.auth_role_id where au.email = ?";
 	}
 
 //	@Bean
-//	public FilterChainProxy springSecurityFilterChain(final HttpSecurity httpSecurity) throws ServletException, Exception {
+//	public @NonNull FilterChainProxy springSecurityFilterChain(final @NonNull HttpSecurity httpSecurity) throws ServletException, Exception {
 //		final SecurityFilterChain securityFilterChain = filterChain(httpSecurity);
 //		final FilterChainProxy filterChainProxy = new FilterChainProxy(securityFilterChain);
 //
@@ -88,7 +89,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 //	}
 
 	@Bean
-	SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
+	SecurityFilterChain filterChain(final @NonNull HttpSecurity httpSecurity) throws Exception {
 		final AnonymousAccessPermission currentDefaultAnonymousAccessPermission = ConfigPropertiesBean.CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION;
 
 		final SecurityFilterChain securityFilterChain;
@@ -105,7 +106,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	/**
 	 * Customization of access to the application URLs and the login, logout and remember-me functionalities
 	 */
-	private SecurityFilterChain filterChain(final HttpSecurity httpSecurity, final AnonymousAccessPermission anonymousAccessPermission) throws Exception {
+	private SecurityFilterChain filterChain(final @NonNull HttpSecurity httpSecurity, final AnonymousAccessPermission anonymousAccessPermission) throws Exception {
 		final AllowedViewsEnum allowedViewsEnum = AllowedViewsEnum.getInstance(anonymousAccessPermission);
 
 		httpSecurity
@@ -155,7 +156,7 @@ public class WebSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 //        BeanUtils.refreshBean("springSecurityFilterChain");
 //    }
 
-	private static String[] getStaticResourcesArray() {
+	private static @NonNull String @NonNull [] getStaticResourcesArray() {
 		return new String[]{
 			"/auth-user-curriculum-files/**",
 			"/auth-user-entity-query-files/**",

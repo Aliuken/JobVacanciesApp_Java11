@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.util.security.SpringSecurityUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.decorators.strategies.GroupingStrategy;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +38,7 @@ public class WebTemplateConfig {
 	private boolean springThymeleafCache;
 
 	@Bean
-	UrlTemplateResolver urlTemplateResolver() {
+	@NonNull UrlTemplateResolver urlTemplateResolver() {
 		final UrlTemplateResolver urlTemplateResolver = new UrlTemplateResolver();
 		urlTemplateResolver.setCacheable(springThymeleafCache);
 
@@ -45,7 +46,7 @@ public class WebTemplateConfig {
 	}
 
 	@Bean
-	ServletContextTemplateResolver servletContextTemplateResolver() {
+	@NonNull ServletContextTemplateResolver servletContextTemplateResolver() {
 		final ServletContextTemplateResolver servletContextTemplateResolver = new ServletContextTemplateResolver(servletContext);
 		servletContextTemplateResolver.setCacheable(false);
 		servletContextTemplateResolver.setTemplateMode("HTML");
@@ -55,7 +56,7 @@ public class WebTemplateConfig {
 	}
 
 	@Bean
-	SpringTemplateEngine springTemplateEngine() {
+	@NonNull SpringTemplateEngine springTemplateEngine() {
 		final ITemplateResolver urlTemplateResolver = urlTemplateResolver();
 		final ITemplateResolver servletContextTemplateResolver = servletContextTemplateResolver();
 
@@ -75,7 +76,7 @@ public class WebTemplateConfig {
 	}
 
 	@Bean
-	ViewResolver viewResolver() {
+	@NonNull ViewResolver viewResolver() {
 		final ISpringTemplateEngine springTemplateEngine = springTemplateEngine();
 
 		final ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();

@@ -12,7 +12,7 @@ public class JobVacancyConverter extends EntityToDtoConverter<JobVacancy, JobVac
 	private static final @NonNull JobVacancyConverter SINGLETON_INSTANCE = new JobVacancyConverter();
 
 	private JobVacancyConverter() {
-		super(JobVacancy.class, JobVacancyDTO.class, JobVacancyDTO[]::new);
+		super(JobVacancy.class, JobVacancyDTO.class, size -> new JobVacancyDTO[size]);
 	}
 
 	public static @NonNull JobVacancyConverter getInstance() {

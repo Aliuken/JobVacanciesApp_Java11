@@ -2,7 +2,7 @@ package com.aliuken.jobvacanciesapp;
 
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
-import com.aliuken.jobvacanciesapp.util.javase.stream.superclass.StreamUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateTimeUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils;

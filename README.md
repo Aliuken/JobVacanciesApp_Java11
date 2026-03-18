@@ -114,7 +114,7 @@
 
 **JobVacanciesApp_Java11** is an open-source web application made with **OpenJDK 11** and **Spring Boot 2.7.18** to learn how to make a website to manage job vacancies using state-of-the-art Spring-related technologies.
 
-The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **SOLID principles** in a **monolithic architecture**.
+The code was created under the [Apache License 2.0](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/LICENSE) using the **package-by-layer** style in a **monolithic architecture**.
 
 ### 1.1. About JobVacanciesApp_AppData_Java11
 
@@ -521,7 +521,8 @@ The PCs used to develop and execute the application were two:
 
 Other technologies currently used are:
 * **IntelliJ IDEA 2025.3.1**: As the IDE.
-* **SonarQube for IDE**: As the static program analysis tool (actually, it is a plugin for IntelliJ IDEA).
+* **GitHub Copilot** plugin for IntelliJ IDEA: As the AI pair programmer (using the free plan).
+* **SonarQube for IDE** plugin for IntelliJ IDEA: As the static program analysis tool.
 * **Mozilla Firefox**: As the main web browser.
 * **PNG**: As the file format (**.png**) of the [ERD image](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.png), the [images in JobVacanciesApp_Java11](https://github.com/Aliuken/JobVacanciesApp_Java11/tree/main/src/main/resources/static/images) and the [images in JobVacanciesApp_AppData_Java11](https://github.com/Aliuken/JobVacanciesApp_AppData_Java11/tree/main/AppData_Java11/JobVacanciesApp/job-company-logos).
 * **draw.io**: As the file format (**.drawio**) of the [ERD](https://github.com/Aliuken/JobVacanciesApp_Java11/blob/main/documentation/Entity-Relationship-Diagram.drawio).

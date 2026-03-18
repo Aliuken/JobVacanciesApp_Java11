@@ -10,7 +10,7 @@ public class AuthUserEmailConverter extends EntityToDtoConverter<AuthUserCredent
 	private static final @NonNull AuthUserEmailConverter SINGLETON_INSTANCE = new AuthUserEmailConverter();
 
 	private AuthUserEmailConverter() {
-		super(AuthUserCredentials.class, AuthUserEmailDTO.class, AuthUserEmailDTO[]::new);
+		super(AuthUserCredentials.class, AuthUserEmailDTO.class, size -> new AuthUserEmailDTO[size]);
 	}
 
 	public static @NonNull AuthUserEmailConverter getInstance() {

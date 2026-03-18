@@ -10,7 +10,7 @@ public class AuthUserConverter extends EntityToDtoConverter<AuthUser, AuthUserDT
 	private static final @NonNull AuthUserConverter SINGLETON_INSTANCE = new AuthUserConverter();
 
 	private AuthUserConverter() {
-		super(AuthUser.class, AuthUserDTO.class, AuthUserDTO[]::new);
+		super(AuthUser.class, AuthUserDTO.class, size -> new AuthUserDTO[size]);
 	}
 
 	public static @NonNull AuthUserConverter getInstance() {

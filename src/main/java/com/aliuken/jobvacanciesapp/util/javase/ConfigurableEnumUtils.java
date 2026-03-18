@@ -104,12 +104,12 @@ public class ConfigurableEnumUtils {
 	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T> getCurrentDefaultConfigurableEnumElement(final @NonNull Class<U> configurableEnumClass, final ConfigPropertiesBean configPropertiesBean) {
 		final ConfigurableEnum<T> defaultConfigurableEnumElement = this.getDefaultConfigurableEnumElement(configurableEnumClass);
 
-		final List<Supplier<ConfigurableEnum<T>>> configurableEnumSuppliers = List.of(
+		final List<@NonNull Supplier<ConfigurableEnum<T>>> configurableEnumSuppliers = List.of(
 			() -> defaultConfigurableEnumElement.getOverwrittenEnumElement(configPropertiesBean),
 			() -> defaultConfigurableEnumElement.getOverwritableEnumElement(configPropertiesBean)
 		);
 
-		Supplier<ConfigurableEnum<T>> finalDefaultEnumElementSupplier = () -> defaultConfigurableEnumElement.getFinalDefaultEnumElement();
+		Supplier<@NonNull ConfigurableEnum<T>> finalDefaultEnumElementSupplier = () -> defaultConfigurableEnumElement.getFinalDefaultEnumElement();
 
 		final ConfigurableEnum<T> currentDefaultConfigurableEnumElement = getFirstConfigurableEnumElementThatHasASpecificValueLazily(configurableEnumSuppliers, finalDefaultEnumElementSupplier);
 		return currentDefaultConfigurableEnumElement;
@@ -154,14 +154,14 @@ public class ConfigurableEnumUtils {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getFirstEnumElementThatHasASpecificValueLazily(final @NonNull Collection<Supplier<U>> initialConfigurableEnumElementSuppliers, final @NonNull Supplier<@NonNull U> defaultConfigurableEnumElementSupplier) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getFirstEnumElementThatHasASpecificValueLazily(final @NonNull Collection<@NonNull Supplier<U>> initialConfigurableEnumElementSuppliers, final @NonNull Supplier<@NonNull U> defaultConfigurableEnumElementSupplier) {
 		final U finalConfigurableEnumElement = getFirstConfigurableEnumElementThatHasASpecificValueLazily(initialConfigurableEnumElementSuppliers, defaultConfigurableEnumElementSupplier);
 		final T finalEnumElement = GenericsUtils.cast(finalConfigurableEnumElement);
 		return finalEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull U getFirstConfigurableEnumElementThatHasASpecificValueLazily(final @NonNull Collection<Supplier<U>> initialConfigurableEnumElementSuppliers, final @NonNull Supplier<@NonNull U> defaultConfigurableEnumElementSupplier) {
-		final Predicate<U> configurableEnumElementCondition = configurableEnumElement -> configurableEnumElement.hasASpecificValue();
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull U getFirstConfigurableEnumElementThatHasASpecificValueLazily(final @NonNull Collection<@NonNull Supplier<U>> initialConfigurableEnumElementSuppliers, final @NonNull Supplier<@NonNull U> defaultConfigurableEnumElementSupplier) {
+		final Predicate<@NonNull U> configurableEnumElementCondition = configurableEnumElement -> configurableEnumElement.hasASpecificValue();
 
 		final U finalConfigurableEnumElement =
 			Constants.SEQUENTIAL_STREAM_UTILS.getFirstElementFilteredByConditionLazily(initialConfigurableEnumElementSuppliers, configurableEnumElementCondition, defaultConfigurableEnumElementSupplier);
@@ -176,21 +176,21 @@ public class ConfigurableEnumUtils {
 	}
 
 	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull U getFirstConfigurableEnumElementThatHasASpecificValue(final @NonNull Collection<U> initialConfigurableEnumElements, final @NonNull U defaultConfigurableEnumElement) {
-		final Predicate<U> configurableEnumElementCondition = configurableEnumElement -> configurableEnumElement.hasASpecificValue();
+		final Predicate<@NonNull U> configurableEnumElementCondition = configurableEnumElement -> configurableEnumElement.hasASpecificValue();
 
 		final U finalConfigurableEnumElement =
-				Constants.SEQUENTIAL_STREAM_UTILS.getFirstElementFilteredByCondition(initialConfigurableEnumElements, configurableEnumElementCondition, defaultConfigurableEnumElement);
+			Constants.SEQUENTIAL_STREAM_UTILS.getFirstElementFilteredByCondition(initialConfigurableEnumElements, configurableEnumElementCondition, defaultConfigurableEnumElement);
 
 		return finalConfigurableEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> ConfigurableEnum<T> getDefaultConfigurableEnumElement(final @NonNull Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull ConfigurableEnum<T> getDefaultConfigurableEnumElement(final @NonNull Class<U> configurableEnumClass) {
 		final T defaultEnumElement = this.getDefaultEnumElement(configurableEnumClass);
 		final ConfigurableEnum<T> defaultConfigurableEnumElement = GenericsUtils.cast(defaultEnumElement);
 		return defaultConfigurableEnumElement;
 	}
 
-	public <T extends Enum<T>, U extends ConfigurableEnum<T>> T getDefaultEnumElement(final @NonNull Class<U> configurableEnumClass) {
+	public <T extends Enum<T>, U extends ConfigurableEnum<T>> @NonNull T getDefaultEnumElement(final @NonNull Class<U> configurableEnumClass) {
 		final Class<T> enumClass = GenericsUtils.cast(configurableEnumClass);
 		final T defaultEnumElement = Enum.valueOf(enumClass, ConfigurableEnum.BY_DEFAULT_ELEMENT_NAME);
 		return defaultEnumElement;

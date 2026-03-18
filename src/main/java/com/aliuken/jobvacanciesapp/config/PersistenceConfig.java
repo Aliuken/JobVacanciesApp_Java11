@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.config;
 
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -22,11 +23,11 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.aliuken.jobvacanciesapp.repository")
 public class PersistenceConfig {
-	private static final DataSource DATA_SOURCE = PersistenceConfig.getDataSource();
-	private static final AbstractEntityManagerFactoryBean ENTITY_MANAGER_FACTORY_BEAN = PersistenceConfig.getEntityManagerFactoryBean(PersistenceConfig.DATA_SOURCE);
-	private static final PlatformTransactionManager TRANSACTION_MANAGER = PersistenceConfig.getTransactionManager(PersistenceConfig.ENTITY_MANAGER_FACTORY_BEAN);
+	private static final @NonNull DataSource DATA_SOURCE = PersistenceConfig.getDataSource();
+	private static final @NonNull AbstractEntityManagerFactoryBean ENTITY_MANAGER_FACTORY_BEAN = PersistenceConfig.getEntityManagerFactoryBean(PersistenceConfig.DATA_SOURCE);
+	private static final @NonNull PlatformTransactionManager TRANSACTION_MANAGER = PersistenceConfig.getTransactionManager(PersistenceConfig.ENTITY_MANAGER_FACTORY_BEAN);
 
-	private static DataSource getDataSource() {
+	private static @NonNull DataSource getDataSource() {
 		String mysqlHost = System.getenv("MYSQL_HOST");
 		if(mysqlHost == null) {
 			mysqlHost = "localhost";
@@ -56,7 +57,7 @@ public class PersistenceConfig {
 		return dataSource;
 	}
 
-	private static AbstractEntityManagerFactoryBean getEntityManagerFactoryBean(final DataSource dataSource) {
+	private static @NonNull AbstractEntityManagerFactoryBean getEntityManagerFactoryBean(final @NonNull DataSource dataSource) {
 		final JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
 		final Properties additionalProperties = new Properties();
@@ -73,7 +74,7 @@ public class PersistenceConfig {
 		return entityManagerFactoryBean;
 	}
 
-	private static PlatformTransactionManager getTransactionManager(final AbstractEntityManagerFactoryBean entityManagerFactoryBean) {
+	private static @NonNull PlatformTransactionManager getTransactionManager(final @NonNull AbstractEntityManagerFactoryBean entityManagerFactoryBean) {
 		final EntityManagerFactory entityManagerFactory = entityManagerFactoryBean.getObject();
 //		final EntityManagerFactory entityManagerFactory = entityManagerFactoryBean.getNativeEntityManagerFactory();
 
@@ -84,22 +85,22 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	DataSource dataSource() {
+	@NonNull DataSource dataSource() {
 		return PersistenceConfig.DATA_SOURCE;
 	}
 
 	@Bean
-	AbstractEntityManagerFactoryBean entityManagerFactory() {
+	@NonNull AbstractEntityManagerFactoryBean entityManagerFactory() {
 		return PersistenceConfig.ENTITY_MANAGER_FACTORY_BEAN;
 	}
 
 	@Bean
-	PlatformTransactionManager transactionManager() {
+	@NonNull PlatformTransactionManager transactionManager() {
 		return PersistenceConfig.TRANSACTION_MANAGER;
 	}
 
 	@Bean
-	PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+	@NonNull PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		final PersistenceExceptionTranslationPostProcessor exceptionTranslation = new PersistenceExceptionTranslationPostProcessor();
 
 		return exceptionTranslation;

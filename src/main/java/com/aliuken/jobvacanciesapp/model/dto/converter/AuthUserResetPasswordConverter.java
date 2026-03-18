@@ -10,7 +10,7 @@ public class AuthUserResetPasswordConverter extends EntityToDtoConverter<AuthUse
 	private static final @NonNull AuthUserResetPasswordConverter SINGLETON_INSTANCE = new AuthUserResetPasswordConverter();
 
 	private AuthUserResetPasswordConverter() {
-		super(AuthUserResetPassword.class, AuthUserResetPasswordDTO.class, AuthUserResetPasswordDTO[]::new);
+		super(AuthUserResetPassword.class, AuthUserResetPasswordDTO.class, size -> new AuthUserResetPasswordDTO[size]);
 	}
 
 	public static @NonNull AuthUserResetPasswordConverter getInstance() {

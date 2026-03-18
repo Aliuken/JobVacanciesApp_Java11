@@ -6,6 +6,7 @@ import com.aliuken.jobvacanciesapp.enumtype.LoggingStats;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.MDC;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,7 +27,7 @@ public class ControllerAspectLoggingUtils {
 		throw new InstantiationException(StringUtils.getStringJoined(Constants.INSTANTIATION_NOT_ALLOWED, className));
 	}
 
-	public static void initMDC(final String operation, final String mappingPath, final RequestMethod requestMethod, final HttpServletRequest request) {
+	public static void initMDC(final String operation, final @NonNull RequestMethod requestMethod, final String mappingPath, final HttpServletRequest request) {
 		MDC.clear();
 		MDC.put(LoggingStats.HTTP_METHOD.getKey(), requestMethod.toString());
 		MDC.put(LoggingStats.MAPPING_PATH.getKey(), mappingPath);

@@ -10,6 +10,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Class that contains the Advises used around DAOs/repositories
@@ -29,7 +30,7 @@ public class RepositoryAspect {
 	private static boolean isInsideLazyEntityRelationGetter = false;
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.repository.*.*(..)) && repositoryMethod()")
-	public Object adviseAroundExecutionInRepositories(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundExecutionInRepositories(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
@@ -45,7 +46,7 @@ public class RepositoryAspect {
 	}
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.repository.superinterface.UpgradedJpaRepository.*(..)) && repositoryMethod()")
-	public Object adviseAroundExecutionInUpgradedJpaRepository(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundExecutionInUpgradedJpaRepository(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
@@ -61,7 +62,7 @@ public class RepositoryAspect {
 	}
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.model.entity.*.*(..)) && lazyEntityRelationGetter()")
-	public Object adviseAroundLazyEntityRelationGetters(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundLazyEntityRelationGetters(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificRepository && !isInsideUpgradedJpaRepository && !isInsideLazyEntityRelationGetter) {
 			try {
@@ -79,12 +80,12 @@ public class RepositoryAspect {
 	/**
 	 * Advise that is executed around the DAO/repository methods or lazy entity relation getters
 	 */
-	private Object adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(final ProceedingJoinPoint joinPoint) throws Throwable {
+	private Object adviseAroundExecutionInRepositoriesOrEntityRelationsCommon(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final long inputTimeMillis = System.currentTimeMillis();
 
 		final RepositoryAspectOrigin repositoryAspectOrigin = RepositoryAspect.getRepositoryAspectOrigin();
 
-		Object result;
+		final Object result;
 		try {
 			result = joinPoint.proceed();
 		} finally {

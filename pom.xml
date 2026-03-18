@@ -209,6 +209,13 @@
 			<version>1.0.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -306,7 +313,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.15.0</version>
+				<version>1.16.0</version>
 				<configuration>
 					<showWeaveInfo/>
 					<sources/>

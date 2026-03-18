@@ -10,7 +10,7 @@ public class AuthUserCredentialsConverter extends EntityToDtoConverter<AuthUserC
 	private static final @NonNull AuthUserCredentialsConverter SINGLETON_INSTANCE = new AuthUserCredentialsConverter();
 
 	private AuthUserCredentialsConverter() {
-		super(AuthUserCredentials.class, AuthUserCredentialsDTO.class, AuthUserCredentialsDTO[]::new);
+		super(AuthUserCredentials.class, AuthUserCredentialsDTO.class, size -> new AuthUserCredentialsDTO[size]);
 	}
 
 	public static @NonNull AuthUserCredentialsConverter getInstance() {

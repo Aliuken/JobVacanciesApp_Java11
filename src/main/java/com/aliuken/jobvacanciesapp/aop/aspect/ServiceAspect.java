@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jspecify.annotations.NonNull;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.CannotCreateTransactionException;
 
@@ -25,7 +26,7 @@ public class ServiceAspect {
 	private static boolean isInsideSecurity = false;
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.service.*.*(..)) && serviceMethod()")
-	public Object adviseAroundExecutionInServices(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundExecutionInServices(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
@@ -41,7 +42,7 @@ public class ServiceAspect {
 	}
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.service.superclass.*.*(..)) && serviceMethod()")
-	public Object adviseAroundExecutionInServiceInterfaces(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundExecutionInServiceInterfaces(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
@@ -57,7 +58,7 @@ public class ServiceAspect {
 	}
 
 	@Around("execution(public * com.aliuken.jobvacanciesapp.security.*.*(..)) && serviceMethod()")
-	public Object adviseAroundExecutionInHandlers(final ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object adviseAroundExecutionInHandlers(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		final Object result;
 		if(!isInsideSpecificService && !isInsideServiceSuperinterface && !isInsideSecurity) {
 			try {
@@ -75,7 +76,7 @@ public class ServiceAspect {
 	/**
 	 * Advise that is executed around the service methods
 	 */
-	private Object adviseAroundExecutionInServicesCommon(final ProceedingJoinPoint joinPoint) throws Throwable {
+	private Object adviseAroundExecutionInServicesCommon(final @NonNull ProceedingJoinPoint joinPoint) throws Throwable {
 		Object result;
 		try {
 			result = joinPoint.proceed();
@@ -93,8 +94,6 @@ public class ServiceAspect {
 			} else {
 				throw specificException;
 			}
-		} catch(final Exception exception) {
-			throw exception;
 		}
 
 		return result;

@@ -12,7 +12,7 @@ public class JobRequestConverter extends EntityToDtoConverter<JobRequest, JobReq
 	private static final @NonNull JobRequestConverter SINGLETON_INSTANCE = new JobRequestConverter();
 
 	private JobRequestConverter() {
-		super(JobRequest.class, JobRequestDTO.class, JobRequestDTO[]::new);
+		super(JobRequest.class, JobRequestDTO.class, size -> new JobRequestDTO[size]);
 	}
 
 	public static @NonNull JobRequestConverter getInstance() {

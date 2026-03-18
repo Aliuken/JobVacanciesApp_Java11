@@ -79,7 +79,8 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 	}
 
 	private String[][] createContentArrayFromPage(final Page<T> entityPage) {
-		final List<AbstractEntity> entityList = GenericsUtils.cast(entityPage.getContent());
+		final List<T> entityPageContent = entityPage.getContent();
+		final List<AbstractEntity> entityList = GenericsUtils.cast(entityPageContent);
 
 		final String[][] contentArray;
 		if(entityList != null && !entityList.isEmpty()) {

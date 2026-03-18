@@ -10,7 +10,7 @@ public class JobCompanyLogoConverter extends EntityToDtoConverter<JobCompanyLogo
 	private static final @NonNull JobCompanyLogoConverter SINGLETON_INSTANCE = new JobCompanyLogoConverter();
 
 	private JobCompanyLogoConverter() {
-		super(JobCompanyLogo.class, JobCompanyLogoDTO.class, JobCompanyLogoDTO[]::new);
+		super(JobCompanyLogo.class, JobCompanyLogoDTO.class, size -> new JobCompanyLogoDTO[size]);
 	}
 
 	public static @NonNull JobCompanyLogoConverter getInstance() {

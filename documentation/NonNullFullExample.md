@@ -63,4 +63,4 @@ private FileType(final @NonNull String @NonNull ... allowedFileExtensionsVarargs
 NOTES:
 - allowedFileExtensionsVarargs cannot be null because of "@NonNull ..." or "@NonNull []"
 - every allowedFileExtension in allowedFileExtensionsVarargs cannot be null because of "@NonNull String"
-- To search occurrences, use the regex "\@NonNull.*\[\]" and "\@NonNull.*\.\.\."
+- To search occurrences, use the regex "\@NonNull.*\[\]" and "\@NonNull.*\.\.\." and "IntFunction" for array generators

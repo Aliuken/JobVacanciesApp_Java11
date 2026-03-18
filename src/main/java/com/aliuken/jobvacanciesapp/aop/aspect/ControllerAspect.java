@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jspecify.annotations.NonNull;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +61,7 @@ public class ControllerAspect {
 		return ControllerAspect.isInsideController;
 	}
 
-	public static String getTraceType(final ControllerDependentTraceType controllerDependentTraceType) {
+	public static String getTraceType(final @NonNull ControllerDependentTraceType controllerDependentTraceType) {
 		final String finalTraceType;
 		if(isInsideController) {
 			finalTraceType = controllerDependentTraceType.getTraceInsideController();
@@ -71,19 +72,19 @@ public class ControllerAspect {
 	}
 
 	@Before("execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()")
-	public void adviseBeforeExecutionInRequestMappingControllers(final JoinPoint joinPoint) {
+	public void adviseBeforeExecutionInRequestMappingControllers(final @NonNull JoinPoint joinPoint) {
 		final RequestMapping requestMapping = ControllerAspectRestUtils.getRequestMapping(joinPoint);
 		this.adviseBeforeExecutionInControllersCommon(joinPoint, requestMapping.method()[0], requestMapping.value()[0]);
 	}
 
 	@Before("execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && getMapping()")
-	public void adviseBeforeExecutionInGetMappingControllers(final JoinPoint joinPoint) {
+	public void adviseBeforeExecutionInGetMappingControllers(final @NonNull JoinPoint joinPoint) {
 		final GetMapping getMapping = ControllerAspectRestUtils.getGetMapping(joinPoint);
 		this.adviseBeforeExecutionInControllersCommon(joinPoint, RequestMethod.GET, getMapping.value()[0]);
 	}
 
 	@Before("execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && postMapping()")
-	public void adviseBeforeExecutionInPostMappingControllers(final JoinPoint joinPoint) {
+	public void adviseBeforeExecutionInPostMappingControllers(final @NonNull JoinPoint joinPoint) {
 		final PostMapping postMapping = ControllerAspectRestUtils.getPostMapping(joinPoint);
 		this.adviseBeforeExecutionInControllersCommon(joinPoint, RequestMethod.POST, postMapping.value()[0]);
 	}
@@ -91,14 +92,15 @@ public class ControllerAspect {
 	/**
 	 * Advise that is executed before executing the REST controllers
 	 */
-	private void adviseBeforeExecutionInControllersCommon(final JoinPoint joinPoint, final RequestMethod requestMethod, final String mappingPath) {
+	private void adviseBeforeExecutionInControllersCommon(final @NonNull JoinPoint joinPoint, final @NonNull RequestMethod requestMethod, final String mappingPath) {
 		final String methodName = joinPoint.getSignature().getName();
 		final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-		ControllerAspectLoggingUtils.initMDC(methodName, mappingPath, requestMethod, request);
+		ControllerAspectLoggingUtils.initMDC(methodName, requestMethod, mappingPath, request);
 
 		if(log.isInfoEnabled()) {
 			final String methodSignature = joinPoint.getSignature().toShortString();
-			log.info(StringUtils.getStringJoined(CONTROLLER_INPUT_TRACE, "[", methodSignature, "] mapped in [", mappingPath, "]"));
+			final String restEndpoint = StringUtils.getStringJoined(requestMethod.name(), " ", mappingPath);
+			log.info(StringUtils.getStringJoined(CONTROLLER_INPUT_TRACE, "[", methodSignature, "] mapped in [", restEndpoint, "]"));
 		}
 
 		if(log.isTraceEnabled()) {
@@ -128,19 +130,19 @@ public class ControllerAspect {
 	}
 
 	@AfterReturning(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()", returning = "returnValue")
-	public void adviseAfterExecutionInRequestMappingControllers(final JoinPoint joinPoint, final String returnValue) {
+	public void adviseAfterExecutionInRequestMappingControllers(final @NonNull JoinPoint joinPoint, final String returnValue) {
 		final RequestMapping requestMapping = ControllerAspectRestUtils.getRequestMapping(joinPoint);
 		this.adviseAfterExecutionInControllersCommon(joinPoint, requestMapping.method()[0], requestMapping.value()[0], returnValue);
 	}
 
 	@AfterReturning(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && getMapping()", returning = "returnValue")
-	public void adviseAfterExecutionInGetMappingControllers(final JoinPoint joinPoint, final String returnValue) {
+	public void adviseAfterExecutionInGetMappingControllers(final @NonNull JoinPoint joinPoint, final String returnValue) {
 		final GetMapping getMapping = ControllerAspectRestUtils.getGetMapping(joinPoint);
 		this.adviseAfterExecutionInControllersCommon(joinPoint, RequestMethod.GET, getMapping.value()[0], returnValue);
 	}
 
 	@AfterReturning(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && postMapping()", returning = "returnValue")
-	public void adviseAfterExecutionInPostMappingControllers(final JoinPoint joinPoint, final String returnValue) {
+	public void adviseAfterExecutionInPostMappingControllers(final @NonNull JoinPoint joinPoint, final String returnValue) {
 		final PostMapping postMapping = ControllerAspectRestUtils.getPostMapping(joinPoint);
 		this.adviseAfterExecutionInControllersCommon(joinPoint, RequestMethod.POST, postMapping.value()[0], returnValue);
 	}
@@ -148,32 +150,33 @@ public class ControllerAspect {
 	/**
 	 * Advise that is executed after executing the REST controllers when the result is obtained correctly
 	 */
-	private void adviseAfterExecutionInControllersCommon(final JoinPoint joinPoint, final RequestMethod requestMethod, final String mappingPath, final String returnValue) {
+	private void adviseAfterExecutionInControllersCommon(final @NonNull JoinPoint joinPoint, final @NonNull RequestMethod requestMethod, final String mappingPath, final String returnValue) {
 		ControllerAspect.isInsideController = false;
 
 		final String statsResult = ControllerAspectLoggingUtils.endMDC();
 
 		if(log.isInfoEnabled()) {
 			final String methodName = joinPoint.getSignature().getName();
-			log.info(StringUtils.getStringJoined(CONTROLLER_OUTPUT_TRACE, "[", methodName, "] mapped in [", mappingPath, "] returned: ", returnValue));
+			final String restEndpoint = StringUtils.getStringJoined(requestMethod.name(), " ", mappingPath);
+			log.info(StringUtils.getStringJoined(CONTROLLER_OUTPUT_TRACE, "[", methodName, "] mapped in [", restEndpoint, "] returned: ", returnValue));
 			log.info(StringUtils.getStringJoined("Stats result:", statsResult));
 		}
 	}
 
 	@AfterThrowing(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && requestMapping()", throwing = "exception")
-	public void adviseAfterExceptionIsThrownInRequestMappingControllers(final JoinPoint joinPoint, final Exception exception) {
+	public void adviseAfterExceptionIsThrownInRequestMappingControllers(final @NonNull JoinPoint joinPoint, final @NonNull Exception exception) {
 		final RequestMapping requestMapping = ControllerAspectRestUtils.getRequestMapping(joinPoint);
 		this.adviseAfterExceptionIsThrownInControllersCommon(joinPoint, requestMapping.method()[0], requestMapping.value()[0], exception);
 	}
 
 	@AfterThrowing(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && getMapping()", throwing = "exception")
-	public void adviseAfterExceptionIsThrownInGetMappingControllers(final JoinPoint joinPoint, final Exception exception) {
+	public void adviseAfterExceptionIsThrownInGetMappingControllers(final @NonNull JoinPoint joinPoint, final @NonNull Exception exception) {
 		final GetMapping getMapping = ControllerAspectRestUtils.getGetMapping(joinPoint);
 		this.adviseAfterExceptionIsThrownInControllersCommon(joinPoint, RequestMethod.GET, getMapping.value()[0], exception);
 	}
 
 	@AfterThrowing(pointcut = "execution(public * com.aliuken.jobvacanciesapp.controller.*.*(..)) && postMapping()", throwing = "exception")
-	public void adviseAfterExceptionIsThrownInPostMappingControllers(final JoinPoint joinPoint, final Exception exception) {
+	public void adviseAfterExceptionIsThrownInPostMappingControllers(final @NonNull JoinPoint joinPoint, final @NonNull Exception exception) {
 		final PostMapping postMapping = ControllerAspectRestUtils.getPostMapping(joinPoint);
 		this.adviseAfterExceptionIsThrownInControllersCommon(joinPoint, RequestMethod.POST, postMapping.value()[0], exception);
 	}
@@ -181,7 +184,7 @@ public class ControllerAspect {
 	/**
 	 * Advise that is executed after executing the REST controllers when an exception is thrown
 	 */
-	private void adviseAfterExceptionIsThrownInControllersCommon(final JoinPoint joinPoint, final RequestMethod requestMethod, final String mappingPath, final Exception exception) {
+	private void adviseAfterExceptionIsThrownInControllersCommon(final @NonNull JoinPoint joinPoint, final @NonNull RequestMethod requestMethod, final String mappingPath, final @NonNull Exception exception) {
 		ControllerAspect.isInsideController = false;
 
 		final String statsResult = ControllerAspectLoggingUtils.endMDC();
@@ -189,12 +192,13 @@ public class ControllerAspect {
 		if(log.isInfoEnabled()) {
 			final String methodName = joinPoint.getSignature().getName();
 			final String rootCauseMessage = ThrowableUtils.getRootCauseMessage(exception);
-			log.info(StringUtils.getStringJoined(CONTROLLER_OUTPUT_TRACE, "[", methodName, "] mapped in [", mappingPath, "]. Finished in Exception: ", exception.getClass().toString(), ", message: ", rootCauseMessage));
+			final String restEndpoint = StringUtils.getStringJoined(requestMethod.name(), " ", mappingPath);
+			log.info(StringUtils.getStringJoined(CONTROLLER_OUTPUT_TRACE, "[", methodName, "] mapped in [", restEndpoint, "]. Finished in Exception: ", exception.getClass().toString(), ", message: ", rootCauseMessage));
 			log.info(StringUtils.getStringJoined("Stats result:", statsResult));
 		}
 	}
 
-	private static String extractPathFromPattern(final HttpServletRequest request) {
+	private static String extractPathFromPattern(final @NonNull HttpServletRequest request) {
 		final String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 		final String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
 

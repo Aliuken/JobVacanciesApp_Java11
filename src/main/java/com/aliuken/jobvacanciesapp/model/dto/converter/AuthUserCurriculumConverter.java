@@ -12,7 +12,7 @@ public class AuthUserCurriculumConverter extends EntityToDtoConverter<AuthUserCu
 	private static final @NonNull AuthUserCurriculumConverter SINGLETON_INSTANCE = new AuthUserCurriculumConverter();
 
 	private AuthUserCurriculumConverter() {
-		super(AuthUserCurriculum.class, AuthUserCurriculumDTO.class, AuthUserCurriculumDTO[]::new);
+		super(AuthUserCurriculum.class, AuthUserCurriculumDTO.class, size -> new AuthUserCurriculumDTO[size]);
 	}
 
 	public static @NonNull AuthUserCurriculumConverter getInstance() {

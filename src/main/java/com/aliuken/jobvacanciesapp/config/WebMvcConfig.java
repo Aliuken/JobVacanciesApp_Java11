@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.config;
 import com.aliuken.jobvacanciesapp.model.formatter.LocalDateFormatter;
 import com.aliuken.jobvacanciesapp.model.formatter.LocalDateTimeFormatter;
 import com.aliuken.jobvacanciesapp.util.persistence.file.FileUtils;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -30,19 +31,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	private LocalDateTimeFormatter localDateTimeFormatter;
 
 	@Override
-	public void addFormatters(final FormatterRegistry formatterRegistry) {
+	public void addFormatters(final @NonNull FormatterRegistry formatterRegistry) {
 		formatterRegistry.addFormatterForFieldType(LocalDate.class, localDateFormatter);
 		formatterRegistry.addFormatterForFieldType(LocalDateTime.class, localDateTimeFormatter);
 	}
 
 	@Override
-	public void addInterceptors(final InterceptorRegistry interceptorRegistry) {
+	public void addInterceptors(final @NonNull InterceptorRegistry interceptorRegistry) {
 		final LocaleChangeInterceptor localeChangeInterceptor = i18nConfig.localeChangeInterceptor();
 		interceptorRegistry.addInterceptor(localeChangeInterceptor);
 	}
 
 	@Override
-	public void addResourceHandlers(final ResourceHandlerRegistry resourceHandlerRegistry) {
+	public void addResourceHandlers(final @NonNull ResourceHandlerRegistry resourceHandlerRegistry) {
 		final String authUserCurriculumFilesPath = configPropertiesBean.getAuthUserCurriculumFilesPath();
 		final String authUserEntityQueryFilesPath = configPropertiesBean.getAuthUserEntityQueryFilesPath();
 		final String jobCompanyLogosPath = configPropertiesBean.getJobCompanyLogosPath();
