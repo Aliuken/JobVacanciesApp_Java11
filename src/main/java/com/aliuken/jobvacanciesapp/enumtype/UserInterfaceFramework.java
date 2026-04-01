@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -25,7 +26,7 @@ public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFram
 	public static UserInterfaceFramework findByCode(final String code) {
 		final UserInterfaceFramework userInterfaceFramework;
 		if(code != null) {
-			userInterfaceFramework = Constants.PARALLEL_STREAM_UTILS.ofEnum(UserInterfaceFramework.class)
+			userInterfaceFramework = StreamStaticUtils.ofEnum(UserInterfaceFramework.class, false)
 				.filter(userInterfaceFrameworkAux -> code.equals(userInterfaceFrameworkAux.code))
 				.findFirst()
 				.orElse(null);
@@ -41,19 +42,19 @@ public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFram
 	}
 
 	@Override
-	public ConfigurableEnum<UserInterfaceFramework> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public UserInterfaceFramework getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final UserInterfaceFramework userInterfaceFramework = configPropertiesBean.getDefaultUserInterfaceFrameworkOverwritten();
 		return userInterfaceFramework;
 	}
 
 	@Override
-	public ConfigurableEnum<UserInterfaceFramework> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public UserInterfaceFramework getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final UserInterfaceFramework userInterfaceFramework = configPropertiesBean.getDefaultUserInterfaceFramework();
 		return userInterfaceFramework;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<UserInterfaceFramework> getFinalDefaultEnumElement() {
+	public @NonNull UserInterfaceFramework getFinalDefaultEnumElement() {
 		return UserInterfaceFramework.MATERIAL_DESIGN;
 	}
 }

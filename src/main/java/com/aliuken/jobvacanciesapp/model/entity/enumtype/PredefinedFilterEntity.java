@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -42,7 +43,7 @@ public enum PredefinedFilterEntity implements Serializable {
 			return null;
 		}
 
-		final PredefinedFilterEntity predefinedFilterEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PredefinedFilterEntity.class)
+		final PredefinedFilterEntity predefinedFilterEntity = StreamStaticUtils.ofEnum(PredefinedFilterEntity.class, false)
 			.filter(predefinedFilterEntityAux -> entityName.equals(predefinedFilterEntityAux.upperCasedEntityName))
 			.findFirst()
 			.orElse(null);

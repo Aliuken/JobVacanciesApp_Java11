@@ -1,8 +1,12 @@
 package com.aliuken.jobvacanciesapp.util.security;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.enumtype.EndpointType;
 import com.aliuken.jobvacanciesapp.model.entity.AuthRole;
+import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -100,14 +104,17 @@ public class SpringSecurityUtils {
 	public @NonNull Set<String> getAuthorityNames() {
 		final Authentication authentication = this.getAuthentication();
 
-		final Collection<? extends GrantedAuthority> grantedAuthorities;
+		final Collection<GrantedAuthority> grantedAuthorities;
 		if(authentication != null) {
-			grantedAuthorities = authentication.getAuthorities();
+			final Collection<? extends GrantedAuthority> authenticationAuthorities = authentication.getAuthorities();
+			grantedAuthorities = GenericsUtils.cast(authenticationAuthorities);
 		} else {
 			grantedAuthorities = null;
 		}
 
-		final Set<String> grantedAuthorityNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(grantedAuthorities)
+		final StreamUtils<GrantedAuthority> grantedAuthorityStreamUtils = StreamUtilsImpl.getInstance(GrantedAuthority.class);
+
+		final Set<String> grantedAuthorityNames = grantedAuthorityStreamUtils.ofNullableCollection(grantedAuthorities)
 			.map(grantedAuthority -> grantedAuthority.getAuthority())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 

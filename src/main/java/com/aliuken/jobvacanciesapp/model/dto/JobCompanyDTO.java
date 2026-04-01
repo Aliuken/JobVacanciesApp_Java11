@@ -2,7 +2,10 @@ package com.aliuken.jobvacanciesapp.model.dto;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import lombok.Data;
 import org.jspecify.annotations.NonNull;
 
@@ -92,7 +95,9 @@ public class JobCompanyDTO implements AbstractEntityDTO, Serializable {
 	}
 
 	public List<String> getJobCompanyLogoFilePaths() {
-		final List<String> jobCompanyLogoFilePaths = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogoDTO> jobCompanyLogoDtoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogoDTO.class);
+
+		final List<String> jobCompanyLogoFilePaths = jobCompanyLogoDtoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.map(jcl -> jcl.getFilePath())
 			.collect(Collectors.toList());
 

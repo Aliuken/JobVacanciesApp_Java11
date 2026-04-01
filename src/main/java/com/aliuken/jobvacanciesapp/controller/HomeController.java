@@ -516,7 +516,7 @@ public class HomeController implements InputFlashMapManager {
 
 			final Example<JobVacancy> jobVacancyExample = Example.of(jobVacancySearch, exampleMatcher);
 			final List<JobVacancy> approvedJobVacancies = jobVacancyService.findAll(jobVacancyExample);
-			final List<JobVacancyDTO> approvedJobVacancyDTOs = JobVacancyConverter.getInstance().convertEntityList(approvedJobVacancies);
+			final List<JobVacancyDTO> approvedJobVacancyDTOs = JobVacancyConverter.getInstance().convertEntityList(approvedJobVacancies, JobVacancy.class);
 
 			model.addAttribute("approvedJobVacancyDTOs", approvedJobVacancyDTOs);
 
@@ -565,7 +565,7 @@ public class HomeController implements InputFlashMapManager {
 	@ModelAttribute
 	public void setGenerics(final @NonNull Model model) {
 		final List<JobVacancy> approvedJobVacancies = jobVacancyService.findAllHighlighted();
-		final List<JobVacancyDTO> approvedJobVacancyDTOs = JobVacancyConverter.getInstance().convertEntityList(approvedJobVacancies);
+		final List<JobVacancyDTO> approvedJobVacancyDTOs = JobVacancyConverter.getInstance().convertEntityList(approvedJobVacancies, JobVacancy.class);
 		model.addAttribute("approvedJobVacancyDTOs", approvedJobVacancyDTOs);
 
 		final List<JobCategory> jobCategories = jobCategoryService.findAll();

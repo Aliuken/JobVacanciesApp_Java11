@@ -5,6 +5,7 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableField;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.i18n.I18nUtils;
+import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;
@@ -51,7 +52,10 @@ public class TableSearchDTO implements Serializable {
 		this.sortingField = sortingField;
 		this.sortingDirection = sortingDirection;
 		MIRAR -> hacer lo mismo con el resto de enumerados
+		this.pageSize = pageSize;
 		this.pageSize = (tablePageSize != null) ? tablePageSize.getValue() : TablePageSize.BY_DEFAULT.getValue();
+		this.pageSize = ConfigurableEnumUtils.getInstance().getCurrentDefaultElement(TablePageSize.class).getValue();
+				//(tablePageSize != null) ? tablePageSize.getValue() : TablePageSize.BY_DEFAULT.getValue();
 		this.pageNumber = (pageNumber != null) ? pageNumber : 0;
 	}
 
@@ -85,7 +89,7 @@ public class TableSearchDTO implements Serializable {
 	public boolean hasAllParameters() {
 		final Language language = this.getLanguage();
 
-		final boolean hasAllParameters = (language.hasASpecificValue()
+		final boolean hasAllParameters = (language.isASpecificElement()
 			&& filterName != null && filterValue != null
 			&& LogicalUtils.isNotNullNorEmptyString(sortingField)
 			&& LogicalUtils.isNotNullNorEmptyString(sortingDirection)

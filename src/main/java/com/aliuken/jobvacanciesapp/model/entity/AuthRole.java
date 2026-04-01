@@ -2,11 +2,15 @@ package com.aliuken.jobvacanciesapp.model.entity;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.comparator.AuthUserRoleAuthUserFullNameComparator;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -73,7 +77,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserRoleIds() {
-		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<Long> authUserRoleIds = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -82,7 +88,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<AuthUser> getAuthUsers() {
-		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<AuthUser> authUsers = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthUser())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -91,7 +99,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserIds() {
-		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<Long> authUserIds = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthUser())
 			.map(authUser -> authUser.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -101,7 +111,9 @@ public class AuthRole extends AbstractEntity<AuthRole> implements Internationali
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getAuthUserEmails() {
-		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<String> authUserEmails = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthUser())
 			.map(authUser -> authUser.getEmail())
 			.collect(Collectors.toCollection(LinkedHashSet::new));

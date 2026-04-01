@@ -15,6 +15,8 @@ import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.componentbuilder.GenericTableBuilder;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.dto.GenericTableContentDTO;
 import com.itextpdf.text.BaseColor;
@@ -29,6 +31,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Page;
 
 import java.io.ByteArrayOutputStream;
@@ -51,10 +54,10 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 	private static final int RESULT_TABLE_CELL_HORIZONTAL_ALIGNMENT = Element.ALIGN_LEFT;
 	private static final Font RESULT_TABLE_CELL_FONT = new Font(FontFamily.HELVETICA, 7, Font.NORMAL);
 
-	private final AuthUserEntityQuery authUserEntityQuery;
-	private final String[][] contentArray;
+	private final @NonNull AuthUserEntityQuery authUserEntityQuery;
+	private final @NonNull String @NonNull [] @NonNull [] contentArray;
 
-	public static <U extends AbstractEntity<U>> AuthUserQueryReport<U> generatePdfDocument(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<U> entityPage) {
+	public static <U extends AbstractEntity<U>> AuthUserQueryReport<U> generatePdfDocument(final ByteArrayOutputStream byteArrayOutputStream, final @NonNull AuthUserEntityQuery authUserEntityQuery, final Page<U> entityPage) {
 		AuthUserQueryReport<U> result;
 		try(final AuthUserQueryReport<U> authUserQueryReport = new AuthUserQueryReport<>(byteArrayOutputStream, authUserEntityQuery, entityPage)) {
 			authUserQueryReport.open();
@@ -62,7 +65,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 			result = authUserQueryReport;
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
-				final String authUserEntityQueryString = String.valueOf(authUserEntityQuery);
+				final String authUserEntityQueryString = authUserEntityQuery.toString();
 				final String stackTrace = ThrowableUtils.getStackTrace(exception);
 				log.error(StringUtils.getStringJoined("Error when saving an AuthUserQueryReport with authUserEntityQuery \"", authUserEntityQueryString, "\". Exception: ", stackTrace));
 			}
@@ -71,14 +74,15 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		return result;
 	}
 
-	private AuthUserQueryReport(final ByteArrayOutputStream byteArrayOutputStream, final AuthUserEntityQuery authUserEntityQuery, final Page<T> entityPage) throws DocumentException, IOException {
+	private AuthUserQueryReport(final ByteArrayOutputStream byteArrayOutputStream, final @NonNull AuthUserEntityQuery authUserEntityQuery, final Page<T> entityPage) throws DocumentException, IOException {
 		super(authUserEntityQuery.getInitialPdfDocumentPageFormat(), authUserEntityQuery.getFinalPdfDocumentPageFormat(), byteArrayOutputStream);
 		this.authUserEntityQuery = authUserEntityQuery;
 		this.contentArray = this.createContentArrayFromPage(entityPage);
 		this.addPageEventHelper();
 	}
 
-	private String[][] createContentArrayFromPage(final Page<T> entityPage) {
+	@SuppressWarnings("rawtypes")
+	private @NonNull String @NonNull [] @NonNull [] createContentArrayFromPage(final Page<T> entityPage) {
 		final List<T> entityPageContent = entityPage.getContent();
 		final List<AbstractEntity> entityList = GenericsUtils.cast(entityPageContent);
 
@@ -86,8 +90,11 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 		if(entityList != null && !entityList.isEmpty()) {
 			final AbstractEntity<?> abstractEntity = entityList.get(0);
 			if(abstractEntity.isPrintableEntity()) {
-				final List<String[]> contentList = Constants.PARALLEL_STREAM_UTILS.convertList(entityList,
+				final StreamUtils<AbstractEntity> entityStreamUtils = StreamUtilsImpl.getInstance(AbstractEntity.class);
+
+				final List<String[]> contentList = entityStreamUtils.convertList(entityList,
 						entity -> entity.getGroupedFields(), AbstractEntity.class, String[].class);
+
 				contentArray = contentList.toArray(new String[][]{});
 			} else {
 				contentArray = new String[0][0];
@@ -99,27 +106,16 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 	}
 
 	@Override
-	public String getLeftFooter() {
-		final String leftFooter;
-		if(authUserEntityQuery != null) {
-			final AuthUser authUser = authUserEntityQuery.getAuthUser();
+	public @NonNull String getLeftFooter() {
+		final AuthUser authUser = authUserEntityQuery.getAuthUser();
+		final String authUserId = authUser.getIdString();
 
-			final String authUserId;
-			if(authUser != null) {
-				authUserId = authUser.getIdString();
-			} else {
-				authUserId = null;
-			}
+		final String queryId = authUserEntityQuery.getIdString();
 
-			final String queryId = authUserEntityQuery.getIdString();
-			final LocalDateTime queryDateTime = authUserEntityQuery.getFirstRegistrationDateTime();
-			final String queryDateTimeString = Constants.DATE_TIME_UTILS.convertToString(queryDateTime);
+		final LocalDateTime queryDateTime = authUserEntityQuery.getFirstRegistrationDateTime();
+		final String queryDateTimeString = Constants.DATE_TIME_UTILS.convertToString(queryDateTime);
 
-			leftFooter = StringUtils.getStringJoined("[", authUserId, ", ", queryId, "] - ", queryDateTimeString);
-		} else {
-			leftFooter = null;
-		}
-
+		final String leftFooter = StringUtils.getStringJoined("[", authUserId, ", ", queryId, "] - ", queryDateTimeString);
 		return leftFooter;
 	}
 

@@ -103,7 +103,7 @@ public class AuthUserEntityQuery extends AbstractEntityWithAuthUser<AuthUserEnti
 		this.pageEntity = pageEntity;
 		this.initialPdfDocumentPageFormat = authUser.getPdfDocumentPageFormat();
 		final List<PdfDocumentPageFormat> possiblePdfDocumentPageFormats = Collections.singletonList(initialPdfDocumentPageFormat);
-		this.finalPdfDocumentPageFormat = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possiblePdfDocumentPageFormats, ConfigPropertiesBean.CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT);
+		this.finalPdfDocumentPageFormat = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possiblePdfDocumentPageFormats, ConfigPropertiesBean.CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT, PdfDocumentPageFormat.class);
 		this.language = tableSearchDTO.getLanguage();
 
 		if(predefinedFilterDTO != null) {

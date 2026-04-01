@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -33,7 +34,7 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 		}
 
 		final int intValue = value.intValue();
-		final TablePageSize tablePageSize = Constants.PARALLEL_STREAM_UTILS.ofEnum(TablePageSize.class)
+		final TablePageSize tablePageSize = StreamStaticUtils.ofEnum(TablePageSize.class, false)
 			.filter(tablePageSizeAux -> tablePageSizeAux.value == intValue)
 			.findFirst()
 			.orElse(null);
@@ -41,7 +42,7 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	}
 
 	public static @NonNull TablePageSize[] getSpecificEnumElements() {
-		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificEnumElements(TablePageSize.class);
+		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(TablePageSize.class);
 		return enumElementsWithoutByDefault;
 	}
 
@@ -51,19 +52,19 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	}
 
 	@Override
-	public ConfigurableEnum<TablePageSize> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public TablePageSize getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final TablePageSize tablePageSize = configPropertiesBean.getDefaultInitialTablePageSizeOverwritten();
 		return tablePageSize;
 	}
 
 	@Override
-	public ConfigurableEnum<TablePageSize> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public TablePageSize getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final TablePageSize tablePageSize = configPropertiesBean.getDefaultInitialTablePageSize();
 		return tablePageSize;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<TablePageSize> getFinalDefaultEnumElement() {
+	public @NonNull TablePageSize getFinalDefaultEnumElement() {
 		return TablePageSize.SIZE_5;
 	}
 }

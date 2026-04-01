@@ -1,6 +1,9 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -78,14 +81,18 @@ public enum AllowedViewsEnum implements Serializable {
 	private static final @NonNull Map<AnonymousAccessPermission, AllowedViewsEnum> ALLOWED_VIEWS_MAP = AllowedViewsEnum.getAllowedViewsMap();
 
 	private AllowedViewsEnum(final AnonymousAccessPermission anonymousAccessPermission) {
-		this.anonymousAccessPermission = Constants.ENUM_UTILS.getFinalEnumElement(anonymousAccessPermission, AnonymousAccessPermission.class);
+		this.anonymousAccessPermission = Constants.ENUM_UTILS.getFinalElement(anonymousAccessPermission, AnonymousAccessPermission.class);
 
 		if(AnonymousAccessPermission.ACCESS_ALLOWED == this.anonymousAccessPermission) {
-			this.anonymousViewsArray = Constants.PARALLEL_STREAM_UTILS.joinArrays(size -> new String[size], FIXED_ANONYMOUS_VIEWS_ARRAY, VARIABLE_VIEWS_ARRAY);
+			final StreamUtils<String> stringStreamUtils = StreamUtilsImpl.getInstance(String.class);
+
+			this.anonymousViewsArray = stringStreamUtils.joinArrays(size -> new String[size], FIXED_ANONYMOUS_VIEWS_ARRAY, VARIABLE_VIEWS_ARRAY);
 			this.userViewsArray = FIXED_USER_VIEWS_ARRAY;
 		} else {
+			final StreamUtils<String> stringStreamUtils = StreamUtilsImpl.getInstance(String.class);
+
 			this.anonymousViewsArray = FIXED_ANONYMOUS_VIEWS_ARRAY;
-			this.userViewsArray = Constants.PARALLEL_STREAM_UTILS.joinArrays(size -> new String[size], FIXED_USER_VIEWS_ARRAY, VARIABLE_VIEWS_ARRAY);
+			this.userViewsArray = stringStreamUtils.joinArrays(size -> new String[size], FIXED_USER_VIEWS_ARRAY, VARIABLE_VIEWS_ARRAY);
 		}
 
 		this.supervisorViewsArray = SUPERVISOR_VIEWS_ARRAY;
@@ -101,15 +108,12 @@ public enum AllowedViewsEnum implements Serializable {
 		final AllowedViewsEnum[] allowedViewsEnumElements = AllowedViewsEnum.values();
 
 		final Map<AnonymousAccessPermission, AllowedViewsEnum> allowedViewsMap = new HashMap<>();
-		final Consumer<AllowedViewsEnum> allowedViewsEnumConsumer = (allowedViewsEnum -> {
+		for(AllowedViewsEnum allowedViewsEnum : allowedViewsEnumElements) {
 			if(allowedViewsEnum != null) {
 				final AnonymousAccessPermission anonymousAccessPermission = allowedViewsEnum.getAnonymousAccessPermission();
 				allowedViewsMap.put(anonymousAccessPermission, allowedViewsEnum);
 			}
-		});
-
-		final Stream<AllowedViewsEnum> allowedViewsEnumStream = Constants.PARALLEL_STREAM_UTILS.ofNullableArray(allowedViewsEnumElements);
-		allowedViewsEnumStream.forEach(allowedViewsEnumConsumer);
+		}
 
 		return allowedViewsMap;
 	}

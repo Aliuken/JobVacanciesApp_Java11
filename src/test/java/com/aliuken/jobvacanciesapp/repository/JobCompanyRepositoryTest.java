@@ -427,7 +427,7 @@ public class JobCompanyRepositoryTest extends AbstractTransactionalJUnit4SpringC
 		Assertions.assertEquals(selectedJobCompanyLogoId, jobCompanyDTO.getSelectedLogoId());
 		Assertions.assertEquals(selectedJobCompanyLogoFilePath, jobCompanyDTO.getSelectedLogoFilePath());
 
-		final Set<JobCompanyLogoDTO> jobCompanyLogoDTOs = JobCompanyLogoConverter.getInstance().convertEntitySet(jobCompanyLogos);
+		final Set<JobCompanyLogoDTO> jobCompanyLogoDTOs = JobCompanyLogoConverter.getInstance().convertEntitySet(jobCompanyLogos, JobCompanyLogo.class);
 		Assertions.assertEquals(jobCompanyLogoDTOs, jobCompanyDTO.getJobCompanyLogos());
 	}
 }

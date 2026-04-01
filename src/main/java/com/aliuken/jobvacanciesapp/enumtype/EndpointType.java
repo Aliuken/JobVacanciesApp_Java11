@@ -2,7 +2,10 @@ package com.aliuken.jobvacanciesapp.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.EndpointRegexPatternDTO;
+import com.aliuken.jobvacanciesapp.model.dto.JobCompanyLogoDTO;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -165,7 +168,9 @@ public enum EndpointType implements Serializable {
 			}
 		});
 
-		final Stream<EndpointType> endpointTypeStream = Constants.PARALLEL_STREAM_UTILS.ofNullableArray(endpointTypes);
+		final StreamUtils<EndpointType> endpointTypeStreamUtils = StreamUtilsImpl.getInstance(EndpointType.class);
+
+		final Stream<EndpointType> endpointTypeStream = endpointTypeStreamUtils.ofNullableArray(endpointTypes);
 		endpointTypeStream.forEach(endpointTypeConsumer);
 
 		return endpointTypeMap;

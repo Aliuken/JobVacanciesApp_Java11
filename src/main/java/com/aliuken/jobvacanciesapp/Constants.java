@@ -27,9 +27,6 @@ public class Constants {
 	public static final TemporalUtils<LocalDate> DATE_UTILS = DateUtils.getInstance();
 	public static final TemporalUtils<LocalDateTime> DATE_TIME_UTILS = DateTimeUtils.getInstance();
 
-	public static final StreamUtils SEQUENTIAL_STREAM_UTILS = StreamUtilsImpl.sequential();
-	public static final StreamUtils PARALLEL_STREAM_UTILS = StreamUtilsImpl.parallel();
-
 	public static final String SESSION_AUTH_USER_ID = "sessionAuthUserId";
 	public static final String SESSION_ACCOUNT_DELETED = "sessionAccountDeleted";
 

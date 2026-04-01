@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.comparator.AuthUserRoleAuthRolePriorityComparator;
 import com.aliuken.jobvacanciesapp.model.comparator.JobRequestJobVacancyPublicationDateTimeComparator;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
@@ -11,9 +12,13 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.service.JobCompanyLogoService;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -165,7 +170,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserRoleIds() {
-		final Set<Long> authUserRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<Long> authUserRoleIds = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -174,7 +181,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<AuthRole> getAuthRoles() {
-		final Set<AuthRole> authRoles = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<AuthRole> authRoles = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -183,7 +192,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthRoleIds() {
-		final Set<Long> authRoleIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<Long> authRoleIds = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.map(authRole -> authRole.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -193,7 +204,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getAuthRoleNames() {
-		final Set<String> authRoleNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Set<String> authRoleNames = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.map(authRole -> authRole.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -203,7 +216,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobRequestIds() {
-		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<Long> jobRequestIds = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -212,7 +227,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<JobVacancy> getJobVacancies() {
-		final Set<JobVacancy> jobVacancies = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<JobVacancy> jobVacancies = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getJobVacancy())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -221,7 +238,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobVacancyIds() {
-		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<Long> jobVacancyIds = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getJobVacancy())
 			.map(jobVacancy -> jobVacancy.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -231,7 +250,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getJobVacancyNames() {
-		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<String> jobVacancyNames = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getJobVacancy())
 			.map(jobVacancy -> jobVacancy.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -241,7 +262,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserCurriculumIds() {
-		final Set<Long> authUserCurriculumIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
+		final StreamUtils<AuthUserCurriculum> authUserCurriculumStreamUtils = StreamUtilsImpl.getInstance(AuthUserCurriculum.class);
+
+		final Set<Long> authUserCurriculumIds = authUserCurriculumStreamUtils.ofNullableCollection(authUserCurriculums)
 			.map(authUserCurriculum -> authUserCurriculum.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -250,7 +273,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getAuthUserCurriculumSelectionNames() {
-		final Set<String> authUserCurriculumSelectionNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserCurriculums)
+		final StreamUtils<AuthUserCurriculum> authUserCurriculumStreamUtils = StreamUtilsImpl.getInstance(AuthUserCurriculum.class);
+
+		final Set<String> authUserCurriculumSelectionNames = authUserCurriculumStreamUtils.ofNullableCollection(authUserCurriculums)
 			.map(authUserCurriculum -> authUserCurriculum.getSelectionName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -259,7 +284,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserEntityQueryIds() {
-		final Set<Long> authUserEntityQueryIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserEntityQueries)
+		final StreamUtils<AuthUserEntityQuery> userEntityQueryStreamUtils =	StreamUtilsImpl.getInstance(AuthUserEntityQuery.class);
+
+		final Set<Long> authUserEntityQueryIds = userEntityQueryStreamUtils.ofNullableCollection(authUserEntityQueries)
 			.map(authUserEntityQuery -> authUserEntityQuery.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -272,7 +299,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 			return null;
 		}
 
-		final AuthRole authRole = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final AuthRole authRole = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.findFirst()
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.orElse(null);
@@ -286,7 +315,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 			return null;
 		}
 
-		final Long authRoleId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final Long authRoleId = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.findFirst()
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.map(authRole -> authRole.getId())
@@ -301,7 +332,9 @@ public class AuthUser extends AbstractEntity<AuthUser> {
 			return null;
 		}
 
-		final String authRoleName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(authUserRoles)
+		final StreamUtils<AuthUserRole> authUserRoleStreamUtils = StreamUtilsImpl.getInstance(AuthUserRole.class);
+
+		final String authRoleName = authUserRoleStreamUtils.ofNullableCollection(authUserRoles)
 			.findFirst()
 			.map(authUserRole -> authUserRole.getAuthRole())
 			.map(authRole -> authRole.getName())

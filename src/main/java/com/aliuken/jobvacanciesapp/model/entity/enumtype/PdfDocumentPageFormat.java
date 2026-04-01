@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 			return null;
 		}
 
-		final PdfDocumentPageFormat pdfDocumentPageFormat = Constants.PARALLEL_STREAM_UTILS.ofEnum(PdfDocumentPageFormat.class)
+		final PdfDocumentPageFormat pdfDocumentPageFormat = StreamStaticUtils.ofEnum(PdfDocumentPageFormat.class, false)
 			.filter(pdfDocumentPageFormatAux -> code.equals(pdfDocumentPageFormatAux.code))
 			.findFirst()
 			.orElse(null);
@@ -49,19 +50,19 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 	}
 
 	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public PdfDocumentPageFormat getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final PdfDocumentPageFormat pdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormatOverwritten();
 		return pdfDocumentPageFormat;
 	}
 
 	@Override
-	public ConfigurableEnum<PdfDocumentPageFormat> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public PdfDocumentPageFormat getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final PdfDocumentPageFormat pdfDocumentPageFormat = configPropertiesBean.getDefaultPdfDocumentPageFormat();
 		return pdfDocumentPageFormat;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<PdfDocumentPageFormat> getFinalDefaultEnumElement() {
+	public @NonNull PdfDocumentPageFormat getFinalDefaultEnumElement() {
 		return PdfDocumentPageFormat.A4_VERTICAL;
 	}
 }

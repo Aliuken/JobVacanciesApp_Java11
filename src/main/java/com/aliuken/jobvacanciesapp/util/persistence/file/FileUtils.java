@@ -48,7 +48,7 @@ public class FileUtils {
 	/**
 	 * Method to get the resource location of a file path
 	 */
-	public static String getFileResourceLocation(final String filePathString) {
+	public static @NonNull String getFileResourceLocation(final String filePathString) {
 		final String resourceLocation = StringUtils.getStringJoined(FILE_RESOURCE_LOCATION_PREFIX, filePathString);
 		return resourceLocation;
 	}

@@ -2,7 +2,11 @@ package com.aliuken.jobvacanciesapp.model.dto.converter.superclass;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.model.dto.superinterface.AbstractEntityDTO;
+import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
+import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
@@ -30,18 +34,27 @@ public abstract class EntityToDtoConverter<T extends AbstractEntity<T>,U extends
 		return dtoElement;
 	}
 
-	public @NonNull U[] convertEntityArray(final T @NonNull [] entityArray) {
-		final U[] dtoArray = Constants.PARALLEL_STREAM_UTILS.convertArray(entityArray, conversionFunction, inputClass, outputClass, arrayGenerator);
+	public U @NonNull [] convertEntityArray(final T @NonNull [] entityArray) {
+		final Class<?> entityArrayComponentType = entityArray.getClass().getComponentType();
+		final Class<T> entityClass = GenericsUtils.cast(entityArrayComponentType);
+
+		final StreamUtils<T> entityStreamUtils = StreamUtilsImpl.getInstance(entityClass);
+
+		final U[] dtoArray = entityStreamUtils.convertArray(entityArray, conversionFunction, inputClass, outputClass, arrayGenerator);
 		return dtoArray;
 	}
 
-	public @NonNull List<U> convertEntityList(final @NonNull List<T> entityList) {
-		final List<U> dtoList = Constants.PARALLEL_STREAM_UTILS.convertList(entityList, conversionFunction, inputClass, outputClass);
+	public @NonNull List<U> convertEntityList(final @NonNull List<T> entityList, final @NonNull Class<T> entityClass) {
+		final StreamUtils<T> entityStreamUtils = StreamUtilsImpl.getInstance(entityClass);
+
+		final List<U> dtoList = entityStreamUtils.convertList(entityList, conversionFunction, inputClass, outputClass);
 		return dtoList;
 	}
 
-	public @NonNull Set<U> convertEntitySet(final @NonNull Set<T> entitySet) {
-		final Set<U> dtoSet = Constants.PARALLEL_STREAM_UTILS.convertSet(entitySet, conversionFunction, inputClass, outputClass);
+	public @NonNull Set<U> convertEntitySet(final @NonNull Set<T> entitySet, final @NonNull Class<T> entityClass) {
+		final StreamUtils<T> entityStreamUtils = StreamUtilsImpl.getInstance(entityClass);
+
+		final Set<U> dtoSet = entityStreamUtils.convertSet(entitySet, conversionFunction, inputClass, outputClass);
 		return dtoSet;
 	}
 }

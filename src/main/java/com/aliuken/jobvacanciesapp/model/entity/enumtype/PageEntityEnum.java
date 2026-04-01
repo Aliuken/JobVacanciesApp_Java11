@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -28,7 +29,7 @@ public enum PageEntityEnum implements Serializable {
 			return null;
 		}
 
-		final PageEntityEnum pageEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(PageEntityEnum.class)
+		final PageEntityEnum pageEntity = StreamStaticUtils.ofEnum(PageEntityEnum.class, false)
 			.filter(pageEntityAux -> value.equals(pageEntityAux.value))
 			.findFirst()
 			.orElse(null);

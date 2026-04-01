@@ -16,6 +16,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jspecify.annotations.NonNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,7 +76,7 @@ public abstract class PdfDocument extends Document implements AutoCloseable {
 		pdfWriter.setPageEvent(pageEventHelper);
 	}
 
-	protected abstract String getLeftFooter();
+	protected abstract @NonNull String getLeftFooter();
 
 	protected PdfDocumentPageFormat getInitialPdfDocumentPageFormat() {
 		return initialPdfDocumentPageFormat;

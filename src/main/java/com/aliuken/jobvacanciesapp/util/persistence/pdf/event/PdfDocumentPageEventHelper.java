@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jspecify.annotations.NonNull;
 
 public class PdfDocumentPageEventHelper extends PdfPageEventHelper {
 	private static final int PDF_TEMPLATE_WIDTH = 100;
@@ -24,11 +25,11 @@ public class PdfDocumentPageEventHelper extends PdfPageEventHelper {
 
 	private static final float DOC_BOTTOM_MARGIN = PdfDocument.cmToPoints(0.5f);
 
-	private final String leftFooter;
+	private final @NonNull String leftFooter;
 
 	private PdfTemplate totalNumberOfPagesTemplate;
 
-	public PdfDocumentPageEventHelper(final String leftFooter) {
+	public PdfDocumentPageEventHelper(final @NonNull String leftFooter) {
 		this.leftFooter = leftFooter;
 	}
 

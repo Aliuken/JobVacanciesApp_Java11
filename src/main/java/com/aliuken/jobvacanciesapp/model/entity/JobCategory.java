@@ -2,9 +2,13 @@ package com.aliuken.jobvacanciesapp.model.entity;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -57,7 +61,9 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobVacancyIds() {
-		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
+		final StreamUtils<JobVacancy> jobVacancyStreamUtils = StreamUtilsImpl.getInstance(JobVacancy.class);
+
+		final Set<Long> jobVacancyIds = jobVacancyStreamUtils.ofNullableCollection(jobVacancies)
 			.map(jobVacancy -> jobVacancy.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -66,7 +72,9 @@ public class JobCategory extends AbstractEntity<JobCategory> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getJobVacancyNames() {
-		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
+		final StreamUtils<JobVacancy> jobVacancyStreamUtils = StreamUtilsImpl.getInstance(JobVacancy.class);
+
+		final Set<String> jobVacancyNames = jobVacancyStreamUtils.ofNullableCollection(jobVacancies)
 			.map(jobVacancy -> jobVacancy.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 

@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -28,7 +29,7 @@ public enum Currency implements ConfigurableEnum<Currency> {
 			return null;
 		}
 
-		final Currency currency = Constants.PARALLEL_STREAM_UTILS.ofEnum(Currency.class)
+		final Currency currency = StreamStaticUtils.ofEnum(Currency.class, false)
 			.filter(currencyAux -> symbol.equals(currencyAux.symbol))
 			.findFirst()
 			.orElse(null);
@@ -36,7 +37,7 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	}
 
 	public static @NonNull Currency[] getSpecificEnumElements() {
-		final Currency[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificEnumElements(Currency.class);
+		final Currency[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(Currency.class);
 		return enumElementsWithoutByDefault;
 	}
 
@@ -46,17 +47,17 @@ public enum Currency implements ConfigurableEnum<Currency> {
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<Currency> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Currency getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		return Currency.BY_DEFAULT;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<Currency> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public @NonNull Currency getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		return Currency.BY_DEFAULT;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<Currency> getFinalDefaultEnumElement() {
+	public @NonNull Currency getFinalDefaultEnumElement() {
 		return Currency.US_DOLLAR;
 	}
 }

@@ -4,6 +4,7 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.LogicalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -77,7 +78,7 @@ public enum TableField implements Serializable, Internationalizable {
 			return null;
 		}
 
-		final TableField tableField = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
+		final TableField tableField = StreamStaticUtils.ofEnum(TableField.class, false)
 			.filter(e -> code.equals(e.code))
 			.findFirst()
 			.orElse(null);
@@ -85,7 +86,7 @@ public enum TableField implements Serializable, Internationalizable {
 	}
 
 	public static @NonNull TableField[] valuesForCombo(final boolean isAuthUserEntityOrContainsDifferentAuthUsers, final boolean isJobCompanyEntityOrContainsDifferentJobCompanies, final boolean isUnmodifiableEntity) {
-		final TableField[] tableFields = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableField.class)
+		final TableField[] tableFields = StreamStaticUtils.ofEnum(TableField.class, false)
 			.filter(TableField.valuesForComboPredicate(isAuthUserEntityOrContainsDifferentAuthUsers, isJobCompanyEntityOrContainsDifferentJobCompanies, isUnmodifiableEntity))
 			.toArray(TableField[]::new);
 		return tableFields;

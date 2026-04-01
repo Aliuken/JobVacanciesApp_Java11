@@ -2,9 +2,13 @@ package com.aliuken.jobvacanciesapp.model.entity;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntity;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -76,7 +80,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 			return null;
 		}
 
-		final JobCompanyLogo selectedJobCompanyLogo = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final JobCompanyLogo selectedJobCompanyLogo = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.filter(jobCompanyLogo -> selectedLogoFileName.equals(jobCompanyLogo.getFileName()))
 			.findFirst()
 			.orElse(null);
@@ -90,7 +96,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 			return null;
 		}
 
-		final Long selectedJobCompanyLogoId = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final Long selectedJobCompanyLogoId = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.filter(jobCompanyLogo -> selectedLogoFileName.equals(jobCompanyLogo.getFileName()))
 			.findFirst()
 			.map(jobCompanyLogo -> jobCompanyLogo.getId())
@@ -105,7 +113,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 			return Constants.NO_SELECTED_LOGO_FILE_PATH;
 		}
 
-		final String selectedJobCompanyLogoFilePath = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final String selectedJobCompanyLogoFilePath = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.filter(jobCompanyLogo -> selectedLogoFileName.equals(jobCompanyLogo.getFileName()))
 			.findFirst()
 			.map(jobCompanyLogo -> jobCompanyLogo.getFilePath())
@@ -120,7 +130,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 			return null;
 		}
 
-		final String selectedJobCompanyLogoSelectionName = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final String selectedJobCompanyLogoSelectionName = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.filter(jobCompanyLogo -> selectedLogoFileName.equals(jobCompanyLogo.getFileName()))
 			.findFirst()
 			.map(jobCompanyLogo -> jobCompanyLogo.getSelectionName())
@@ -131,7 +143,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobCompanyLogoIds() {
-		final Set<Long> jobCompanyLogoIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final Set<Long> jobCompanyLogoIds = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.map(jobCompanyLogo -> jobCompanyLogo.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -140,7 +154,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getJobCompanyLogoSelectionNames() {
-		final Set<String> jobCompanyLogoSelectionNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobCompanyLogos)
+		final StreamUtils<JobCompanyLogo> jobCompanyLogoStreamUtils = StreamUtilsImpl.getInstance(JobCompanyLogo.class);
+
+		final Set<String> jobCompanyLogoSelectionNames = jobCompanyLogoStreamUtils.ofNullableCollection(jobCompanyLogos)
 			.map(jobCompanyLogo -> jobCompanyLogo.getSelectionName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -149,7 +165,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobVacancyIds() {
-		final Set<Long> jobVacancyIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
+		final StreamUtils<JobVacancy> jobVacancyStreamUtils = StreamUtilsImpl.getInstance(JobVacancy.class);
+
+		final Set<Long> jobVacancyIds = jobVacancyStreamUtils.ofNullableCollection(jobVacancies)
 			.map(jobVacancy -> jobVacancy.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -158,7 +176,9 @@ public class JobCompany extends AbstractEntity<JobCompany> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getJobVacancyNames() {
-		final Set<String> jobVacancyNames = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobVacancies)
+		final StreamUtils<JobVacancy> jobVacancyStreamUtils = StreamUtilsImpl.getInstance(JobVacancy.class);
+
+		final Set<String> jobVacancyNames = jobVacancyStreamUtils.ofNullableCollection(jobVacancies)
 			.map(jobVacancy -> jobVacancy.getName())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 

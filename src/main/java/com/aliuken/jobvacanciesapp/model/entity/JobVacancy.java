@@ -2,12 +2,16 @@ package com.aliuken.jobvacanciesapp.model.entity;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.annotation.LazyEntityRelationGetter;
+import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.model.comparator.JobRequestAuthUserFullNameComparator;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.JobVacancyStatus;
 import com.aliuken.jobvacanciesapp.model.entity.superclass.AbstractEntityWithJobCompany;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.persistence.pdf.util.StyleApplier;
+import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -130,7 +134,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getJobRequestIds() {
-		final Set<Long> jobRequestIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<Long> jobRequestIds = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -139,7 +145,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<AuthUser> getAuthUsers() {
-		final Set<AuthUser> authUsers = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<AuthUser> authUsers = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getAuthUser())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -148,7 +156,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<Long> getAuthUserIds() {
-		final Set<Long> authUserIds = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<Long> authUserIds = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getAuthUser())
 			.map(authUser -> authUser.getId())
 			.collect(Collectors.toCollection(LinkedHashSet::new));
@@ -158,7 +168,9 @@ public class JobVacancy extends AbstractEntityWithJobCompany<JobVacancy> {
 
 	@LazyEntityRelationGetter
 	public @NonNull Set<String> getAuthUserEmails() {
-		final Set<String> authUserEmails = Constants.PARALLEL_STREAM_UTILS.ofNullableCollection(jobRequests)
+		final StreamUtils<JobRequest> jobRequestStreamUtils = StreamUtilsImpl.getInstance(JobRequest.class);
+
+		final Set<String> authUserEmails = jobRequestStreamUtils.ofNullableCollection(jobRequests)
 			.map(jobRequest -> jobRequest.getAuthUser())
 			.map(authUser -> authUser.getEmail())
 			.collect(Collectors.toCollection(LinkedHashSet::new));

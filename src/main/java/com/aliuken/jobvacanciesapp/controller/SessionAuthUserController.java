@@ -153,7 +153,7 @@ public class SessionAuthUserController implements InputFlashMapManager {
 			sessionAuthUser.setPdfDocumentPageFormat(pdfDocumentPageFormat);
 			sessionAuthUser = authUserService.saveAndFlush(sessionAuthUser);
 
-			final Language finalAuthUserLanguage = Constants.ENUM_UTILS.getFinalEnumElement(authUserLanguage, Language.class);
+			final Language finalAuthUserLanguage = Constants.ENUM_UTILS.getFinalElement(authUserLanguage, Language.class);
 			languageCode = finalAuthUserLanguage.getCode();
 
 			httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER_ID, sessionAuthUser.getId());
@@ -320,8 +320,8 @@ public class SessionAuthUserController implements InputFlashMapManager {
 		model.addAttribute("applicationNextConfigDTO", initialApplicationNextConfigDTO);
 
 		if(log.isInfoEnabled()) {
-			final String applicationDefaultConfigDtoString = String.valueOf(applicationDefaultConfigDTO);
-			final String initialApplicationNextConfigDtoString = String.valueOf(initialApplicationNextConfigDTO);
+			final String applicationDefaultConfigDtoString = applicationDefaultConfigDTO.toString();
+			final String initialApplicationNextConfigDtoString = initialApplicationNextConfigDTO.toString();
 			log.info(StringUtils.getStringJoined(
 				"1. restartApp:",
 				"\n- applicationDefaultConfigDTO: ", applicationDefaultConfigDtoString,
@@ -407,7 +407,7 @@ public class SessionAuthUserController implements InputFlashMapManager {
 		}
 	}
 
-	private ApplicationDefaultConfigDTO getApplicationDefaultConfigDTO() {
+	private @NonNull ApplicationDefaultConfigDTO getApplicationDefaultConfigDTO() {
 		final String authUserCurriculumFilesPath = configPropertiesBean.getAuthUserCurriculumFilesPath();
 		final String authUserEntityQueryFilesPath = configPropertiesBean.getAuthUserEntityQueryFilesPath();
 		final String jobCompanyLogosPath = configPropertiesBean.getJobCompanyLogosPath();
@@ -433,10 +433,10 @@ public class SessionAuthUserController implements InputFlashMapManager {
 		return applicationDefaultConfigDTO;
 	}
 
-	private ApplicationNextConfigDTO getInitialApplicationNextConfigDTO() {
+	private @NonNull ApplicationNextConfigDTO getInitialApplicationNextConfigDTO() {
 		final String overwrittenLanguageCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_LANGUAGE.getCode();
 		final String overwrittenAnonymousAccessPermissionValue = ConfigPropertiesBean.CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION.getValue();
-		final String overwrittenInitialTableSortingDirectionCode = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION.getCode());
+		final String overwrittenInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION.getCode();
 		final String overwrittenInitialTablePageSizeValue = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE.getValue());
 		final String overwrittenColorModeCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_COLOR_MODE.getCode();
 		final String overwrittenUserInterfaceFrameworkCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK.getCode();

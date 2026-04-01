@@ -2,6 +2,7 @@ package com.aliuken.jobvacanciesapp.model.entity.enumtype;
 
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -37,7 +38,7 @@ public enum TableFieldEntity implements Serializable {
 	public static TableFieldEntity findByEntityName(final String entityName) {
 		final TableFieldEntity tableFieldEntity;
 		if(entityName != null) {
-			tableFieldEntity = Constants.PARALLEL_STREAM_UTILS.ofEnum(TableFieldEntity.class)
+			tableFieldEntity = StreamStaticUtils.ofEnum(TableFieldEntity.class, false)
 				.filter(tableFieldEntityAux -> entityName.equals(tableFieldEntityAux.upperCasedEntityName))
 				.findFirst()
 				.orElse(null);

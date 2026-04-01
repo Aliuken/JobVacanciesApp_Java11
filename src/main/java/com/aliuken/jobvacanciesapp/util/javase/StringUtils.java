@@ -1,6 +1,7 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import org.jspecify.annotations.NonNull;
 
 import java.net.URI;
@@ -86,7 +87,7 @@ public class StringUtils {
 	}
 
 	public static <K extends Comparable<K>,V> @NonNull String getMapString(final Map<K,V> map) {
-		Stream<Map.Entry<K,V>> mapEntryStream = Constants.SEQUENTIAL_STREAM_UTILS.ofNullableMap(map);
+		Stream<Map.Entry<K,V>> mapEntryStream = StreamStaticUtils.ofNullableMap(map, false);
 		mapEntryStream = mapEntryStream.sorted(Map.Entry.comparingByKey());
 
 		final CharSequence delimiter = Constants.EMPTY_STRING;

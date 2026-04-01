@@ -843,7 +843,7 @@ The ad-hoc non-overwritable properties are the following:
 * **jobvacanciesapp.jobCompanyLogosPath**: Indicates the folder where the company logos are stored. Initial value: "/AppData_Java11/JobVacanciesApp/job-company-logos/".
 * **jobvacanciesapp.useAjaxToRefreshJobCompanyLogos**: Indicates whether the company logos can be refreshed without reloading the full page (using AJAX) or not (using URL parameters). Initial value: "true". Possible values: "true" or "false".
 * **jobvacanciesapp.useEntityManagerCache**: Indicates if the cache **entityManagerCache** is used or not to get the EntityManager for an AbstractEntity subclass. Initial value: "true". Possible values: "true" or "false".
-* **jobvacanciesapp.useParallelStreams**: Indicates if the application should use parallel or sequential streams. Initial value: "true". Possible values: "true" or "false".
+* **jobvacanciesapp.useParallelStreams**: Indicates if the application should use parallel or sequential streams. Initial value: "false". Possible values: "true" (parallel) or "false" (sequential).
 * **jobvacanciesapp.signupConfirmationLinkExpirationHours**: Indicates the expiration hours of the signup confirmation link.  Initial value: "24". Possible values: "longs".
 * **jobvacanciesapp.resetPasswordLinkExpirationHours**: Indicates the expiration hours of the reset password link.  Initial value: "24". Possible values: "longs".
 

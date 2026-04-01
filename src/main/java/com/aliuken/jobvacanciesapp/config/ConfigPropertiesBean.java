@@ -4,6 +4,12 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
+import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
+import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
+import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
+import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
@@ -12,6 +18,8 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
+import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -132,23 +140,23 @@ public class ConfigPropertiesBean {
 
 	@PostConstruct
 	private void postConstruct() {
-		CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(AnonymousAccessPermission.class, this);
-		CURRENT_DEFAULT_COLOR_MODE = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(ColorMode.class, this);
-		CURRENT_DEFAULT_CURRENCY = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(Currency.class, this);
-		CURRENT_DEFAULT_LANGUAGE = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(Language.class, this);
-		CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(PdfDocumentPageFormat.class, this);
-		CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TableSortingDirection.class, this);
-		CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(TablePageSize.class, this);
-		CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentDefaultEnumElement(UserInterfaceFramework.class, this);
+		CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentDefaultElement(AnonymousAccessPermission.class, this);
+		CURRENT_DEFAULT_COLOR_MODE = Constants.ENUM_UTILS.getCurrentDefaultElement(ColorMode.class, this);
+		CURRENT_DEFAULT_CURRENCY = Constants.ENUM_UTILS.getCurrentDefaultElement(Currency.class, this);
+		CURRENT_DEFAULT_LANGUAGE = Constants.ENUM_UTILS.getCurrentDefaultElement(Language.class, this);
+		CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentDefaultElement(PdfDocumentPageFormat.class, this);
+		CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentDefaultElement(TableSortingDirection.class, this);
+		CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentDefaultElement(TablePageSize.class, this);
+		CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentDefaultElement(UserInterfaceFramework.class, this);
 
-		CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(AnonymousAccessPermission.class, this);
-		CURRENT_OVERWRITTEN_COLOR_MODE = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(ColorMode.class, this);
-		CURRENT_OVERWRITTEN_CURRENCY = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(Currency.class, this);
-		CURRENT_OVERWRITTEN_LANGUAGE = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(Language.class, this);
-		CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(PdfDocumentPageFormat.class, this);
-		CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(TableSortingDirection.class, this);
-		CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(TablePageSize.class, this);
-		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentOverwrittenEnumElement(UserInterfaceFramework.class, this);
+		CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentOverwrittenElement(AnonymousAccessPermission.class, this);
+		CURRENT_OVERWRITTEN_COLOR_MODE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(ColorMode.class, this);
+		CURRENT_OVERWRITTEN_CURRENCY = Constants.ENUM_UTILS.getCurrentOverwrittenElement(Currency.class, this);
+		CURRENT_OVERWRITTEN_LANGUAGE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(Language.class, this);
+		CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentOverwrittenElement(PdfDocumentPageFormat.class, this);
+		CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentOverwrittenElement(TableSortingDirection.class, this);
+		CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(TablePageSize.class, this);
+		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentOverwrittenElement(UserInterfaceFramework.class, this);
 	}
 
 	public @NonNull String getInitialCurrencySymbol() {
@@ -157,7 +165,7 @@ public class ConfigPropertiesBean {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
 			Currency initialCurrency = (sessionAuthUser != null) ? sessionAuthUser.getInitialCurrency() : null;
 			final List<Currency> possibleCurrencies = Collections.singletonList(initialCurrency);
-			initialCurrency = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleCurrencies, Currency.US_DOLLAR);
+			initialCurrency = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleCurrencies, Currency.US_DOLLAR, Currency.class);
 			initialCurrencySymbol = initialCurrency.getSymbol();
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
@@ -181,7 +189,7 @@ public class ConfigPropertiesBean {
 
 				TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
 				final List<TableSortingDirection> possibleTableSortingDirections = Collections.singletonList(initialTableSortingDirection);
-				initialTableSortingDirection = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleTableSortingDirections, currentDefaultInitialTableSortingDirection);
+				initialTableSortingDirection = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleTableSortingDirections, currentDefaultInitialTableSortingDirection, TableSortingDirection.class);
 				initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {
@@ -221,7 +229,7 @@ public class ConfigPropertiesBean {
 
 				TablePageSize initialTablePageSize = (sessionAuthUser != null) ? sessionAuthUser.getInitialTablePageSize() : null;
 				final List<TablePageSize> possibleTablePageSizes = Collections.singletonList(initialTablePageSize);
-				initialTablePageSize = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleTablePageSizes, currentDefaultInitialTablePageSize);
+				initialTablePageSize = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleTablePageSizes, currentDefaultInitialTablePageSize, TablePageSize.class);
 				initialTablePageSizeValue = initialTablePageSize.getValue();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {

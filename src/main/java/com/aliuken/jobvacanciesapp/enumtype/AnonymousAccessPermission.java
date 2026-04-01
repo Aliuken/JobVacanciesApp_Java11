@@ -3,6 +3,7 @@ package com.aliuken.jobvacanciesapp.enumtype;
 import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
@@ -25,7 +26,7 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 	public static @NonNull AnonymousAccessPermission findByValue(final String value) {
 		final AnonymousAccessPermission anonymousAccessPermission;
 		if(value != null) {
-			anonymousAccessPermission = Constants.PARALLEL_STREAM_UTILS.ofEnum(AnonymousAccessPermission.class)
+			anonymousAccessPermission = StreamStaticUtils.ofEnum(AnonymousAccessPermission.class, false)
 				.filter(anonymousAccessPermissionAux -> value.equals(anonymousAccessPermissionAux.value))
 				.findFirst()
 				.orElse(AnonymousAccessPermission.ACCESS_NOT_ALLOWED);
@@ -42,19 +43,19 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 	}
 
 	@Override
-	public ConfigurableEnum<AnonymousAccessPermission> getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public AnonymousAccessPermission getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final AnonymousAccessPermission anonymousAccessPermission = configPropertiesBean.getDefaultAnonymousAccessPermissionOverwritten();
 		return anonymousAccessPermission;
 	}
 
 	@Override
-	public ConfigurableEnum<AnonymousAccessPermission> getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
+	public AnonymousAccessPermission getOverwritableEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final AnonymousAccessPermission anonymousAccessPermission = configPropertiesBean.getDefaultAnonymousAccessPermission();
 		return anonymousAccessPermission;
 	}
 
 	@Override
-	public @NonNull ConfigurableEnum<AnonymousAccessPermission> getFinalDefaultEnumElement() {
+	public @NonNull AnonymousAccessPermission getFinalDefaultEnumElement() {
 		return AnonymousAccessPermission.ACCESS_NOT_ALLOWED;
 	}
 }

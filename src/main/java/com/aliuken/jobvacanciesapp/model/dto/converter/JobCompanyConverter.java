@@ -43,7 +43,7 @@ public class JobCompanyConverter extends EntityToDtoConverter<JobCompany, JobCom
 		}
 
 		final Set<JobCompanyLogo> jobCompanyLogos = jobCompany.getJobCompanyLogos();
-		jobCompanyLogoDTOs = JobCompanyLogoConverter.getInstance().convertEntitySet(jobCompanyLogos);
+		jobCompanyLogoDTOs = JobCompanyLogoConverter.getInstance().convertEntitySet(jobCompanyLogos, JobCompanyLogo.class);
 //			if(jobCompanyLogos != null) {
 //				jobCompanyLogoDTOs = new LinkedHashSet<>();
 //				for(final JobCompanyLogo jobCompanyLogo : jobCompanyLogos) {

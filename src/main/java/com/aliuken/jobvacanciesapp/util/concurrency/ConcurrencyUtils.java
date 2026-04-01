@@ -1,5 +1,7 @@
 package com.aliuken.jobvacanciesapp.util.concurrency;
 
+import com.aliuken.jobvacanciesapp.util.concurrency.dto.ChunkFutureDTO;
+import com.aliuken.jobvacanciesapp.util.concurrency.dto.ChunkResultDTO;
 import com.aliuken.jobvacanciesapp.util.javase.FunctionalUtils;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.extern.slf4j.Slf4j;

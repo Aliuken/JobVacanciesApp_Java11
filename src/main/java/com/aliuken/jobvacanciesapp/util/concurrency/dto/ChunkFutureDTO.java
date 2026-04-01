@@ -1,4 +1,4 @@
-package com.aliuken.jobvacanciesapp.util.concurrency;
+package com.aliuken.jobvacanciesapp.util.concurrency.dto;
 
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import lombok.Data;

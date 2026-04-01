@@ -117,7 +117,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 			possibleLanguages.add(sessionAuthUser.getLanguage());
 		}
 
-		final Language languageUrlParam = Constants.ENUM_UTILS.getFirstEnumElementThatHasASpecificValue(possibleLanguages, Language.ENGLISH);
+		final Language languageUrlParam = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleLanguages, Language.ENGLISH, Language.class);
 
 		final String languageUrlParamValue = languageUrlParam.getCode();
 
