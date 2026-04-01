@@ -45,13 +45,13 @@ public class TableSearchDTO implements Serializable {
 	private final @NonNull Integer pageNumber;
 
 	public TableSearchDTO(final @NonNull HttpServletRequest httpServletRequest, final String languageParam, final String filterName, final String filterValue, final String sortingField, final String sortingDirection, final Integer pageSize, final Integer pageNumber) {
-		final TablePageSize tablePageSize = TablePageSize.findByValue(pageSize);
 		this.languageParam = I18nUtils.getFinalLanguageCode(httpServletRequest, languageParam);
 		this.filterName = filterName;
 		this.filterValue = filterValue;
 		this.sortingField = sortingField;
 		this.sortingDirection = sortingDirection;
 		MIRAR -> hacer lo mismo con el resto de enumerados
+		final TablePageSize tablePageSize = TablePageSize.findByValue(pageSize);
 		this.pageSize = pageSize;
 		this.pageSize = (tablePageSize != null) ? tablePageSize.getValue() : TablePageSize.BY_DEFAULT.getValue();
 		this.pageSize = ConfigurableEnumUtils.getInstance().getCurrentDefaultElement(TablePageSize.class).getValue();
