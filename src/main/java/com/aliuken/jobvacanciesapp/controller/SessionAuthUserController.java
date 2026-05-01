@@ -435,9 +435,9 @@ public class SessionAuthUserController implements InputFlashMapManager {
 
 	private @NonNull ApplicationNextConfigDTO getInitialApplicationNextConfigDTO() {
 		final String overwrittenLanguageCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_LANGUAGE.getCode();
-		final String overwrittenAnonymousAccessPermissionValue = ConfigPropertiesBean.CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION.getValue();
+		final String overwrittenAnonymousAccessPermissionValue = ConfigPropertiesBean.CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION.getCode();
 		final String overwrittenInitialTableSortingDirectionCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION.getCode();
-		final String overwrittenInitialTablePageSizeValue = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE.getValue());
+		final String overwrittenInitialTablePageSizeValue = String.valueOf(ConfigPropertiesBean.CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE.getCode());
 		final String overwrittenColorModeCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_COLOR_MODE.getCode();
 		final String overwrittenUserInterfaceFrameworkCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK.getCode();
 		final String overwrittenPdfDocumentPageFormatCode = ConfigPropertiesBean.CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT.getCode();

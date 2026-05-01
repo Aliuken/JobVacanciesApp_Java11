@@ -134,7 +134,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		}
 
 		if(nextDefaultAnonymousAccessPermission != null) {
-			final String urlParamValue = nextDefaultAnonymousAccessPermission.getValue();
+			final String urlParamValue = nextDefaultAnonymousAccessPermission.getCode();
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_ANONYMOUS_ACCESS_PERMISSION, urlParamValue);
 		}
 
@@ -144,7 +144,7 @@ public class CustomAuthenticationHandler extends SavedRequestAwareAuthentication
 		}
 
 		if(nextDefaultInitialTablePageSize != null) {
-			final String urlParamValue = String.valueOf(nextDefaultInitialTablePageSize.getValue());
+			final String urlParamValue = String.valueOf(nextDefaultInitialTablePageSize.getCode());
 			redirectUrl = StringUtils.getStringJoined(redirectUrl, LOGOUT_RESTART_APP_WITH_DEFAULT_INITIAL_TABLE_PAGE_SIZE, urlParamValue);
 		}
 

@@ -8,42 +8,32 @@ import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum Currency implements ConfigurableEnum<Currency> {
+public enum Currency implements ConfigurableEnum<String,Currency> {
 	BY_DEFAULT("-", "currency.byDefault"),
 	US_DOLLAR ("$", "currency.usDollar"),
 	EURO      ("€", "currency.euro");
 
 	@Getter
-	private final @NonNull String symbol;
+	private final @NonNull String code;
 
 	@Getter
 	private final @NonNull String messageName;
 
-	private Currency(final @NonNull String symbol, final @NonNull String messageName) {
-		this.symbol = symbol;
+	private Currency(final @NonNull String code, final @NonNull String messageName) {
+		this.code = code;
 		this.messageName = messageName;
 	}
 
-	public static Currency findBySymbol(final String symbol) {
-		if(LogicalUtils.isNullOrEmptyString(symbol)) {
+	public static Currency findByCode(final String code) {
+		if(LogicalUtils.isNullOrEmptyString(code)) {
 			return null;
 		}
 
 		final Currency currency = StreamStaticUtils.ofEnum(Currency.class, false)
-			.filter(currencyAux -> symbol.equals(currencyAux.symbol))
+			.filter(currencyAux -> code.equals(currencyAux.code))
 			.findFirst()
 			.orElse(null);
 		return currency;
-	}
-
-	public static @NonNull Currency[] getSpecificEnumElements() {
-		final Currency[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(Currency.class);
-		return enumElementsWithoutByDefault;
-	}
-
-	@Override
-	public @NonNull Class<Currency> getEnumClass() {
-		return Currency.class;
 	}
 
 	@Override

@@ -5,7 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a823a4b-3d73-4838-89a4-c00f3aa4166d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/ConfigPropertiesBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/config/WebTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/controller/SessionAuthUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/controller/advice/GenericControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/controller/advice/GenericControllerAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/AnonymousAccessPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/AnonymousAccessPermission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/UserInterfaceFramework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/UserInterfaceFramework.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/superinterface/ConfigurableEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/enumtype/superinterface/ConfigurableEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superclass/AbstractEntityDefaultComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/comparator/superclass/AbstractEntityDefaultComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/converter/TablePageSizeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/converter/TablePageSizeConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/dto/TableSearchDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/dto/TableSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter/AuthUserConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/dto/converter/AuthUserConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/ColorMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/ColorMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/Language.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/PdfDocumentPageFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/PdfDocumentPageFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TablePageSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/model/entity/enumtype/TableSortingDirection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/security/CustomAuthenticationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/ConfigurableEnumUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/GenericsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/GenericsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/StreamUtilsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/StreamUtilsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/superinterface/StreamUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/javase/stream/superinterface/StreamUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/di/BeanFactoryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/di/BeanFactoryUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/mvc/ControllerNavigationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aliuken/jobvacanciesapp/util/spring/mvc/ControllerNavigationUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/mandatory/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/optional/tableFilterAndPaginationForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/optional/tableFilterAndPaginationForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/jobVacancy/jobVacancyForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/signupForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/signupForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/aliuken/jobvacanciesapp/repository/AuthUserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/aliuken/jobvacanciesapp/repository/AuthUserRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +46,9 @@
     <persistenceIdMap>
       <entry key="_C:/Programacion/git/JobVacanciesApp_Java11" value="2tE6mmi4mvj3XmpTECmDf7Mpa0R" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedChatMode">
+    <option name="chatModeId" value="Agent" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -241,7 +274,17 @@
       <workItem from="1774700013028" duration="2194000" />
       <workItem from="1774812739053" duration="3334000" />
       <workItem from="1774958306244" duration="9055000" />
-      <workItem from="1775034704095" duration="3859000" />
+      <workItem from="1775034704095" duration="4805000" />
+      <workItem from="1775071805608" duration="3221000" />
+      <workItem from="1775115678702" duration="15103000" />
+      <workItem from="1775228207886" duration="1013000" />
+      <workItem from="1776467940337" duration="2086000" />
+      <workItem from="1776470800885" duration="2745000" />
+      <workItem from="1776539989173" duration="8281000" />
+      <workItem from="1776875965478" duration="1522000" />
+      <workItem from="1776892385630" duration="149000" />
+      <workItem from="1776929486049" duration="4085000" />
+      <workItem from="1777279796753" duration="13000" />
     </task>
     <servers />
   </component>

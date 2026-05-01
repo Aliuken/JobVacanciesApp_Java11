@@ -4,12 +4,6 @@ import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
 import com.aliuken.jobvacanciesapp.model.entity.AuthUser;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserCurriculum;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserEntityQuery;
-import com.aliuken.jobvacanciesapp.model.entity.AuthUserRole;
-import com.aliuken.jobvacanciesapp.model.entity.JobCompanyLogo;
-import com.aliuken.jobvacanciesapp.model.entity.JobRequest;
-import com.aliuken.jobvacanciesapp.model.entity.JobVacancy;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
@@ -18,8 +12,6 @@ import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
 import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.StringUtils;
 import com.aliuken.jobvacanciesapp.util.javase.ThrowableUtils;
-import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
-import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.security.SessionUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +28,7 @@ import java.util.List;
 @Slf4j
 public class ConfigPropertiesBean {
 	private static final @NonNull String BY_DEFAULT_SORTING_DIRECTION_CODE = TableSortingDirection.BY_DEFAULT.getCode();
-	private static final @NonNull String BY_DEFAULT_PAGE_SIZE_VALUE_STRING = String.valueOf(TablePageSize.BY_DEFAULT.getValue());
+	private static final @NonNull String BY_DEFAULT_PAGE_SIZE_VALUE_STRING = String.valueOf(TablePageSize.BY_DEFAULT.getCode());
 
 	//Non-overwritable properties
 	private final String authUserCurriculumFilesPath;
@@ -230,13 +222,13 @@ public class ConfigPropertiesBean {
 				TablePageSize initialTablePageSize = (sessionAuthUser != null) ? sessionAuthUser.getInitialTablePageSize() : null;
 				final List<TablePageSize> possibleTablePageSizes = Collections.singletonList(initialTablePageSize);
 				initialTablePageSize = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleTablePageSizes, currentDefaultInitialTablePageSize, TablePageSize.class);
-				initialTablePageSizeValue = initialTablePageSize.getValue();
+				initialTablePageSizeValue = initialTablePageSize.getCode();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {
 					final String stackTrace = ThrowableUtils.getStackTrace(exception);
 					log.error(StringUtils.getStringJoined("An exception happened when trying to get the initial table page size. The default initial table page size will be used. Exception: ", stackTrace));
 				}
-				initialTablePageSizeValue = currentDefaultInitialTablePageSize.getValue();
+				initialTablePageSizeValue = currentDefaultInitialTablePageSize.getCode();
 			}
 
 			final String initialTablePageSizeValueString = String.valueOf(initialTablePageSizeValue);

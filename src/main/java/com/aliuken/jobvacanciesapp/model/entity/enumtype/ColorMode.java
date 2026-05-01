@@ -12,7 +12,7 @@ import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum ColorMode implements ConfigurableEnum<ColorMode> {
+public enum ColorMode implements ConfigurableEnum<String,ColorMode> {
 	BY_DEFAULT("-", "default", "colorMode.byDefault"),
 	LIGHT     ("L", "light",   "colorMode.light"),
 	DARK      ("D", "dark",    "colorMode.dark");
@@ -54,11 +54,6 @@ public enum ColorMode implements ConfigurableEnum<ColorMode> {
 			.findFirst()
 			.orElse(null);
 		return colorMode;
-	}
-
-	@Override
-	public @NonNull Class<ColorMode> getEnumClass() {
-		return ColorMode.class;
 	}
 
 	@Override

@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Data
-public class StreamUtilsImpl<T> implements StreamUtils<T> {
+public class StreamUtilsImpl<E> implements StreamUtils<E> {
     private static final @NonNull Map<Class<?>, StreamUtilsPair<?>> CACHE = new ConcurrentHashMap<>();
 
-    private final @NonNull Class<T> elementClass;
+    private final @NonNull Class<E> elementClass;
     private final @NonNull StreamStrategy streamStrategy;
 
-    private StreamUtilsImpl(final @NonNull Class<T> elementClass, final @NonNull StreamStrategy streamStrategy) {
+    private StreamUtilsImpl(final @NonNull Class<E> elementClass, final @NonNull StreamStrategy streamStrategy) {
         this.elementClass = elementClass;
         this.streamStrategy = streamStrategy;
     }
@@ -41,27 +41,27 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // StreamUtils factory methods
     // ==========================================================
 
-    public static <E> @NonNull StreamUtils<E> getInstance(final @NonNull Class<E> elementClass) {
+    public static <E2> @NonNull StreamUtils<E2> getInstance(final @NonNull Class<E2> elementClass) {
         final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
         final boolean useParallelStreams = configPropertiesBean.isUseParallelStreams();
 
-        final StreamUtils<E> streamUtils = StreamUtilsImpl.getInstance(elementClass, useParallelStreams);
+        final StreamUtils<E2> streamUtils = StreamUtilsImpl.getInstance(elementClass, useParallelStreams);
         return streamUtils;
     }
 
-    public static <E> @NonNull StreamUtils<E> getInstance(final @NonNull Class<E> elementClass, final boolean isParallel) {
+    public static <E2> @NonNull StreamUtils<E2> getInstance(final @NonNull Class<E2> elementClass, final boolean isParallel) {
         final StreamUtilsPair<?> streamUtilsPair = CACHE.computeIfAbsent(elementClass, elementClassAux -> StreamUtilsImpl.createStreamUtilsPair(elementClassAux));
-        final StreamUtilsPair<E> finalStreamUtilsPair = GenericsUtils.cast(streamUtilsPair);
+        final StreamUtilsPair<E2> finalStreamUtilsPair = GenericsUtils.cast(streamUtilsPair);
 
-        final StreamUtils<E> streamUtils = finalStreamUtilsPair.get(isParallel);
+        final StreamUtils<E2> streamUtils = finalStreamUtilsPair.get(isParallel);
         return streamUtils;
     }
 
-    private static <E> @NonNull StreamUtilsPair<E> createStreamUtilsPair(final @NonNull Class<E> elementClass) {
-        final StreamUtils<E> sequentialStreamUtils = new StreamUtilsImpl<>(elementClass, StreamStrategy.getInstance(false));
-        final StreamUtils<E> parallelStreamUtils = new StreamUtilsImpl<>(elementClass, StreamStrategy.getInstance(true));
+    private static <E2> @NonNull StreamUtilsPair<E2> createStreamUtilsPair(final @NonNull Class<E2> elementClass) {
+        final StreamUtils<E2> sequentialStreamUtils = new StreamUtilsImpl<>(elementClass, StreamStrategy.getInstance(false));
+        final StreamUtils<E2> parallelStreamUtils = new StreamUtilsImpl<>(elementClass, StreamStrategy.getInstance(true));
 
-        StreamUtilsPair<E> streamUtilsPair = new StreamUtilsPair<>(sequentialStreamUtils, parallelStreamUtils);
+        StreamUtilsPair<E2> streamUtilsPair = new StreamUtilsPair<>(sequentialStreamUtils, parallelStreamUtils);
         return streamUtilsPair;
     }
 
@@ -70,24 +70,24 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public T @NonNull [] joinArrays(final @NonNull IntFunction<T @NonNull []> arrayGenerator, final T[] array1, final T[] array2) {
+    public E @NonNull [] joinArrays(final @NonNull IntFunction<E @NonNull []> arrayGenerator, final E[] array1, final E[] array2) {
         final Object[][] objectMatrix = new Object[][]{array1, array2};
-        final T[][] arrays = GenericsUtils.cast(objectMatrix);
+        final E[][] arrays = GenericsUtils.cast(objectMatrix);
 
-        final T[] elementArray = this.joinArrays(arrayGenerator, arrays);
+        final E[] elementArray = this.joinArrays(arrayGenerator, arrays);
         return elementArray;
     }
 
     @Override
-    public T @NonNull [] joinArrays(final @NonNull IntFunction<T @NonNull []> arrayGenerator, final T[][] arrays) {
+    public E @NonNull [] joinArrays(final @NonNull IntFunction<E @NonNull []> arrayGenerator, final E[][] arrays) {
         if (arrays == null) {
             // "IntFunction<T[]> generator" es equivalente a la function "size -> new T[size]" o "T[]::new";
-            final T[] emptyElementArray = arrayGenerator.apply(0);
+            final E[] emptyElementArray = arrayGenerator.apply(0);
             Objects.requireNonNull(emptyElementArray, "emptyElementArray cannot be null");
             return emptyElementArray;
         }
 
-        final T[] elementArray = Arrays.stream(arrays)
+        final E[] elementArray = Arrays.stream(arrays)
             .filter(elementArrayAux -> elementArrayAux != null)
             .flatMap(elementArrayAux -> buildStream(elementArrayAux))
             .toArray(arrayGenerator);
@@ -99,21 +99,21 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public @NonNull List<T> joinLists(final List<T> list1, final List<T> list2) {
+    public @NonNull List<E> joinLists(final List<E> list1, final List<E> list2) {
         final Object[] objectArray = new Object[]{list1, list2};
-        final List<T>[] lists = GenericsUtils.cast(objectArray);
+        final List<E>[] lists = GenericsUtils.cast(objectArray);
 
-        final List<T> elementList = this.joinLists(lists);
+        final List<E> elementList = this.joinLists(lists);
         return elementList;
     }
 
     @Override
-    public @NonNull List<T> joinLists(final List<T>[] lists) {
+    public @NonNull List<E> joinLists(final List<E>[] lists) {
         if (lists == null) {
             return new ArrayList<>();
         }
 
-        final List<T> elementList = Arrays.stream(lists)
+        final List<E> elementList = Arrays.stream(lists)
             .filter(elementListAux -> elementListAux != null)
             .flatMap(elementListAux -> buildStream(elementListAux))
             .collect(Collectors.toCollection(ArrayList::new));
@@ -125,21 +125,21 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public @NonNull Set<T> joinSets(final Set<T> set1, final Set<T> set2) {
+    public @NonNull Set<E> joinSets(final Set<E> set1, final Set<E> set2) {
         final Object[] objectArray = new Object[]{set1, set2};
-        final Set<T>[] sets = GenericsUtils.cast(objectArray);
+        final Set<E>[] sets = GenericsUtils.cast(objectArray);
 
-        final Set<T> elementSet = this.joinSets(sets);
+        final Set<E> elementSet = this.joinSets(sets);
         return elementSet;
     }
 
     @Override
-    public @NonNull Set<T> joinSets(final Set<T>[] sets) {
+    public @NonNull Set<E> joinSets(final Set<E>[] sets) {
         if (sets == null) {
             return new LinkedHashSet<>();
         }
 
-        final Set<T> elementSet = Arrays.stream(sets)
+        final Set<E> elementSet = Arrays.stream(sets)
             .filter(elementSetAux -> elementSetAux != null)
             .flatMap(elementSetAux -> buildStream(elementSetAux))
             .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -151,30 +151,30 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public <U> U @NonNull [] convertArray(final T @NonNull [] initialArray, final @NonNull Function<T, U> conversionFunction,
-                                         final @NonNull Class<T> inputClass, final @NonNull Class<U> outputClass, final @NonNull IntFunction<U @NonNull []> arrayGenerator) {
+    public <E2> E2 @NonNull [] convertArray(final E @NonNull [] initialArray, final @NonNull Function<E, E2> conversionFunction,
+                                            final @NonNull Class<E> inputClass, final @NonNull Class<E2> outputClass, final @NonNull IntFunction<E2 @NonNull []> arrayGenerator) {
 
-        final U[] finalArray = buildStream(initialArray)
+        final E2[] finalArray = buildStream(initialArray)
             .map(conversionFunction)
             .toArray(arrayGenerator);
         return finalArray;
     }
 
     @Override
-    public <U> @NonNull List<U> convertList(final @NonNull List<T> initialList, final @NonNull Function<T, U> conversionFunction,
-                                            final @NonNull Class<T> inputClass, final @NonNull Class<U> outputClass) {
+    public <E2> @NonNull List<E2> convertList(final @NonNull List<E> initialList, final @NonNull Function<E, E2> conversionFunction,
+                                              final @NonNull Class<E> inputClass, final @NonNull Class<E2> outputClass) {
 
-        final List<U> finalList = buildStream(initialList)
+        final List<E2> finalList = buildStream(initialList)
             .map(conversionFunction)
             .collect(Collectors.toCollection(ArrayList::new));
         return finalList;
     }
 
     @Override
-    public <U> @NonNull Set<U> convertSet(final @NonNull Set<T> initialSet, final @NonNull Function<T, U> conversionFunction,
-                                          final @NonNull Class<T> inputClass, final @NonNull Class<U> outputClass) {
+    public <E2> @NonNull Set<E2> convertSet(final @NonNull Set<E> initialSet, final @NonNull Function<E, E2> conversionFunction,
+                                            final @NonNull Class<E> inputClass, final @NonNull Class<E2> outputClass) {
 
-        final Set<U>  finalSet = buildStream(initialSet)
+        final Set<E2>  finalSet = buildStream(initialSet)
             .map(conversionFunction)
             .collect(Collectors.toCollection(LinkedHashSet::new));
         return finalSet;
@@ -185,10 +185,10 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public @NonNull T getFirstElementFilteredByCondition(final T @NonNull [] initialElements,
-                                                         final @NonNull Predicate<@NonNull T> elementCondition) {
+    public @NonNull E getFirstElementFilteredByCondition(final E @NonNull [] initialElements,
+                                                         final @NonNull Predicate<@NonNull E> elementCondition) {
 
-        final T finalElement = buildStream(initialElements)
+        final E finalElement = buildStream(initialElements)
                 .filter(element -> element != null)
                 .filter(elementCondition)
                 .findFirst()
@@ -197,11 +197,11 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByCondition(final T @NonNull [] initialElements,
-                                                         final @NonNull Predicate<@NonNull T> elementCondition,
-                                                         final @NonNull T fallbackElement) {
+    public @NonNull E getFirstElementFilteredByCondition(final E @NonNull [] initialElements,
+                                                         final @NonNull Predicate<@NonNull E> elementCondition,
+                                                         final @NonNull E fallbackElement) {
 
-        final T finalElement = buildStream(initialElements)
+        final E finalElement = buildStream(initialElements)
                 .filter(element -> element != null)
                 .filter(elementCondition)
                 .findFirst()
@@ -210,10 +210,10 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByConditionLazily(final @NonNull Supplier<T> @NonNull [] initialElementSuppliers,
-                                                               final @NonNull Predicate<@NonNull T> elementCondition) {
+    public @NonNull E getFirstElementFilteredByConditionLazily(final @NonNull Supplier<E> @NonNull [] initialElementSuppliers,
+                                                               final @NonNull Predicate<@NonNull E> elementCondition) {
 
-        final T finalElement = buildStreamWithSuppliers(initialElementSuppliers)
+        final E finalElement = buildStreamWithSuppliers(initialElementSuppliers)
                 .map(elementSupplier -> elementSupplier.get())
                 .filter(element -> element != null)
                 .filter(elementCondition)
@@ -223,11 +223,11 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByConditionLazily(final @NonNull Supplier<T> @NonNull [] initialElementSuppliers,
-                                                               final @NonNull Predicate<@NonNull T> elementCondition,
-                                                               final @NonNull Supplier<@NonNull T> fallbackElementSupplier) {
+    public @NonNull E getFirstElementFilteredByConditionLazily(final @NonNull Supplier<E> @NonNull [] initialElementSuppliers,
+                                                               final @NonNull Predicate<@NonNull E> elementCondition,
+                                                               final @NonNull Supplier<@NonNull E> fallbackElementSupplier) {
 
-        final T finalElement = buildStreamWithSuppliers(initialElementSuppliers)
+        final E finalElement = buildStreamWithSuppliers(initialElementSuppliers)
                 .map(elementSupplier -> elementSupplier.get())
                 .filter(element -> element != null)
                 .filter(elementCondition)
@@ -241,10 +241,10 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // ==========================================================
 
     @Override
-    public @NonNull T getFirstElementFilteredByCondition(final @NonNull Collection<T> initialElements,
-                                                         final @NonNull Predicate<@NonNull T> elementCondition) {
+    public @NonNull E getFirstElementFilteredByCondition(final @NonNull Collection<E> initialElements,
+                                                         final @NonNull Predicate<@NonNull E> elementCondition) {
 
-        final T finalElement = buildStream(initialElements)
+        final E finalElement = buildStream(initialElements)
             .filter(element -> element != null)
             .filter(elementCondition)
             .findFirst()
@@ -253,11 +253,11 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByCondition(final @NonNull Collection<T> initialElements,
-                                                         final @NonNull Predicate<@NonNull T> elementCondition,
-                                                         final @NonNull T fallbackElement) {
+    public @NonNull E getFirstElementFilteredByCondition(final @NonNull Collection<E> initialElements,
+                                                         final @NonNull Predicate<@NonNull E> elementCondition,
+                                                         final @NonNull E fallbackElement) {
 
-        final T finalElement = buildStream(initialElements)
+        final E finalElement = buildStream(initialElements)
             .filter(element -> element != null)
             .filter(elementCondition)
             .findFirst()
@@ -266,10 +266,10 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByConditionLazily(final @NonNull Collection<@NonNull Supplier<T>> initialElementSuppliers,
-                                                               final @NonNull Predicate<@NonNull T> elementCondition) {
+    public @NonNull E getFirstElementFilteredByConditionLazily(final @NonNull Collection<@NonNull Supplier<E>> initialElementSuppliers,
+                                                               final @NonNull Predicate<@NonNull E> elementCondition) {
 
-        final T finalElement = buildStreamWithSuppliers(initialElementSuppliers)
+        final E finalElement = buildStreamWithSuppliers(initialElementSuppliers)
             .map(elementSupplier -> elementSupplier.get())
             .filter(element -> element != null)
             .filter(elementCondition)
@@ -279,11 +279,11 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull T getFirstElementFilteredByConditionLazily(final @NonNull Collection<@NonNull Supplier<T>> initialElementSuppliers,
-                                                               final @NonNull Predicate<@NonNull T> elementCondition,
-                                                               final @NonNull Supplier<@NonNull T> fallbackElementSupplier) {
+    public @NonNull E getFirstElementFilteredByConditionLazily(final @NonNull Collection<@NonNull Supplier<E>> initialElementSuppliers,
+                                                               final @NonNull Predicate<@NonNull E> elementCondition,
+                                                               final @NonNull Supplier<@NonNull E> fallbackElementSupplier) {
 
-        final T finalElement = buildStreamWithSuppliers(initialElementSuppliers)
+        final E finalElement = buildStreamWithSuppliers(initialElementSuppliers)
             .map(elementSupplier -> elementSupplier.get())
             .filter(element -> element != null)
             .filter(elementCondition)
@@ -293,12 +293,41 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     // ==========================================================
+    // Resolve element
+    // ==========================================================
+
+    @Override
+    public @NonNull E resolveElement(E initialElement, @NonNull Supplier<@NonNull E> fallbackElementSupplier) {
+        final Predicate<E> elementCondition = element -> true;
+        final E finalElement = resolveElement(initialElement, elementCondition, fallbackElementSupplier);
+        return finalElement;
+    }
+
+    @Override
+    public @NonNull E resolveElement(E initialElement, @NonNull Predicate<E> elementCondition, @NonNull Supplier<@NonNull E> fallbackElementSupplier) {
+        if (initialElement != null && elementCondition.test(initialElement)) {
+            return initialElement;
+        }
+
+        return fallbackElementSupplier.get();
+    }
+
+    @Override
+    public E resolveElement(E initialElement, @NonNull Predicate<E> elementCondition) {
+        if (initialElement != null && elementCondition.test(initialElement)) {
+            return initialElement;
+        }
+
+        return null;
+    }
+
+    // ==========================================================
     // Stream factory methods
     // ==========================================================
 
     @Override
-    public @NonNull Stream<T> ofNullableArray(final T[] array) {
-        final Stream<T> elementStream;
+    public @NonNull Stream<E> ofNullableArray(final E[] array) {
+        final Stream<E> elementStream;
         if(array != null) {
             elementStream = this.buildStream(array);
         } else {
@@ -308,8 +337,8 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     }
 
     @Override
-    public @NonNull Stream<T> ofNullableCollection(final Collection<T> collection) {
-        final Stream<T> elementStream;
+    public @NonNull Stream<E> ofNullableCollection(final Collection<E> collection) {
+        final Stream<E> elementStream;
         if(collection != null) {
             elementStream = this.buildStream(collection);
         } else {
@@ -322,25 +351,25 @@ public class StreamUtilsImpl<T> implements StreamUtils<T> {
     // Reusable internal methods
     // ==========================================================
 
-    private @NonNull Stream<T> buildStream(final T @NonNull [] array) {
-        final List<T> list = Arrays.asList(array);
-        final Stream<T> elementStream = streamStrategy.build(list);
+    private @NonNull Stream<E> buildStream(final E @NonNull [] array) {
+        final List<E> list = Arrays.asList(array);
+        final Stream<E> elementStream = streamStrategy.build(list);
         return elementStream;
     }
 
-    private @NonNull Stream<@NonNull Supplier<T>> buildStreamWithSuppliers(final @NonNull Supplier<T> @NonNull [] array) {
-        final List<@NonNull Supplier<T>> list = Arrays.asList(array);
-        final Stream<@NonNull Supplier<T>> elementSupplierStream = streamStrategy.buildWithSuppliers(list);
+    private @NonNull Stream<@NonNull Supplier<E>> buildStreamWithSuppliers(final @NonNull Supplier<E> @NonNull [] array) {
+        final List<@NonNull Supplier<E>> list = Arrays.asList(array);
+        final Stream<@NonNull Supplier<E>> elementSupplierStream = streamStrategy.buildWithSuppliers(list);
         return elementSupplierStream;
     }
 
-    private @NonNull Stream<T> buildStream(final @NonNull Collection<T> collection) {
-        final Stream<T> elementStream = streamStrategy.build(collection);
+    private @NonNull Stream<E> buildStream(final @NonNull Collection<E> collection) {
+        final Stream<E> elementStream = streamStrategy.build(collection);
         return elementStream;
     }
 
-    private @NonNull Stream<@NonNull Supplier<T>> buildStreamWithSuppliers(final @NonNull Collection<@NonNull Supplier<T>> collection) {
-        final Stream<@NonNull Supplier<T>> elementSupplierStream = streamStrategy.buildWithSuppliers(collection);
+    private @NonNull Stream<@NonNull Supplier<E>> buildStreamWithSuppliers(final @NonNull Collection<@NonNull Supplier<E>> collection) {
+        final Stream<@NonNull Supplier<E>> elementSupplierStream = streamStrategy.buildWithSuppliers(collection);
         return elementSupplierStream;
     }
 }

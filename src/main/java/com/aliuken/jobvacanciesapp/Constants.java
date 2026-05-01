@@ -1,11 +1,20 @@
 package com.aliuken.jobvacanciesapp;
 
+import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
+import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.stream.StreamUtilsImpl;
 import com.aliuken.jobvacanciesapp.util.javase.stream.superinterface.StreamUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateTimeUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.DateUtils;
 import com.aliuken.jobvacanciesapp.util.javase.time.superinterface.TemporalUtils;
+import org.jspecify.annotations.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +31,14 @@ public class Constants {
 	public static final String MAP_ENTRY_PREFIX = "\n- ";
 	public static final String KEY_VALUE_SEPARATOR = " -> ";
 
-	public static final ConfigurableEnumUtils ENUM_UTILS = ConfigurableEnumUtils.getInstance();
+	public static final ConfigurableEnumUtils<String,AnonymousAccessPermission> ANONYMOUS_ACCESS_PERMISSION_UTILS = ConfigurableEnumUtils.getInstance(String.class, AnonymousAccessPermission.class);
+	public static final ConfigurableEnumUtils<String,ColorMode> COLOR_MODE_UTILS = ConfigurableEnumUtils.getInstance(String.class, ColorMode.class);
+	public static final ConfigurableEnumUtils<String,Currency> CURRENCY_UTILS = ConfigurableEnumUtils.getInstance(String.class, Currency.class);
+	public static final ConfigurableEnumUtils<String,Language> LANGUAGE_UTILS = ConfigurableEnumUtils.getInstance(String.class, Language.class);
+	public static final ConfigurableEnumUtils<String,PdfDocumentPageFormat> PDF_DOCUMENT_PAGE_FORMAT_UTILS = ConfigurableEnumUtils.getInstance(String.class, PdfDocumentPageFormat.class);
+	public static final ConfigurableEnumUtils<Integer,TablePageSize> TABLE_PAGE_SIZE_UTILS = ConfigurableEnumUtils.getInstance(Integer.class, TablePageSize.class);
+	public static final ConfigurableEnumUtils<String,TableSortingDirection> TABLE_SORTING_DIRECTION_UTILS = ConfigurableEnumUtils.getInstance(String.class, TableSortingDirection.class);
+	public static final ConfigurableEnumUtils<String,UserInterfaceFramework> USER_INTERFACE_FRAMEWORK_UTILS = ConfigurableEnumUtils.getInstance(String.class, UserInterfaceFramework.class);
 
 	public static final TemporalUtils<LocalDate> DATE_UTILS = DateUtils.getInstance();
 	public static final TemporalUtils<LocalDateTime> DATE_TIME_UTILS = DateTimeUtils.getInstance();

@@ -10,7 +10,7 @@ import com.itextpdf.text.Rectangle;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFormat> {
+public enum PdfDocumentPageFormat implements ConfigurableEnum<String,PdfDocumentPageFormat> {
 	BY_DEFAULT   ("---", "pdfDocumentPageFormat.byDefault",    null),
 	A3_VERTICAL  ("A3V", "pdfDocumentPageFormat.verticalA3",   PageSize.A3),
 	A3_HORIZONTAL("A3H", "pdfDocumentPageFormat.horizontalA3", PageSize.A3.rotate()),
@@ -42,11 +42,6 @@ public enum PdfDocumentPageFormat implements ConfigurableEnum<PdfDocumentPageFor
 			.findFirst()
 			.orElse(null);
 		return pdfDocumentPageFormat;
-	}
-
-	@Override
-	public @NonNull Class<PdfDocumentPageFormat> getEnumClass() {
-		return PdfDocumentPageFormat.class;
 	}
 
 	@Override

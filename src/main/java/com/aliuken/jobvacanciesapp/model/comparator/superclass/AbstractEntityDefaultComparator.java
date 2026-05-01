@@ -24,7 +24,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 		}
 
 		public @NonNull AbstractEntityDefaultComparator<U> getCurrentDefaultComparator() {
-			final TableSortingDirection currentDefaultTableSortingDirection = Constants.ENUM_UTILS.getCurrentDefaultElement(TableSortingDirection.class);
+			final TableSortingDirection currentDefaultTableSortingDirection = Constants.TABLE_SORTING_DIRECTION_UTILS.getCurrentDefaultElement(TableSortingDirection.class);
 
 			final AbstractEntityDefaultComparator<U> currentDefaultComparator;
 			if(TableSortingDirection.DESC.equals(currentDefaultTableSortingDirection)) {
@@ -67,7 +67,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 		return direction * idCompareResult;
 	}
 
-	public static <U extends AbstractEntity<U>> EntityComparators<U> getEntityComparators(final Class<U> entityClass) {
+	public static <U extends AbstractEntity<U>> EntityComparators<U> getEntityComparators(final @NonNull Class<U> entityClass) {
 		EntityComparators<U> entityComparators = GenericsUtils.cast(ENTITY_COMPARATORS_MAP.get(entityClass));
 		if(entityComparators == null) {
 			entityComparators = new EntityComparators<>();

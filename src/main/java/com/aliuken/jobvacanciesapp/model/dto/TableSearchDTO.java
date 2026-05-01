@@ -50,11 +50,11 @@ public class TableSearchDTO implements Serializable {
 		this.filterValue = filterValue;
 		this.sortingField = sortingField;
 		this.sortingDirection = sortingDirection;
-		MIRAR -> hacer lo mismo con el resto de enumerados
+		//MIRAR -> hacer lo mismo con el resto de enumerados
 		final TablePageSize tablePageSize = TablePageSize.findByValue(pageSize);
 		this.pageSize = pageSize;
-		this.pageSize = (tablePageSize != null) ? tablePageSize.getValue() : TablePageSize.BY_DEFAULT.getValue();
-		this.pageSize = ConfigurableEnumUtils.getInstance().getCurrentDefaultElement(TablePageSize.class).getValue();
+//		this.pageSize = (tablePageSize != null) ? tablePageSize.getCode() : TablePageSize.BY_DEFAULT.getCode();
+//		this.pageSize = ConfigurableEnumUtils.getInstance().getCurrentDefaultElement(TablePageSize.class).getValue();
 				//(tablePageSize != null) ? tablePageSize.getValue() : TablePageSize.BY_DEFAULT.getValue();
 		this.pageNumber = (pageNumber != null) ? pageNumber : 0;
 	}

@@ -13,12 +13,10 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.Locale;
 
-public enum Language implements ConfigurableEnum<Language> {
+public enum Language implements ConfigurableEnum<String,Language> {
 	BY_DEFAULT("--", "language.byDefault", null),
 	ENGLISH   ("en", "language.english",   new Locale("en")),
 	SPANISH   ("es", "language.español",   new Locale("es"));
-
-	private static final StreamUtils<Language> LANGUAGE_STREAM_UTILS = StreamUtilsImpl.getInstance(Language.class, true);
 
 	@Getter
 	private final @NonNull String code;
@@ -45,16 +43,6 @@ public enum Language implements ConfigurableEnum<Language> {
 			.findFirst()
 			.orElse(null);
 		return language;
-	}
-
-	public static @NonNull Language[] getSpecificEnumElements() {
-		final Language[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(Language.class);
-		return enumElementsWithoutByDefault;
-	}
-
-	@Override
-	public @NonNull Class<Language> getEnumClass() {
-		return Language.class;
 	}
 
 	@Override

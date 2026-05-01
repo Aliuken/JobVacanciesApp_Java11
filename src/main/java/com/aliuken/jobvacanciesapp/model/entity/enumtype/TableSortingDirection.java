@@ -9,7 +9,7 @@ import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Sort;
 
-public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirection> {
+public enum TableSortingDirection implements ConfigurableEnum<String,TableSortingDirection> {
 	BY_DEFAULT("---",  "tableSortingDirection.byDefault", null),
 	ASC       ("asc",  "tableSortingDirection.asc",       Sort.Direction.ASC),
 	DESC      ("desc", "tableSortingDirection.desc",      Sort.Direction.DESC);
@@ -42,7 +42,7 @@ public enum TableSortingDirection implements ConfigurableEnum<TableSortingDirect
 	}
 
 	public static @NonNull TableSortingDirection[] getSpecificEnumElements() {
-		final TableSortingDirection[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(TableSortingDirection.class);
+		final TableSortingDirection[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getElements(TableSortingDirection.class, true);
 		return enumElementsWithoutByDefault;
 	}
 

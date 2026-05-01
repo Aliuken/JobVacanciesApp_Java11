@@ -1,6 +1,15 @@
 package com.aliuken.jobvacanciesapp.config;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.enumtype.AnonymousAccessPermission;
+import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.ColorMode;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Currency;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.Language;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.PdfDocumentPageFormat;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TablePageSize;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
+import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.security.SpringSecurityUtils;
 import com.aliuken.jobvacanciesapp.util.spring.di.BeanFactoryUtils;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
@@ -92,6 +101,15 @@ public class WebTemplateConfig {
 		// To use:		${dateTimeUtils.convertToStringForWebPageField(localDateTimeVar)}
 		// Instead of:	${(localDateTimeVar != null) ? #temporals.format(localDateTimeVar, 'dd-MM-yyyy HH:mm:ss') : '-'}
 		thymeleafViewResolver.addStaticVariable("dateTimeUtils", Constants.DATE_TIME_UTILS);
+
+		thymeleafViewResolver.addStaticVariable("anonymousAccessPermissionUtils", Constants.ANONYMOUS_ACCESS_PERMISSION_UTILS);
+		thymeleafViewResolver.addStaticVariable("colorModeUtils", Constants.COLOR_MODE_UTILS);
+		thymeleafViewResolver.addStaticVariable("currencyUtils", Constants.CURRENCY_UTILS);
+		thymeleafViewResolver.addStaticVariable("languageUtils", Constants.LANGUAGE_UTILS);
+		thymeleafViewResolver.addStaticVariable("pdfDocumentPageFormatUtils", Constants.PDF_DOCUMENT_PAGE_FORMAT_UTILS);
+		thymeleafViewResolver.addStaticVariable("tablePageSizeUtils", Constants.TABLE_PAGE_SIZE_UTILS);
+		thymeleafViewResolver.addStaticVariable("tableSortingDirectionUtils", Constants.TABLE_SORTING_DIRECTION_UTILS);
+		thymeleafViewResolver.addStaticVariable("userInterfaceFrameworkUtils", Constants.USER_INTERFACE_FRAMEWORK_UTILS);
 
 		final GenericApplicationContext applicationContext = BeanFactoryUtils.getGenericApplicationContext();
 		thymeleafViewResolver.addStaticVariable("applicationContext", applicationContext);

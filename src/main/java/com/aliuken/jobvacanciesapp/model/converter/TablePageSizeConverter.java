@@ -12,10 +12,10 @@ public class TablePageSizeConverter implements AttributeConverter<TablePageSize,
 	@Override
 	public Integer convertToDatabaseColumn(final TablePageSize tablePageSize) {
 		if(tablePageSize == null) {
-			return TablePageSize.BY_DEFAULT.getValue();
+			return TablePageSize.BY_DEFAULT.getCode();
 		}
 
-		final Integer tablePageSizeValue = tablePageSize.getValue();
+		final Integer tablePageSizeValue = tablePageSize.getCode();
 		return tablePageSizeValue;
 	}
 

@@ -37,7 +37,7 @@
       <span class="text-light align-middle" th:text="#{language.field} + ':'" th:if="${#httpServletRequest.requestURI} != '/signup'"></span>
       &nbsp;&nbsp;
       <select id="languageCombo" name="languageCombo" class="align-middle" th:if="${#httpServletRequest.requestURI} != '/signup'">
-        <option th:each="language : ${T(com.aliuken.jobvacanciesapp.model.entity.enumtype.Language).getSpecificElements()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
+        <option th:each="language : ${languageUtils.getSpecificElements()}" th:value="${language.code}" th:text="#{${language.messageName}}"></option>
       </select>
       &nbsp;&nbsp;
       <a class="btn btn-primary align-middle" th:href="@{/login (languageParam=${param.languageParam})}" th:text="#{button.login}"></a>

@@ -7,7 +7,7 @@ import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
+public enum TablePageSize implements ConfigurableEnum<Integer,TablePageSize> {
 	BY_DEFAULT(0,   "tablePageSize.byDefault"),
 	SIZE_5    (5,   "tablePageSize.5"),
 	SIZE_10   (10,  "tablePageSize.10"),
@@ -42,7 +42,7 @@ public enum TablePageSize implements ConfigurableEnum<TablePageSize> {
 	}
 
 	public static @NonNull TablePageSize[] getSpecificEnumElements() {
-		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getSpecificElements(TablePageSize.class);
+		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getElements(TablePageSize.class, true);
 		return enumElementsWithoutByDefault;
 	}
 

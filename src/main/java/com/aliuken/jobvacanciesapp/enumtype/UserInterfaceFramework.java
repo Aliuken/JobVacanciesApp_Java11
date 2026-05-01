@@ -7,7 +7,7 @@ import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum UserInterfaceFramework implements ConfigurableEnum<UserInterfaceFramework> {
+public enum UserInterfaceFramework implements ConfigurableEnum<String,UserInterfaceFramework> {
 	BY_DEFAULT     ("-", "uiFramework.byDefault"),
 	MATERIAL_DESIGN("M", "uiFramework.materialDesign"),
 	BOOTSTRAP      ("B", "uiFramework.bootstrap");

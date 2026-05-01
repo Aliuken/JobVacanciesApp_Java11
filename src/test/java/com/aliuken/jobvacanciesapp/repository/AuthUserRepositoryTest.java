@@ -890,7 +890,7 @@ public class AuthUserRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Assertions.assertEquals(ColorMode.DARK.getCode(), authUserDTO.getColorModeCode());
 		Assertions.assertEquals(Currency.US_DOLLAR.getSymbol(), authUserDTO.getInitialCurrencySymbol());
 		Assertions.assertEquals(TableSortingDirection.BY_DEFAULT.getCode(), authUserDTO.getInitialTableSortingDirectionCode());
-		Assertions.assertEquals(TablePageSize.BY_DEFAULT.getValue(), authUserDTO.getInitialTablePageSizeValue());
+		Assertions.assertEquals(TablePageSize.BY_DEFAULT.getCode(), authUserDTO.getInitialTablePageSizeValue());
 		Assertions.assertEquals(PdfDocumentPageFormat.A3_HORIZONTAL.getCode(), authUserDTO.getPdfDocumentPageFormatCode());
 
 		final Set<String> authRoleNames = authUserDTO.getAuthRoleNames();

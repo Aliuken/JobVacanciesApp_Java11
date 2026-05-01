@@ -1,11 +1,13 @@
 package com.aliuken.jobvacanciesapp.util.javase;
 
 import com.aliuken.jobvacanciesapp.Constants;
+import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import org.jspecify.annotations.NonNull;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.IntFunction;
 
 public class GenericsUtils {
 
@@ -39,11 +41,16 @@ public class GenericsUtils {
 //		return element;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T> @NonNull T[] getCollectionAsArray(final Class<T> collectionElementClass, final Collection<T> collection) {
-		T[] collectionElementArray = (T[]) Array.newInstance(collectionElementClass, collection.size());
-		collectionElementArray = collection.toArray(collectionElementArray);
+	public static <T> T @NonNull [] getCollectionAsArray(final @NonNull Class<T> collectionElementClass, final @NonNull Collection<T> collection) {
+		final IntFunction<T[]> arrayGenerator = GenericsUtils.getArrayGenerator(collectionElementClass);
 
+		final T[] collectionElementArray = collection.toArray(arrayGenerator);
 		return collectionElementArray;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> @NonNull IntFunction<T[]> getArrayGenerator(final @NonNull Class<T> collectionElementClass) {
+		final IntFunction<T[]> arrayGenerator = size -> (T[]) Array.newInstance(collectionElementClass, size);
+		return arrayGenerator;
 	}
 }

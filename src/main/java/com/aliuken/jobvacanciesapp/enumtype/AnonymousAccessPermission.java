@@ -1,25 +1,24 @@
 package com.aliuken.jobvacanciesapp.enumtype;
 
-import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.superinterface.ConfigurableEnum;
 import com.aliuken.jobvacanciesapp.util.javase.stream.StreamStaticUtils;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 
-public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAccessPermission> {
+public enum AnonymousAccessPermission implements ConfigurableEnum<String,AnonymousAccessPermission> {
 	BY_DEFAULT        ("-", "anonymousAccessPermission.accessByDefault"),
 	ACCESS_ALLOWED    ("T", "anonymousAccessPermission.accessAllowed"),
 	ACCESS_NOT_ALLOWED("F", "anonymousAccessPermission.accessNotAllowed");
 
 	@Getter
-	private final @NonNull String value;
+	private final @NonNull String code;
 
 	@Getter
 	private final @NonNull String messageName;
 
-	private AnonymousAccessPermission(final @NonNull String value, final @NonNull String messageName) {
-		this.value = value;
+	private AnonymousAccessPermission(final @NonNull String code, final @NonNull String messageName) {
+		this.code = code;
 		this.messageName = messageName;
 	}
 
@@ -27,7 +26,7 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 		final AnonymousAccessPermission anonymousAccessPermission;
 		if(value != null) {
 			anonymousAccessPermission = StreamStaticUtils.ofEnum(AnonymousAccessPermission.class, false)
-				.filter(anonymousAccessPermissionAux -> value.equals(anonymousAccessPermissionAux.value))
+				.filter(anonymousAccessPermissionAux -> value.equals(anonymousAccessPermissionAux.code))
 				.findFirst()
 				.orElse(AnonymousAccessPermission.ACCESS_NOT_ALLOWED);
 		} else {
@@ -35,11 +34,6 @@ public enum AnonymousAccessPermission implements ConfigurableEnum<AnonymousAcces
 		}
 
 		return anonymousAccessPermission;
-	}
-
-	@Override
-	public @NonNull Class<AnonymousAccessPermission> getEnumClass() {
-		return AnonymousAccessPermission.class;
 	}
 
 	@Override

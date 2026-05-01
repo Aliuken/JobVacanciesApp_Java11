@@ -121,9 +121,9 @@ public class ControllerNavigationUtils {
 
 		final String nextRedirect = StringUtils.getStringJoined("redirect:", nextRedirectPath, "?languageParam=", languageCode,
 				"&nextDefaultLanguageCode=", nextDefaultLanguage.getCode(),
-				"&nextDefaultAnonymousAccessPermissionValue=", nextDefaultAnonymousAccessPermission.getValue(),
+				"&nextDefaultAnonymousAccessPermissionValue=", nextDefaultAnonymousAccessPermission.getCode(),
 				"&nextDefaultInitialTableSortingDirectionCode=", String.valueOf(nextDefaultInitialTableSortingDirection.getCode()),
-				"&nextDefaultInitialTablePageSizeValue=", String.valueOf(nextDefaultInitialTablePageSize.getValue()),
+				"&nextDefaultInitialTablePageSizeValue=", String.valueOf(nextDefaultInitialTablePageSize.getCode()),
 				"&nextDefaultColorModeCode=", nextDefaultColorMode.getCode(),
 				"&nextDefaultUserInterfaceFrameworkCode=", nextDefaultUserInterfaceFramework.getCode(),
 				"&nextDefaultPdfDocumentPageFormatCode=", nextDefaultPdfDocumentPageFormat.getCode());
