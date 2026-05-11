@@ -90,10 +90,7 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 			configurableEnumMessage = configurableEnumElement.getMessage(language);
 		} else {
 			final String defaultElementMessage = defaultElement.getMessage(language);
-
-			final ConfigurableEnum<V,E> finalElement = this.getCurrentDefaultElement();
-			final String finalElementMessage = finalElement.getMessage(language);
-
+			final String finalElementMessage = currentDefaultElement.getMessage(language);
 			configurableEnumMessage = StringUtils.getStringJoined(finalElementMessage, " (", defaultElementMessage, ")");
 		}
 		return configurableEnumMessage;
@@ -121,7 +118,7 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 			Objects.requireNonNull(configurableEnumElement, "configurableEnumElement cannot be null");
 			finalEnumElement = configurableEnumElement;
 		} else {
-			finalEnumElement = this.getCurrentDefaultElement();
+			finalEnumElement = currentDefaultElement;
 		}
 		return finalEnumElement;
 	}
