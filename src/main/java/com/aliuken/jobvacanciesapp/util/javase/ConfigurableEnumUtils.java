@@ -41,6 +41,8 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 
 	private final @NonNull StreamUtils<E> elementSequentialStreamUtils;
 
+	private final @NonNull E currentDefaultElement;
+
 	private ConfigurableEnumUtils(final @NonNull Class<V> valueClass, final @NonNull Class<E> elementClass) {
 		this.valueClass = valueClass;
 		this.elementClass = elementClass;
@@ -60,6 +62,13 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 			.toArray(this.arrayGenerator);
 
 		this.elementSequentialStreamUtils = StreamUtilsImpl.getInstance(elementClass, false);
+
+		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
+		final List<E> configurableEnumSuppliers = List.of(
+			defaultElement.getOverwrittenEnumElement(configPropertiesBean),
+			defaultElement.getOverwritableEnumElement(configPropertiesBean)
+		);
+		this.currentDefaultElement = elementSequentialStreamUtils.getFirstElementFilteredByCondition(configurableEnumSuppliers, specificElementPredicate, finalDefaultElement);
 	}
 
 	// ==========================================================
@@ -119,27 +128,6 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public @NonNull E getCurrentDefaultElement() {
-		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
-
-		final E currentDefaultElement = this.getCurrentDefaultElement(configPropertiesBean);
-		return currentDefaultElement;
-	}
-
-	public @NonNull E getCurrentDefaultElement(final ConfigPropertiesBean configPropertiesBean) {
-		final List<@NonNull Supplier<E>> configurableEnumSuppliers = List.of(
-			() -> defaultElement.getOverwrittenEnumElement(configPropertiesBean),
-			() -> defaultElement.getOverwritableEnumElement(configPropertiesBean)
-		);
-
-		final Supplier<@NonNull E> finalDefaultEnumElementSupplier = () -> finalDefaultElement;
-
-		final E currentDefaultElement = getFirstElementThatIsSpecificLazily(configurableEnumSuppliers, finalDefaultEnumElementSupplier);
-		return currentDefaultElement;
-	}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 	public @NonNull E getCurrentOverwrittenElement(final ConfigPropertiesBean configPropertiesBean) {
 		final E overwrittenEnumElement = defaultElement.getOverwrittenEnumElement(configPropertiesBean);
 
@@ -151,18 +139,6 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 			currentOverwrittenElement = defaultElement;
 		}
 		return currentOverwrittenElement;
-	}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	public @NonNull E getFirstElementThatIsSpecificLazily(final @NonNull Collection<@NonNull Supplier<E>> initialElementSuppliers, final @NonNull Supplier<@NonNull E> defaultElementSupplier) {
-		final E finalElement = elementSequentialStreamUtils.getFirstElementFilteredByConditionLazily(initialElementSuppliers, specificElementPredicate, defaultElementSupplier);
-		return finalElement;
-	}
-
-	public @NonNull E getFirstElementThatIsSpecific(final @NonNull Collection<E> initialElements, final @NonNull E defaultElement) {
-		final E finalElement = elementSequentialStreamUtils.getFirstElementFilteredByCondition(initialElements, specificElementPredicate, defaultElement);
-		return finalElement;
 	}
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

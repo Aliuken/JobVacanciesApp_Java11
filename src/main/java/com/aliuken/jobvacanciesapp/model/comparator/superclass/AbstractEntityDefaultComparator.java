@@ -24,7 +24,7 @@ public class AbstractEntityDefaultComparator<T extends AbstractEntity<T>> extend
 		}
 
 		public @NonNull AbstractEntityDefaultComparator<U> getCurrentDefaultComparator() {
-			final TableSortingDirection currentDefaultTableSortingDirection = Constants.TABLE_SORTING_DIRECTION_UTILS.getCurrentDefaultElement(TableSortingDirection.class);
+			final TableSortingDirection currentDefaultTableSortingDirection = Constants.TABLE_SORTING_DIRECTION_UTILS.getCurrentDefaultElement();
 
 			final AbstractEntityDefaultComparator<U> currentDefaultComparator;
 			if(TableSortingDirection.DESC.equals(currentDefaultTableSortingDirection)) {
