@@ -34,6 +34,7 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 	private final @NonNull Supplier<@NonNull E> finalDefaultElementSupplier;
 
 	private final @NonNull Predicate<E> specificElementPredicate;
+	private final @NonNull Predicate<@NonNull E> specificNonNullElementPredicate;
 	private final @NonNull IntFunction<E[]> arrayGenerator;
 
 	private final E @NonNull [] elements;
@@ -41,6 +42,7 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 
 	private final @NonNull StreamUtils<E> elementSequentialStreamUtils;
 
+	private final @NonNull E currentOverwrittenElement;
 	private final @NonNull E currentDefaultElement;
 
 	private ConfigurableEnumUtils(final @NonNull Class<V> valueClass, final @NonNull Class<E> elementClass) {
@@ -54,6 +56,7 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 		this.finalDefaultElementSupplier = () -> finalDefaultElement;
 
 		this.specificElementPredicate = element -> this.isASpecificElement(element);
+		this.specificNonNullElementPredicate = element -> element.isASpecificElement();
 		this.arrayGenerator = GenericsUtils.getArrayGenerator(elementClass);
 
 		this.elements = elementClass.getEnumConstants();
@@ -64,11 +67,25 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 		this.elementSequentialStreamUtils = StreamUtilsImpl.getInstance(elementClass, false);
 
 		final ConfigPropertiesBean configPropertiesBean = BeanFactoryUtils.getBean(ConfigPropertiesBean.class);
-		final List<E> configurableEnumSuppliers = List.of(
-			defaultElement.getOverwrittenEnumElement(configPropertiesBean),
-			defaultElement.getOverwritableEnumElement(configPropertiesBean)
+		this.currentOverwrittenElement = calculateCurrentOverwrittenElement(configPropertiesBean, specificNonNullElementPredicate, defaultElement);
+		this.currentDefaultElement = calculateCurrentDefaultElement(configPropertiesBean, specificNonNullElementPredicate, finalDefaultElement);
+	}
+
+	private @NonNull E calculateCurrentOverwrittenElement(final @NonNull ConfigPropertiesBean configPropertiesBean, final @NonNull Predicate<E> configurableEnumCondition, final @NonNull E fallbackConfigurableEnum) {
+		final List<E> initialConfigurableEnums = List.of(
+			fallbackConfigurableEnum.getOverwrittenEnumElement(configPropertiesBean)
 		);
-		this.currentDefaultElement = elementSequentialStreamUtils.getFirstElementFilteredByCondition(configurableEnumSuppliers, specificElementPredicate, finalDefaultElement);
+		final E currentOverwrittenElement = elementSequentialStreamUtils.getFirstElementFilteredByCondition(initialConfigurableEnums, configurableEnumCondition, fallbackConfigurableEnum);
+		return currentOverwrittenElement;
+	}
+
+	private @NonNull E calculateCurrentDefaultElement(final @NonNull ConfigPropertiesBean configPropertiesBean, final @NonNull Predicate<E> configurableEnumCondition, final @NonNull E fallbackConfigurableEnum) {
+		final List<E> initialConfigurableEnums = List.of(
+			fallbackConfigurableEnum.getOverwrittenEnumElement(configPropertiesBean),
+			fallbackConfigurableEnum.getOverwritableEnumElement(configPropertiesBean)
+		);
+		final E currentDefaultElement = elementSequentialStreamUtils.getFirstElementFilteredByCondition(initialConfigurableEnums, configurableEnumCondition, fallbackConfigurableEnum);
+		return currentDefaultElement;
 	}
 
 	// ==========================================================
@@ -121,21 +138,6 @@ public class ConfigurableEnumUtils<V, E extends Enum<E> & ConfigurableEnum<V,E>>
 			finalEnumElement = currentDefaultElement;
 		}
 		return finalEnumElement;
-	}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	public @NonNull E getCurrentOverwrittenElement(final ConfigPropertiesBean configPropertiesBean) {
-		final E overwrittenEnumElement = defaultElement.getOverwrittenEnumElement(configPropertiesBean);
-
-		final E currentOverwrittenElement;
-		if(this.isASpecificElement(overwrittenEnumElement)) {
-			Objects.requireNonNull(overwrittenEnumElement, "overwrittenEnumElement cannot be null");
-			currentOverwrittenElement = overwrittenEnumElement;
-		} else {
-			currentOverwrittenElement = defaultElement;
-		}
-		return currentOverwrittenElement;
 	}
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -132,23 +132,23 @@ public class ConfigPropertiesBean {
 
 	@PostConstruct
 	private void postConstruct() {
-		CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentDefaultElement(AnonymousAccessPermission.class, this);
-		CURRENT_DEFAULT_COLOR_MODE = Constants.ENUM_UTILS.getCurrentDefaultElement(ColorMode.class, this);
-		CURRENT_DEFAULT_CURRENCY = Constants.ENUM_UTILS.getCurrentDefaultElement(Currency.class, this);
-		CURRENT_DEFAULT_LANGUAGE = Constants.ENUM_UTILS.getCurrentDefaultElement(Language.class, this);
-		CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentDefaultElement(PdfDocumentPageFormat.class, this);
-		CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentDefaultElement(TableSortingDirection.class, this);
-		CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentDefaultElement(TablePageSize.class, this);
-		CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentDefaultElement(UserInterfaceFramework.class, this);
+		CURRENT_DEFAULT_ANONYMOUS_ACCESS_PERMISSION = Constants.ANONYMOUS_ACCESS_PERMISSION_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_COLOR_MODE = Constants.COLOR_MODE_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_CURRENCY = Constants.CURRENCY_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_LANGUAGE = Constants.LANGUAGE_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_PDF_DOCUMENT_PAGE_FORMAT = Constants.PDF_DOCUMENT_PAGE_FORMAT_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_INITIAL_TABLE_PAGE_SIZE = Constants.TABLE_PAGE_SIZE_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_INITIAL_TABLE_SORTING_DIRECTION = Constants.TABLE_SORTING_DIRECTION_UTILS.getCurrentDefaultElement();
+		CURRENT_DEFAULT_USER_INTERFACE_FRAMEWORK = Constants.USER_INTERFACE_FRAMEWORK_UTILS.getCurrentDefaultElement();
 
-		CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION = Constants.ENUM_UTILS.getCurrentOverwrittenElement(AnonymousAccessPermission.class, this);
-		CURRENT_OVERWRITTEN_COLOR_MODE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(ColorMode.class, this);
-		CURRENT_OVERWRITTEN_CURRENCY = Constants.ENUM_UTILS.getCurrentOverwrittenElement(Currency.class, this);
-		CURRENT_OVERWRITTEN_LANGUAGE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(Language.class, this);
-		CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT = Constants.ENUM_UTILS.getCurrentOverwrittenElement(PdfDocumentPageFormat.class, this);
-		CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.ENUM_UTILS.getCurrentOverwrittenElement(TableSortingDirection.class, this);
-		CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE = Constants.ENUM_UTILS.getCurrentOverwrittenElement(TablePageSize.class, this);
-		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.ENUM_UTILS.getCurrentOverwrittenElement(UserInterfaceFramework.class, this);
+		CURRENT_OVERWRITTEN_ANONYMOUS_ACCESS_PERMISSION = Constants.ANONYMOUS_ACCESS_PERMISSION_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_COLOR_MODE = Constants.COLOR_MODE_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_CURRENCY = Constants.CURRENCY_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_LANGUAGE = Constants.LANGUAGE_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_PDF_DOCUMENT_PAGE_FORMAT = Constants.PDF_DOCUMENT_PAGE_FORMAT_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_INITIAL_TABLE_PAGE_SIZE = Constants.TABLE_PAGE_SIZE_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_INITIAL_TABLE_SORTING_DIRECTION = Constants.TABLE_SORTING_DIRECTION_UTILS.getCurrentOverwrittenElement();
+		CURRENT_OVERWRITTEN_USER_INTERFACE_FRAMEWORK = Constants.USER_INTERFACE_FRAMEWORK_UTILS.getCurrentOverwrittenElement();
 	}
 
 	public @NonNull String getInitialCurrencySymbol() {
