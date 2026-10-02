@@ -18,14 +18,18 @@ public enum TablePageSize implements ConfigurableEnum<Integer,TablePageSize> {
 	SIZE_500  (500, "tablePageSize.500");
 
 	@Getter
-    private final int value;
+    private final int code;
 
 	@Getter
 	private final @NonNull String messageName;
 
-	private TablePageSize(final int value, final @NonNull String messageName) {
-		this.value = value;
+	private TablePageSize(final int code, final @NonNull String messageName) {
+		this.code = code;
 		this.messageName = messageName;
+	}
+
+	public int getValue() {
+		return code;
 	}
 
 	public static TablePageSize findByValue(final Integer value) {
@@ -35,20 +39,10 @@ public enum TablePageSize implements ConfigurableEnum<Integer,TablePageSize> {
 
 		final int intValue = value.intValue();
 		final TablePageSize tablePageSize = StreamStaticUtils.ofEnum(TablePageSize.class, false)
-			.filter(tablePageSizeAux -> tablePageSizeAux.value == intValue)
+			.filter(tablePageSizeAux -> tablePageSizeAux.code == intValue)
 			.findFirst()
 			.orElse(null);
 		return tablePageSize;
-	}
-
-	public static @NonNull TablePageSize[] getSpecificEnumElements() {
-		final TablePageSize[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getElements(TablePageSize.class, true);
-		return enumElementsWithoutByDefault;
-	}
-
-	@Override
-	public @NonNull Class<TablePageSize> getEnumClass() {
-		return TablePageSize.class;
 	}
 
 	@Override

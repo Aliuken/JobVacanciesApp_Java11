@@ -36,6 +36,10 @@ public enum Currency implements ConfigurableEnum<String,Currency> {
 		return currency;
 	}
 
+	public @NonNull String getSymbol() {
+		return code;
+	}
+
 	@Override
 	public @NonNull Currency getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		return Currency.BY_DEFAULT;

@@ -41,16 +41,6 @@ public enum TableSortingDirection implements ConfigurableEnum<String,TableSortin
 		return tableSortingDirection;
 	}
 
-	public static @NonNull TableSortingDirection[] getSpecificEnumElements() {
-		final TableSortingDirection[] enumElementsWithoutByDefault = Constants.ENUM_UTILS.getElements(TableSortingDirection.class, true);
-		return enumElementsWithoutByDefault;
-	}
-
-	@Override
-	public @NonNull Class<TableSortingDirection> getEnumClass() {
-		return TableSortingDirection.class;
-	}
-
 	@Override
 	public TableSortingDirection getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final TableSortingDirection tableSortingDirection = configPropertiesBean.getDefaultInitialTableSortingDirectionOverwritten();

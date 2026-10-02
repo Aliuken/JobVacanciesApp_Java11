@@ -45,13 +45,26 @@ public class ThrowableUtils {
 			final PrintWriter printWriter = new PrintWriter(stringWriter);
 		) {
 			throwable.printStackTrace(printWriter);
-
-			final String exceptionStackTrace = stringWriter.toString();
-			return exceptionStackTrace;
+			final String stackTrace = stringWriter.toString();
+			return stackTrace;
 		} catch(Exception newException) {
 			final String newExceptionMessage = StringUtils.getStringJoined("An exception happened when trying to print the stack trace of the exception '", throwable.getMessage(), "'");
 			log.error(newExceptionMessage, newException);
 			return newExceptionMessage;
+		}
+	}
+
+	public static void logStackTrace(final Throwable throwable) {
+		try(
+			final StringWriter stringWriter = new StringWriter();
+			final PrintWriter printWriter = new PrintWriter(stringWriter);
+		) {
+			throwable.printStackTrace(printWriter);
+			final String stackTrace = stringWriter.toString();
+			log.error(stackTrace);
+		} catch(Exception newException) {
+			final String newExceptionMessage = StringUtils.getStringJoined("An exception happened when trying to print the stack trace of the exception '", throwable.getMessage(), "'");
+			log.error(newExceptionMessage, newException);
 		}
 	}
 }

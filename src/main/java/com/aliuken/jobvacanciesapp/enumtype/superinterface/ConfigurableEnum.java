@@ -1,7 +1,9 @@
 package com.aliuken.jobvacanciesapp.enumtype.superinterface;
 
+import com.aliuken.jobvacanciesapp.Constants;
 import com.aliuken.jobvacanciesapp.config.ConfigPropertiesBean;
 import com.aliuken.jobvacanciesapp.enumtype.UserInterfaceFramework;
+import com.aliuken.jobvacanciesapp.model.entity.enumtype.TableSortingDirection;
 import com.aliuken.jobvacanciesapp.superinterface.Internationalizable;
 import com.aliuken.jobvacanciesapp.util.javase.ConfigurableEnumUtils;
 import com.aliuken.jobvacanciesapp.util.javase.GenericsUtils;
@@ -43,6 +45,13 @@ public interface ConfigurableEnum<C, E extends Enum<E> & ConfigurableEnum<C,E>> 
 		final Class<E> elementClass = getElementClass();
 		final E defaultElement = Enum.valueOf(elementClass, ConfigurableEnum.BY_DEFAULT_ELEMENT_NAME);
 		return defaultElement;
+	}
+
+	public default @NonNull ConfigurableEnumUtils<C, E> getConfigurableEnumUtils() {
+		final Class<E> elementClass = getElementClass();
+		final ConfigurableEnumUtils<?, ?> configurableEnumUtils = Constants.CONFIGURABLE_ENUM_UTILS_BY_ENUM_MAP.get(elementClass);
+		final ConfigurableEnumUtils<C, E> configurableEnumUtilsCasted = GenericsUtils.cast(configurableEnumUtils);
+		return configurableEnumUtilsCasted;
 	}
 
 	public abstract @NonNull C getCode();
