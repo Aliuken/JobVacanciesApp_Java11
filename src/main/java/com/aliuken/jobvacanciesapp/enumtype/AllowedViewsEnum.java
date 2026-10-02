@@ -81,7 +81,7 @@ public enum AllowedViewsEnum implements Serializable {
 	private static final @NonNull Map<AnonymousAccessPermission, AllowedViewsEnum> ALLOWED_VIEWS_MAP = AllowedViewsEnum.getAllowedViewsMap();
 
 	private AllowedViewsEnum(final AnonymousAccessPermission anonymousAccessPermission) {
-		this.anonymousAccessPermission = Constants.ENUM_UTILS.getFinalElement(anonymousAccessPermission, AnonymousAccessPermission.class);
+		this.anonymousAccessPermission = Constants.ANONYMOUS_ACCESS_PERMISSION_UTILS.getFinalElement(anonymousAccessPermission);
 
 		if(AnonymousAccessPermission.ACCESS_ALLOWED == this.anonymousAccessPermission) {
 			final StreamUtils<String> stringStreamUtils = StreamUtilsImpl.getInstance(String.class);

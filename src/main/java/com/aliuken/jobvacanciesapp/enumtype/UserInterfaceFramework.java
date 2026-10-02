@@ -37,11 +37,6 @@ public enum UserInterfaceFramework implements ConfigurableEnum<String,UserInterf
 	}
 
 	@Override
-	public @NonNull Class<UserInterfaceFramework> getEnumClass() {
-		return UserInterfaceFramework.class;
-	}
-
-	@Override
 	public UserInterfaceFramework getOverwrittenEnumElement(final @NonNull ConfigPropertiesBean configPropertiesBean) {
 		final UserInterfaceFramework userInterfaceFramework = configPropertiesBean.getDefaultUserInterfaceFrameworkOverwritten();
 		return userInterfaceFramework;

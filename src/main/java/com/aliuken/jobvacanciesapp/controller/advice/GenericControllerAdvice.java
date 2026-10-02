@@ -35,14 +35,14 @@ public class GenericControllerAdvice {
 		final String languageCode;
 		if (refreshedSessionAuthUser != null) {
 			final ColorMode sessionColorMode = refreshedSessionAuthUser.getColorMode();
-			if (Constants.ENUM_UTILS.isASpecificElement(sessionColorMode)) {
+			if (Constants.COLOR_MODE_UTILS.isASpecificElement(sessionColorMode)) {
 				colorModeValue = sessionColorMode.getCode();
 			} else {
 				colorModeValue = ConfigPropertiesBean.CURRENT_DEFAULT_COLOR_MODE.getCode();
 			}
 
 			final Language sessionLanguage = refreshedSessionAuthUser.getLanguage();
-			if (Constants.ENUM_UTILS.isASpecificElement(sessionLanguage)) {
+			if (Constants.LANGUAGE_UTILS.isASpecificElement(sessionLanguage)) {
 				languageCode = sessionLanguage.getCode();
 			} else {
 				languageCode = ConfigPropertiesBean.CURRENT_DEFAULT_LANGUAGE.getCode();

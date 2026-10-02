@@ -18,7 +18,7 @@ public enum TablePageSize implements ConfigurableEnum<Integer,TablePageSize> {
 	SIZE_500  (500, "tablePageSize.500");
 
 	@Getter
-    private final int code;
+    private final @NonNull Integer code;
 
 	@Getter
 	private final @NonNull String messageName;

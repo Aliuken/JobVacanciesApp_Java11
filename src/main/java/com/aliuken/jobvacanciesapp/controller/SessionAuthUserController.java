@@ -153,7 +153,7 @@ public class SessionAuthUserController implements InputFlashMapManager {
 			sessionAuthUser.setPdfDocumentPageFormat(pdfDocumentPageFormat);
 			sessionAuthUser = authUserService.saveAndFlush(sessionAuthUser);
 
-			final Language finalAuthUserLanguage = Constants.ENUM_UTILS.getFinalElement(authUserLanguage, Language.class);
+			final Language finalAuthUserLanguage = Constants.LANGUAGE_UTILS.getFinalElement(authUserLanguage);
 			languageCode = finalAuthUserLanguage.getCode();
 
 			httpServletRequest.getSession().setAttribute(Constants.SESSION_AUTH_USER_ID, sessionAuthUser.getId());

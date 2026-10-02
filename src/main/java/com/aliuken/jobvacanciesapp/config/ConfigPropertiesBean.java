@@ -157,7 +157,7 @@ public class ConfigPropertiesBean {
 			final AuthUser sessionAuthUser = SessionUtils.getSessionAuthUserFromSecurityContextHolder();
 			Currency initialCurrency = (sessionAuthUser != null) ? sessionAuthUser.getInitialCurrency() : null;
 			final List<Currency> possibleCurrencies = Collections.singletonList(initialCurrency);
-			initialCurrency = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleCurrencies, Currency.US_DOLLAR, Currency.class);
+			initialCurrency = Constants.CURRENCY_UTILS.getFirstElementThatIsSpecific(possibleCurrencies, Currency.US_DOLLAR, Currency.class);
 			initialCurrencySymbol = initialCurrency.getSymbol();
 		} catch(final Exception exception) {
 			if(log.isErrorEnabled()) {
@@ -181,7 +181,7 @@ public class ConfigPropertiesBean {
 
 				TableSortingDirection initialTableSortingDirection = (sessionAuthUser != null) ? sessionAuthUser.getInitialTableSortingDirection() : null;
 				final List<TableSortingDirection> possibleTableSortingDirections = Collections.singletonList(initialTableSortingDirection);
-				initialTableSortingDirection = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleTableSortingDirections, currentDefaultInitialTableSortingDirection, TableSortingDirection.class);
+				initialTableSortingDirection = Constants.TABLE_SORTING_DIRECTION_UTILS.getFirstElementThatIsSpecific(possibleTableSortingDirections, currentDefaultInitialTableSortingDirection, TableSortingDirection.class);
 				initialTableSortingDirectionCode = initialTableSortingDirection.getCode();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {
@@ -221,7 +221,7 @@ public class ConfigPropertiesBean {
 
 				TablePageSize initialTablePageSize = (sessionAuthUser != null) ? sessionAuthUser.getInitialTablePageSize() : null;
 				final List<TablePageSize> possibleTablePageSizes = Collections.singletonList(initialTablePageSize);
-				initialTablePageSize = Constants.ENUM_UTILS.getFirstElementThatIsSpecific(possibleTablePageSizes, currentDefaultInitialTablePageSize, TablePageSize.class);
+				initialTablePageSize = Constants.TABLE_PAGE_SIZE_UTILS.getFirstElementThatIsSpecific(possibleTablePageSizes, currentDefaultInitialTablePageSize, TablePageSize.class);
 				initialTablePageSizeValue = initialTablePageSize.getCode();
 			} catch(final Exception exception) {
 				if(log.isErrorEnabled()) {

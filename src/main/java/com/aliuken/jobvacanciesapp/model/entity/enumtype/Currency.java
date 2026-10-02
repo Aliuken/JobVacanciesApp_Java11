@@ -24,13 +24,13 @@ public enum Currency implements ConfigurableEnum<String,Currency> {
 		this.messageName = messageName;
 	}
 
-	public static Currency findByCode(final String code) {
-		if(LogicalUtils.isNullOrEmptyString(code)) {
+	public static Currency findBySymbol(final String symbol) {
+		if(LogicalUtils.isNullOrEmptyString(symbol)) {
 			return null;
 		}
 
 		final Currency currency = StreamStaticUtils.ofEnum(Currency.class, false)
-			.filter(currencyAux -> code.equals(currencyAux.code))
+			.filter(currencyAux -> symbol.equals(currencyAux.code))
 			.findFirst()
 			.orElse(null);
 		return currency;

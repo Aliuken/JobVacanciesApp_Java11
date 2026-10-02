@@ -223,7 +223,7 @@ public class AuthUserQueryReport<T extends AbstractEntity<T>> extends PdfDocumen
 
 			final PdfDocumentPageFormat initialPdfDocumentPageFormat = this.getInitialPdfDocumentPageFormat();
 			final PdfDocumentPageFormat finalPdfDocumentPageFormat = this.getFinalPdfDocumentPageFormat();
-			final String pdfDocumentPageFormatMessage = Constants.ENUM_UTILS.getConfigurableEnumMessage(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, PdfDocumentPageFormat.class, queryLanguage);
+			final String pdfDocumentPageFormatMessage = Constants.PDF_DOCUMENT_PAGE_FORMAT_UTILS.getConfigurableEnumMessage(initialPdfDocumentPageFormat, finalPdfDocumentPageFormat, PdfDocumentPageFormat.class, queryLanguage);
 
 			PdfDocument.addCellWithPhrase(userInfo, idField, authUser.getIdString());
 			PdfDocument.addCellWithPhrase(userInfo, nameField, authUser.getFullName());
